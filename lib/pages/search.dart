@@ -1,4 +1,5 @@
 import 'package:dangdiarysample/controllers/search_controller.dart';
+import 'package:dangdiarysample/skeletons/search_skeleton.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -8,6 +9,14 @@ class Search extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Get.put(SearchController());
+    return Obx(
+      () => SearchController.to.isLoading.value
+          ? SearchSkeleton()
+          : _searchWidget(context),
+    );
+  }
+
+  Widget _searchWidget(BuildContext context) {
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(

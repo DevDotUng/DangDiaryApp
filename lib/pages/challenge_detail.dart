@@ -407,12 +407,17 @@ class ChallengeDetail extends StatelessWidget {
                         itemBuilder: (BuildContext context, int index) {
                           return Padding(
                             padding: const EdgeInsets.only(right: 8.0),
-                            child: Container(
-                              width: 104,
-                              height: 104,
-                              decoration: BoxDecoration(
-                                color: Colors.grey,
-                                borderRadius: BorderRadius.circular(10.0),
+                            child: GestureDetector(
+                              onTap: () {
+                                Get.toNamed("/post");
+                              },
+                              child: Container(
+                                width: 104,
+                                height: 104,
+                                decoration: BoxDecoration(
+                                  color: Colors.grey,
+                                  borderRadius: BorderRadius.circular(10.0),
+                                ),
                               ),
                             ),
                           );

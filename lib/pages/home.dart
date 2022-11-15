@@ -94,7 +94,7 @@ class Home extends StatelessWidget {
             ),
           ),
           Positioned(
-            bottom: Get.height * 0.35,
+            bottom: Get.height * 0.3 + 32,
             left: 24,
             child: Container(
               width: 49,
