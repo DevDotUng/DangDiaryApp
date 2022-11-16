@@ -7,7 +7,7 @@ class AllChallenge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Get.put(AllChallengeController());
+    Get.put(AllChallengeController(context: context));
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
