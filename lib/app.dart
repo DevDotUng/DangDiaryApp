@@ -1,4 +1,5 @@
 import 'package:dangdiarysample/controllers/bottom_nav_controller.dart';
+import 'package:dangdiarysample/pages/diary.dart';
 import 'package:dangdiarysample/pages/home.dart';
 import 'package:dangdiarysample/pages/my_page.dart';
 import 'package:dangdiarysample/pages/search.dart';
@@ -18,6 +19,7 @@ class App extends StatelessWidget {
           index: BottomNavController.to.pageIndex.value,
           children: const [
             Home(),
+            //Diary(),
             Search(),
             Sticker(),
             MyPage(),

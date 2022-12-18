@@ -104,40 +104,27 @@ class Home extends StatelessWidget {
                 borderRadius: BorderRadius.circular(25.0),
               ),
               child: Obx(
-                () => ListView.builder(
-                  controller: HomeController.to.scrollController,
-                  shrinkWrap: true,
+                () => PageView.builder(
+                  scrollDirection: Axis.vertical,
+                  controller: HomeController.to.pageController,
                   itemCount: HomeController.to.imageList.length,
                   itemBuilder: (BuildContext context, int index) {
-                    if (index == 9) {
-                      return SizedBox(height: 20);
-                    }
-                    return InkWell(
-                      onTap: () {
-                        HomeController.to.scrollController.animateTo(
-                          (index - 1.78) * 37.0,
-                          duration: Duration(milliseconds: 200),
-                          curve: Curves.fastOutSlowIn,
-                        );
-                        HomeController.to.changeIndex(index);
-                      },
-                      child: Container(
-                        width: double.infinity,
-                        height: 37,
-                        child: Center(
-                          child: Obx(
-                            () => Text(
-                              '${index + 1}',
-                              style: TextStyle(
-                                color:
-                                    index == HomeController.to.mainIndex.toInt()
-                                        ? Colors.white
-                                        : Colors.grey,
-                                fontSize:
-                                    index == HomeController.to.mainIndex.toInt()
-                                        ? 24
-                                        : 20,
-                              ),
+                    return Container(
+                      width: double.infinity,
+                      height: 37,
+                      child: Center(
+                        child: Obx(
+                          () => Text(
+                            '${index + 1}',
+                            style: TextStyle(
+                              color:
+                                  index == HomeController.to.mainIndex.toInt()
+                                      ? Colors.white
+                                      : Colors.grey,
+                              fontSize:
+                                  index == HomeController.to.mainIndex.toInt()
+                                      ? 24
+                                      : 20,
                             ),
                           ),
                         ),

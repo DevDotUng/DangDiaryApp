@@ -1,3 +1,5 @@
+import 'package:dangdiarysample/controllers/sticker_controller.dart';
+import 'package:dangdiarysample/skeletons/sticker_skeleton.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -6,6 +8,14 @@ class Sticker extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Get.put(StickerController());
+    return Obx(
+      () =>
+          StickerController.to.isLoading.value ? StickerSkeleton() : _sticker(),
+    );
+  }
+
+  Widget _sticker() {
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(

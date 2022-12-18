@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 
 class HomeController extends GetxController {
   static HomeController get to => Get.find();
-  late ScrollController scrollController;
+  late PageController pageController;
   RxList imageList = [
     'assets/dog.png',
     'assets/dog2.png',
@@ -20,15 +20,22 @@ class HomeController extends GetxController {
 
   @override
   void onInit() {
-    scrollController = ScrollController();
+    pageController = PageController(viewportFraction: 0.177);
+    pageController.addListener(pageScrollListener);
     loading();
     super.onInit();
   }
 
   @override
   void dispose() {
-    scrollController.dispose();
+    pageController.dispose();
     super.dispose();
+  }
+
+  void pageScrollListener() {
+    if (pageController.page! % 0.5 < 0.4) {
+      mainIndex(pageController.page?.toInt());
+    }
   }
 
   void changeIndex(int index) {
