@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:skeletons/skeletons.dart';
 
@@ -15,9 +16,9 @@ class StickerSkeleton extends StatelessWidget {
       body: Stack(
         children: [
           Positioned(
-            bottom: Get.height * 0.6 + 24,
+            bottom: Get.height * 0.6 + 24.h,
             child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 24.0),
+              padding: EdgeInsets.symmetric(horizontal: 24.0.w),
               width: Get.width,
               child: Column(
                 children: [
@@ -29,42 +30,42 @@ class StickerSkeleton extends StatelessWidget {
                         children: [
                           SkeletonAvatar(
                             style: SkeletonAvatarStyle(
-                              width: 100,
-                              height: 30,
+                              width: 100.w,
+                              height: 30.h,
                             ),
                           ),
-                          SizedBox(height: 8),
+                          SizedBox(height: 8.h),
                           SkeletonAvatar(
                             style: SkeletonAvatarStyle(
-                              width: 200,
-                              height: 30,
+                              width: 200.w,
+                              height: 30.h,
                             ),
                           ),
                         ],
                       ),
                       SkeletonAvatar(
                         style: SkeletonAvatarStyle(
-                          width: 56,
-                          height: 56,
+                          width: 56.w,
+                          height: 56.h,
                           shape: BoxShape.circle,
                         ),
                       ),
                     ],
                   ),
-                  SizedBox(height: 16),
+                  SizedBox(height: 16.h),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       SkeletonAvatar(
                         style: SkeletonAvatarStyle(
-                          width: 80,
-                          height: 30,
+                          width: 80.w,
+                          height: 30.h,
                         ),
                       ),
                       SkeletonAvatar(
                         style: SkeletonAvatarStyle(
-                          width: 180,
-                          height: 30,
+                          width: 180.w,
+                          height: 30.h,
                         ),
                       ),
                     ],
@@ -76,14 +77,14 @@ class StickerSkeleton extends StatelessWidget {
           Positioned(
             bottom: 0,
             child: Container(
-              padding: const EdgeInsets.only(left: 24, top: 24),
+              padding: EdgeInsets.only(left: 24.w, top: 24.h),
               width: Get.width,
               height: Get.height * 0.6,
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(20),
-                  topRight: Radius.circular(20),
+                  topLeft: Radius.circular(20.r),
+                  topRight: Radius.circular(20.r),
                 ),
                 boxShadow: [
                   BoxShadow(
@@ -101,33 +102,33 @@ class StickerSkeleton extends StatelessWidget {
                     children: [
                       SkeletonAvatar(
                         style: SkeletonAvatarStyle(
-                          width: 80,
-                          height: 20,
+                          width: 80.w,
+                          height: 20.h,
                         ),
                       ),
-                      SizedBox(height: 8),
+                      SizedBox(height: 8.h),
                       Container(
-                        height: 184,
+                        height: 184.h,
                         child: ListView.builder(
                           scrollDirection: Axis.horizontal,
                           itemCount: 10,
                           itemBuilder: (context, jndex) {
                             return Padding(
-                              padding: const EdgeInsets.only(right: 8.0),
+                              padding: EdgeInsets.only(right: 8.0.w),
                               child: Column(
                                 children: [
                                   SkeletonAvatar(
                                     style: SkeletonAvatarStyle(
-                                      width: 104,
-                                      height: 104,
-                                      borderRadius: BorderRadius.circular(10),
+                                      width: 104.w,
+                                      height: 104.h,
+                                      borderRadius: BorderRadius.circular(10.r),
                                     ),
                                   ),
-                                  SizedBox(height: 8),
+                                  SizedBox(height: 8.h),
                                   SkeletonAvatar(
                                     style: SkeletonAvatarStyle(
-                                      width: 104,
-                                      height: 30,
+                                      width: 104.w,
+                                      height: 30.h,
                                     ),
                                   ),
                                 ],

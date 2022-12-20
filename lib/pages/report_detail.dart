@@ -1,5 +1,6 @@
 import 'package:dangdiarysample/components/report_dropdown_container.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 class ReportDetail extends StatelessWidget {
@@ -18,7 +19,7 @@ class ReportDetail extends StatelessWidget {
           },
           child: Icon(
             Icons.arrow_back,
-            size: 32,
+            size: 32.r,
             color: Colors.black,
           ),
         ),
@@ -26,16 +27,16 @@ class ReportDetail extends StatelessWidget {
           '신고내역',
           style: TextStyle(
             color: Colors.black,
-            fontSize: 16,
+            fontSize: 16.sp,
             fontWeight: FontWeight.w400,
           ),
         ),
         actions: [
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 25.0),
+            padding: EdgeInsets.symmetric(horizontal: 25.0.w),
             child: Icon(
               Icons.camera,
-              size: 21,
+              size: 21.r,
               color: Colors.black,
             ),
           ),
@@ -47,12 +48,12 @@ class ReportDetail extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Padding(
-              padding: const EdgeInsets.only(left: 24),
+              padding: EdgeInsets.only(left: 24.w),
               child: Text(
                 '오또캐드님의 신고내역',
                 style: TextStyle(
                   color: Colors.black,
-                  fontSize: 14,
+                  fontSize: 14.sp,
                   fontWeight: FontWeight.w600,
                 ),
               ),

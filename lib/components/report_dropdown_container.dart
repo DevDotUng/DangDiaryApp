@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class ReportDropdownContainer extends StatefulWidget {
   const ReportDropdownContainer({Key? key}) : super(key: key);
@@ -20,12 +21,12 @@ class _ReportDropdownContainerState extends State<ReportDropdownContainer> {
         });
       },
       child: Container(
-        margin: const EdgeInsets.only(left: 24, top: 8, right: 24, bottom: 8),
-        padding: const EdgeInsets.all(8.0),
+        margin: EdgeInsets.only(left: 24.w, top: 8.h, right: 24.w, bottom: 8.h),
+        padding: EdgeInsets.all(8.0.r),
         width: double.infinity,
         decoration: BoxDecoration(
           color: Colors.white,
-          borderRadius: BorderRadius.circular(11),
+          borderRadius: BorderRadius.circular(11.r),
           boxShadow: [
             BoxShadow(
               color: Colors.black.withOpacity(0.15),
@@ -39,10 +40,10 @@ class _ReportDropdownContainerState extends State<ReportDropdownContainer> {
             Row(
               children: [
                 Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 8),
-                  height: 20,
+                  padding: EdgeInsets.symmetric(horizontal: 8.w),
+                  height: 20.h,
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
+                    borderRadius: BorderRadius.circular(10.r),
                     border: Border.all(
                       color: Color(0xff00C2FF),
                     ),
@@ -52,24 +53,24 @@ class _ReportDropdownContainerState extends State<ReportDropdownContainer> {
                       '접수중',
                       style: TextStyle(
                         color: Color(0xff00C2FF),
-                        fontSize: 12,
+                        fontSize: 12.sp,
                         fontWeight: FontWeight.w400,
                       ),
                     ),
                   ),
                 ),
-                SizedBox(width: 8),
+                SizedBox(width: 8.w),
                 Text(
                   '2022/00/00',
                   style: TextStyle(
                     color: Color(0xffB8B8B8),
-                    fontSize: 10,
+                    fontSize: 10.sp,
                     fontWeight: FontWeight.w400,
                   ),
                 ),
               ],
             ),
-            SizedBox(height: 15),
+            SizedBox(height: 15.h),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -77,31 +78,31 @@ class _ReportDropdownContainerState extends State<ReportDropdownContainer> {
                   '00000으로 사용자 000님을 신고했어요.',
                   style: TextStyle(
                     color: Colors.black,
-                    fontSize: 14,
+                    fontSize: 14.sp,
                     fontWeight: FontWeight.w400,
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(right: 3.0),
+                  padding: EdgeInsets.only(right: 3.0.w),
                   child: AnimatedRotation(
                     duration: Duration(milliseconds: 200),
                     turns: isOpened ? 0.5 : 0,
-                    child: Icon(Icons.keyboard_arrow_down_sharp, size: 24),
+                    child: Icon(Icons.keyboard_arrow_down_sharp, size: 24.r),
                   ),
                 )
               ],
             ),
             isOpened
                 ? Container(
-                    margin: const EdgeInsets.only(
-                        left: 12, top: 27, right: 14, bottom: 17),
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 16, vertical: 20),
+                    margin: EdgeInsets.only(
+                        left: 12.w, top: 27.h, right: 14.w, bottom: 17.h),
+                    padding:
+                        EdgeInsets.symmetric(horizontal: 16.w, vertical: 20.h),
                     width: double.infinity,
-                    height: 146,
+                    height: 146.h,
                     decoration: BoxDecoration(
                       color: Color(0xffF2F2F2),
-                      borderRadius: BorderRadius.circular(11),
+                      borderRadius: BorderRadius.circular(11.r),
                       boxShadow: [
                         BoxShadow(
                           color: Colors.black.withOpacity(0.15),
@@ -113,15 +114,18 @@ class _ReportDropdownContainerState extends State<ReportDropdownContainer> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Padding(
-                          padding: const EdgeInsets.only(
-                              top: 4.0, left: 14, right: 14, bottom: 16),
+                          padding: EdgeInsets.only(
+                              top: 4.0.h,
+                              left: 14.w,
+                              right: 14.w,
+                              bottom: 16.h),
                           child: Container(
                             width: double.infinity,
-                            height: 54,
+                            height: 54.h,
                             child: Stack(
                               children: [
                                 Positioned(
-                                  top: 27,
+                                  top: 27.h,
                                   left: 0,
                                   right: 0,
                                   child: _dottedLine(),
@@ -131,31 +135,34 @@ class _ReportDropdownContainerState extends State<ReportDropdownContainer> {
                                       MainAxisAlignment.spaceBetween,
                                   children: [
                                     Container(
-                                      width: 54,
-                                      height: 54,
+                                      width: 54.w,
+                                      height: 54.h,
                                       decoration: BoxDecoration(
                                         color: Color(0xffD2D2D2),
-                                        borderRadius: BorderRadius.circular(27),
+                                        borderRadius:
+                                            BorderRadius.circular(27.r),
                                         border: Border.all(
                                           color: Color(0xff00C2FF),
-                                          width: 2,
+                                          width: 2.w,
                                         ),
                                       ),
                                     ),
                                     Container(
-                                      width: 54,
-                                      height: 54,
+                                      width: 54.w,
+                                      height: 54.h,
                                       decoration: BoxDecoration(
                                         color: Color(0xffD2D2D2),
-                                        borderRadius: BorderRadius.circular(27),
+                                        borderRadius:
+                                            BorderRadius.circular(27.r),
                                       ),
                                     ),
                                     Container(
-                                      width: 54,
-                                      height: 54,
+                                      width: 54.w,
+                                      height: 54.h,
                                       decoration: BoxDecoration(
                                         color: Color(0xffD2D2D2),
-                                        borderRadius: BorderRadius.circular(27),
+                                        borderRadius:
+                                            BorderRadius.circular(27.r),
                                       ),
                                     ),
                                   ],
@@ -168,7 +175,7 @@ class _ReportDropdownContainerState extends State<ReportDropdownContainer> {
                           'NN님의 신고가 정상적으로 접수되었어요.\n신고내용을 확인한 뒤 조치여부를 확인할게요.',
                           style: TextStyle(
                             color: Colors.black,
-                            fontSize: 12,
+                            fontSize: 12.sp,
                             fontWeight: FontWeight.w400,
                           ),
                         ),

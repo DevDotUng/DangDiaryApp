@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:skeletons/skeletons.dart';
 
 class HomeSkeleton extends StatelessWidget {
@@ -13,41 +14,41 @@ class HomeSkeleton extends StatelessWidget {
         child: Stack(
           children: [
             Positioned(
-              top: 90,
-              left: 24,
+              top: 90.h,
+              left: 24.w,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   SkeletonAvatar(
                     style: SkeletonAvatarStyle(
-                      width: 150,
-                      height: 32,
+                      width: 150.w,
+                      height: 32.h,
                     ),
                   ),
-                  SizedBox(height: 8),
+                  SizedBox(height: 8.h),
                   SkeletonAvatar(
                     style: SkeletonAvatarStyle(
-                      width: 200,
-                      height: 32,
+                      width: 200.w,
+                      height: 32.h,
                     ),
                   ),
-                  SizedBox(height: 8),
+                  SizedBox(height: 8.h),
                   SkeletonAvatar(
                     style: SkeletonAvatarStyle(
-                      width: 100,
-                      height: 32,
+                      width: 100.w,
+                      height: 32.h,
                     ),
                   ),
                 ],
               ),
             ),
             Positioned(
-              top: 90,
-              right: 24,
+              top: 90.h,
+              right: 24.w,
               child: SkeletonAvatar(
                 style: SkeletonAvatarStyle(
-                  width: 56,
-                  height: 56,
+                  width: 56.w,
+                  height: 56.h,
                   shape: BoxShape.circle,
                 ),
               ),

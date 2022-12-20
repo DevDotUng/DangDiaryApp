@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 class AllChallengeController extends GetxController {
@@ -37,21 +38,21 @@ class AllChallengeController extends GetxController {
       builder: (BuildContext context) {
         return Dialog(
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(15),
+            borderRadius: BorderRadius.circular(15.r),
           ),
-          insetPadding: EdgeInsets.all(24.0),
+          insetPadding: EdgeInsets.all(24.0.r),
           child: Container(
-            padding: EdgeInsets.symmetric(vertical: 26.0),
+            padding: EdgeInsets.symmetric(vertical: 26.0.h),
             width: double.infinity,
-            height: 396,
+            height: 396.h,
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(15),
+              borderRadius: BorderRadius.circular(15.r),
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 26),
+                  padding: EdgeInsets.symmetric(horizontal: 26.w),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -60,7 +61,7 @@ class AllChallengeController extends GetxController {
                         '앗!\n예전에 미룬 챌린지가 있어요',
                         style: TextStyle(
                           color: Colors.black,
-                          fontSize: 20,
+                          fontSize: 20.sp,
                           fontWeight: FontWeight.w600,
                         ),
                       ),
@@ -68,12 +69,12 @@ class AllChallengeController extends GetxController {
                         onTap: () {
                           Navigator.pop(context);
                         },
-                        child: Icon(Icons.clear, size: 18),
+                        child: Icon(Icons.clear, size: 18.r),
                       ),
                     ],
                   ),
                 ),
-                SizedBox(height: 16),
+                SizedBox(height: 16.h),
                 Expanded(
                   child: Obx(
                     () => isFolded.value
@@ -81,27 +82,27 @@ class AllChallengeController extends GetxController {
                         : _overduedChallengeList(),
                   ),
                 ),
-                SizedBox(height: 24),
+                SizedBox(height: 20.h),
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 26),
+                  padding: EdgeInsets.symmetric(horizontal: 26.w),
                   child: Row(
                     children: [
                       Container(
-                        width: 16,
-                        height: 16,
+                        width: 16.w,
+                        height: 16.h,
                         decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(8),
+                          borderRadius: BorderRadius.circular(8.r),
                           border: Border.all(
                             color: Color(0xff7D7D7D),
                           ),
                         ),
                       ),
-                      SizedBox(width: 4),
+                      SizedBox(width: 4.w),
                       Text(
                         '일주일 뒤에 다시 알려주세요',
                         style: TextStyle(
                           color: Color(0xff7D7D7D),
-                          fontSize: 12,
+                          fontSize: 12.sp,
                           fontWeight: FontWeight.w400,
                         ),
                       ),
@@ -118,12 +119,12 @@ class AllChallengeController extends GetxController {
 
   Widget _twoOverduedChallenge() {
     return Padding(
-      padding: const EdgeInsets.only(top: 8, left: 26, right: 26),
+      padding: EdgeInsets.only(top: 8.h, left: 26.w, right: 26.w),
       child: Column(
         children: [
           ...List.generate(
             2,
-            (index) => _overduedChallengeWidget(0, 8, 0, 0),
+            (index) => _overduedChallengeWidget(0.h, 8.h, 0.w, 0.w),
           ),
           GestureDetector(
             onTap: () {
@@ -131,10 +132,10 @@ class AllChallengeController extends GetxController {
             },
             child: Container(
               width: double.infinity,
-              height: 32,
+              height: 32.h,
               decoration: BoxDecoration(
                 color: Color(0xffF5F5F5),
-                borderRadius: BorderRadius.circular(10),
+                borderRadius: BorderRadius.circular(10.r),
                 boxShadow: [
                   BoxShadow(
                     color: Colors.black.withOpacity(0.15),
@@ -147,14 +148,14 @@ class AllChallengeController extends GetxController {
                 children: [
                   Icon(
                     Icons.add,
-                    size: 16,
+                    size: 16.r,
                     color: Color(0xff00C2FF),
                   ),
                   Text(
                     '8개',
                     style: TextStyle(
                       color: Color(0xff00C2FF),
-                      fontSize: 14,
+                      fontSize: 14.sp,
                       fontWeight: FontWeight.w600,
                     ),
                   ),
@@ -169,11 +170,11 @@ class AllChallengeController extends GetxController {
 
   Widget _overduedChallengeList() {
     return Padding(
-      padding: const EdgeInsets.only(top: 4),
+      padding: EdgeInsets.only(top: 4.h),
       child: ListView.builder(
         itemCount: 10,
         itemBuilder: (context, index) {
-          return _overduedChallengeWidget(4, 4, 26, 26);
+          return _overduedChallengeWidget(4.h, 4.h, 26.w, 26.w);
         },
       ),
     );
@@ -188,10 +189,10 @@ class AllChallengeController extends GetxController {
           left: leftMargin,
           right: rightMargin),
       width: double.infinity,
-      height: 92,
+      height: 92.h,
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(10),
+        borderRadius: BorderRadius.circular(10.r),
         boxShadow: [
           BoxShadow(
             color: Colors.black.withOpacity(0.15),
@@ -201,12 +202,12 @@ class AllChallengeController extends GetxController {
       ),
       child: Row(
         children: [
-          SizedBox(width: 12),
+          SizedBox(width: 12.w),
           Container(
-            width: 72,
-            height: 72,
+            width: 72.w,
+            height: 72.h,
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(7.0),
+              borderRadius: BorderRadius.circular(7.0.r),
               image: DecorationImage(
                 image: AssetImage('assets/dog.png'),
                 fit: BoxFit.cover,
@@ -214,7 +215,7 @@ class AllChallengeController extends GetxController {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 8),
+            padding: EdgeInsets.symmetric(vertical: 10.h, horizontal: 8.w),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -223,18 +224,18 @@ class AllChallengeController extends GetxController {
                   '한강공원 술래잡기',
                   style: TextStyle(
                     color: Colors.black,
-                    fontSize: 16,
+                    fontSize: 16.sp,
                     fontWeight: FontWeight.w400,
                   ),
                 ),
                 Container(
-                  width: Get.width - 203,
+                  width: Get.width - 203.w,
                   child: Text(
                     '한강공원 술래잡기한강공원 술래잡기한강공원 술래잡기한강공원 술래잡기한강공원 술래잡기',
                     maxLines: 2,
                     style: TextStyle(
                       color: Color(0xff7D7D7D),
-                      fontSize: 14,
+                      fontSize: 14.sp,
                       fontWeight: FontWeight.w400,
                       overflow: TextOverflow.ellipsis,
                     ),
@@ -246,6 +247,5 @@ class AllChallengeController extends GetxController {
         ],
       ),
     );
-    ;
   }
 }

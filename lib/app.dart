@@ -19,8 +19,8 @@ class App extends StatelessWidget {
           index: BottomNavController.to.pageIndex.value,
           children: const [
             Home(),
-            //Diary(),
             Search(),
+            Diary(),
             Sticker(),
             MyPage(),
           ],
@@ -60,7 +60,11 @@ class App extends StatelessWidget {
               label: '',
             ),
             BottomNavigationBarItem(
-              icon: new Icon(Icons.shopping_cart_outlined),
+              icon: new Icon(Icons.search),
+              label: '',
+            ),
+            BottomNavigationBarItem(
+              icon: new Icon(Icons.menu_book),
               label: '',
             ),
             BottomNavigationBarItem(

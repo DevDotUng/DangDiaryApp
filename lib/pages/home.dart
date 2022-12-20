@@ -2,6 +2,7 @@ import 'package:dangdiarysample/controllers/bottom_nav_controller.dart';
 import 'package:dangdiarysample/controllers/home_controller.dart';
 import 'package:dangdiarysample/skeletons/home_skeleton.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 class Home extends StatelessWidget {
@@ -37,8 +38,8 @@ class Home extends StatelessWidget {
             ],
           ),
           Positioned(
-            top: 90,
-            left: 24,
+            top: 90.h,
+            left: 24.w,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -46,7 +47,7 @@ class Home extends StatelessWidget {
                   '오늘은 초코가',
                   style: TextStyle(
                     color: Colors.white,
-                    fontSize: 24,
+                    fontSize: 24.sp,
                     fontWeight: FontWeight.w400,
                   ),
                 ),
@@ -54,7 +55,7 @@ class Home extends StatelessWidget {
                   '한강공원 산책을 가고\n싶어해요!',
                   style: TextStyle(
                     color: Colors.white,
-                    fontSize: 24,
+                    fontSize: 24.sp,
                     fontWeight: FontWeight.w600,
                   ),
                 ),
@@ -62,17 +63,17 @@ class Home extends StatelessWidget {
             ),
           ),
           Positioned(
-            top: 90,
-            right: 24,
+            top: 90.h,
+            right: 24.w,
             child: GestureDetector(
               onTap: () {
                 BottomNavController.to.changeBottomNav(3);
               },
               child: Container(
-                width: 56,
-                height: 56,
+                width: 56.w,
+                height: 56.h,
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(28.0),
+                  borderRadius: BorderRadius.circular(28.0.r),
                   boxShadow: [
                     BoxShadow(
                       color: Colors.black.withOpacity(0.1),
@@ -94,14 +95,14 @@ class Home extends StatelessWidget {
             ),
           ),
           Positioned(
-            bottom: Get.height * 0.3 + 32,
-            left: 24,
+            bottom: Get.height * 0.3 + 32.h,
+            left: 24.w,
             child: Container(
-              width: 49,
-              height: 209,
+              width: 49.w,
+              height: 209.h,
               decoration: BoxDecoration(
                 color: Colors.grey.withOpacity(0.4),
-                borderRadius: BorderRadius.circular(25.0),
+                borderRadius: BorderRadius.circular(25.0.r),
               ),
               child: Obx(
                 () => PageView.builder(
@@ -111,7 +112,7 @@ class Home extends StatelessWidget {
                   itemBuilder: (BuildContext context, int index) {
                     return Container(
                       width: double.infinity,
-                      height: 37,
+                      height: 37.h,
                       child: Center(
                         child: Obx(
                           () => Text(
@@ -123,8 +124,8 @@ class Home extends StatelessWidget {
                                       : Colors.grey,
                               fontSize:
                                   index == HomeController.to.mainIndex.toInt()
-                                      ? 24
-                                      : 20,
+                                      ? 24.sp
+                                      : 20.sp,
                             ),
                           ),
                         ),
@@ -148,58 +149,59 @@ class Home extends StatelessWidget {
       maxChildSize: 0.7,
       builder: (BuildContext context, ScrollController scrollController) {
         return Container(
-          height: MediaQuery.of(context).size.height * 0.9,
-          width: MediaQuery.of(context).size.width,
+          height: Get.height * 0.9,
+          width: Get.width,
           decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(40),
+              topLeft: Radius.circular(40.r),
             ),
           ),
           child: Stack(
             children: [
               Container(
-                padding: EdgeInsets.only(top: 4),
-                height: MediaQuery.of(context).size.height * 0.9,
-                width: MediaQuery.of(context).size.width,
+                padding: EdgeInsets.only(top: 4.h),
+                height: Get.height * 0.9,
+                width: Get.width,
                 child: SingleChildScrollView(
                   controller: scrollController,
                   child: Column(
                     children: [
-                      const SizedBox(height: 32),
+                      SizedBox(height: 32.h),
                       ...List.generate(
                         10,
                         (index) {
                           return Padding(
-                            padding: EdgeInsets.only(left: 24.0, bottom: 24.0),
+                            padding:
+                                EdgeInsets.only(left: 24.0.w, bottom: 24.0.h),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Row(
                                   children: [
                                     Icon(Icons.rocket),
-                                    SizedBox(height: 4),
+                                    SizedBox(height: 4.h),
                                     Text(
                                       '진행 중인 챌린지',
                                       style: TextStyle(
-                                        fontSize: 16,
+                                        fontSize: 16.sp,
                                         fontWeight: FontWeight.w600,
                                       ),
                                     ),
                                   ],
                                 ),
-                                SizedBox(height: 6),
+                                SizedBox(height: 6.h),
                                 Text(
                                   '현재 효림님이 초코와 진행 중인 챌린지에요',
                                   style: TextStyle(
                                     color: Color(0xff7D7D7D),
-                                    fontSize: 14,
+                                    fontSize: 14.sp,
                                     fontWeight: FontWeight.w400,
                                   ),
                                 ),
-                                SizedBox(height: 8),
+                                SizedBox(height: 8.h),
                                 Container(
-                                  height: 108,
+                                  height: 108.h,
                                   child: InkWell(
                                     onTap: () {
                                       Get.toNamed('/challengeDetail');
@@ -212,20 +214,21 @@ class Home extends StatelessWidget {
                                         itemBuilder:
                                             (BuildContext context, int index) {
                                           return Padding(
-                                            padding: const EdgeInsets.only(
-                                                left: 4,
-                                                right: 17,
-                                                top: 4,
-                                                bottom: 4),
+                                            padding: EdgeInsets.only(
+                                              left: 4.w,
+                                              right: 17.w,
+                                              top: 4.h,
+                                              bottom: 4.h,
+                                            ),
                                             child: Center(
                                               child: Container(
                                                 width: Get.width * 0.7,
-                                                height: 108,
+                                                height: 108.h,
                                                 decoration: BoxDecoration(
                                                   color: Colors.white,
                                                   borderRadius:
                                                       BorderRadius.circular(
-                                                          10.0),
+                                                          10.0.r),
                                                   boxShadow: [
                                                     BoxShadow(
                                                       color: Colors.black
@@ -244,14 +247,15 @@ class Home extends StatelessWidget {
                                                 ),
                                                 child: Row(
                                                   children: [
-                                                    SizedBox(width: 12),
+                                                    SizedBox(width: 12.w),
                                                     Container(
-                                                      width: 87,
-                                                      height: 80,
+                                                      width: 87.w,
+                                                      height: 80.h,
                                                       decoration: BoxDecoration(
                                                         borderRadius:
                                                             BorderRadius
-                                                                .circular(7.0),
+                                                                .circular(
+                                                                    7.0.r),
                                                         image: DecorationImage(
                                                           image: AssetImage(
                                                               'assets/dog.png'),
@@ -260,10 +264,11 @@ class Home extends StatelessWidget {
                                                       ),
                                                     ),
                                                     Padding(
-                                                      padding: const EdgeInsets
-                                                              .symmetric(
-                                                          vertical: 12.0,
-                                                          horizontal: 8.0),
+                                                      padding:
+                                                          EdgeInsets.symmetric(
+                                                              vertical: 12.0.w,
+                                                              horizontal:
+                                                                  8.0.h),
                                                       child: Column(
                                                         mainAxisAlignment:
                                                             MainAxisAlignment
@@ -277,7 +282,7 @@ class Home extends StatelessWidget {
                                                             style: TextStyle(
                                                               color:
                                                                   Colors.black,
-                                                              fontSize: 16,
+                                                              fontSize: 16.sp,
                                                               fontWeight:
                                                                   FontWeight
                                                                       .w400,
@@ -286,14 +291,14 @@ class Home extends StatelessWidget {
                                                           Container(
                                                             width: Get.width *
                                                                     0.7 -
-                                                                119,
+                                                                119.w,
                                                             child: Text(
                                                               '한강공원 술래잡기한강공원 술래잡기한강공원 술래잡기한강공원 술래잡기한강공원 술래잡기',
                                                               maxLines: 2,
                                                               style: TextStyle(
                                                                 color: Color(
                                                                     0xff7D7D7D),
-                                                                fontSize: 14,
+                                                                fontSize: 14.sp,
                                                                 fontWeight:
                                                                     FontWeight
                                                                         .w400,
@@ -330,18 +335,18 @@ class Home extends StatelessWidget {
                   decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(40),
+                      topLeft: Radius.circular(40.r),
                     ),
                   ),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Container(
-                        margin: EdgeInsets.only(top: 8.0, bottom: 24.0),
-                        height: 4,
-                        width: 48,
+                        margin: EdgeInsets.only(top: 8.0.h, bottom: 24.0.h),
+                        width: 48.w,
+                        height: 4.h,
                         decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(2.0),
+                          borderRadius: BorderRadius.circular(2.0.r),
                           color: Colors.grey,
                         ),
                       ),

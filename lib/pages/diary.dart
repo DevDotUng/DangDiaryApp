@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 class Diary extends StatelessWidget {
@@ -15,17 +16,17 @@ class Diary extends StatelessWidget {
           '일기장',
           style: TextStyle(
             color: Colors.black,
-            fontSize: 16,
+            fontSize: 16.sp,
             fontWeight: FontWeight.w400,
           ),
         ),
         actions: [
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 24.0),
+            padding: EdgeInsets.symmetric(horizontal: 24.0.w),
             child: Icon(
               Icons.calendar_month_outlined,
               color: Colors.black,
-              size: 21,
+              size: 21.r,
             ),
           ),
         ],
@@ -35,12 +36,12 @@ class Diary extends StatelessWidget {
         child: Column(
           children: [
             Container(
-              margin: EdgeInsets.symmetric(vertical: 8.0, horizontal: 24.0),
+              margin: EdgeInsets.symmetric(vertical: 8.0.h, horizontal: 24.0.w),
               width: double.infinity,
-              height: 72,
+              height: 72.h,
               decoration: BoxDecoration(
                 color: Colors.white,
-                borderRadius: BorderRadius.circular(11),
+                borderRadius: BorderRadius.circular(11.r),
                 boxShadow: [
                   BoxShadow(
                     color: Colors.black.withOpacity(0.15),
@@ -50,12 +51,12 @@ class Diary extends StatelessWidget {
               ),
               child: Row(
                 children: [
-                  SizedBox(width: 16),
+                  SizedBox(width: 16.w),
                   Container(
-                    width: 56,
-                    height: 56,
+                    width: 56.w,
+                    height: 56.h,
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(28.0),
+                      borderRadius: BorderRadius.circular(28.0.r),
                       boxShadow: [
                         BoxShadow(
                           color: Colors.black.withOpacity(0.1),
@@ -74,7 +75,7 @@ class Diary extends StatelessWidget {
                       ),
                     ),
                   ),
-                  SizedBox(width: 16),
+                  SizedBox(width: 16.w),
                   Column(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -83,39 +84,40 @@ class Diary extends StatelessWidget {
                         '초코와 일기를 시작한지 000일',
                         style: TextStyle(
                           color: Colors.black,
-                          fontSize: 14,
+                          fontSize: 14.sp,
                           fontWeight: FontWeight.w600,
                         ),
                       ),
-                      Row(
-                        children: [
-                          Text(
-                            '일기 000장',
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 12,
-                              fontWeight: FontWeight.w300,
+                      Container(
+                        width: Get.width - 152.w,
+                        child: Row(
+                          children: [
+                            Text(
+                              '일기 000장 ',
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 12.sp,
+                                fontWeight: FontWeight.w300,
+                              ),
                             ),
-                          ),
-                          SizedBox(width: 16),
-                          Text(
-                            '받은 도장 00개',
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 12,
-                              fontWeight: FontWeight.w300,
+                            Text(
+                              '받은 도장 00개 ',
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 12.sp,
+                                fontWeight: FontWeight.w300,
+                              ),
                             ),
-                          ),
-                          SizedBox(width: 16),
-                          Text(
-                            '총 좋아요 00개',
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 12,
-                              fontWeight: FontWeight.w300,
+                            Text(
+                              '총 좋아요 00개',
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 12.sp,
+                                fontWeight: FontWeight.w300,
+                              ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ],
                   ),
@@ -123,13 +125,13 @@ class Diary extends StatelessWidget {
               ),
             ),
             Container(
-              padding: EdgeInsets.symmetric(horizontal: 16.0),
-              margin: EdgeInsets.symmetric(vertical: 8.0, horizontal: 24.0),
+              padding: EdgeInsets.symmetric(horizontal: 16.0.w),
+              margin: EdgeInsets.symmetric(vertical: 8.0.h, horizontal: 24.0.w),
               width: double.infinity,
-              height: 52,
+              height: 52.h,
               decoration: BoxDecoration(
                 color: Colors.white,
-                borderRadius: BorderRadius.circular(11),
+                borderRadius: BorderRadius.circular(11.r),
                 boxShadow: [
                   BoxShadow(
                     color: Colors.black.withOpacity(0.15),
@@ -144,38 +146,38 @@ class Diary extends StatelessWidget {
                     '00개의 밀린 일기가 있어요!',
                     style: TextStyle(
                       color: Colors.black,
-                      fontSize: 14,
+                      fontSize: 14.sp,
                       fontWeight: FontWeight.w400,
                     ),
                   ),
-                  Icon(Icons.arrow_forward_ios_sharp, size: 16),
+                  Icon(Icons.arrow_forward_ios_sharp, size: 16.r),
                 ],
               ),
             ),
-            SizedBox(height: 8),
+            SizedBox(height: 8.h),
             Expanded(
               child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 24.0),
+                padding: EdgeInsets.symmetric(horizontal: 24.0.w),
                 child: GridView.builder(
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2,
-                    crossAxisSpacing: 7,
-                    mainAxisSpacing: 8,
-                    mainAxisExtent: 229,
+                    crossAxisSpacing: 7.w,
+                    mainAxisSpacing: 8.h,
+                    mainAxisExtent: 229.h,
                   ),
                   itemCount: 3,
                   itemBuilder: (context, index) {
                     return Stack(
                       children: [
                         Positioned(
-                          top: 16,
-                          left: 16,
+                          top: 16.h,
+                          left: 16.w,
                           child: Container(
-                            width: Get.width / 2 - 43.5,
-                            height: 213,
+                            width: Get.width / 2 - 43.5.w,
+                            height: 213.h,
                             decoration: BoxDecoration(
                               color: Color(0xffFDF393),
-                              borderRadius: BorderRadius.circular(10),
+                              borderRadius: BorderRadius.circular(10.r),
                               image: DecorationImage(
                                 image: AssetImage('assets/dog.png'),
                                 fit: BoxFit.cover,
@@ -184,14 +186,14 @@ class Diary extends StatelessWidget {
                           ),
                         ),
                         Positioned(
-                          top: 8,
-                          left: 8,
+                          top: 8.h,
+                          left: 8.w,
                           child: Container(
-                            width: Get.width / 2 - 43.5,
-                            height: 213,
+                            width: Get.width / 2 - 43.5.w,
+                            height: 213.h,
                             decoration: BoxDecoration(
                               color: Color(0xffFDF393),
-                              borderRadius: BorderRadius.circular(10),
+                              borderRadius: BorderRadius.circular(10.r),
                               image: DecorationImage(
                                 image: AssetImage('assets/dog2.png'),
                                 fit: BoxFit.cover,
@@ -203,18 +205,18 @@ class Diary extends StatelessWidget {
                           top: 0,
                           left: 0,
                           child: Container(
-                            padding: EdgeInsets.all(16.0),
-                            width: Get.width / 2 - 43.5,
-                            height: 213,
+                            padding: EdgeInsets.all(16.0.r),
+                            width: Get.width / 2 - 43.5.w,
+                            height: 213.h,
                             decoration: BoxDecoration(
                               color: Color(0xffFDF393),
-                              borderRadius: BorderRadius.circular(10),
+                              borderRadius: BorderRadius.circular(10.r),
                             ),
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Container(
-                                  width: Get.width / 2 - 43.5,
+                                  width: Get.width / 2 - 43.5.w,
                                   child: Column(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
@@ -223,16 +225,16 @@ class Diary extends StatelessWidget {
                                         '2022년 8월',
                                         style: TextStyle(
                                           color: Colors.black,
-                                          fontSize: 12,
+                                          fontSize: 12.sp,
                                           fontWeight: FontWeight.w400,
                                         ),
                                       ),
-                                      SizedBox(height: 8),
+                                      SizedBox(height: 8.h),
                                       Text(
                                         '초코와 여름.',
                                         style: TextStyle(
                                           color: Colors.black,
-                                          fontSize: 12,
+                                          fontSize: 12.sp,
                                           fontWeight: FontWeight.w600,
                                         ),
                                       ),
@@ -240,7 +242,7 @@ class Diary extends StatelessWidget {
                                   ),
                                 ),
                                 Container(
-                                  width: Get.width / 2 - 43.5,
+                                  width: Get.width / 2 - 43.5.w,
                                   child: Column(
                                     crossAxisAlignment: CrossAxisAlignment.end,
                                     children: [
@@ -250,26 +252,26 @@ class Diary extends StatelessWidget {
                                         children: [
                                           Icon(
                                             Icons.favorite,
-                                            size: 14,
+                                            size: 14.r,
                                             color: Color(0xffFF9900),
                                           ),
-                                          SizedBox(width: 4),
+                                          SizedBox(width: 4.w),
                                           Text(
                                             '000',
                                             style: TextStyle(
                                               color: Colors.black,
-                                              fontSize: 12,
+                                              fontSize: 12.sp,
                                               fontWeight: FontWeight.w400,
                                             ),
                                           ),
                                         ],
                                       ),
-                                      SizedBox(height: 8),
+                                      SizedBox(height: 8.h),
                                       Text(
                                         '19일의 이야기',
                                         style: TextStyle(
                                           color: Colors.black,
-                                          fontSize: 12,
+                                          fontSize: 12.sp,
                                           fontWeight: FontWeight.w400,
                                         ),
                                       ),

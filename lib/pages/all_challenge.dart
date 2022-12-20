@@ -1,5 +1,7 @@
 import 'package:dangdiarysample/controllers/all_challenge_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 class AllChallenge extends StatelessWidget {
@@ -20,7 +22,7 @@ class AllChallenge extends StatelessWidget {
             },
             child: Icon(
               Icons.arrow_back,
-              size: 32,
+              size: 32.r,
               color: Colors.black,
             ),
           ),
@@ -29,13 +31,13 @@ class AllChallenge extends StatelessWidget {
             '모든 챌린지 리스트',
             style: TextStyle(
               color: Colors.black,
-              fontSize: 16,
+              fontSize: 16.sp,
               fontWeight: FontWeight.w400,
             ),
           ),
         ),
         body: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 24),
+          padding: EdgeInsets.symmetric(horizontal: 24.w),
           color: Colors.white,
           child: Column(
             children: [
@@ -45,56 +47,50 @@ class AllChallenge extends StatelessWidget {
                     : _overduedDiary(),
               ),
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Row(
                     children: [
-                      Icon(Icons.padding, size: 24),
-                      SizedBox(width: 4),
+                      Icon(Icons.padding, size: 24.r),
+                      SizedBox(width: 4.w),
                       Text(
                         '모든 챌린지 리스트',
                         style: TextStyle(
                           color: Colors.black,
-                          fontSize: 16,
+                          fontSize: 16.sp,
                           fontWeight: FontWeight.w600,
                         ),
                       ),
                     ],
                   ),
-                  GestureDetector(
-                    onTap: () {
-                      AllChallengeController.to.search();
-                    },
-                    child: Icon(Icons.search, size: 24),
-                  ),
                 ],
               ),
-              Obx(() => _searchBar()),
-              Divider(color: Color(0xffEBEBEB), thickness: 1),
+              SizedBox(height: 8.h),
+              Divider(color: Color(0xffEBEBEB), thickness: 1.h),
               Container(
                 width: double.infinity,
-                height: 24,
+                height: 24.h,
                 child: ListView.builder(
                   scrollDirection: Axis.horizontal,
                   itemCount: AllChallengeController.to.categoryList.length,
                   itemBuilder: (context, index) {
                     return Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 5.5),
+                      padding: EdgeInsets.symmetric(horizontal: 5.5.w),
                       child: Obx(
                         () => GestureDetector(
                           onTap: () {
                             AllChallengeController.to.changeCategory(index);
                           },
                           child: Container(
-                            padding: const EdgeInsets.symmetric(horizontal: 11),
-                            height: 24,
+                            padding: EdgeInsets.symmetric(horizontal: 11.w),
+                            height: 24.h,
                             decoration: BoxDecoration(
                               color: index ==
                                       AllChallengeController
                                           .to.selectedCategory.value
                                   ? Color(0xffA6A6A6)
                                   : Colors.transparent,
-                              borderRadius: BorderRadius.circular(10),
+                              borderRadius: BorderRadius.circular(10.r),
                             ),
                             child: Center(
                               child: Text(
@@ -105,7 +101,7 @@ class AllChallenge extends StatelessWidget {
                                               .to.selectedCategory.value
                                       ? Colors.white
                                       : Color(0xffB6B6B6),
-                                  fontSize: 14,
+                                  fontSize: 14.sp,
                                   fontWeight: FontWeight.w600,
                                 ),
                               ),
@@ -117,39 +113,41 @@ class AllChallenge extends StatelessWidget {
                   },
                 ),
               ),
-              Divider(color: Color(0xffEBEBEB), thickness: 1),
+              SizedBox(height: 8.h),
+              Divider(color: Color(0xffEBEBEB), height: 0, thickness: 1.h),
+              _searchBar(),
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   Container(
-                    width: 16,
-                    height: 16,
+                    width: 16.w,
+                    height: 16.h,
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(8),
+                      borderRadius: BorderRadius.circular(8.r),
                       border: Border.all(
                         color: Color(0xff7D7D7D7),
                       ),
                     ),
                   ),
-                  SizedBox(width: 4),
+                  SizedBox(width: 4.w),
                   Text(
                     '미달성 챌린지만 볼래요',
                     style: TextStyle(
                       color: Color(0xff7D7D7D),
-                      fontSize: 12,
+                      fontSize: 12.sp,
                       fontWeight: FontWeight.w400,
                     ),
                   ),
                 ],
               ),
-              SizedBox(height: 8),
+              SizedBox(height: 8.h),
               Expanded(
                 child: GridView.builder(
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2,
-                    crossAxisSpacing: 7,
-                    mainAxisSpacing: 8,
-                    mainAxisExtent: 174,
+                    crossAxisSpacing: 7.w,
+                    mainAxisSpacing: 8.h,
+                    mainAxisExtent: 174.h,
                   ),
                   itemCount: 10,
                   itemBuilder: (context, index) {
@@ -163,7 +161,7 @@ class AllChallenge extends StatelessWidget {
                           Expanded(
                             child: Container(
                               decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
+                                borderRadius: BorderRadius.circular(10.r),
                                 image: DecorationImage(
                                   image: AssetImage('assets/dog.png'),
                                   fit: BoxFit.cover,
@@ -171,12 +169,12 @@ class AllChallenge extends StatelessWidget {
                               ),
                             ),
                           ),
-                          SizedBox(height: 4),
+                          SizedBox(height: 4.h),
                           Text(
                             '챌린지 이름 챌린지\n이름 챌린지',
                             style: TextStyle(
                               color: Color(0xff7D7D7D),
-                              fontSize: 14,
+                              fontSize: 14.sp,
                               fontWeight: FontWeight.w400,
                             ),
                           ),
@@ -194,58 +192,58 @@ class AllChallenge extends StatelessWidget {
   }
 
   Widget _searchBar() {
-    return AllChallengeController.to.isSearch.value
-        ? Column(
-            children: [
-              SizedBox(height: 8),
-              Container(
-                height: 40,
-                decoration: BoxDecoration(
-                  color: Color(0xffEDEDED),
-                  borderRadius: BorderRadius.circular(5),
+    return Padding(
+      padding: EdgeInsets.only(top: 4.0.h, bottom: 7.h),
+      child: Column(
+        children: [
+          Container(
+            height: 40.h,
+            decoration: BoxDecoration(
+              color: Color(0xffEDEDED),
+              borderRadius: BorderRadius.circular(5.r),
+            ),
+            child: TextField(
+              cursorColor: Color(0xff202020),
+              cursorWidth: 1.w,
+              maxLines: 1,
+              style: TextStyle(
+                color: Color(0xff0A0A0A),
+                fontSize: 14.sp,
+                fontWeight: FontWeight.w400,
+              ),
+              decoration: InputDecoration(
+                hintText: '어떤 챌린지를 찾아볼까요?',
+                hintStyle: TextStyle(
+                  color: Color(0xffA6A6A6),
+                  fontSize: 14.sp,
+                  fontWeight: FontWeight.w400,
                 ),
-                child: TextField(
-                  cursorColor: Color(0xff202020),
-                  cursorWidth: 1,
-                  maxLines: 1,
-                  style: TextStyle(
-                    color: Color(0xff0A0A0A),
-                    fontSize: 14,
-                    fontWeight: FontWeight.w400,
+                contentPadding: EdgeInsets.only(left: 8.0.w),
+                suffixIcon: Icon(
+                  Icons.search,
+                  size: 24.r,
+                  color: Colors.black,
+                ),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(5.r),
+                  borderSide: BorderSide(
+                    width: 0.0,
+                    style: BorderStyle.none,
                   ),
-                  decoration: InputDecoration(
-                    hintText: '어떤 챌린지를 찾아볼까요?',
-                    hintStyle: TextStyle(
-                      color: Color(0xffA6A6A6),
-                      fontSize: 14,
-                      fontWeight: FontWeight.w400,
-                    ),
-                    contentPadding: EdgeInsets.only(left: 8.0),
-                    suffixIcon: Icon(
-                      Icons.search,
-                      size: 24,
-                      color: Colors.black,
-                    ),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(5),
-                      borderSide: BorderSide(
-                        width: 0.0,
-                        style: BorderStyle.none,
-                      ),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(5),
-                      borderSide: BorderSide(
-                        width: 0.0,
-                        style: BorderStyle.none,
-                      ),
-                    ),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(5.r),
+                  borderSide: BorderSide(
+                    width: 0.0,
+                    style: BorderStyle.none,
                   ),
                 ),
               ),
-            ],
-          )
-        : Container();
+            ),
+          ),
+        ],
+      ),
+    );
   }
 
   Widget _overduedDiary() {
@@ -253,44 +251,44 @@ class AllChallenge extends StatelessWidget {
       children: [
         Row(
           children: [
-            Icon(Icons.collections_bookmark, size: 24),
-            SizedBox(width: 4),
+            Icon(Icons.collections_bookmark, size: 24.r),
+            SizedBox(width: 4.w),
             Text(
               '밀린 일기',
               style: TextStyle(
                 color: Colors.black,
-                fontSize: 16,
+                fontSize: 16.sp,
                 fontWeight: FontWeight.w600,
               ),
             ),
-            SizedBox(width: 4),
+            SizedBox(width: 4.w),
             Text(
               '3',
               style: TextStyle(
                 color: Color(0xffFF9900),
-                fontSize: 16,
+                fontSize: 16.sp,
                 fontWeight: FontWeight.w600,
               ),
             ),
           ],
         ),
-        SizedBox(height: 8),
+        SizedBox(height: 8.w),
         Container(
-          height: 104,
+          height: 104.h,
           child: ListView.builder(
             scrollDirection: Axis.horizontal,
             itemCount: 3,
             itemBuilder: (context, index) {
               return Padding(
-                padding: const EdgeInsets.only(
-                    top: 4, bottom: 4, left: 4, right: 16),
+                padding: EdgeInsets.only(
+                    top: 4.h, bottom: 4.h, left: 4.w, right: 16.w),
                 child: Container(
-                  padding: EdgeInsets.all(12),
-                  width: 310,
-                  height: 104,
+                  padding: EdgeInsets.all(12.r),
+                  width: 310.w,
+                  height: 104.h,
                   decoration: BoxDecoration(
                     color: Colors.white,
-                    borderRadius: BorderRadius.circular(10),
+                    borderRadius: BorderRadius.circular(10.r),
                     boxShadow: [
                       BoxShadow(
                         color: Colors.black.withOpacity(0.15),
@@ -301,17 +299,17 @@ class AllChallenge extends StatelessWidget {
                   child: Row(
                     children: [
                       Container(
-                        width: 87,
-                        height: 80,
+                        width: 87.w,
+                        height: 80.h,
                         decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(7),
+                          borderRadius: BorderRadius.circular(7.r),
                           image: DecorationImage(
                             image: AssetImage('assets/dog.png'),
                             fit: BoxFit.cover,
                           ),
                         ),
                       ),
-                      SizedBox(width: 8),
+                      SizedBox(width: 8.w),
                       Column(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -320,7 +318,7 @@ class AllChallenge extends StatelessWidget {
                             '한강공원 술래잡기',
                             style: TextStyle(
                               color: Colors.black,
-                              fontSize: 16,
+                              fontSize: 16.sp,
                               fontWeight: FontWeight.w400,
                             ),
                           ),
@@ -328,7 +326,7 @@ class AllChallenge extends StatelessWidget {
                             '2022.09.01에 했어요',
                             style: TextStyle(
                               color: Color(0xff7D7D7D),
-                              fontSize: 14,
+                              fontSize: 14.sp,
                               fontWeight: FontWeight.w400,
                             ),
                           ),
@@ -341,7 +339,7 @@ class AllChallenge extends StatelessWidget {
                                     '임시 저장된 일기쓰기 ',
                                     style: TextStyle(
                                       color: Color(0xff7D7D7D),
-                                      fontSize: 12,
+                                      fontSize: 12.sp,
                                       fontWeight: FontWeight.w400,
                                     ),
                                   ),
@@ -349,32 +347,33 @@ class AllChallenge extends StatelessWidget {
                                     '30%',
                                     style: TextStyle(
                                       color: Color(0xffFF9900),
-                                      fontSize: 12,
+                                      fontSize: 12.sp,
                                       fontWeight: FontWeight.w400,
                                     ),
                                   ),
                                 ],
                               ),
-                              SizedBox(height: 4),
+                              SizedBox(height: 4.h),
                               Stack(
                                 children: [
                                   Container(
-                                    width: 190,
-                                    height: 8,
+                                    width: 190.w,
+                                    height: 8.h,
                                     decoration: BoxDecoration(
                                       color: Color(0xffD9D9D9),
-                                      borderRadius: BorderRadius.circular(4),
+                                      borderRadius: BorderRadius.circular(4.r),
                                     ),
                                   ),
                                   Positioned(
                                     top: 0,
                                     left: 0,
                                     child: Container(
-                                      width: 190 / 100 * 30,
-                                      height: 8,
+                                      width: (190 / 100 * 30).w,
+                                      height: 8.h,
                                       decoration: BoxDecoration(
                                         color: Color(0xffFF9900),
-                                        borderRadius: BorderRadius.circular(4),
+                                        borderRadius:
+                                            BorderRadius.circular(4.r),
                                       ),
                                     ),
                                   ),
@@ -391,7 +390,7 @@ class AllChallenge extends StatelessWidget {
             },
           ),
         ),
-        SizedBox(height: 32),
+        SizedBox(height: 32.h),
       ],
     );
   }

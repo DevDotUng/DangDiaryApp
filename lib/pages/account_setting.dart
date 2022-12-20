@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 class AccountSetting extends StatelessWidget {
@@ -16,7 +17,7 @@ class AccountSetting extends StatelessWidget {
           },
           child: Icon(
             Icons.arrow_back,
-            size: 32,
+            size: 32.r,
             color: Colors.black,
           ),
         ),
@@ -25,23 +26,23 @@ class AccountSetting extends StatelessWidget {
           '계정 관리',
           style: TextStyle(
             color: Colors.black,
-            fontSize: 16,
+            fontSize: 16.sp,
             fontWeight: FontWeight.w400,
           ),
         ),
       ),
       body: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 24.0),
+        padding: EdgeInsets.symmetric(horizontal: 24.0.w),
         color: Colors.white,
         child: Column(
           children: [
             Container(
-              padding: const EdgeInsets.only(left: 16, right: 32),
+              padding: EdgeInsets.only(left: 16.w, right: 32.w),
               width: double.infinity,
-              height: 36,
+              height: 36.h,
               decoration: BoxDecoration(
                 color: Color(0xffF5F5F5),
-                borderRadius: BorderRadius.circular(15),
+                borderRadius: BorderRadius.circular(15.r),
               ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -50,7 +51,7 @@ class AccountSetting extends StatelessWidget {
                     '사용자명',
                     style: TextStyle(
                       color: Color(0xff545454),
-                      fontSize: 14,
+                      fontSize: 14.sp,
                       fontWeight: FontWeight.w600,
                     ),
                   ),
@@ -58,21 +59,21 @@ class AccountSetting extends StatelessWidget {
                     '오또캐드',
                     style: TextStyle(
                       color: Color(0xff545454),
-                      fontSize: 14,
+                      fontSize: 14.sp,
                       fontWeight: FontWeight.w600,
                     ),
                   ),
                 ],
               ),
             ),
-            SizedBox(height: 9),
+            SizedBox(height: 9.h),
             Container(
-              padding: const EdgeInsets.only(left: 24, right: 24),
+              padding: EdgeInsets.only(left: 24.w, right: 24.w),
               width: double.infinity,
-              height: 36,
+              height: 36.h,
               decoration: BoxDecoration(
                 color: Color(0xffF5F5F5),
-                borderRadius: BorderRadius.circular(15),
+                borderRadius: BorderRadius.circular(15.r),
               ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -81,7 +82,7 @@ class AccountSetting extends StatelessWidget {
                     '아이디',
                     style: TextStyle(
                       color: Color(0xff545454),
-                      fontSize: 14,
+                      fontSize: 14.sp,
                       fontWeight: FontWeight.w600,
                     ),
                   ),
@@ -89,39 +90,39 @@ class AccountSetting extends StatelessWidget {
                     'asdalk821',
                     style: TextStyle(
                       color: Color(0xff545454),
-                      fontSize: 14,
+                      fontSize: 14.sp,
                       fontWeight: FontWeight.w600,
                     ),
                   ),
                 ],
               ),
             ),
-            SizedBox(height: 9),
+            SizedBox(height: 9.h),
             Container(
               width: double.infinity,
-              height: 78,
+              height: 78.h,
               decoration: BoxDecoration(
                 color: Color(0xffF5F5F5),
-                borderRadius: BorderRadius.circular(15),
+                borderRadius: BorderRadius.circular(15.r),
               ),
               child: Center(
                 child: Text(
                   '카카오톡계정 정보',
                   style: TextStyle(
                     color: Color(0xff545454),
-                    fontSize: 14,
+                    fontSize: 14.sp,
                     fontWeight: FontWeight.w600,
                   ),
                 ),
               ),
             ),
-            SizedBox(height: 15),
+            SizedBox(height: 15.h),
             Container(
               width: double.infinity,
-              height: 48,
+              height: 48.h,
               decoration: BoxDecoration(
                 color: Colors.white,
-                borderRadius: BorderRadius.circular(10),
+                borderRadius: BorderRadius.circular(10.r),
                 border: Border.all(
                   color: Color(0xffF02E2E),
                 ),
@@ -131,19 +132,19 @@ class AccountSetting extends StatelessWidget {
                   '로그아웃',
                   style: TextStyle(
                     color: Color(0xffF02E2E),
-                    fontSize: 14,
+                    fontSize: 14.sp,
                     fontWeight: FontWeight.w600,
                   ),
                 ),
               ),
             ),
-            SizedBox(height: 9),
+            SizedBox(height: 9.h),
             Container(
               width: double.infinity,
-              height: 48,
+              height: 48.h,
               decoration: BoxDecoration(
                 color: Colors.white,
-                borderRadius: BorderRadius.circular(10),
+                borderRadius: BorderRadius.circular(10.r),
                 border: Border.all(
                   color: Color(0xffF02E2E),
                 ),
@@ -153,7 +154,7 @@ class AccountSetting extends StatelessWidget {
                   '아쉽지만 탈퇴할래요!',
                   style: TextStyle(
                     color: Color(0xffF02E2E),
-                    fontSize: 14,
+                    fontSize: 14.sp,
                     fontWeight: FontWeight.w600,
                   ),
                 ),

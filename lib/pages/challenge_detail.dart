@@ -3,6 +3,7 @@ import 'package:dangdiarysample/controllers/challenge_detail_controller.dart';
 import 'package:dangdiarysample/skeletons/challenge_detail_skeleton.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 class ChallengeDetail extends StatelessWidget {
@@ -14,15 +15,15 @@ class ChallengeDetail extends StatelessWidget {
       builder: (BuildContext context) {
         return Dialog(
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(15),
+            borderRadius: BorderRadius.circular(15.r),
           ),
-          insetPadding: EdgeInsets.all(24.0),
+          insetPadding: EdgeInsets.all(24.0.r),
           child: Container(
-            padding: EdgeInsets.all(24.0),
+            padding: EdgeInsets.all(24.0.r),
             width: double.infinity,
-            height: 395,
+            height: 395.h,
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(15),
+              borderRadius: BorderRadius.circular(15.r),
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -34,60 +35,60 @@ class ChallengeDetail extends StatelessWidget {
                       '잘했어요!\n이제 일기를 쓰러 가볼까요?',
                       style: TextStyle(
                         color: Colors.black,
-                        fontSize: 20,
+                        fontSize: 20.sp,
                         fontWeight: FontWeight.w600,
                       ),
                     ),
                   ],
                 ),
-                SizedBox(height: 24),
+                SizedBox(height: 24.h),
                 Container(
-                  width: 130,
-                  height: 130,
+                  width: 130.w,
+                  height: 130.h,
                   decoration: BoxDecoration(
                     color: Colors.grey,
-                    borderRadius: BorderRadius.circular(65.0),
+                    borderRadius: BorderRadius.circular(65.0.r),
                   ),
                 ),
-                SizedBox(height: 16),
+                SizedBox(height: 16.h),
                 Text(
                   '일기를 쓰면 이 칭찬스티커를 받을 수 있어요!',
                   style: TextStyle(
                     color: Color(0xff7D7D7D),
-                    fontSize: 14,
+                    fontSize: 14.sp,
                     fontWeight: FontWeight.w400,
                   ),
                 ),
-                SizedBox(height: 29),
+                SizedBox(height: 29.h),
                 GestureDetector(
                   onTap: () {
                     Navigator.pop(context);
                     Get.toNamed('/writeDiary');
                   },
                   child: Container(
-                    height: 48,
+                    height: 48.h,
                     decoration: BoxDecoration(
                       color: Color(0xff7D7D7D),
-                      borderRadius: BorderRadius.circular(10.0),
+                      borderRadius: BorderRadius.circular(10.0.r),
                     ),
                     child: Center(
                       child: Text(
                         '일기를 쓰러 갈래요',
                         style: TextStyle(
                           color: Colors.white,
-                          fontSize: 16,
+                          fontSize: 16.sp,
                           fontWeight: FontWeight.w600,
                         ),
                       ),
                     ),
                   ),
                 ),
-                SizedBox(height: 8),
+                SizedBox(height: 8.h),
                 Text(
                   '일기는 다음에 쓸게요',
                   style: TextStyle(
                     color: Color(0xff6B6B6B),
-                    fontSize: 12,
+                    fontSize: 12.sp,
                     fontWeight: FontWeight.w400,
                     decoration: TextDecoration.underline,
                   ),
@@ -136,8 +137,8 @@ class ChallengeDetail extends StatelessWidget {
                 child: Obx(
                   () => Icon(
                     Icons.arrow_back,
-                    size: 32,
-                    color: ChallengeDetailController.to.scrollPosition > 150
+                    size: 32.r,
+                    color: ChallengeDetailController.to.scrollPosition > 150.h
                         ? Colors.black
                         : Colors.white,
                   ),
@@ -146,7 +147,7 @@ class ChallengeDetail extends StatelessWidget {
               backgroundColor: Colors.white,
               elevation: 0.0,
               pinned: true,
-              expandedHeight: 228,
+              expandedHeight: 228.h,
               primary: true,
               flexibleSpace: Stack(
                 children: [
@@ -161,7 +162,7 @@ class ChallengeDetail extends StatelessWidget {
                     ),
                   ),
                   SizedBox(
-                    height: 70,
+                    height: 70.h,
                     child: FlexibleSpaceBar(
                       collapseMode: CollapseMode.none,
                       background: Container(
@@ -177,22 +178,22 @@ class ChallengeDetail extends StatelessWidget {
                     ),
                   ),
                   Positioned(
-                    bottom: 0,
+                    bottom: -2.h,
                     left: 0,
                     right: 0,
                     child: Obx(
                       () => AnimatedOpacity(
                         opacity:
-                            ChallengeDetailController.to.scrollPosition > 150
+                            ChallengeDetailController.to.scrollPosition > 150.h
                                 ? 0
                                 : 1,
                         duration: Duration(milliseconds: 200),
                         child: Container(
-                          height: 32,
-                          decoration: const BoxDecoration(
+                          height: 34.h,
+                          decoration: BoxDecoration(
                             color: Colors.white,
                             borderRadius: BorderRadius.vertical(
-                              top: Radius.circular(20),
+                              top: Radius.circular(20.r),
                             ),
                           ),
                         ),
@@ -203,7 +204,7 @@ class ChallengeDetail extends StatelessWidget {
               ),
             ),
             SliverPadding(
-              padding: EdgeInsets.symmetric(horizontal: 24),
+              padding: EdgeInsets.symmetric(horizontal: 24.w),
               sliver: SliverList(
                 delegate: SliverChildListDelegate(
                   [
@@ -211,11 +212,11 @@ class ChallengeDetail extends StatelessWidget {
                       '한강공원 술래잡기',
                       style: TextStyle(
                         color: Colors.black,
-                        fontSize: 24,
+                        fontSize: 24.sp,
                         fontWeight: FontWeight.w600,
                       ),
                     ),
-                    SizedBox(height: 16),
+                    SizedBox(height: 16.h),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -225,15 +226,15 @@ class ChallengeDetail extends StatelessWidget {
                               '총 00회 진행',
                               style: TextStyle(
                                 color: Colors.black,
-                                fontSize: 16,
+                                fontSize: 16.sp,
                                 fontWeight: FontWeight.w600,
                               ),
                             ),
                             Padding(
-                              padding: EdgeInsets.symmetric(horizontal: 8.0),
+                              padding: EdgeInsets.symmetric(horizontal: 8.0.w),
                               child: Container(
-                                width: 2,
-                                height: 20,
+                                width: 2.w,
+                                height: 20.h,
                                 color: Colors.black,
                               ),
                             ),
@@ -241,18 +242,18 @@ class ChallengeDetail extends StatelessWidget {
                               '총 00회 진행',
                               style: TextStyle(
                                 color: Colors.black,
-                                fontSize: 16,
+                                fontSize: 16.sp,
                                 fontWeight: FontWeight.w600,
                               ),
                             ),
                           ],
                         ),
                         Container(
-                          width: 104,
-                          height: 32,
+                          width: 104.w,
+                          height: 32.h,
                           decoration: BoxDecoration(
                             color: Colors.black,
-                            borderRadius: BorderRadius.circular(16),
+                            borderRadius: BorderRadius.circular(16.r),
                           ),
                           child: Center(
                             child: Row(
@@ -260,15 +261,15 @@ class ChallengeDetail extends StatelessWidget {
                               children: [
                                 Icon(
                                   Icons.share,
-                                  size: 16,
+                                  size: 16.r,
                                   color: Colors.white,
                                 ),
-                                SizedBox(width: 8),
+                                SizedBox(width: 8.w),
                                 Text(
                                   '챌린지 공유',
                                   style: TextStyle(
                                     color: Colors.white,
-                                    fontSize: 12,
+                                    fontSize: 12.sp,
                                     fontWeight: FontWeight.w400,
                                   ),
                                 ),
@@ -278,7 +279,7 @@ class ChallengeDetail extends StatelessWidget {
                         ),
                       ],
                     ),
-                    SizedBox(height: 24),
+                    SizedBox(height: 24.h),
                     AnimatedSize(
                       duration: Duration(milliseconds: 500),
                       curve: Curves.fastOutSlowIn,
@@ -290,14 +291,14 @@ class ChallengeDetail extends StatelessWidget {
                               : 4,
                           style: TextStyle(
                             color: Color(0xff7D7D7D),
-                            fontSize: 16,
+                            fontSize: 16.sp,
                             fontWeight: FontWeight.w400,
                             overflow: TextOverflow.ellipsis,
                           ),
                         ),
                       ),
                     ),
-                    SizedBox(height: 16),
+                    SizedBox(height: 16.h),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -316,7 +317,7 @@ class ChallengeDetail extends StatelessWidget {
                                           : 0.0,
                                   child: Icon(
                                     Icons.arrow_drop_down_outlined,
-                                    size: 24,
+                                    size: 24.r,
                                   ),
                                 ),
                               ),
@@ -324,7 +325,7 @@ class ChallengeDetail extends StatelessWidget {
                                 '더보기',
                                 style: TextStyle(
                                   color: Colors.black,
-                                  fontSize: 14,
+                                  fontSize: 14.sp,
                                   fontWeight: FontWeight.w400,
                                 ),
                               ),
@@ -333,17 +334,17 @@ class ChallengeDetail extends StatelessWidget {
                         ),
                       ],
                     ),
-                    SizedBox(height: 24),
+                    SizedBox(height: 24.h),
                     Container(
-                      padding:
-                          EdgeInsets.symmetric(vertical: 12, horizontal: 16),
-                      width: 327,
-                      height: 116,
+                      padding: EdgeInsets.symmetric(
+                          vertical: 12.h, horizontal: 16.w),
+                      width: 327.w,
+                      height: 116.h,
                       decoration: BoxDecoration(
                         border: Border.all(
                           color: Color(0xffA6A6A6),
                         ),
-                        borderRadius: BorderRadius.circular(15.0),
+                        borderRadius: BorderRadius.circular(15.0.r),
                       ),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -352,26 +353,26 @@ class ChallengeDetail extends StatelessWidget {
                             '인증 방법',
                             style: TextStyle(
                               color: Colors.black,
-                              fontSize: 16,
+                              fontSize: 16.sp,
                               fontWeight: FontWeight.w600,
                             ),
                           ),
-                          SizedBox(height: 4),
+                          SizedBox(height: 4.h),
                           Row(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Icon(
                                 Icons.rocket_launch_sharp,
-                                size: 16,
+                                size: 16.r,
                               ),
-                              SizedBox(width: 4),
+                              SizedBox(width: 4.w),
                               Container(
-                                width: Get.width - 102,
+                                width: Get.width - 102.w,
                                 child: Text(
                                   '인증 방법 설명 인증 방법 설명 인증 방법 설명 인증 방법 설명 인증 방법 설명 인증 방법 설명 인증 방법 설명 인증 방법 설명',
                                   style: TextStyle(
                                     color: Colors.black,
-                                    fontSize: 14,
+                                    fontSize: 14.sp,
                                     fontWeight: FontWeight.w400,
                                     overflow: TextOverflow.ellipsis,
                                   ),
@@ -383,7 +384,7 @@ class ChallengeDetail extends StatelessWidget {
                         ],
                       ),
                     ),
-                    SizedBox(height: 36),
+                    SizedBox(height: 36.h),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -391,32 +392,32 @@ class ChallengeDetail extends StatelessWidget {
                           '다른 아이들은 이렇게 했어요!',
                           style: TextStyle(
                             color: Colors.black,
-                            fontSize: 16,
+                            fontSize: 16.sp,
                             fontWeight: FontWeight.w600,
                           ),
                         ),
                         Icon(Icons.menu),
                       ],
                     ),
-                    SizedBox(height: 4),
+                    SizedBox(height: 4.h),
                     Container(
-                      height: 104,
+                      height: 104.h,
                       child: ListView.builder(
                         scrollDirection: Axis.horizontal,
                         itemCount: 10,
                         itemBuilder: (BuildContext context, int index) {
                           return Padding(
-                            padding: const EdgeInsets.only(right: 8.0),
+                            padding: EdgeInsets.only(right: 8.0.w),
                             child: GestureDetector(
                               onTap: () {
                                 Get.toNamed("/post");
                               },
                               child: Container(
-                                width: 104,
-                                height: 104,
+                                width: 104.w,
+                                height: 104.h,
                                 decoration: BoxDecoration(
                                   color: Colors.grey,
-                                  borderRadius: BorderRadius.circular(10.0),
+                                  borderRadius: BorderRadius.circular(10.0.r),
                                 ),
                               ),
                             ),
@@ -424,7 +425,7 @@ class ChallengeDetail extends StatelessWidget {
                         },
                       ),
                     ),
-                    SizedBox(height: 49),
+                    SizedBox(height: 49.h),
                     Obx(
                       () => ChallengeDetailController.to.isChallenge.value
                           ? Row(
@@ -436,11 +437,11 @@ class ChallengeDetail extends StatelessWidget {
                                       _showLaterDialog(context);
                                     },
                                     child: Container(
-                                      height: 48,
+                                      height: 48.h,
                                       decoration: BoxDecoration(
                                         color: Colors.white,
                                         borderRadius:
-                                            BorderRadius.circular(10.0),
+                                            BorderRadius.circular(10.0.r),
                                         border: Border.all(
                                           color: Color(0xffA6A6A6),
                                         ),
@@ -450,7 +451,7 @@ class ChallengeDetail extends StatelessWidget {
                                           '다음에 다시 할게요',
                                           style: TextStyle(
                                             color: Color(0xffA6A6A6),
-                                            fontSize: 16,
+                                            fontSize: 16.sp,
                                             fontWeight: FontWeight.w600,
                                           ),
                                         ),
@@ -458,25 +459,25 @@ class ChallengeDetail extends StatelessWidget {
                                     ),
                                   ),
                                 ),
-                                SizedBox(width: 8),
+                                SizedBox(width: 8.w),
                                 Flexible(
                                   child: GestureDetector(
                                     onTap: () {
                                       _showDoneDialog(context);
                                     },
                                     child: Container(
-                                      height: 48,
+                                      height: 48.h,
                                       decoration: BoxDecoration(
                                         color: Color(0xff7D7D7D),
                                         borderRadius:
-                                            BorderRadius.circular(10.0),
+                                            BorderRadius.circular(10.0.r),
                                       ),
                                       child: Center(
                                         child: Text(
                                           '다했어요!',
                                           style: TextStyle(
                                             color: Colors.white,
-                                            fontSize: 16,
+                                            fontSize: 16.sp,
                                             fontWeight: FontWeight.w600,
                                           ),
                                         ),
@@ -492,17 +493,17 @@ class ChallengeDetail extends StatelessWidget {
                                     .setIsChallenge(true);
                               },
                               child: Container(
-                                height: 48,
+                                height: 48.h,
                                 decoration: BoxDecoration(
                                   color: Color(0xff7D7D7D),
-                                  borderRadius: BorderRadius.circular(10.0),
+                                  borderRadius: BorderRadius.circular(10.0.r),
                                 ),
                                 child: Center(
                                   child: Text(
                                     '도전할래요',
                                     style: TextStyle(
                                       color: Colors.white,
-                                      fontSize: 16,
+                                      fontSize: 16.sp,
                                       fontWeight: FontWeight.w600,
                                     ),
                                   ),
@@ -510,7 +511,7 @@ class ChallengeDetail extends StatelessWidget {
                               ),
                             ),
                     ),
-                    SizedBox(height: 32),
+                    SizedBox(height: 32.h),
                   ],
                 ),
               ),

@@ -1,6 +1,7 @@
 import 'package:dangdiarysample/controllers/search_controller.dart';
 import 'package:dangdiarysample/skeletons/search_skeleton.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 class Search extends StatelessWidget {
@@ -29,13 +30,13 @@ class Search extends StatelessWidget {
             '둘러보기',
             style: TextStyle(
               color: Colors.black,
-              fontSize: 16,
+              fontSize: 16.sp,
               fontWeight: FontWeight.w400,
             ),
           ),
         ),
         body: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 24),
+          padding: EdgeInsets.symmetric(horizontal: 24.w),
           color: Colors.white,
           child: Column(
             children: [
@@ -43,10 +44,10 @@ class Search extends StatelessWidget {
                 children: [
                   Expanded(
                     child: Container(
-                      height: 40,
+                      height: 40.h,
                       decoration: BoxDecoration(
                         color: Color(0xffEDEDED),
-                        borderRadius: BorderRadius.circular(5),
+                        borderRadius: BorderRadius.circular(5.r),
                       ),
                       child: Focus(
                         onFocusChange: (isFocus) {
@@ -56,35 +57,36 @@ class Search extends StatelessWidget {
                         },
                         child: TextField(
                           cursorColor: Color(0xff202020),
-                          cursorWidth: 1,
+                          cursorWidth: 1.w,
                           maxLines: 1,
                           style: TextStyle(
                             color: Color(0xff0A0A0A),
-                            fontSize: 14,
+                            fontSize: 14.sp,
                             fontWeight: FontWeight.w400,
                           ),
                           decoration: InputDecoration(
                             hintText: '어떤 이야기를 찾아볼까요?',
                             hintStyle: TextStyle(
                               color: Color(0xffA6A6A6),
-                              fontSize: 14,
+                              fontSize: 14.sp,
                               fontWeight: FontWeight.w400,
                             ),
-                            contentPadding: EdgeInsets.only(left: 8.0),
+                            contentPadding:
+                                EdgeInsets.only(left: 8.0.w, top: 24.h),
                             suffixIcon: Icon(
                               Icons.search,
-                              size: 16,
+                              size: 16.r,
                               color: Colors.black,
                             ),
                             border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(5),
+                              borderRadius: BorderRadius.circular(5.r),
                               borderSide: BorderSide(
                                 width: 0.0,
                                 style: BorderStyle.none,
                               ),
                             ),
                             focusedBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(5),
+                              borderRadius: BorderRadius.circular(5.r),
                               borderSide: BorderSide(
                                 width: 0.0,
                                 style: BorderStyle.none,
@@ -98,17 +100,17 @@ class Search extends StatelessWidget {
                   Obx(
                     () => SearchController.to.isFocus.value
                         ? Padding(
-                            padding: const EdgeInsets.only(left: 12.0),
+                            padding: EdgeInsets.only(left: 12.0.w),
                             child: GestureDetector(
                               onTap: () {
                                 SearchController.to.changeFocus(false);
                                 FocusScope.of(context).unfocus();
                               },
                               child: Container(
-                                width: 16,
-                                height: 16,
+                                width: 16.w,
+                                height: 16.h,
                                 child: Center(
-                                  child: Icon(Icons.clear, size: 15),
+                                  child: Icon(Icons.clear, size: 15.r),
                                 ),
                               ),
                             ),
@@ -117,7 +119,7 @@ class Search extends StatelessWidget {
                   ),
                 ],
               ),
-              SizedBox(height: 16),
+              SizedBox(height: 16.h),
               Obx(
                 () => SearchController.to.isFocus.value
                     ? _searchHistory()
@@ -135,9 +137,9 @@ class Search extends StatelessWidget {
       child: GridView.builder(
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 2,
-          crossAxisSpacing: 7,
-          mainAxisSpacing: 8,
-          mainAxisExtent: 221,
+          crossAxisSpacing: 7.w,
+          mainAxisSpacing: 8.h,
+          mainAxisExtent: 221.h,
         ),
         itemBuilder: (context, index) {
           return GestureDetector(
@@ -146,7 +148,7 @@ class Search extends StatelessWidget {
             },
             child: Container(
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
+                borderRadius: BorderRadius.circular(10.r),
                 image: DecorationImage(
                   image: AssetImage('assets/dog.png'),
                   fit: BoxFit.cover,
@@ -165,12 +167,12 @@ class Search extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
-            padding: const EdgeInsets.only(bottom: 8.0),
+            padding: EdgeInsets.only(bottom: 8.0.h),
             child: Text(
               '이전 검색 기록',
               style: TextStyle(
                 color: Color(0xffA6A6A6),
-                fontSize: 12,
+                fontSize: 12.sp,
                 fontWeight: FontWeight.w400,
               ),
             ),
@@ -180,26 +182,26 @@ class Search extends StatelessWidget {
               itemCount: 3,
               itemBuilder: (context, index) {
                 return Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 8.0),
+                  padding: EdgeInsets.symmetric(vertical: 8.0.h),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Row(
                         children: [
                           Container(
-                            width: 36,
-                            height: 36,
+                            width: 36.w,
+                            height: 36.h,
                             decoration: BoxDecoration(
                               color: Color(0xffD9D9D9),
-                              borderRadius: BorderRadius.circular(18.0),
+                              borderRadius: BorderRadius.circular(18.0.r),
                             ),
                           ),
-                          SizedBox(width: 8),
+                          SizedBox(width: 8.w),
                           Text(
                             '미션 산책하며 물먹기',
                             style: TextStyle(
                               color: Colors.black,
-                              fontSize: 14,
+                              fontSize: 14.sp,
                               fontWeight: FontWeight.w500,
                             ),
                           ),
@@ -211,12 +213,12 @@ class Search extends StatelessWidget {
                             '미션 산책하며 물먹기',
                             style: TextStyle(
                               color: Colors.black,
-                              fontSize: 12,
+                              fontSize: 12.sp,
                               fontWeight: FontWeight.w400,
                             ),
                           ),
-                          SizedBox(width: 13),
-                          Icon(Icons.clear, size: 8),
+                          SizedBox(width: 13.w),
+                          Icon(Icons.clear, size: 8.r),
                         ],
                       ),
                     ],
