@@ -1,3 +1,4 @@
+import 'package:dangdiarysample/components/custom_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -49,13 +50,11 @@ class _ReportDropdownContainerState extends State<ReportDropdownContainer> {
                     ),
                   ),
                   child: Center(
-                    child: Text(
-                      '접수중',
-                      style: TextStyle(
-                        color: Color(0xff00C2FF),
-                        fontSize: 12.sp,
-                        fontWeight: FontWeight.w400,
-                      ),
+                    child: CustomText(
+                      text: '접수중',
+                      color: Color(0xff00C2FF),
+                      fontSize: 12.sp,
+                      fontWeight: FontWeight.w400,
                     ),
                   ),
                 ),
@@ -74,13 +73,12 @@ class _ReportDropdownContainerState extends State<ReportDropdownContainer> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
-                  '00000으로 사용자 000님을 신고했어요.',
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 14.sp,
-                    fontWeight: FontWeight.w400,
-                  ),
+                CustomText(
+                  text: '00000으로 사용자 000님을 신고했어요.',
+                  color: Colors.black,
+                  fontSize: 14.sp,
+                  fontWeight: FontWeight.w400,
+                  height: (16 / 14).h,
                 ),
                 Padding(
                   padding: EdgeInsets.only(right: 3.0.w),
@@ -99,7 +97,6 @@ class _ReportDropdownContainerState extends State<ReportDropdownContainer> {
                     padding:
                         EdgeInsets.symmetric(horizontal: 16.w, vertical: 20.h),
                     width: double.infinity,
-                    height: 146.h,
                     decoration: BoxDecoration(
                       color: Color(0xffF2F2F2),
                       borderRadius: BorderRadius.circular(11.r),
@@ -171,13 +168,13 @@ class _ReportDropdownContainerState extends State<ReportDropdownContainer> {
                             ),
                           ),
                         ),
-                        Text(
-                          'NN님의 신고가 정상적으로 접수되었어요.\n신고내용을 확인한 뒤 조치여부를 확인할게요.',
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 12.sp,
-                            fontWeight: FontWeight.w400,
-                          ),
+                        CustomText(
+                          text:
+                              'NN님의 신고가 정상적으로 접수되었어요.\n신고내용을 확인한 뒤 조치여부를 확인할게요.',
+                          color: Colors.black,
+                          fontSize: 12.sp,
+                          fontWeight: FontWeight.w400,
+                          height: (16 / 12).h,
                         ),
                       ],
                     ),

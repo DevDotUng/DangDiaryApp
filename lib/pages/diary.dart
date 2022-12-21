@@ -1,3 +1,4 @@
+import 'package:dangdiarysample/components/custom_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -12,13 +13,12 @@ class Diary extends StatelessWidget {
         backgroundColor: Colors.white,
         elevation: 0.0,
         centerTitle: true,
-        title: Text(
-          '일기장',
-          style: TextStyle(
-            color: Colors.black,
-            fontSize: 16.sp,
-            fontWeight: FontWeight.w400,
-          ),
+        title: CustomText(
+          text: '일기장',
+          color: Colors.black,
+          fontSize: 16.sp,
+          fontWeight: FontWeight.w400,
+          height: (32 / 16).h,
         ),
         actions: [
           Padding(
@@ -80,41 +80,37 @@ class Diary extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        '초코와 일기를 시작한지 000일',
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 14.sp,
-                          fontWeight: FontWeight.w600,
-                        ),
+                      CustomText(
+                        text: '초코와 일기를 시작한지 000일',
+                        color: Colors.black,
+                        fontSize: 14.sp,
+                        fontWeight: FontWeight.w600,
+                        height: (20 / 14).h,
                       ),
                       Container(
                         width: Get.width - 152.w,
                         child: Row(
                           children: [
-                            Text(
-                              '일기 000장 ',
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 12.sp,
-                                fontWeight: FontWeight.w300,
-                              ),
+                            CustomText(
+                              text: '일기 000장 ',
+                              color: Colors.black,
+                              fontSize: 12.sp,
+                              fontWeight: FontWeight.w300,
+                              height: (20 / 12).h,
                             ),
-                            Text(
-                              '받은 도장 00개 ',
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 12.sp,
-                                fontWeight: FontWeight.w300,
-                              ),
+                            CustomText(
+                              text: '받은 도장 00개 ',
+                              color: Colors.black,
+                              fontSize: 12.sp,
+                              fontWeight: FontWeight.w300,
+                              height: (20 / 12).h,
                             ),
-                            Text(
-                              '총 좋아요 00개',
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 12.sp,
-                                fontWeight: FontWeight.w300,
-                              ),
+                            CustomText(
+                              text: '총 좋아요 00개',
+                              color: Colors.black,
+                              fontSize: 12.sp,
+                              fontWeight: FontWeight.w300,
+                              height: (20 / 12).h,
                             ),
                           ],
                         ),
@@ -142,13 +138,12 @@ class Diary extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(
-                    '00개의 밀린 일기가 있어요!',
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 14.sp,
-                      fontWeight: FontWeight.w400,
-                    ),
+                  CustomText(
+                    text: '00개의 밀린 일기가 있어요!',
+                    color: Colors.black,
+                    fontSize: 14.sp,
+                    fontWeight: FontWeight.w400,
+                    height: (20 / 14).h,
                   ),
                   Icon(Icons.arrow_forward_ios_sharp, size: 16.r),
                 ],
@@ -221,22 +216,19 @@ class Diary extends StatelessWidget {
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
-                                      Text(
-                                        '2022년 8월',
-                                        style: TextStyle(
-                                          color: Colors.black,
-                                          fontSize: 12.sp,
-                                          fontWeight: FontWeight.w400,
-                                        ),
+                                      CustomText(
+                                        text: '2022년 8월',
+                                        color: Colors.black,
+                                        fontSize: 12.sp,
+                                        fontWeight: FontWeight.w400,
+                                        height: (18 / 12).h,
                                       ),
                                       SizedBox(height: 8.h),
-                                      Text(
-                                        '초코와 여름.',
-                                        style: TextStyle(
-                                          color: Colors.black,
-                                          fontSize: 12.sp,
-                                          fontWeight: FontWeight.w600,
-                                        ),
+                                      CustomText(
+                                        text: '초코와 여름.',
+                                        color: Colors.black,
+                                        fontSize: 12.sp,
+                                        fontWeight: FontWeight.w600,
                                       ),
                                     ],
                                   ),
@@ -256,24 +248,21 @@ class Diary extends StatelessWidget {
                                             color: Color(0xffFF9900),
                                           ),
                                           SizedBox(width: 4.w),
-                                          Text(
-                                            '000',
-                                            style: TextStyle(
-                                              color: Colors.black,
-                                              fontSize: 12.sp,
-                                              fontWeight: FontWeight.w400,
-                                            ),
+                                          CustomText(
+                                            text: '000',
+                                            color: Colors.black,
+                                            fontSize: 12.sp,
+                                            fontWeight: FontWeight.w400,
+                                            height: (20 / 12).h,
                                           ),
                                         ],
                                       ),
-                                      SizedBox(height: 8.h),
-                                      Text(
-                                        '19일의 이야기',
-                                        style: TextStyle(
-                                          color: Colors.black,
-                                          fontSize: 12.sp,
-                                          fontWeight: FontWeight.w400,
-                                        ),
+                                      CustomText(
+                                        text: '19일의 이야기',
+                                        color: Colors.black,
+                                        fontSize: 12.sp,
+                                        fontWeight: FontWeight.w400,
+                                        height: (20 / 12).h,
                                       ),
                                     ],
                                   ),

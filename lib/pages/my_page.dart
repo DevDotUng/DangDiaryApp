@@ -1,3 +1,4 @@
+import 'package:dangdiarysample/components/custom_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -13,13 +14,12 @@ class MyPage extends StatelessWidget {
         elevation: 0.0,
         centerTitle: true,
         leading: Container(),
-        title: Text(
-          '마이페이지',
-          style: TextStyle(
-            color: Colors.black,
-            fontSize: 16.sp,
-            fontWeight: FontWeight.w400,
-          ),
+        title: CustomText(
+          text: '마이페이지',
+          color: Colors.black,
+          fontSize: 16.sp,
+          fontWeight: FontWeight.w400,
+          height: (32 / 16).h,
         ),
       ),
       body: Container(
@@ -36,7 +36,8 @@ class MyPage extends StatelessWidget {
                     left: 0,
                     right: 0,
                     child: Container(
-                      padding: EdgeInsets.only(left: 20.w, top: 37.h),
+                      padding:
+                          EdgeInsets.only(left: 20.w, top: 37.h, right: 20.w),
                       width: double.infinity,
                       height: 111.h,
                       decoration: BoxDecoration(
@@ -53,51 +54,72 @@ class MyPage extends StatelessWidget {
                         children: [
                           Row(
                             children: [
-                              Icon(Icons.menu, size: 16.r),
-                              SizedBox(width: 8.w),
-                              Text(
-                                '나의 일기 000장',
-                                style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 14.sp,
-                                  fontWeight: FontWeight.w300,
+                              Expanded(
+                                flex: 6,
+                                child: Row(
+                                  children: [
+                                    Icon(Icons.menu, size: 16.r),
+                                    SizedBox(width: 8.w),
+                                    CustomText(
+                                      text: '나의 일기 000장',
+                                      color: Colors.black,
+                                      fontSize: 14.sp,
+                                      fontWeight: FontWeight.w300,
+                                      height: (20 / 14).h,
+                                    ),
+                                  ],
                                 ),
                               ),
-                              SizedBox(width: 44.w),
-                              Icon(Icons.menu, size: 16.r),
-                              SizedBox(width: 8.w),
-                              Text(
-                                '시작한지 000일',
-                                style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 14.sp,
-                                  fontWeight: FontWeight.w300,
+                              Expanded(
+                                flex: 5,
+                                child: Row(
+                                  children: [
+                                    Icon(Icons.menu, size: 16.r),
+                                    SizedBox(width: 8.w),
+                                    CustomText(
+                                      text: '시작한지 000일',
+                                      color: Colors.black,
+                                      fontSize: 14.sp,
+                                      fontWeight: FontWeight.w300,
+                                      height: (20 / 14).h,
+                                    ),
+                                  ],
                                 ),
                               ),
                             ],
                           ),
-                          SizedBox(height: 12.h),
+                          SizedBox(height: 8.h),
                           Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Icon(Icons.menu, size: 16.r),
-                              SizedBox(width: 8.w),
-                              Text(
-                                '받은 좋아요 00개',
-                                style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 14.sp,
-                                  fontWeight: FontWeight.w300,
+                              Expanded(
+                                flex: 6,
+                                child: Row(
+                                  children: [
+                                    Icon(Icons.menu, size: 16.r),
+                                    SizedBox(width: 8.w),
+                                    CustomText(
+                                      text: '받은 좋아요 00개',
+                                      color: Colors.black,
+                                      fontSize: 14.sp,
+                                      fontWeight: FontWeight.w300,
+                                    ),
+                                  ],
                                 ),
                               ),
-                              SizedBox(width: 44.w),
-                              Icon(Icons.menu, size: 16.r),
-                              SizedBox(width: 8.w),
-                              Text(
-                                '받은 도장 00개',
-                                style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 14.sp,
-                                  fontWeight: FontWeight.w300,
+                              Expanded(
+                                flex: 5,
+                                child: Row(
+                                  children: [
+                                    Icon(Icons.menu, size: 16.r),
+                                    SizedBox(width: 8.w),
+                                    CustomText(
+                                      text: '받은 도장 00개',
+                                      color: Colors.black,
+                                      fontSize: 14.sp,
+                                      fontWeight: FontWeight.w300,
+                                    ),
+                                  ],
                                 ),
                               ),
                             ],
@@ -188,33 +210,30 @@ class MyPage extends StatelessWidget {
                                   width: Get.width - 134.w,
                                   child: Row(
                                     children: [
-                                      Text(
-                                        '웰시코기',
-                                        style: TextStyle(
-                                          color: Colors.black,
-                                          fontSize: 12.sp,
-                                          fontWeight: FontWeight.w400,
-                                        ),
+                                      CustomText(
+                                        text: '웰시코기',
+                                        color: Colors.black,
+                                        fontSize: 12.sp,
+                                        fontWeight: FontWeight.w400,
+                                        height: (20 / 12).h,
                                       ),
                                       SizedBox(width: 3.w),
                                       Icon(Icons.male, size: 8.r),
                                       SizedBox(width: 16.w),
-                                      Text(
-                                        '8살',
-                                        style: TextStyle(
-                                          color: Colors.black,
-                                          fontSize: 12.sp,
-                                          fontWeight: FontWeight.w400,
-                                        ),
+                                      CustomText(
+                                        text: '8살',
+                                        color: Colors.black,
+                                        fontSize: 12.sp,
+                                        fontWeight: FontWeight.w400,
+                                        height: (20 / 12).h,
                                       ),
                                       SizedBox(width: 16.w),
-                                      Text(
-                                        '2000-00-00',
-                                        style: TextStyle(
-                                          color: Colors.black,
-                                          fontSize: 12.sp,
-                                          fontWeight: FontWeight.w400,
-                                        ),
+                                      CustomText(
+                                        text: '2000-00-00',
+                                        color: Colors.black,
+                                        fontSize: 12.sp,
+                                        fontWeight: FontWeight.w400,
+                                        height: (20 / 12).h,
                                       ),
                                     ],
                                   ),
@@ -234,13 +253,12 @@ class MyPage extends StatelessWidget {
               children: [
                 Icon(Icons.menu, size: 16.r),
                 SizedBox(width: 8.w),
-                Text(
-                  '계정 관리',
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 14.sp,
-                    fontWeight: FontWeight.w600,
-                  ),
+                CustomText(
+                  text: '계정 관리',
+                  color: Colors.black,
+                  fontSize: 14.sp,
+                  fontWeight: FontWeight.w600,
+                  height: (20 / 14).h,
                 ),
               ],
             ),
@@ -255,16 +273,17 @@ class MyPage extends StatelessWidget {
                   Get.toNamed('/dogProfileSetting');
                 },
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(
-                      '견적사항 관리',
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 14.sp,
-                        fontWeight: FontWeight.w400,
-                      ),
+                    CustomText(
+                      text: '견적사항 관리',
+                      color: Colors.black,
+                      fontSize: 14.sp,
+                      fontWeight: FontWeight.w400,
+                      height: (20 / 14).h,
                     ),
+                    Expanded(
+                        child:
+                            Container(height: 20, color: Colors.transparent)),
                     Icon(Icons.arrow_forward_ios_outlined, size: 14.r),
                   ],
                 ),
@@ -278,16 +297,17 @@ class MyPage extends StatelessWidget {
                   Get.toNamed('/accountSetting');
                 },
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(
-                      '계정 관리',
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 14.sp,
-                        fontWeight: FontWeight.w400,
-                      ),
+                    CustomText(
+                      text: '계정 관리',
+                      color: Colors.black,
+                      fontSize: 14.sp,
+                      fontWeight: FontWeight.w400,
+                      height: (20 / 14).h,
                     ),
+                    Expanded(
+                        child:
+                            Container(height: 20, color: Colors.transparent)),
                     Icon(Icons.arrow_forward_ios_outlined, size: 14.r),
                   ],
                 ),
@@ -298,13 +318,12 @@ class MyPage extends StatelessWidget {
               children: [
                 Icon(Icons.menu, size: 16.r),
                 SizedBox(width: 8.w),
-                Text(
-                  '앱 관리',
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 14.sp,
-                    fontWeight: FontWeight.w600,
-                  ),
+                CustomText(
+                  text: '앱 관리',
+                  color: Colors.black,
+                  fontSize: 14.sp,
+                  fontWeight: FontWeight.w600,
+                  height: (20 / 14).h,
                 ),
               ],
             ),
@@ -317,13 +336,12 @@ class MyPage extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(
-                    '앱 설정',
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 14.sp,
-                      fontWeight: FontWeight.w400,
-                    ),
+                  CustomText(
+                    text: '앱 설정',
+                    color: Colors.black,
+                    fontSize: 14.sp,
+                    fontWeight: FontWeight.w400,
+                    height: (20 / 14).h,
                   ),
                   Icon(Icons.arrow_forward_ios_outlined, size: 14.r),
                 ],
@@ -337,16 +355,17 @@ class MyPage extends StatelessWidget {
                   Get.toNamed('/customerCenter');
                 },
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(
-                      '고객센터',
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 14.sp,
-                        fontWeight: FontWeight.w400,
-                      ),
+                    CustomText(
+                      text: '고객센터',
+                      color: Colors.black,
+                      fontSize: 14.sp,
+                      fontWeight: FontWeight.w400,
+                      height: (20 / 14).h,
                     ),
+                    Expanded(
+                        child:
+                            Container(height: 20, color: Colors.transparent)),
                     Icon(Icons.arrow_forward_ios_outlined, size: 14.r),
                   ],
                 ),
@@ -360,16 +379,17 @@ class MyPage extends StatelessWidget {
                   Get.toNamed('/reportDetail');
                 },
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(
-                      '신고내역',
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 14.sp,
-                        fontWeight: FontWeight.w400,
-                      ),
+                    CustomText(
+                      text: '신고내역',
+                      color: Colors.black,
+                      fontSize: 14.sp,
+                      fontWeight: FontWeight.w400,
+                      height: (20 / 14).h,
                     ),
+                    Expanded(
+                        child:
+                            Container(height: 20, color: Colors.transparent)),
                     Icon(Icons.arrow_forward_ios_outlined, size: 14.r),
                   ],
                 ),
@@ -377,27 +397,15 @@ class MyPage extends StatelessWidget {
             ),
             Flexible(
               child: Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      'asdkjhluwhdlj aslkjdoiqw',
-                      style: TextStyle(
-                        color: Color(0xffDDDDDD),
-                        fontSize: 12.sp,
-                        fontWeight: FontWeight.w400,
-                      ),
-                    ),
-                    SizedBox(height: 8.h),
-                    Text(
-                      'ver 0.0.0',
-                      style: TextStyle(
-                        color: Color(0xffDDDDDD),
-                        fontSize: 12.sp,
-                        fontWeight: FontWeight.w400,
-                      ),
-                    ),
-                  ],
+                child: Text(
+                  'asdkjhluwhdlj aslkjdoiqw\nver 0.0.0',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: Color(0xffDDDDDD),
+                    fontSize: 12.sp,
+                    fontWeight: FontWeight.w400,
+                    height: (20 / 12).h,
+                  ),
                 ),
               ),
             ),

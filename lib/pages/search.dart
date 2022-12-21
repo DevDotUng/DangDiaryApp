@@ -1,3 +1,4 @@
+import 'package:dangdiarysample/components/custom_text.dart';
 import 'package:dangdiarysample/controllers/search_controller.dart';
 import 'package:dangdiarysample/skeletons/search_skeleton.dart';
 import 'package:flutter/material.dart';
@@ -26,13 +27,12 @@ class Search extends StatelessWidget {
           elevation: 0.0,
           leading: Container(),
           centerTitle: true,
-          title: Text(
-            '둘러보기',
-            style: TextStyle(
-              color: Colors.black,
-              fontSize: 16.sp,
-              fontWeight: FontWeight.w400,
-            ),
+          title: CustomText(
+            text: '둘러보기',
+            color: Colors.black,
+            fontSize: 16.sp,
+            fontWeight: FontWeight.w400,
+            height: (32 / 16).h,
           ),
         ),
         body: Container(
@@ -63,6 +63,7 @@ class Search extends StatelessWidget {
                             color: Color(0xff0A0A0A),
                             fontSize: 14.sp,
                             fontWeight: FontWeight.w400,
+                            height: (24 / 14).h,
                           ),
                           decoration: InputDecoration(
                             hintText: '어떤 이야기를 찾아볼까요?',
@@ -70,6 +71,7 @@ class Search extends StatelessWidget {
                               color: Color(0xffA6A6A6),
                               fontSize: 14.sp,
                               fontWeight: FontWeight.w400,
+                              height: (24 / 14).h,
                             ),
                             contentPadding:
                                 EdgeInsets.only(left: 8.0.w, top: 24.h),
@@ -119,7 +121,7 @@ class Search extends StatelessWidget {
                   ),
                 ],
               ),
-              SizedBox(height: 16.h),
+              SizedBox(height: 8.h),
               Obx(
                 () => SearchController.to.isFocus.value
                     ? _searchHistory()
@@ -168,13 +170,12 @@ class Search extends StatelessWidget {
         children: [
           Padding(
             padding: EdgeInsets.only(bottom: 8.0.h),
-            child: Text(
-              '이전 검색 기록',
-              style: TextStyle(
-                color: Color(0xffA6A6A6),
-                fontSize: 12.sp,
-                fontWeight: FontWeight.w400,
-              ),
+            child: CustomText(
+              text: '이전 검색 기록',
+              color: Color(0xffA6A6A6),
+              fontSize: 12.sp,
+              fontWeight: FontWeight.w400,
+              height: (24 / 12).h,
             ),
           ),
           Expanded(
@@ -197,28 +198,26 @@ class Search extends StatelessWidget {
                             ),
                           ),
                           SizedBox(width: 8.w),
-                          Text(
-                            '미션 산책하며 물먹기',
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 14.sp,
-                              fontWeight: FontWeight.w500,
-                            ),
+                          CustomText(
+                            text: '미션 산책하며 물먹기',
+                            color: Colors.black,
+                            fontSize: 14.sp,
+                            fontWeight: FontWeight.w500,
+                            height: (20 / 14).h,
                           ),
                         ],
                       ),
                       Row(
                         children: [
-                          Text(
-                            '미션 산책하며 물먹기',
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 12.sp,
-                              fontWeight: FontWeight.w400,
-                            ),
+                          CustomText(
+                            text: '101개의 일기',
+                            color: Colors.black,
+                            fontSize: 12.sp,
+                            fontWeight: FontWeight.w400,
+                            height: (20 / 12).h,
                           ),
                           SizedBox(width: 13.w),
-                          Icon(Icons.clear, size: 8.r),
+                          Icon(Icons.clear, size: 16.r),
                         ],
                       ),
                     ],

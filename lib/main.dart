@@ -25,7 +25,9 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
-      designSize: Platform.isAndroid ? Size(360, 740) : Size(375, 812),
+      designSize: Platform.isAndroid
+          ? Size(Get.width * 0.8, Get.height * 0.8)
+          : Size(Get.width, Get.height),
       minTextAdapt: true,
       splitScreenMode: true,
       builder: (context, child) {

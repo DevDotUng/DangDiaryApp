@@ -1,3 +1,4 @@
+import 'package:dangdiarysample/components/custom_text.dart';
 import 'package:dangdiarysample/controllers/bottom_nav_controller.dart';
 import 'package:dangdiarysample/controllers/home_controller.dart';
 import 'package:dangdiarysample/skeletons/home_skeleton.dart';
@@ -43,21 +44,19 @@ class Home extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  '오늘은 초코가',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 24.sp,
-                    fontWeight: FontWeight.w400,
-                  ),
+                CustomText(
+                  text: '오늘은 초코가',
+                  color: Colors.white,
+                  fontSize: 24.sp,
+                  fontWeight: FontWeight.w400,
+                  height: (32 / 24).h,
                 ),
-                Text(
-                  '한강공원 산책을 가고\n싶어해요!',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 24.sp,
-                    fontWeight: FontWeight.w600,
-                  ),
+                CustomText(
+                  text: '한강공원 산책을 가고\n싶어해요!',
+                  color: Colors.white,
+                  fontSize: 24.sp,
+                  fontWeight: FontWeight.w600,
+                  height: (32 / 24).h,
                 ),
               ],
             ),
@@ -172,148 +171,136 @@ class Home extends StatelessWidget {
                         10,
                         (index) {
                           return Padding(
-                            padding:
-                                EdgeInsets.only(left: 24.0.w, bottom: 24.0.h),
+                            padding: EdgeInsets.only(bottom: 24.0.h),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Row(
-                                  children: [
-                                    Icon(Icons.rocket),
-                                    SizedBox(height: 4.h),
-                                    Text(
-                                      '진행 중인 챌린지',
-                                      style: TextStyle(
+                                Padding(
+                                  padding: EdgeInsets.only(left: 24.0.w),
+                                  child: Row(
+                                    children: [
+                                      Icon(Icons.rocket),
+                                      SizedBox(height: 4.h),
+                                      CustomText(
+                                        text: '진행 중인 챌린지',
+                                        color: Colors.black,
                                         fontSize: 16.sp,
                                         fontWeight: FontWeight.w600,
+                                        height: (24 / 16).h,
                                       ),
-                                    ),
-                                  ],
+                                    ],
+                                  ),
                                 ),
-                                SizedBox(height: 6.h),
-                                Text(
-                                  '현재 효림님이 초코와 진행 중인 챌린지에요',
-                                  style: TextStyle(
+                                SizedBox(height: 2.h),
+                                Padding(
+                                  padding: EdgeInsets.only(left: 24.0.w),
+                                  child: CustomText(
+                                    text: '현재 효림님이 초코와 진행 중인 챌린지에요',
                                     color: Color(0xff7D7D7D),
                                     fontSize: 14.sp,
                                     fontWeight: FontWeight.w400,
+                                    height: (20 / 14).h,
                                   ),
                                 ),
-                                SizedBox(height: 8.h),
                                 Container(
-                                  height: 108.h,
+                                  height: 128.h,
                                   child: InkWell(
                                     onTap: () {
                                       Get.toNamed('/challengeDetail');
                                     },
                                     child: Padding(
-                                      padding: const EdgeInsets.all(0.1),
+                                      padding: EdgeInsets.symmetric(
+                                          horizontal: 20.0.w),
                                       child: ListView.builder(
                                         scrollDirection: Axis.horizontal,
                                         itemCount: 5,
                                         itemBuilder:
                                             (BuildContext context, int index) {
-                                          return Padding(
-                                            padding: EdgeInsets.only(
+                                          return Container(
+                                            margin: EdgeInsets.only(
+                                              top: 8.h,
                                               left: 4.w,
-                                              right: 17.w,
-                                              top: 4.h,
-                                              bottom: 4.h,
+                                              right: 4.w,
+                                              bottom: 16.h,
                                             ),
-                                            child: Center(
-                                              child: Container(
-                                                width: Get.width * 0.7,
-                                                height: 108.h,
-                                                decoration: BoxDecoration(
-                                                  color: Colors.white,
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          10.0.r),
-                                                  boxShadow: [
-                                                    BoxShadow(
-                                                      color: Colors.black
-                                                          .withOpacity(0.1),
-                                                      offset:
-                                                          Offset(-0.1, -0.1),
-                                                      blurRadius: 4.0,
-                                                    ),
-                                                    BoxShadow(
-                                                      color: Colors.black
-                                                          .withOpacity(0.1),
-                                                      offset: Offset(0.1, 0.1),
-                                                      blurRadius: 4.0,
-                                                    ),
-                                                  ],
+                                            width: Get.width * 0.8,
+                                            height: 128.h,
+                                            decoration: BoxDecoration(
+                                              color: Colors.white,
+                                              borderRadius:
+                                                  BorderRadius.circular(10.0.r),
+                                              boxShadow: [
+                                                BoxShadow(
+                                                  color: Colors.black
+                                                      .withOpacity(0.15),
+                                                  blurRadius: 4.0,
                                                 ),
-                                                child: Row(
-                                                  children: [
-                                                    SizedBox(width: 12.w),
-                                                    Container(
-                                                      width: 87.w,
-                                                      height: 80.h,
-                                                      decoration: BoxDecoration(
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(
-                                                                    7.0.r),
-                                                        image: DecorationImage(
-                                                          image: AssetImage(
-                                                              'assets/dog.png'),
-                                                          fit: BoxFit.cover,
+                                              ],
+                                            ),
+                                            child: Row(
+                                              children: [
+                                                SizedBox(width: 12.w),
+                                                Container(
+                                                  width: 87.w,
+                                                  height: 80.h,
+                                                  decoration: BoxDecoration(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            7.0.r),
+                                                    image: DecorationImage(
+                                                      image: AssetImage(
+                                                          'assets/dog.png'),
+                                                      fit: BoxFit.cover,
+                                                    ),
+                                                  ),
+                                                ),
+                                                Padding(
+                                                  padding: EdgeInsets.symmetric(
+                                                      vertical: 12.0.w,
+                                                      horizontal: 8.0.h),
+                                                  child: Column(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceBetween,
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
+                                                    children: [
+                                                      Padding(
+                                                        padding:
+                                                            EdgeInsets.only(
+                                                                top: 3.h),
+                                                        child: CustomText(
+                                                          text: '한강공원 술래잡기',
+                                                          color: Colors.black,
+                                                          fontSize: 16.sp,
+                                                          fontWeight:
+                                                              FontWeight.w400,
                                                         ),
                                                       ),
-                                                    ),
-                                                    Padding(
-                                                      padding:
-                                                          EdgeInsets.symmetric(
-                                                              vertical: 12.0.w,
-                                                              horizontal:
-                                                                  8.0.h),
-                                                      child: Column(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .spaceBetween,
-                                                        crossAxisAlignment:
-                                                            CrossAxisAlignment
-                                                                .start,
-                                                        children: [
-                                                          Text(
-                                                            '한강공원 술래잡기',
-                                                            style: TextStyle(
-                                                              color:
-                                                                  Colors.black,
-                                                              fontSize: 16.sp,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w400,
-                                                            ),
+                                                      Container(
+                                                        width: Get.width * 0.8 -
+                                                            119.w,
+                                                        child: Text(
+                                                          '한강공원 술래잡기한강공원 술래잡기한강공원 술래잡기한강공원 술래잡기한강공원 술래잡기',
+                                                          maxLines: 2,
+                                                          style: TextStyle(
+                                                            color: Color(
+                                                                0xff7D7D7D),
+                                                            fontSize: 14.sp,
+                                                            fontWeight:
+                                                                FontWeight.w400,
+                                                            overflow:
+                                                                TextOverflow
+                                                                    .ellipsis,
+                                                            height: (20 / 14).h,
                                                           ),
-                                                          Container(
-                                                            width: Get.width *
-                                                                    0.7 -
-                                                                119.w,
-                                                            child: Text(
-                                                              '한강공원 술래잡기한강공원 술래잡기한강공원 술래잡기한강공원 술래잡기한강공원 술래잡기',
-                                                              maxLines: 2,
-                                                              style: TextStyle(
-                                                                color: Color(
-                                                                    0xff7D7D7D),
-                                                                fontSize: 14.sp,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w400,
-                                                                overflow:
-                                                                    TextOverflow
-                                                                        .ellipsis,
-                                                              ),
-                                                            ),
-                                                          ),
-                                                        ],
+                                                        ),
                                                       ),
-                                                    ),
-                                                  ],
+                                                    ],
+                                                  ),
                                                 ),
-                                              ),
+                                              ],
                                             ),
                                           );
                                         },

@@ -1,3 +1,4 @@
+import 'package:dangdiarysample/components/custom_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -11,7 +12,7 @@ class AllChallengeController extends GetxController {
   RxList<String> categoryList = ['전체', '산책', '간식', '여행', '훈련', '장난감'].obs;
   RxInt selectedCategory = 0.obs;
   RxBool isSearch = false.obs;
-  RxList overduedDiarys = [].obs;
+  RxList overduedDiarys = [1].obs;
 
   @override
   void onReady() {
@@ -44,7 +45,7 @@ class AllChallengeController extends GetxController {
           child: Container(
             padding: EdgeInsets.symmetric(vertical: 26.0.h),
             width: double.infinity,
-            height: 396.h,
+            height: 420.h,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(15.r),
             ),
@@ -57,13 +58,12 @@ class AllChallengeController extends GetxController {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        '앗!\n예전에 미룬 챌린지가 있어요',
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 20.sp,
-                          fontWeight: FontWeight.w600,
-                        ),
+                      CustomText(
+                        text: '앗!\n예전에 미룬 챌린지가 있어요',
+                        color: Colors.black,
+                        fontSize: 20.sp,
+                        fontWeight: FontWeight.w600,
+                        height: (24 / 20).h,
                       ),
                       GestureDetector(
                         onTap: () {
@@ -74,7 +74,7 @@ class AllChallengeController extends GetxController {
                     ],
                   ),
                 ),
-                SizedBox(height: 16.h),
+                SizedBox(height: 24.h),
                 Expanded(
                   child: Obx(
                     () => isFolded.value
@@ -82,7 +82,7 @@ class AllChallengeController extends GetxController {
                         : _overduedChallengeList(),
                   ),
                 ),
-                SizedBox(height: 20.h),
+                SizedBox(height: 24.h),
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 26.w),
                   child: Row(
@@ -98,13 +98,11 @@ class AllChallengeController extends GetxController {
                         ),
                       ),
                       SizedBox(width: 4.w),
-                      Text(
-                        '일주일 뒤에 다시 알려주세요',
-                        style: TextStyle(
-                          color: Color(0xff7D7D7D),
-                          fontSize: 12.sp,
-                          fontWeight: FontWeight.w400,
-                        ),
+                      CustomText(
+                        text: '일주일 뒤에 다시 알려주세요',
+                        color: Color(0xff7D7D7D),
+                        fontSize: 12.sp,
+                        fontWeight: FontWeight.w400,
                       ),
                     ],
                   ),
@@ -119,7 +117,7 @@ class AllChallengeController extends GetxController {
 
   Widget _twoOverduedChallenge() {
     return Padding(
-      padding: EdgeInsets.only(top: 8.h, left: 26.w, right: 26.w),
+      padding: EdgeInsets.only(left: 26.w, right: 26.w),
       child: Column(
         children: [
           ...List.generate(
@@ -151,13 +149,11 @@ class AllChallengeController extends GetxController {
                     size: 16.r,
                     color: Color(0xff00C2FF),
                   ),
-                  Text(
-                    '8개',
-                    style: TextStyle(
-                      color: Color(0xff00C2FF),
-                      fontSize: 14.sp,
-                      fontWeight: FontWeight.w600,
-                    ),
+                  CustomText(
+                    text: '8개',
+                    color: Color(0xff00C2FF),
+                    fontSize: 14.sp,
+                    fontWeight: FontWeight.w600,
                   ),
                 ],
               ),
@@ -220,25 +216,25 @@ class AllChallengeController extends GetxController {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  '한강공원 술래잡기',
-                  style: TextStyle(
+                Padding(
+                  padding: EdgeInsets.only(top: 3.0.h),
+                  child: CustomText(
+                    text: '한강공원 술래잡기',
                     color: Colors.black,
-                    fontSize: 16.sp,
+                    fontSize: 14.sp,
                     fontWeight: FontWeight.w400,
                   ),
                 ),
                 Container(
                   width: Get.width - 203.w,
-                  child: Text(
-                    '한강공원 술래잡기한강공원 술래잡기한강공원 술래잡기한강공원 술래잡기한강공원 술래잡기',
+                  child: CustomText(
+                    text: '한강공원 술래잡기한강공원 술래잡기한강공원 술래잡기한강공원 술래잡기한강공원 술래잡기',
                     maxLines: 2,
-                    style: TextStyle(
-                      color: Color(0xff7D7D7D),
-                      fontSize: 14.sp,
-                      fontWeight: FontWeight.w400,
-                      overflow: TextOverflow.ellipsis,
-                    ),
+                    color: Color(0xff7D7D7D),
+                    fontSize: 12.sp,
+                    fontWeight: FontWeight.w400,
+                    height: (16 / 12).h,
+                    overflow: TextOverflow.ellipsis,
                   ),
                 ),
               ],

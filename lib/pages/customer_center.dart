@@ -1,3 +1,4 @@
+import 'package:dangdiarysample/components/custom_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -23,13 +24,12 @@ class CustomerCenter extends StatelessWidget {
             color: Colors.black,
           ),
         ),
-        title: Text(
-          '고객센터',
-          style: TextStyle(
-            color: Colors.black,
-            fontSize: 16.sp,
-            fontWeight: FontWeight.w400,
-          ),
+        title: CustomText(
+          text: '고객센터',
+          color: Colors.black,
+          fontSize: 16.sp,
+          fontWeight: FontWeight.w400,
+          height: (32 / 16).h,
         ),
       ),
       body: Stack(
@@ -52,13 +52,12 @@ class CustomerCenter extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(
-                        '공지사항',
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 14.sp,
-                          fontWeight: FontWeight.w600,
-                        ),
+                      CustomText(
+                        text: '공지사항',
+                        color: Colors.black,
+                        fontSize: 14.sp,
+                        fontWeight: FontWeight.w600,
+                        height: (24 / 14).h,
                       ),
                       Padding(
                         padding: EdgeInsets.only(right: 4.0.w),
@@ -66,13 +65,11 @@ class CustomerCenter extends StatelessWidget {
                           onTap: () {
                             Get.toNamed('/notice');
                           },
-                          child: Text(
-                            '전체 보기',
-                            style: TextStyle(
-                              color: Color(0xff666666),
-                              fontSize: 11.sp,
-                              fontWeight: FontWeight.w400,
-                            ),
+                          child: CustomText(
+                            text: '전체 보기',
+                            color: Color(0xff666666),
+                            fontSize: 11.sp,
+                            fontWeight: FontWeight.w400,
                           ),
                         ),
                       ),
@@ -105,13 +102,13 @@ class CustomerCenter extends StatelessWidget {
                           ),
                         ),
                         SizedBox(height: 4.h),
-                        Text(
-                          '아 공지사항 공지사항입니다. 이러이러한 개선점이 있으니 참고하시기 바랍니다. 참고하라고^^',
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 12.sp,
-                            fontWeight: FontWeight.w400,
-                          ),
+                        CustomText(
+                          text:
+                              '아 공지사항 공지사항입니다. 이러이러한 개선점이 있으니 참고하시기 바랍니다. 참고하라고^^',
+                          color: Colors.black,
+                          fontSize: 12.sp,
+                          fontWeight: FontWeight.w400,
+                          height: (16 / 12).h,
                         ),
                       ],
                     ),
@@ -137,22 +134,20 @@ class CustomerCenter extends StatelessWidget {
                 children: [
                   Row(
                     children: [
-                      Text(
-                        'FAQ',
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 16.sp,
-                          fontWeight: FontWeight.w600,
-                        ),
+                      CustomText(
+                        text: 'FAQ',
+                        color: Colors.black,
+                        fontSize: 16.sp,
+                        fontWeight: FontWeight.w600,
+                        height: (24 / 16).h,
                       ),
                       SizedBox(width: 12.w),
-                      Text(
-                        '사용자들이 자주 묻는 질문을 확인하세요.',
-                        style: TextStyle(
-                          color: Color(0xff929292),
-                          fontSize: 12.sp,
-                          fontWeight: FontWeight.w400,
-                        ),
+                      CustomText(
+                        text: '사용자들이 자주 묻는 질문을 확인하세요.',
+                        color: Color(0xff929292),
+                        fontSize: 12.sp,
+                        fontWeight: FontWeight.w400,
+                        height: (24 / 12).h,
                       ),
                     ],
                   ),
@@ -167,13 +162,12 @@ class CustomerCenter extends StatelessWidget {
                           children: [
                             Container(
                               padding: EdgeInsets.symmetric(vertical: 12.h),
-                              child: Text(
-                                '개발자님이 잘생겼다는데 사실인가요?',
-                                style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 14.sp,
-                                  fontWeight: FontWeight.w400,
-                                ),
+                              child: CustomText(
+                                text: '개발자님이 잘생겼다는데 사실인가요?',
+                                color: Colors.black,
+                                fontSize: 14.sp,
+                                fontWeight: FontWeight.w400,
+                                height: (16 / 14).h,
                               ),
                             ),
                             Container(
@@ -190,13 +184,12 @@ class CustomerCenter extends StatelessWidget {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        '또다른 궁금한 내용이 있나요?',
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 14.sp,
-                          fontWeight: FontWeight.w600,
-                        ),
+                      CustomText(
+                        text: '또다른 궁금한 내용이 있나요?',
+                        color: Colors.black,
+                        fontSize: 14.sp,
+                        fontWeight: FontWeight.w600,
+                        height: (24 / 14).h,
                       ),
                       SizedBox(height: 8.h),
                       Container(
@@ -209,13 +202,12 @@ class CustomerCenter extends StatelessWidget {
                           ),
                         ),
                         child: Center(
-                          child: Text(
-                            '1대1 문의',
-                            style: TextStyle(
-                              color: Color(0xffA6A6A6),
-                              fontSize: 16.sp,
-                              fontWeight: FontWeight.w600,
-                            ),
+                          child: CustomText(
+                            text: '1대1 문의',
+                            color: Color(0xffA6A6A6),
+                            fontSize: 16.sp,
+                            fontWeight: FontWeight.w600,
+                            height: (32 / 16).h,
                           ),
                         ),
                       ),

@@ -1,3 +1,4 @@
+import 'package:dangdiarysample/components/custom_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -28,13 +29,12 @@ class Post extends StatelessWidget {
           ),
         ),
         centerTitle: true,
-        title: Text(
-          '둘러보기',
-          style: TextStyle(
-            color: Colors.black,
-            fontSize: 16.sp,
-            fontWeight: FontWeight.w400,
-          ),
+        title: CustomText(
+          text: '둘러보기',
+          color: Colors.black,
+          fontSize: 16.sp,
+          fontWeight: FontWeight.w400,
+          height: (32 / 16).h,
         ),
       ),
       body: Container(
@@ -70,22 +70,20 @@ class Post extends StatelessWidget {
                         ),
                       ),
                       SizedBox(width: 16.w),
-                      Text(
-                        '오또캐드',
-                        style: TextStyle(
-                          color: Color(0xff1D1D1D),
-                          fontSize: 12.sp,
-                          fontWeight: FontWeight.w400,
-                        ),
+                      CustomText(
+                        text: '오또캐드',
+                        color: Color(0xff1D1D1D),
+                        fontSize: 12.sp,
+                        fontWeight: FontWeight.w400,
+                        height: (20 / 12).h,
                       ),
                       SizedBox(width: 8.w),
-                      Text(
-                        '초코',
-                        style: TextStyle(
-                          color: Color(0xff1D1D1D),
-                          fontSize: 12.sp,
-                          fontWeight: FontWeight.w400,
-                        ),
+                      CustomText(
+                        text: '초코',
+                        color: Color(0xff1D1D1D),
+                        fontSize: 12.sp,
+                        fontWeight: FontWeight.w400,
+                        height: (20 / 12).h,
                       ),
                       SizedBox(width: 2.w),
                       Icon(Icons.male, size: 10.r),
@@ -109,33 +107,29 @@ class Post extends StatelessWidget {
                   child: Column(
                     children: [
                       SizedBox(height: 16.h),
-                      Text(
-                        '초코와 술래잡기',
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 16.sp,
-                          fontWeight: FontWeight.w600,
-                        ),
+                      CustomText(
+                        text: '초코와 술래잡기',
+                        color: Colors.black,
+                        fontSize: 16.sp,
+                        fontWeight: FontWeight.w600,
+                        height: (20 / 16).h,
                       ),
-                      Text(
-                        '서울 성북구 유니크원 카페',
-                        style: TextStyle(
-                          color: Color(0xff7E7E7E),
-                          fontSize: 12.sp,
-                          fontWeight: FontWeight.w300,
-                        ),
+                      CustomText(
+                        text: '서울 성북구 유니크원 카페',
+                        color: Color(0xff7E7E7E),
+                        fontSize: 12.sp,
+                        fontWeight: FontWeight.w300,
                       ),
                       SizedBox(height: 8.h),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text(
-                            '2022년 9월 11일 월요일',
-                            style: TextStyle(
-                              color: Color(0xff1D1D1D),
-                              fontSize: 12.sp,
-                              fontWeight: FontWeight.w400,
-                            ),
+                          CustomText(
+                            text: '2022년 9월 11일 월요일',
+                            color: Color(0xff1D1D1D),
+                            fontSize: 12.sp,
+                            fontWeight: FontWeight.w400,
+                            height: (20 / 12).h,
                           ),
                           Row(
                             children: [
@@ -173,13 +167,12 @@ class Post extends StatelessWidget {
                                   SizedBox(width: 8.w),
                                   Icon(Icons.golf_course, size: 16.r),
                                   SizedBox(width: 8.w),
-                                  Text(
-                                    '애견카페 방문기 작성하기',
-                                    style: TextStyle(
-                                      color: Colors.black,
-                                      fontSize: 14.sp,
-                                      fontWeight: FontWeight.w400,
-                                    ),
+                                  CustomText(
+                                    text: '애견카페 방문기 작성하기',
+                                    color: Colors.black,
+                                    fontSize: 14.sp,
+                                    fontWeight: FontWeight.w400,
+                                    height: (24 / 14).h,
                                   ),
                                 ],
                               ),
@@ -199,13 +192,11 @@ class Post extends StatelessWidget {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Icon(Icons.heart_broken, size: 18.r),
-                                  Text(
-                                    '119',
-                                    style: TextStyle(
-                                      color: Color(0xff1D1D1D),
-                                      fontSize: 12.sp,
-                                      fontWeight: FontWeight.w400,
-                                    ),
+                                  CustomText(
+                                    text: '119',
+                                    color: Color(0xff1D1D1D),
+                                    fontSize: 12.sp,
+                                    fontWeight: FontWeight.w400,
                                   ),
                                 ],
                               ),
@@ -214,13 +205,12 @@ class Post extends StatelessWidget {
                         ],
                       ),
                       SizedBox(height: 16.h),
-                      Text(
-                        postContent,
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 14.sp,
-                          fontWeight: FontWeight.w400,
-                        ),
+                      CustomText(
+                        text: postContent,
+                        color: Colors.black,
+                        fontSize: 14.sp,
+                        fontWeight: FontWeight.w400,
+                        height: (20 / 14).h,
                       ),
                       SizedBox(height: 53.h),
                     ],

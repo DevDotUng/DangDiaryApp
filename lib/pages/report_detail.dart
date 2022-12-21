@@ -1,3 +1,4 @@
+import 'package:dangdiarysample/components/custom_text.dart';
 import 'package:dangdiarysample/components/report_dropdown_container.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -23,13 +24,12 @@ class ReportDetail extends StatelessWidget {
             color: Colors.black,
           ),
         ),
-        title: Text(
-          '신고내역',
-          style: TextStyle(
-            color: Colors.black,
-            fontSize: 16.sp,
-            fontWeight: FontWeight.w400,
-          ),
+        title: CustomText(
+          text: '신고내역',
+          color: Colors.black,
+          fontSize: 16.sp,
+          fontWeight: FontWeight.w400,
+          height: (32 / 16).h,
         ),
         actions: [
           Padding(
@@ -49,13 +49,12 @@ class ReportDetail extends StatelessWidget {
           children: [
             Padding(
               padding: EdgeInsets.only(left: 24.w),
-              child: Text(
-                '오또캐드님의 신고내역',
-                style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 14.sp,
-                  fontWeight: FontWeight.w600,
-                ),
+              child: CustomText(
+                text: '오또캐드님의 신고내역',
+                color: Colors.black,
+                fontSize: 14.sp,
+                fontWeight: FontWeight.w600,
+                height: (24 / 14).h,
               ),
             ),
             Expanded(

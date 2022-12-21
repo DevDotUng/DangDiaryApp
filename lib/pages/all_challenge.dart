@@ -1,5 +1,7 @@
+import 'package:dangdiarysample/components/custom_text.dart';
 import 'package:dangdiarysample/controllers/all_challenge_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/painting.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -27,13 +29,12 @@ class AllChallenge extends StatelessWidget {
             ),
           ),
           centerTitle: true,
-          title: Text(
-            '모든 챌린지 리스트',
-            style: TextStyle(
-              color: Colors.black,
-              fontSize: 16.sp,
-              fontWeight: FontWeight.w400,
-            ),
+          title: CustomText(
+            text: '모든 챌린지 리스트',
+            color: Colors.black,
+            fontSize: 16.sp,
+            fontWeight: FontWeight.w400,
+            height: (32 / 16).h,
           ),
         ),
         body: Container(
@@ -53,13 +54,12 @@ class AllChallenge extends StatelessWidget {
                     children: [
                       Icon(Icons.padding, size: 24.r),
                       SizedBox(width: 4.w),
-                      Text(
-                        '모든 챌린지 리스트',
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 16.sp,
-                          fontWeight: FontWeight.w600,
-                        ),
+                      CustomText(
+                        text: '모든 챌린지 리스트',
+                        color: Colors.black,
+                        fontSize: 16.sp,
+                        fontWeight: FontWeight.w600,
+                        height: (24 / 16).h,
                       ),
                     ],
                   ),
@@ -130,13 +130,12 @@ class AllChallenge extends StatelessWidget {
                     ),
                   ),
                   SizedBox(width: 4.w),
-                  Text(
-                    '미달성 챌린지만 볼래요',
-                    style: TextStyle(
-                      color: Color(0xff7D7D7D),
-                      fontSize: 12.sp,
-                      fontWeight: FontWeight.w400,
-                    ),
+                  CustomText(
+                    text: '미달성 챌린지만 볼래요',
+                    color: Color(0xff7D7D7D),
+                    fontSize: 12.sp,
+                    fontWeight: FontWeight.w400,
+                    height: (20 / 14).h,
                   ),
                 ],
               ),
@@ -170,13 +169,12 @@ class AllChallenge extends StatelessWidget {
                             ),
                           ),
                           SizedBox(height: 4.h),
-                          Text(
-                            '챌린지 이름 챌린지\n이름 챌린지',
-                            style: TextStyle(
-                              color: Color(0xff7D7D7D),
-                              fontSize: 14.sp,
-                              fontWeight: FontWeight.w400,
-                            ),
+                          CustomText(
+                            text: '챌린지 이름 챌린지\n이름 챌린지',
+                            color: Color(0xff7D7D7D),
+                            fontSize: 14.sp,
+                            fontWeight: FontWeight.w400,
+                            height: (20 / 14).h,
                           ),
                         ],
                       ),
@@ -218,7 +216,6 @@ class AllChallenge extends StatelessWidget {
                   fontSize: 14.sp,
                   fontWeight: FontWeight.w400,
                 ),
-                contentPadding: EdgeInsets.only(left: 8.0.w),
                 suffixIcon: Icon(
                   Icons.search,
                   size: 24.r,
@@ -253,22 +250,20 @@ class AllChallenge extends StatelessWidget {
           children: [
             Icon(Icons.collections_bookmark, size: 24.r),
             SizedBox(width: 4.w),
-            Text(
-              '밀린 일기',
-              style: TextStyle(
-                color: Colors.black,
-                fontSize: 16.sp,
-                fontWeight: FontWeight.w600,
-              ),
+            CustomText(
+              text: '밀린 일기',
+              color: Colors.black,
+              fontSize: 16.sp,
+              fontWeight: FontWeight.w600,
+              height: (24 / 16).h,
             ),
             SizedBox(width: 4.w),
-            Text(
-              '3',
-              style: TextStyle(
-                color: Color(0xffFF9900),
-                fontSize: 16.sp,
-                fontWeight: FontWeight.w600,
-              ),
+            CustomText(
+              text: '3',
+              color: Color(0xffFF9900),
+              fontSize: 16.sp,
+              fontWeight: FontWeight.w600,
+              height: (24 / 16).h,
             ),
           ],
         ),
@@ -284,7 +279,7 @@ class AllChallenge extends StatelessWidget {
                     top: 4.h, bottom: 4.h, left: 4.w, right: 16.w),
                 child: Container(
                   padding: EdgeInsets.all(12.r),
-                  width: 310.w,
+                  width: Get.width * 0.75,
                   height: 104.h,
                   decoration: BoxDecoration(
                     color: Colors.white,
@@ -311,25 +306,23 @@ class AllChallenge extends StatelessWidget {
                       ),
                       SizedBox(width: 8.w),
                       Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        mainAxisAlignment: MainAxisAlignment.end,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(
-                            '한강공원 술래잡기',
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 16.sp,
-                              fontWeight: FontWeight.w400,
-                            ),
+                          CustomText(
+                            text: '한강공원 술래잡기',
+                            color: Colors.black,
+                            fontSize: 16.sp,
+                            fontWeight: FontWeight.w400,
                           ),
-                          Text(
-                            '2022.09.01에 했어요',
-                            style: TextStyle(
-                              color: Color(0xff7D7D7D),
-                              fontSize: 14.sp,
-                              fontWeight: FontWeight.w400,
-                            ),
+                          SizedBox(height: 6.h),
+                          CustomText(
+                            text: '2022.09.01에 했어요',
+                            color: Color(0xff7D7D7D),
+                            fontSize: 14.sp,
+                            fontWeight: FontWeight.w400,
                           ),
+                          SizedBox(height: 4.h),
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -353,11 +346,10 @@ class AllChallenge extends StatelessWidget {
                                   ),
                                 ],
                               ),
-                              SizedBox(height: 4.h),
                               Stack(
                                 children: [
                                   Container(
-                                    width: 190.w,
+                                    width: Get.width * 0.75 - 119.w,
                                     height: 8.h,
                                     decoration: BoxDecoration(
                                       color: Color(0xffD9D9D9),

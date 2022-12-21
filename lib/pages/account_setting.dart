@@ -1,3 +1,4 @@
+import 'package:dangdiarysample/components/custom_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -22,13 +23,12 @@ class AccountSetting extends StatelessWidget {
           ),
         ),
         centerTitle: true,
-        title: Text(
-          '계정 관리',
-          style: TextStyle(
-            color: Colors.black,
-            fontSize: 16.sp,
-            fontWeight: FontWeight.w400,
-          ),
+        title: CustomText(
+          text: '계정 관리',
+          color: Colors.black,
+          fontSize: 16.sp,
+          fontWeight: FontWeight.w400,
+          height: (32 / 16).h,
         ),
       ),
       body: Container(
@@ -47,21 +47,19 @@ class AccountSetting extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(
-                    '사용자명',
-                    style: TextStyle(
-                      color: Color(0xff545454),
-                      fontSize: 14.sp,
-                      fontWeight: FontWeight.w600,
-                    ),
+                  CustomText(
+                    text: '사용자명',
+                    color: Color(0xff545454),
+                    fontSize: 14.sp,
+                    fontWeight: FontWeight.w600,
+                    height: (24 / 14).h,
                   ),
-                  Text(
-                    '오또캐드',
-                    style: TextStyle(
-                      color: Color(0xff545454),
-                      fontSize: 14.sp,
-                      fontWeight: FontWeight.w600,
-                    ),
+                  CustomText(
+                    text: '오또캐드',
+                    color: Color(0xff545454),
+                    fontSize: 14.sp,
+                    fontWeight: FontWeight.w600,
+                    height: (24 / 14).h,
                   ),
                 ],
               ),
@@ -78,21 +76,19 @@ class AccountSetting extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(
-                    '아이디',
-                    style: TextStyle(
-                      color: Color(0xff545454),
-                      fontSize: 14.sp,
-                      fontWeight: FontWeight.w600,
-                    ),
+                  CustomText(
+                    text: '아이디',
+                    color: Color(0xff545454),
+                    fontSize: 14.sp,
+                    fontWeight: FontWeight.w600,
+                    height: (24 / 14).h,
                   ),
-                  Text(
-                    'asdalk821',
-                    style: TextStyle(
-                      color: Color(0xff545454),
-                      fontSize: 14.sp,
-                      fontWeight: FontWeight.w600,
-                    ),
+                  CustomText(
+                    text: 'asdalk821',
+                    color: Color(0xff545454),
+                    fontSize: 14.sp,
+                    fontWeight: FontWeight.w600,
+                    height: (24 / 14).h,
                   ),
                 ],
               ),
@@ -106,13 +102,12 @@ class AccountSetting extends StatelessWidget {
                 borderRadius: BorderRadius.circular(15.r),
               ),
               child: Center(
-                child: Text(
-                  '카카오톡계정 정보',
-                  style: TextStyle(
-                    color: Color(0xff545454),
-                    fontSize: 14.sp,
-                    fontWeight: FontWeight.w600,
-                  ),
+                child: CustomText(
+                  text: '카카오톡계정 정보',
+                  color: Color(0xff545454),
+                  fontSize: 14.sp,
+                  fontWeight: FontWeight.w600,
+                  height: (24 / 14).h,
                 ),
               ),
             ),
@@ -128,13 +123,12 @@ class AccountSetting extends StatelessWidget {
                 ),
               ),
               child: Center(
-                child: Text(
-                  '로그아웃',
-                  style: TextStyle(
-                    color: Color(0xffF02E2E),
-                    fontSize: 14.sp,
-                    fontWeight: FontWeight.w600,
-                  ),
+                child: CustomText(
+                  text: '로그아웃',
+                  color: Color(0xffF02E2E),
+                  fontSize: 14.sp,
+                  fontWeight: FontWeight.w600,
+                  height: (32 / 16).h,
                 ),
               ),
             ),
@@ -150,13 +144,12 @@ class AccountSetting extends StatelessWidget {
                 ),
               ),
               child: Center(
-                child: Text(
-                  '아쉽지만 탈퇴할래요!',
-                  style: TextStyle(
-                    color: Color(0xffF02E2E),
-                    fontSize: 14.sp,
-                    fontWeight: FontWeight.w600,
-                  ),
+                child: CustomText(
+                  text: '아쉽지만 탈퇴할래요!',
+                  color: Color(0xffF02E2E),
+                  fontSize: 14.sp,
+                  fontWeight: FontWeight.w600,
+                  height: (32 / 16).h,
                 ),
               ),
             ),

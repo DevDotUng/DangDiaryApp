@@ -1,3 +1,4 @@
+import 'package:dangdiarysample/components/custom_text.dart';
 import 'package:dangdiarysample/controllers/sticker_controller.dart';
 import 'package:dangdiarysample/skeletons/sticker_skeleton.dart';
 import 'package:flutter/material.dart';
@@ -28,13 +29,12 @@ class Sticker extends StatelessWidget {
           size: 32.r,
           color: Colors.black,
         ),
-        title: Text(
-          '칭찬 스티커',
-          style: TextStyle(
-            color: Colors.black,
-            fontSize: 16.sp,
-            fontWeight: FontWeight.w400,
-          ),
+        title: CustomText(
+          text: '칭찬 스티커',
+          color: Colors.black,
+          fontSize: 16.sp,
+          fontWeight: FontWeight.w400,
+          height: (32 / 16).h,
         ),
       ),
       body: Stack(
@@ -61,39 +61,35 @@ class Sticker extends StatelessWidget {
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(
-                              '초코가 모은',
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 24.sp,
-                                fontWeight: FontWeight.w400,
-                              ),
+                            CustomText(
+                              text: '초코가 모은',
+                              color: Colors.black,
+                              fontSize: 24.sp,
+                              fontWeight: FontWeight.w400,
+                              height: (32 / 24).h,
                             ),
                             Row(
                               children: [
-                                Text(
-                                  '칭찬 스티커는 ',
-                                  style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 24.sp,
-                                    fontWeight: FontWeight.w400,
-                                  ),
+                                CustomText(
+                                  text: '칭찬 스티커는 ',
+                                  color: Colors.black,
+                                  fontSize: 24.sp,
+                                  fontWeight: FontWeight.w400,
+                                  height: (32 / 24).h,
                                 ),
-                                Text(
-                                  '16',
-                                  style: TextStyle(
-                                    color: Color(0xffFF9900),
-                                    fontSize: 24.sp,
-                                    fontWeight: FontWeight.w600,
-                                  ),
+                                CustomText(
+                                  text: '16',
+                                  color: Color(0xffFF9900),
+                                  fontSize: 24.sp,
+                                  fontWeight: FontWeight.w400,
+                                  height: (32 / 24).h,
                                 ),
-                                Text(
-                                  '개에요',
-                                  style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 24.sp,
-                                    fontWeight: FontWeight.w400,
-                                  ),
+                                CustomText(
+                                  text: '개에요',
+                                  color: Colors.black,
+                                  fontSize: 24.sp,
+                                  fontWeight: FontWeight.w400,
+                                  height: (32 / 24).h,
                                 ),
                               ],
                             ),
@@ -134,22 +130,20 @@ class Sticker extends StatelessWidget {
                           children: [
                             Icon(Icons.book, size: 24.r),
                             SizedBox(width: 4.w),
-                            Text(
-                              '밀린 일기',
-                              style: TextStyle(
-                                color: Color(0xff7D7D7D),
-                                fontSize: 14.sp,
-                                fontWeight: FontWeight.w600,
-                              ),
+                            CustomText(
+                              text: '밀린 일기',
+                              color: Color(0xff7D7D7D),
+                              fontSize: 14.sp,
+                              fontWeight: FontWeight.w600,
+                              height: (24 / 14).h,
                             ),
                             SizedBox(width: 4.w),
-                            Text(
-                              '3',
-                              style: TextStyle(
-                                color: Color(0xffFF9900),
-                                fontSize: 14.sp,
-                                fontWeight: FontWeight.w600,
-                              ),
+                            CustomText(
+                              text: '3',
+                              color: Color(0xffFF9900),
+                              fontSize: 14.sp,
+                              fontWeight: FontWeight.w600,
+                              height: (24 / 14).h,
                             ),
                           ],
                         ),
@@ -172,13 +166,11 @@ class Sticker extends StatelessWidget {
                                   children: [
                                     Padding(
                                       padding: EdgeInsets.only(left: 16.0.w),
-                                      child: Text(
-                                        '모든 챌린지 리스트 보러가기',
-                                        style: TextStyle(
-                                          color: Color(0xff7D7D7D),
-                                          fontSize: 14.sp,
-                                          fontWeight: FontWeight.w600,
-                                        ),
+                                      child: CustomText(
+                                        text: '모든 챌린지 리스트 보러가기',
+                                        color: Color(0xff7D7D7D),
+                                        fontSize: 14.sp,
+                                        fontWeight: FontWeight.w600,
                                       ),
                                     ),
                                     Padding(
@@ -215,13 +207,12 @@ class Sticker extends StatelessWidget {
                         return Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(
-                              '2022.09',
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 16.sp,
-                                fontWeight: FontWeight.w600,
-                              ),
+                            CustomText(
+                              text: '2022.09',
+                              color: Colors.black,
+                              fontSize: 16.sp,
+                              fontWeight: FontWeight.w600,
+                              height: (24 / 16).h,
                             ),
                             SizedBox(height: 8.h),
                             Container(
@@ -232,40 +223,45 @@ class Sticker extends StatelessWidget {
                                 itemBuilder: (context, jndex) {
                                   return Padding(
                                     padding: EdgeInsets.only(right: 8.0.w),
-                                    child: Column(
-                                      children: [
-                                        Container(
-                                          width: 104.w,
-                                          height: 104.h,
-                                          decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(10.r),
-                                            border: Border.all(
-                                              color: Color(0xffEAEAEA),
+                                    child: Container(
+                                      width: 104.w,
+                                      child: Column(
+                                        children: [
+                                          Container(
+                                            width: 104.w,
+                                            height: 104.h,
+                                            decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(10.r),
+                                              border: Border.all(
+                                                color: Color(0xffEAEAEA),
+                                              ),
                                             ),
-                                          ),
-                                          child: Center(
-                                            child: Container(
-                                              width: 80.w,
-                                              height: 80.h,
-                                              decoration: BoxDecoration(
-                                                color: Colors.primaries[jndex],
-                                                borderRadius:
-                                                    BorderRadius.circular(40.r),
+                                            child: Center(
+                                              child: Container(
+                                                width: 80.w,
+                                                height: 80.h,
+                                                decoration: BoxDecoration(
+                                                  color:
+                                                      Colors.primaries[jndex],
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          40.r),
+                                                ),
                                               ),
                                             ),
                                           ),
-                                        ),
-                                        SizedBox(height: 8.h),
-                                        Text(
-                                          '챌린지 이름 챌린지\n이름 챌린지 이름',
-                                          style: TextStyle(
+                                          SizedBox(height: 8.h),
+                                          CustomText(
+                                            text: '챌린지 이름 챌린지 이름 챌린지 이름',
+                                            maxLines: 2,
                                             color: Color(0xff7D7D7D),
                                             fontSize: 14.sp,
                                             fontWeight: FontWeight.w400,
+                                            height: (20 / 14).h,
                                           ),
-                                        ),
-                                      ],
+                                        ],
+                                      ),
                                     ),
                                   );
                                 },

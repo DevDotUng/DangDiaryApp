@@ -1,3 +1,4 @@
+import 'package:dangdiarysample/components/custom_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -22,13 +23,11 @@ class DogProfileSetting extends StatelessWidget {
           ),
         ),
         centerTitle: true,
-        title: Text(
-          '견적사항 관리',
-          style: TextStyle(
-            color: Colors.black,
-            fontSize: 16.sp,
-            fontWeight: FontWeight.w400,
-          ),
+        title: CustomText(
+          text: '견적사항 관리',
+          color: Colors.black,
+          fontSize: 16.sp,
+          fontWeight: FontWeight.w400,
         ),
       ),
       body: Container(
@@ -92,13 +91,11 @@ class DogProfileSetting extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        Text(
-                          '견적 사항',
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 14.sp,
-                            fontWeight: FontWeight.w600,
-                          ),
+                        CustomText(
+                          text: '견적 사항',
+                          color: Colors.black,
+                          fontSize: 14.sp,
+                          fontWeight: FontWeight.w600,
                         ),
                       ],
                     ),
@@ -114,13 +111,11 @@ class DogProfileSetting extends StatelessWidget {
                               borderRadius: BorderRadius.circular(15.r),
                             ),
                             child: Center(
-                              child: Text(
-                                '이름',
-                                style: TextStyle(
-                                  color: Color(0xff545454),
-                                  fontSize: 14.sp,
-                                  fontWeight: FontWeight.w600,
-                                ),
+                              child: CustomText(
+                                text: '이름',
+                                color: Color(0xff545454),
+                                fontSize: 14.sp,
+                                fontWeight: FontWeight.w600,
                               ),
                             ),
                           ),
@@ -135,13 +130,11 @@ class DogProfileSetting extends StatelessWidget {
                               borderRadius: BorderRadius.circular(15.r),
                             ),
                             child: Center(
-                              child: Text(
-                                '초코',
-                                style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 14.sp,
-                                  fontWeight: FontWeight.w400,
-                                ),
+                              child: CustomText(
+                                text: '초코',
+                                color: Colors.black,
+                                fontSize: 14.sp,
+                                fontWeight: FontWeight.w400,
                               ),
                             ),
                           ),
@@ -160,13 +153,11 @@ class DogProfileSetting extends StatelessWidget {
                               borderRadius: BorderRadius.circular(15.r),
                             ),
                             child: Center(
-                              child: Text(
-                                '견종',
-                                style: TextStyle(
-                                  color: Color(0xff545454),
-                                  fontSize: 14.sp,
-                                  fontWeight: FontWeight.w600,
-                                ),
+                              child: CustomText(
+                                text: '견종',
+                                color: Color(0xff545454),
+                                fontSize: 14.sp,
+                                fontWeight: FontWeight.w600,
                               ),
                             ),
                           ),
@@ -181,13 +172,11 @@ class DogProfileSetting extends StatelessWidget {
                               borderRadius: BorderRadius.circular(15.r),
                             ),
                             child: Center(
-                              child: Text(
-                                '웰시코기',
-                                style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 14.sp,
-                                  fontWeight: FontWeight.w400,
-                                ),
+                              child: CustomText(
+                                text: '웰시코기',
+                                color: Colors.black,
+                                fontSize: 14.sp,
+                                fontWeight: FontWeight.w400,
                               ),
                             ),
                           ),
@@ -206,13 +195,11 @@ class DogProfileSetting extends StatelessWidget {
                               borderRadius: BorderRadius.circular(15.r),
                             ),
                             child: Center(
-                              child: Text(
-                                '성별',
-                                style: TextStyle(
-                                  color: Color(0xff545454),
-                                  fontSize: 14.sp,
-                                  fontWeight: FontWeight.w600,
-                                ),
+                              child: CustomText(
+                                text: '성별',
+                                color: Color(0xff545454),
+                                fontSize: 14.sp,
+                                fontWeight: FontWeight.w600,
                               ),
                             ),
                           ),
@@ -245,13 +232,11 @@ class DogProfileSetting extends StatelessWidget {
                               borderRadius: BorderRadius.circular(15.r),
                             ),
                             child: Center(
-                              child: Text(
-                                '생일',
-                                style: TextStyle(
-                                  color: Color(0xff545454),
-                                  fontSize: 14.sp,
-                                  fontWeight: FontWeight.w600,
-                                ),
+                              child: CustomText(
+                                text: '생일',
+                                color: Color(0xff545454),
+                                fontSize: 14.sp,
+                                fontWeight: FontWeight.w600,
                               ),
                             ),
                           ),
@@ -266,13 +251,11 @@ class DogProfileSetting extends StatelessWidget {
                               borderRadius: BorderRadius.circular(15.r),
                             ),
                             child: Center(
-                              child: Text(
-                                '2000/00/00',
-                                style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 14.sp,
-                                  fontWeight: FontWeight.w400,
-                                ),
+                              child: CustomText(
+                                text: '2000/00/00',
+                                color: Colors.black,
+                                fontSize: 14.sp,
+                                fontWeight: FontWeight.w400,
                               ),
                             ),
                           ),
@@ -292,13 +275,11 @@ class DogProfileSetting extends StatelessWidget {
                   borderRadius: BorderRadius.circular(10.r),
                 ),
                 child: Center(
-                  child: Text(
-                    '이렇게 바꿀래요!',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 16.sp,
-                      fontWeight: FontWeight.w600,
-                    ),
+                  child: CustomText(
+                    text: '이렇게 바꿀래요!',
+                    color: Colors.white,
+                    fontSize: 16.sp,
+                    fontWeight: FontWeight.w600,
                   ),
                 ),
               ),

@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:dangdiarysample/components/custom_text.dart';
 import 'package:dangdiarysample/controllers/write_diary_controller.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
@@ -33,13 +34,11 @@ class WriteDiary extends StatelessWidget {
                   children: [
                     Icon(Icons.message, size: 24.r),
                     SizedBox(width: 8.w),
-                    Text(
-                      '일기를 다음에 쓰시겠어요?',
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 20.sp,
-                        fontWeight: FontWeight.w600,
-                      ),
+                    CustomText(
+                      text: '일기를 다음에 쓰시겠어요?',
+                      color: Colors.black,
+                      fontSize: 20.sp,
+                      fontWeight: FontWeight.w600,
                     ),
                   ],
                 ),
@@ -50,6 +49,7 @@ class WriteDiary extends StatelessWidget {
                       color: Color(0xff7D7D7D),
                       fontSize: 14.sp,
                       fontWeight: FontWeight.w400,
+                      height: (20 / 14).h,
                     ),
                     children: <TextSpan>[
                       TextSpan(text: '괜찮아요. 이번에 쓰지 않더라도, '),
@@ -59,6 +59,7 @@ class WriteDiary extends StatelessWidget {
                           color: Colors.black,
                           fontSize: 14.sp,
                           fontWeight: FontWeight.w400,
+                          height: (20 / 14).h,
                         ),
                       ),
                       TextSpan(
@@ -80,13 +81,11 @@ class WriteDiary extends StatelessWidget {
                       borderRadius: BorderRadius.circular(10.0.r),
                     ),
                     child: Center(
-                      child: Text(
-                        '알겠어요',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 16.sp,
-                          fontWeight: FontWeight.w600,
-                        ),
+                      child: CustomText(
+                        text: '알겠어요',
+                        color: Colors.white,
+                        fontSize: 16.sp,
+                        fontWeight: FontWeight.w600,
                       ),
                     ),
                   ),
@@ -95,14 +94,13 @@ class WriteDiary extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text(
-                      '챌린지 목록으로 이동하고 싶어요',
-                      style: TextStyle(
-                        color: Color(0xff6B6B6B),
-                        fontSize: 12.sp,
-                        fontWeight: FontWeight.w400,
-                        decoration: TextDecoration.underline,
-                      ),
+                    CustomText(
+                      text: '챌린지 목록으로 이동하고 싶어요',
+                      color: Color(0xff6B6B6B),
+                      fontSize: 12.sp,
+                      fontWeight: FontWeight.w400,
+                      decoration: TextDecoration.underline,
+                      height: (20 / 12).h,
                     ),
                   ],
                 ),
@@ -139,18 +137,16 @@ class WriteDiary extends StatelessWidget {
             ),
           ),
           centerTitle: true,
-          title: Text(
-            '일기쓰기',
-            style: TextStyle(
-              color: Colors.black,
-              fontSize: 16.sp,
-              fontWeight: FontWeight.w400,
-            ),
+          title: CustomText(
+            text: '일기쓰기',
+            color: Colors.black,
+            fontSize: 16.sp,
+            fontWeight: FontWeight.w400,
+            height: (32 / 16).h,
           ),
           actions: [
             Padding(
-              padding:
-                  EdgeInsets.symmetric(vertical: 4.0.h, horizontal: 29.0.w),
+              padding: EdgeInsets.symmetric(vertical: 8.0, horizontal: 24.0.w),
               child: Container(
                 width: 71.w,
                 height: 32.h,
@@ -159,13 +155,11 @@ class WriteDiary extends StatelessWidget {
                   borderRadius: BorderRadius.circular(10.0.r),
                 ),
                 child: Center(
-                  child: Text(
-                    '일기제출',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 14.sp,
-                      fontWeight: FontWeight.w400,
-                    ),
+                  child: CustomText(
+                    text: '일기제출',
+                    color: Colors.white,
+                    fontSize: 14.sp,
+                    fontWeight: FontWeight.w400,
                   ),
                 ),
               ),
@@ -190,30 +184,28 @@ class WriteDiary extends StatelessWidget {
                       SizedBox(width: 16.w),
                       Icon(Icons.golf_course),
                       SizedBox(width: 4.w),
-                      Text(
-                        '챌린지명',
-                        style: TextStyle(
-                          color: Color(0xff545454),
-                          fontSize: 14.sp,
-                          fontWeight: FontWeight.w600,
-                        ),
+                      CustomText(
+                        text: '챌린지명',
+                        color: Color(0xff545454),
+                        fontSize: 14.sp,
+                        fontWeight: FontWeight.w600,
+                        height: (24 / 14).h,
                       ),
                       SizedBox(width: 29.w),
-                      Text(
-                        '한강공원 술래잡기',
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 14.sp,
-                          fontWeight: FontWeight.w400,
-                        ),
+                      CustomText(
+                        text: '한강공원 술래잡기',
+                        color: Colors.black,
+                        fontSize: 14.sp,
+                        fontWeight: FontWeight.w400,
+                        height: (24 / 14).h,
                       ),
                     ],
                   ),
                 ),
                 SizedBox(height: 16.h),
                 Container(
+                  padding: EdgeInsets.symmetric(vertical: 12.h, horizontal: 16),
                   width: double.infinity,
-                  height: 132.h,
                   decoration: BoxDecoration(
                     color: Color(0xffF5F5F5),
                     borderRadius: BorderRadius.circular(15.0.r),
@@ -223,16 +215,13 @@ class WriteDiary extends StatelessWidget {
                     children: [
                       Row(
                         children: [
-                          SizedBox(width: 16.w),
-                          Icon(Icons.calendar_month),
+                          Icon(Icons.calendar_month, size: 16.r),
                           SizedBox(width: 4.w),
-                          Text(
-                            '도전 날짜',
-                            style: TextStyle(
-                              color: Color(0xff545454),
-                              fontSize: 14.sp,
-                              fontWeight: FontWeight.w600,
-                            ),
+                          CustomText(
+                            text: '도전 날짜',
+                            color: Color(0xff545454),
+                            fontSize: 14.sp,
+                            fontWeight: FontWeight.w600,
                           ),
                           SizedBox(width: 24.w),
                           GestureDetector(
@@ -240,14 +229,13 @@ class WriteDiary extends StatelessWidget {
                               WriteDiaryController.to.changeDate(context);
                             },
                             child: Obx(
-                              () => Text(
-                                WriteDiaryController.to.date.value,
-                                style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 14.sp,
-                                  fontWeight: FontWeight.w400,
-                                  decoration: TextDecoration.underline,
-                                ),
+                              () => CustomText(
+                                text: WriteDiaryController.to.date.value,
+                                color: Colors.black,
+                                fontSize: 14.sp,
+                                fontWeight: FontWeight.w400,
+                                height: (24 / 14).h,
+                                decoration: TextDecoration.underline,
                               ),
                             ),
                           ),
@@ -255,76 +243,67 @@ class WriteDiary extends StatelessWidget {
                       ),
                       Row(
                         children: [
-                          SizedBox(width: 16.w),
-                          Icon(Icons.fmd_good_outlined),
+                          Icon(Icons.fmd_good_outlined, size: 16.r),
                           SizedBox(width: 4.w),
-                          Text(
-                            '장소',
-                            style: TextStyle(
-                              color: Color(0xff545454),
-                              fontSize: 14.sp,
-                              fontWeight: FontWeight.w600,
-                            ),
+                          CustomText(
+                            text: '장소',
+                            color: Color(0xff545454),
+                            fontSize: 14.sp,
+                            fontWeight: FontWeight.w600,
+                            height: (24 / 14).h,
                           ),
                           SizedBox(width: 52.w),
-                          Text(
-                            '캘리포니아 협재비치',
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 14.sp,
-                              fontWeight: FontWeight.w400,
-                              decoration: TextDecoration.underline,
-                            ),
+                          CustomText(
+                            text: '캘리포니아 협재비치',
+                            color: Colors.black,
+                            fontSize: 14.sp,
+                            fontWeight: FontWeight.w400,
+                            height: (24 / 14).h,
+                            decoration: TextDecoration.underline,
                           ),
                         ],
                       ),
                       Row(
                         children: [
-                          SizedBox(width: 16.w),
-                          Icon(Icons.sunny),
+                          Icon(Icons.sunny, size: 16.r),
                           SizedBox(width: 4.w),
-                          Text(
-                            '날씨',
-                            style: TextStyle(
-                              color: Color(0xff545454),
-                              fontSize: 14.sp,
-                              fontWeight: FontWeight.w600,
-                            ),
+                          CustomText(
+                            text: '날씨',
+                            color: Color(0xff545454),
+                            fontSize: 14.sp,
+                            fontWeight: FontWeight.w600,
+                            height: (24 / 14).h,
                           ),
                           SizedBox(width: 52.w),
-                          Text(
-                            '맑음',
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 14.sp,
-                              fontWeight: FontWeight.w400,
-                              decoration: TextDecoration.underline,
-                            ),
+                          CustomText(
+                            text: '맑음',
+                            color: Colors.black,
+                            fontSize: 14.sp,
+                            fontWeight: FontWeight.w400,
+                            height: (24 / 14).h,
+                            decoration: TextDecoration.underline,
                           ),
                         ],
                       ),
                       Row(
                         children: [
-                          SizedBox(width: 16.w),
-                          Icon(Icons.control_point),
+                          Icon(Icons.control_point, size: 16.r),
                           SizedBox(width: 4.w),
-                          Text(
-                            '아이 기분',
-                            style: TextStyle(
-                              color: Color(0xff545454),
-                              fontSize: 14.sp,
-                              fontWeight: FontWeight.w600,
-                            ),
+                          CustomText(
+                            text: '아이 기분',
+                            color: Color(0xff545454),
+                            fontSize: 14.sp,
+                            fontWeight: FontWeight.w600,
+                            height: (24 / 14).h,
                           ),
                           SizedBox(width: 24.w),
-                          Text(
-                            '아주 좋았어요',
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 14.sp,
-                              fontWeight: FontWeight.w400,
-                              decoration: TextDecoration.underline,
-                            ),
+                          CustomText(
+                            text: '아주 좋았어요',
+                            color: Colors.black,
+                            fontSize: 14.sp,
+                            fontWeight: FontWeight.w400,
+                            height: (24 / 14).h,
+                            decoration: TextDecoration.underline,
                           ),
                         ],
                       ),
@@ -340,6 +319,7 @@ class WriteDiary extends StatelessWidget {
                       color: Colors.black,
                       fontSize: 14.sp,
                       fontWeight: FontWeight.w400,
+                      height: (24 / 14).h,
                     ),
                     decoration: InputDecoration(
                       hintText: '일기 제목을 작성해주세요',
@@ -347,8 +327,9 @@ class WriteDiary extends StatelessWidget {
                         color: Color(0xffA6A6A6),
                         fontSize: 14.sp,
                         fontWeight: FontWeight.w400,
+                        height: (24 / 14).h,
                       ),
-                      contentPadding: EdgeInsets.only(top: 7.5.h),
+                      contentPadding: EdgeInsets.only(top: 3.h),
                       prefixIcon: Padding(
                         padding: EdgeInsets.symmetric(horizontal: 4.0.w),
                         child: Icon(
@@ -397,17 +378,24 @@ class WriteDiary extends StatelessWidget {
                   width: double.infinity,
                   child: TextField(
                     maxLines: 15,
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 14.sp,
+                      fontWeight: FontWeight.w400,
+                      height: (24 / 14).h,
+                    ),
                     decoration: InputDecoration(
                       hintText: '일기 내용을 작성해주세요',
                       hintStyle: TextStyle(
                         color: Color(0xffA6A6A6),
                         fontSize: 14.sp,
                         fontWeight: FontWeight.w400,
+                        height: (24 / 14).h,
                       ),
-                      contentPadding: EdgeInsets.only(top: 36.0.h),
+                      contentPadding: EdgeInsets.only(top: 20.0.h),
                       prefixIcon: Padding(
                         padding: EdgeInsets.only(
-                          bottom: ((15 - 1) * 19).h,
+                          bottom: ((19.2 - 1) * 19).h,
                         ),
                         child: Icon(
                           Icons.book,

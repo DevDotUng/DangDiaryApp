@@ -1,3 +1,4 @@
+import 'package:dangdiarysample/components/custom_text.dart';
 import 'package:dangdiarysample/components/later_dialog.dart';
 import 'package:dangdiarysample/controllers/challenge_detail_controller.dart';
 import 'package:dangdiarysample/skeletons/challenge_detail_skeleton.dart';
@@ -21,7 +22,7 @@ class ChallengeDetail extends StatelessWidget {
           child: Container(
             padding: EdgeInsets.all(24.0.r),
             width: double.infinity,
-            height: 395.h,
+            height: 430.h,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(15.r),
             ),
@@ -31,13 +32,12 @@ class ChallengeDetail extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    Text(
-                      '잘했어요!\n이제 일기를 쓰러 가볼까요?',
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 20.sp,
-                        fontWeight: FontWeight.w600,
-                      ),
+                    CustomText(
+                      text: '잘했어요!\n이제 일기를 쓰러 가볼까요?',
+                      color: Colors.black,
+                      fontSize: 20.sp,
+                      fontWeight: FontWeight.w600,
+                      height: (24 / 20).h,
                     ),
                   ],
                 ),
@@ -50,14 +50,13 @@ class ChallengeDetail extends StatelessWidget {
                     borderRadius: BorderRadius.circular(65.0.r),
                   ),
                 ),
-                SizedBox(height: 16.h),
-                Text(
-                  '일기를 쓰면 이 칭찬스티커를 받을 수 있어요!',
-                  style: TextStyle(
-                    color: Color(0xff7D7D7D),
-                    fontSize: 14.sp,
-                    fontWeight: FontWeight.w400,
-                  ),
+                SizedBox(height: 6.h),
+                CustomText(
+                  text: '일기를 쓰면 이 칭찬스티커를 받을 수 있어요!',
+                  color: Color(0xff7D7D7D),
+                  fontSize: 14.sp,
+                  fontWeight: FontWeight.w400,
+                  height: (24 / 14).h,
                 ),
                 SizedBox(height: 29.h),
                 GestureDetector(
@@ -72,26 +71,22 @@ class ChallengeDetail extends StatelessWidget {
                       borderRadius: BorderRadius.circular(10.0.r),
                     ),
                     child: Center(
-                      child: Text(
-                        '일기를 쓰러 갈래요',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 16.sp,
-                          fontWeight: FontWeight.w600,
-                        ),
+                      child: CustomText(
+                        text: '일기를 쓰러 갈래요',
+                        color: Colors.white,
+                        fontSize: 16.sp,
+                        fontWeight: FontWeight.w600,
                       ),
                     ),
                   ),
                 ),
-                SizedBox(height: 8.h),
-                Text(
-                  '일기는 다음에 쓸게요',
-                  style: TextStyle(
-                    color: Color(0xff6B6B6B),
-                    fontSize: 12.sp,
-                    fontWeight: FontWeight.w400,
-                    decoration: TextDecoration.underline,
-                  ),
+                CustomText(
+                  text: '일기는 다음에 쓸게요',
+                  color: Color(0xff6B6B6B),
+                  fontSize: 12.sp,
+                  fontWeight: FontWeight.w400,
+                  height: (20 / 12).h,
+                  decoration: TextDecoration.underline,
                 ),
               ],
             ),
@@ -208,13 +203,12 @@ class ChallengeDetail extends StatelessWidget {
               sliver: SliverList(
                 delegate: SliverChildListDelegate(
                   [
-                    Text(
-                      '한강공원 술래잡기',
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 24.sp,
-                        fontWeight: FontWeight.w600,
-                      ),
+                    CustomText(
+                      text: '한강공원 술래잡기',
+                      color: Colors.black,
+                      fontSize: 24.sp,
+                      fontWeight: FontWeight.w600,
+                      height: (32 / 24).h,
                     ),
                     SizedBox(height: 16.h),
                     Row(
@@ -222,13 +216,12 @@ class ChallengeDetail extends StatelessWidget {
                       children: [
                         Row(
                           children: [
-                            Text(
-                              '총 00회 진행',
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 16.sp,
-                                fontWeight: FontWeight.w600,
-                              ),
+                            CustomText(
+                              text: '총 00회 진행',
+                              color: Colors.black,
+                              fontSize: 16.sp,
+                              fontWeight: FontWeight.w600,
+                              height: (24 / 16).h,
                             ),
                             Padding(
                               padding: EdgeInsets.symmetric(horizontal: 8.0.w),
@@ -238,13 +231,12 @@ class ChallengeDetail extends StatelessWidget {
                                 color: Colors.black,
                               ),
                             ),
-                            Text(
-                              '총 00회 진행',
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 16.sp,
-                                fontWeight: FontWeight.w600,
-                              ),
+                            CustomText(
+                              text: '총 00회 진행',
+                              color: Colors.black,
+                              fontSize: 16.sp,
+                              fontWeight: FontWeight.w600,
+                              height: (24 / 16).h,
                             ),
                           ],
                         ),
@@ -284,17 +276,16 @@ class ChallengeDetail extends StatelessWidget {
                       duration: Duration(milliseconds: 500),
                       curve: Curves.fastOutSlowIn,
                       child: Obx(
-                        () => Text(
-                          ChallengeDetailController.to.challengeContent,
+                        () => CustomText(
+                          text: ChallengeDetailController.to.challengeContent,
                           maxLines: ChallengeDetailController.to.isMore.value
                               ? 10
                               : 4,
-                          style: TextStyle(
-                            color: Color(0xff7D7D7D),
-                            fontSize: 16.sp,
-                            fontWeight: FontWeight.w400,
-                            overflow: TextOverflow.ellipsis,
-                          ),
+                          color: Color(0xff7D7D7D),
+                          fontSize: 16.sp,
+                          fontWeight: FontWeight.w400,
+                          overflow: TextOverflow.ellipsis,
+                          height: (24 / 16).h,
                         ),
                       ),
                     ),
@@ -321,13 +312,12 @@ class ChallengeDetail extends StatelessWidget {
                                   ),
                                 ),
                               ),
-                              Text(
-                                '더보기',
-                                style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 14.sp,
-                                  fontWeight: FontWeight.w400,
-                                ),
+                              CustomText(
+                                text: '더보기',
+                                color: Colors.black,
+                                fontSize: 14.sp,
+                                fontWeight: FontWeight.w400,
+                                height: (24 / 14).h,
                               ),
                             ],
                           ),
@@ -339,7 +329,6 @@ class ChallengeDetail extends StatelessWidget {
                       padding: EdgeInsets.symmetric(
                           vertical: 12.h, horizontal: 16.w),
                       width: 327.w,
-                      height: 116.h,
                       decoration: BoxDecoration(
                         border: Border.all(
                           color: Color(0xffA6A6A6),
@@ -349,13 +338,12 @@ class ChallengeDetail extends StatelessWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(
-                            '인증 방법',
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 16.sp,
-                              fontWeight: FontWeight.w600,
-                            ),
+                          CustomText(
+                            text: '인증 방법',
+                            color: Colors.black,
+                            fontSize: 16.sp,
+                            fontWeight: FontWeight.w600,
+                            height: (24 / 16).h,
                           ),
                           SizedBox(height: 4.h),
                           Row(
@@ -368,15 +356,15 @@ class ChallengeDetail extends StatelessWidget {
                               SizedBox(width: 4.w),
                               Container(
                                 width: Get.width - 102.w,
-                                child: Text(
-                                  '인증 방법 설명 인증 방법 설명 인증 방법 설명 인증 방법 설명 인증 방법 설명 인증 방법 설명 인증 방법 설명 인증 방법 설명',
-                                  style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 14.sp,
-                                    fontWeight: FontWeight.w400,
-                                    overflow: TextOverflow.ellipsis,
-                                  ),
+                                child: CustomText(
+                                  text:
+                                      '인증 방법 설명 인증 방법 설명 인증 방법 설명 인증 방법 설명 인증 방법 설명 인증 방법 설명 인증 방법 설명 인증 방법 설명',
                                   maxLines: 10,
+                                  color: Colors.black,
+                                  fontSize: 14.sp,
+                                  fontWeight: FontWeight.w400,
+                                  height: (20 / 14).h,
+                                  overflow: TextOverflow.ellipsis,
                                 ),
                               ),
                             ],
@@ -388,15 +376,14 @@ class ChallengeDetail extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
-                          '다른 아이들은 이렇게 했어요!',
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 16.sp,
-                            fontWeight: FontWeight.w600,
-                          ),
+                        CustomText(
+                          text: '다른 아이들은 이렇게 했어요!',
+                          color: Colors.black,
+                          fontSize: 16.sp,
+                          fontWeight: FontWeight.w600,
+                          height: (24 / 16).h,
                         ),
-                        Icon(Icons.menu),
+                        Icon(Icons.arrow_forward_ios_sharp, size: 16.r),
                       ],
                     ),
                     SizedBox(height: 4.h),
@@ -447,13 +434,11 @@ class ChallengeDetail extends StatelessWidget {
                                         ),
                                       ),
                                       child: Center(
-                                        child: Text(
-                                          '다음에 다시 할게요',
-                                          style: TextStyle(
-                                            color: Color(0xffA6A6A6),
-                                            fontSize: 16.sp,
-                                            fontWeight: FontWeight.w600,
-                                          ),
+                                        child: CustomText(
+                                          text: '다음에 다시 할게요',
+                                          color: Color(0xffA6A6A6),
+                                          fontSize: 16.sp,
+                                          fontWeight: FontWeight.w600,
                                         ),
                                       ),
                                     ),
@@ -473,13 +458,11 @@ class ChallengeDetail extends StatelessWidget {
                                             BorderRadius.circular(10.0.r),
                                       ),
                                       child: Center(
-                                        child: Text(
-                                          '다했어요!',
-                                          style: TextStyle(
-                                            color: Colors.white,
-                                            fontSize: 16.sp,
-                                            fontWeight: FontWeight.w600,
-                                          ),
+                                        child: CustomText(
+                                          text: '다했어요!',
+                                          color: Colors.white,
+                                          fontSize: 16.sp,
+                                          fontWeight: FontWeight.w600,
                                         ),
                                       ),
                                     ),
@@ -499,13 +482,11 @@ class ChallengeDetail extends StatelessWidget {
                                   borderRadius: BorderRadius.circular(10.0.r),
                                 ),
                                 child: Center(
-                                  child: Text(
-                                    '도전할래요',
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 16.sp,
-                                      fontWeight: FontWeight.w600,
-                                    ),
+                                  child: CustomText(
+                                    text: '도전할래요',
+                                    color: Colors.white,
+                                    fontSize: 16.sp,
+                                    fontWeight: FontWeight.w600,
                                   ),
                                 ),
                               ),

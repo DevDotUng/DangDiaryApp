@@ -1,3 +1,4 @@
+import 'package:dangdiarysample/components/custom_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -22,13 +23,12 @@ class Notice extends StatelessWidget {
             color: Colors.black,
           ),
         ),
-        title: Text(
-          '고객센터',
-          style: TextStyle(
-            color: Colors.black,
-            fontSize: 16.sp,
-            fontWeight: FontWeight.w400,
-          ),
+        title: CustomText(
+          text: '고객센터',
+          color: Colors.black,
+          fontSize: 16.sp,
+          fontWeight: FontWeight.w400,
+          height: (32 / 16).h,
         ),
       ),
       body: Container(
@@ -38,13 +38,12 @@ class Notice extends StatelessWidget {
           children: [
             Padding(
               padding: EdgeInsets.only(left: 24.w, top: 16.h),
-              child: Text(
-                '공지사항',
-                style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 14.sp,
-                  fontWeight: FontWeight.w600,
-                ),
+              child: CustomText(
+                text: '공지사항',
+                color: Colors.black,
+                fontSize: 14.sp,
+                fontWeight: FontWeight.w600,
+                height: (24 / 14).h,
               ),
             ),
             Expanded(
@@ -52,8 +51,11 @@ class Notice extends StatelessWidget {
                 itemCount: 3,
                 itemBuilder: (context, index) {
                   return Container(
-                    margin: EdgeInsets.only(
-                        left: 24.w, top: 8.h, right: 24.w, bottom: 8.h),
+                    margin: index == 0
+                        ? EdgeInsets.only(
+                            left: 24.w, top: 3.h, right: 24.w, bottom: 8.h)
+                        : EdgeInsets.only(
+                            left: 24.w, top: 8.h, right: 24.w, bottom: 8.h),
                     padding: EdgeInsets.all(8.0.r),
                     width: double.infinity,
                     height: 82.h,
@@ -79,13 +81,13 @@ class Notice extends StatelessWidget {
                           ),
                         ),
                         SizedBox(height: 4.h),
-                        Text(
-                          '아 공지사항 공지사항입니다. 이러이러한 개선점이 있으니 참고하시기 바랍니다. 참고하라고^^',
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 12.sp,
-                            fontWeight: FontWeight.w400,
-                          ),
+                        CustomText(
+                          text:
+                              '아 공지사항 공지사항입니다. 이러이러한 개선점이 있으니 참고하시기 바랍니다. 참고하라고^^',
+                          color: Colors.black,
+                          fontSize: 12.sp,
+                          fontWeight: FontWeight.w400,
+                          height: (16 / 12).h,
                         ),
                       ],
                     ),
