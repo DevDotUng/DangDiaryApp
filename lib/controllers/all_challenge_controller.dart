@@ -45,12 +45,12 @@ class AllChallengeController extends GetxController {
           child: Container(
             padding: EdgeInsets.symmetric(vertical: 26.0.h),
             width: double.infinity,
-            height: 420.h,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(15.r),
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisSize: MainAxisSize.min,
               children: [
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 26.w),
@@ -75,12 +75,10 @@ class AllChallengeController extends GetxController {
                   ),
                 ),
                 SizedBox(height: 24.h),
-                Expanded(
-                  child: Obx(
-                    () => isFolded.value
-                        ? _twoOverduedChallenge()
-                        : _overduedChallengeList(),
-                  ),
+                Obx(
+                  () => isFolded.value
+                      ? _twoOverduedChallenge()
+                      : _overduedChallengeList(),
                 ),
                 SizedBox(height: 24.h),
                 Padding(
@@ -107,6 +105,7 @@ class AllChallengeController extends GetxController {
                     ],
                   ),
                 ),
+                SizedBox(height: 24.h),
               ],
             ),
           ),
@@ -165,8 +164,8 @@ class AllChallengeController extends GetxController {
   }
 
   Widget _overduedChallengeList() {
-    return Padding(
-      padding: EdgeInsets.only(top: 4.h),
+    return Container(
+      height: 239.h,
       child: ListView.builder(
         itemCount: 10,
         itemBuilder: (context, index) {

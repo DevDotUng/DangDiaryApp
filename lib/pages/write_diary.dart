@@ -22,12 +22,12 @@ class WriteDiary extends StatelessWidget {
           child: Container(
             padding: EdgeInsets.all(24.0.r),
             width: double.infinity,
-            height: 372.h,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(15.r),
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
               children: [
                 Row(
                   mainAxisAlignment: MainAxisAlignment.start,
@@ -69,7 +69,7 @@ class WriteDiary extends StatelessWidget {
                     ],
                   ),
                 ),
-                Expanded(child: Container()),
+                SizedBox(height: 127.h),
                 GestureDetector(
                   onTap: () {
                     Navigator.pop(context);
@@ -376,6 +376,11 @@ class WriteDiary extends StatelessWidget {
                 SizedBox(height: 8.h),
                 Container(
                   width: double.infinity,
+                  height: 290.h,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10.r),
+                    border: Border.all(color: Color(0xffD9D9D9)),
+                  ),
                   child: TextField(
                     maxLines: 15,
                     style: TextStyle(
@@ -392,29 +397,32 @@ class WriteDiary extends StatelessWidget {
                         fontWeight: FontWeight.w400,
                         height: (24 / 14).h,
                       ),
-                      contentPadding: EdgeInsets.only(top: 20.0.h),
-                      prefixIcon: Padding(
-                        padding: EdgeInsets.only(
-                          bottom: ((19.2 - 1) * 19).h,
-                        ),
-                        child: Icon(
-                          Icons.book,
-                          size: 16.r,
-                          color: Colors.black,
-                        ),
+                      prefixIcon: Column(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          SizedBox(height: 18.h),
+                          Row(
+                            children: [
+                              Expanded(child: Container()),
+                              Icon(
+                                Icons.book,
+                                size: 16.r,
+                                color: Colors.black,
+                              ),
+                              SizedBox(width: 4.w),
+                            ],
+                          ),
+                        ],
                       ),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(15.r),
-                        borderSide: BorderSide(
-                          color: Color(0xffD9D9D9),
-                        ),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(15.r),
-                        borderSide: BorderSide(
-                          color: Colors.black,
-                        ),
-                      ),
+                      prefixIconConstraints:
+                          BoxConstraints.tight(Size(36, double.infinity)),
+                      border: InputBorder.none,
+                      // focusedBorder: OutlineInputBorder(
+                      //   borderRadius: BorderRadius.circular(15.r),
+                      //   borderSide: BorderSide(
+                      //     color: Colors.black,
+                      //   ),
+                      // ),
                     ),
                   ),
                 ),

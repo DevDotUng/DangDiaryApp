@@ -29,12 +29,12 @@ class _LaterDialogState extends State<LaterDialog> {
           child: Container(
             padding: EdgeInsets.all(24.0.r),
             width: double.infinity,
-            height: 372.h,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(15.r),
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
               children: [
                 Row(
                   mainAxisAlignment: MainAxisAlignment.start,
@@ -77,7 +77,7 @@ class _LaterDialogState extends State<LaterDialog> {
                     ],
                   ),
                 ),
-                Expanded(child: Container()),
+                SizedBox(height: 124.h),
                 GestureDetector(
                   onTap: () {
                     Navigator.pop(context);
@@ -131,12 +131,12 @@ class _LaterDialogState extends State<LaterDialog> {
       child: Container(
         padding: EdgeInsets.all(24.0.r),
         width: double.infinity,
-        height: 488.h,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(15.r),
         ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisSize: MainAxisSize.min,
           children: [
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -157,9 +157,11 @@ class _LaterDialogState extends State<LaterDialog> {
                   fontWeight: FontWeight.w400,
                   height: (20 / 14).h,
                 ),
+                SizedBox(height: 114.h),
                 ..._checkBoxList(),
               ],
             ),
+            SizedBox(height: 50.h),
             GestureDetector(
               onTap: () {
                 Navigator.pop(context);

@@ -18,16 +18,15 @@ class ChallengeDetail extends StatelessWidget {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(15.r),
           ),
-          insetPadding: EdgeInsets.all(24.0.r),
           child: Container(
-            padding: EdgeInsets.all(24.0.r),
+            padding: EdgeInsets.all(24.r),
             width: double.infinity,
-            height: 430.h,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(15.r),
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisSize: MainAxisSize.min,
               children: [
                 Row(
                   mainAxisAlignment: MainAxisAlignment.start,
@@ -80,6 +79,7 @@ class ChallengeDetail extends StatelessWidget {
                     ),
                   ),
                 ),
+                SizedBox(height: 8.h),
                 CustomText(
                   text: '일기는 다음에 쓸게요',
                   color: Color(0xff6B6B6B),
