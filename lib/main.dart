@@ -4,6 +4,7 @@ import 'package:dangdiarysample/pages/account_setting.dart';
 import 'package:dangdiarysample/pages/all_challenge.dart';
 import 'package:dangdiarysample/pages/challenge_detail.dart';
 import 'package:dangdiarysample/app.dart';
+import 'package:dangdiarysample/pages/complete_diary.dart';
 import 'package:dangdiarysample/pages/customer_center.dart';
 import 'package:dangdiarysample/pages/dog_profile_setting.dart';
 import 'package:dangdiarysample/pages/my_page.dart';
@@ -48,6 +49,7 @@ class MyApp extends StatelessWidget {
             GetPage(name: '/customerCenter', page: () => CustomerCenter()),
             GetPage(name: '/notice', page: () => Notice()),
             GetPage(name: '/reportDetail', page: () => ReportDetail()),
+            GetPage(name: '/completeDiary', page: () => CompleteDiary()),
           ],
         );
       },

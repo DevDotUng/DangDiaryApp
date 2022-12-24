@@ -152,7 +152,7 @@ class AllChallenge extends StatelessWidget {
                   itemBuilder: (context, index) {
                     return GestureDetector(
                       onTap: () {
-                        Get.toNamed('/post');
+                        Get.toNamed('/challengeDetail');
                       },
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -215,6 +215,7 @@ class AllChallenge extends StatelessWidget {
                   color: Color(0xffA6A6A6),
                   fontSize: 14.sp,
                   fontWeight: FontWeight.w400,
+                  height: (24 / 14).h,
                 ),
                 suffixIcon: Icon(
                   Icons.search,

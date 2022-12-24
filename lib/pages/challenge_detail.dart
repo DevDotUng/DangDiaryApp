@@ -80,13 +80,18 @@ class ChallengeDetail extends StatelessWidget {
                   ),
                 ),
                 SizedBox(height: 8.h),
-                CustomText(
-                  text: '일기는 다음에 쓸게요',
-                  color: Color(0xff6B6B6B),
-                  fontSize: 12.sp,
-                  fontWeight: FontWeight.w400,
-                  height: (20 / 12).h,
-                  decoration: TextDecoration.underline,
+                GestureDetector(
+                  onTap: () {
+                    Navigator.pop(context);
+                  },
+                  child: CustomText(
+                    text: '일기는 다음에 쓸게요',
+                    color: Color(0xff6B6B6B),
+                    fontSize: 12.sp,
+                    fontWeight: FontWeight.w400,
+                    height: (20 / 12).h,
+                    decoration: TextDecoration.underline,
+                  ),
                 ),
               ],
             ),

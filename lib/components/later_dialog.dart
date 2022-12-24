@@ -1,6 +1,7 @@
 import 'package:dangdiarysample/components/custom_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 
 class LaterDialog extends StatefulWidget {
   LaterDialog({
@@ -102,13 +103,19 @@ class _LaterDialogState extends State<LaterDialog> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    CustomText(
-                      text: '챌린지 목록으로 이동하고 싶어요',
-                      color: Color(0xff6B6B6B),
-                      fontSize: 12.sp,
-                      fontWeight: FontWeight.w400,
-                      height: (20 / 12).h,
-                      decoration: TextDecoration.underline,
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.pop(context);
+                        Get.offAndToNamed('/allChallenge');
+                      },
+                      child: CustomText(
+                        text: '챌린지 목록으로 이동하고 싶어요',
+                        color: Color(0xff6B6B6B),
+                        fontSize: 12.sp,
+                        fontWeight: FontWeight.w400,
+                        height: (20 / 12).h,
+                        decoration: TextDecoration.underline,
+                      ),
                     ),
                   ],
                 ),

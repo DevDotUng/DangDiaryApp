@@ -13,7 +13,7 @@ class WriteDiary extends StatelessWidget {
   void _showLaterWriteDialog(BuildContext context) async {
     await showDialog(
       context: context,
-      builder: (BuildContext context) {
+      builder: (BuildContext buildContext) {
         return Dialog(
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(15.r),
@@ -73,6 +73,7 @@ class WriteDiary extends StatelessWidget {
                 GestureDetector(
                   onTap: () {
                     Navigator.pop(context);
+                    Get.back();
                   },
                   child: Container(
                     height: 48.h,
@@ -94,13 +95,19 @@ class WriteDiary extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    CustomText(
-                      text: '챌린지 목록으로 이동하고 싶어요',
-                      color: Color(0xff6B6B6B),
-                      fontSize: 12.sp,
-                      fontWeight: FontWeight.w400,
-                      decoration: TextDecoration.underline,
-                      height: (20 / 12).h,
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.pop(buildContext);
+                        Get.offAndToNamed('/allChallenge');
+                      },
+                      child: CustomText(
+                        text: '챌린지 목록으로 이동하고 싶어요',
+                        color: Color(0xff6B6B6B),
+                        fontSize: 12.sp,
+                        fontWeight: FontWeight.w400,
+                        decoration: TextDecoration.underline,
+                        height: (20 / 12).h,
+                      ),
                     ),
                   ],
                 ),
@@ -110,7 +117,6 @@ class WriteDiary extends StatelessWidget {
         );
       },
     );
-    Get.back();
   }
 
   @override
@@ -147,19 +153,24 @@ class WriteDiary extends StatelessWidget {
           actions: [
             Padding(
               padding: EdgeInsets.symmetric(vertical: 8.0, horizontal: 24.0.w),
-              child: Container(
-                width: 71.w,
-                height: 32.h,
-                decoration: BoxDecoration(
-                  color: Color(0xffA6A6A6),
-                  borderRadius: BorderRadius.circular(10.0.r),
-                ),
-                child: Center(
-                  child: CustomText(
-                    text: '일기제출',
-                    color: Colors.white,
-                    fontSize: 14.sp,
-                    fontWeight: FontWeight.w400,
+              child: GestureDetector(
+                onTap: () {
+                  WriteDiaryController.to.submitDiary(context);
+                },
+                child: Container(
+                  width: 71.w,
+                  height: 32.h,
+                  decoration: BoxDecoration(
+                    color: Color(0xffA6A6A6),
+                    borderRadius: BorderRadius.circular(10.0.r),
+                  ),
+                  child: Center(
+                    child: CustomText(
+                      text: '일기제출',
+                      color: Colors.white,
+                      fontSize: 14.sp,
+                      fontWeight: FontWeight.w400,
+                    ),
                   ),
                 ),
               ),
