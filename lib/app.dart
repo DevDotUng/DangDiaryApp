@@ -1,5 +1,5 @@
 import 'package:dangdiarysample/controllers/bottom_nav_controller.dart';
-import 'package:dangdiarysample/pages/diary.dart';
+import 'package:dangdiarysample/pages/diarys.dart';
 import 'package:dangdiarysample/pages/home.dart';
 import 'package:dangdiarysample/pages/my_page.dart';
 import 'package:dangdiarysample/pages/search.dart';
@@ -20,7 +20,7 @@ class App extends StatelessWidget {
           children: const [
             Home(),
             Search(),
-            Diary(),
+            Diarys(),
             Sticker(),
             MyPage(),
           ],
