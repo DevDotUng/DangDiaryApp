@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
-class Post extends StatelessWidget {
-  const Post({Key? key}) : super(key: key);
+class Posts extends StatelessWidget {
+  const Posts({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

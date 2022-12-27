@@ -97,6 +97,7 @@ class Diarys extends StatelessWidget {
                       Container(
                         width: Get.width - 152.w,
                         child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             CustomText(
                               text: '일기 000장 ',

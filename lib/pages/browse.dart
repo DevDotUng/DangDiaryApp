@@ -1,24 +1,24 @@
 import 'package:dangdiarysample/components/custom_text.dart';
-import 'package:dangdiarysample/controllers/search_controller.dart';
-import 'package:dangdiarysample/skeletons/search_skeleton.dart';
+import 'package:dangdiarysample/controllers/browse_controller.dart';
+import 'package:dangdiarysample/skeletons/browse_skeleton.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
-class Search extends StatelessWidget {
-  const Search({Key? key}) : super(key: key);
+class Browse extends StatelessWidget {
+  const Browse({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    Get.put(SearchController());
+    Get.put(BrowseController());
     return Obx(
-      () => SearchController.to.isLoading.value
-          ? SearchSkeleton()
-          : _searchWidget(context),
+      () => BrowseController.to.isLoading.value
+          ? BrowseSkeleton()
+          : _browseWidget(context),
     );
   }
 
-  Widget _searchWidget(BuildContext context) {
+  Widget _browseWidget(BuildContext context) {
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
@@ -36,7 +36,7 @@ class Search extends StatelessWidget {
           ),
         ),
         body: Container(
-          padding: EdgeInsets.symmetric(horizontal: 24.w),
+          padding: EdgeInsets.symmetric(vertical: 12.h, horizontal: 24.w),
           color: Colors.white,
           child: Column(
             children: [
@@ -52,7 +52,7 @@ class Search extends StatelessWidget {
                       child: Focus(
                         onFocusChange: (isFocus) {
                           if (isFocus == true) {
-                            SearchController.to.changeFocus(isFocus);
+                            BrowseController.to.changeFocus(isFocus);
                           }
                         },
                         child: TextField(
@@ -100,12 +100,12 @@ class Search extends StatelessWidget {
                     ),
                   ),
                   Obx(
-                    () => SearchController.to.isFocus.value
+                    () => BrowseController.to.isFocus.value
                         ? Padding(
                             padding: EdgeInsets.only(left: 12.0.w),
                             child: GestureDetector(
                               onTap: () {
-                                SearchController.to.changeFocus(false);
+                                BrowseController.to.changeFocus(false);
                                 FocusScope.of(context).unfocus();
                               },
                               child: Container(
@@ -123,7 +123,7 @@ class Search extends StatelessWidget {
               ),
               SizedBox(height: 8.h),
               Obx(
-                () => SearchController.to.isFocus.value
+                () => BrowseController.to.isFocus.value
                     ? _searchHistory()
                     : _posts(),
               ),
@@ -143,6 +143,7 @@ class Search extends StatelessWidget {
           mainAxisSpacing: 8.h,
           mainAxisExtent: 221.h,
         ),
+        itemCount: 10,
         itemBuilder: (context, index) {
           return GestureDetector(
             onTap: () {

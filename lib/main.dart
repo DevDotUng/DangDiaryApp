@@ -10,7 +10,7 @@ import 'package:dangdiarysample/pages/diary.dart';
 import 'package:dangdiarysample/pages/dog_profile_setting.dart';
 import 'package:dangdiarysample/pages/my_page.dart';
 import 'package:dangdiarysample/pages/notice.dart';
-import 'package:dangdiarysample/pages/post.dart';
+import 'package:dangdiarysample/pages/posts.dart';
 import 'package:dangdiarysample/pages/report_detail.dart';
 import 'package:dangdiarysample/pages/write_diary.dart';
 import 'package:flutter/material.dart';
@@ -42,7 +42,7 @@ class MyApp extends StatelessWidget {
             GetPage(name: '/challengeDetail', page: () => ChallengeDetail()),
             GetPage(name: '/writeDiary', page: () => WriteDiary()),
             GetPage(name: '/myPage', page: () => MyPage()),
-            GetPage(name: '/post', page: () => Post()),
+            GetPage(name: '/post', page: () => Posts()),
             GetPage(
                 name: '/dogProfileSetting', page: () => DogProfileSetting()),
             GetPage(name: '/accountSetting', page: () => AccountSetting()),

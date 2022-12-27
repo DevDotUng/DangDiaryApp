@@ -2,7 +2,7 @@ import 'package:dangdiarysample/controllers/bottom_nav_controller.dart';
 import 'package:dangdiarysample/pages/diarys.dart';
 import 'package:dangdiarysample/pages/home.dart';
 import 'package:dangdiarysample/pages/my_page.dart';
-import 'package:dangdiarysample/pages/search.dart';
+import 'package:dangdiarysample/pages/browse.dart';
 import 'package:dangdiarysample/pages/sticker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -19,7 +19,7 @@ class App extends StatelessWidget {
           index: BottomNavController.to.pageIndex.value,
           children: const [
             Home(),
-            Search(),
+            Browse(),
             Diarys(),
             Sticker(),
             MyPage(),

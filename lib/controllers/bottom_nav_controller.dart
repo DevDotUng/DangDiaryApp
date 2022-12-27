@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
 
-enum PageName { HOME, SEARCH, DIARY, STICKER, MYPAGE }
+enum PageName { HOME, BROWSE, DIARY, STICKER, MYPAGE }
 
 class BottomNavController extends GetxController {
   static BottomNavController get to => Get.find();
@@ -12,7 +12,7 @@ class BottomNavController extends GetxController {
       case PageName.HOME:
         pageIndex(value);
         break;
-      case PageName.SEARCH:
+      case PageName.BROWSE:
         pageIndex(value);
         break;
       case PageName.DIARY:
