@@ -1,7 +1,6 @@
 import 'package:dangdiarysample/components/custom_text.dart';
 import 'package:dangdiarysample/controllers/all_challenge_controller.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/painting.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -13,7 +12,10 @@ class AllChallenge extends StatelessWidget {
   Widget build(BuildContext context) {
     Get.put(AllChallengeController(context: context));
     return GestureDetector(
-      onTap: () => FocusScope.of(context).unfocus(),
+      onTap: () {
+        FocusScope.of(context).unfocus();
+        AllChallengeController.to.removeHighlightOverlay();
+      },
       child: Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.white,
@@ -34,7 +36,7 @@ class AllChallenge extends StatelessWidget {
             color: Colors.black,
             fontSize: 16.sp,
             fontWeight: FontWeight.w400,
-            height: (32 / 16).h,
+            height: (32 / 16),
           ),
         ),
         body: Container(
@@ -43,9 +45,9 @@ class AllChallenge extends StatelessWidget {
           child: Column(
             children: [
               Obx(
-                () => AllChallengeController.to.overduedDiarys.length == 0
+                () => AllChallengeController.to.overdueDiaries.length == 0
                     ? Container()
-                    : _overduedDiary(),
+                    : _overdueDiary(),
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.start,
@@ -59,7 +61,7 @@ class AllChallenge extends StatelessWidget {
                         color: Colors.black,
                         fontSize: 16.sp,
                         fontWeight: FontWeight.w600,
-                        height: (24 / 16).h,
+                        height: (24 / 16),
                       ),
                     ],
                   ),
@@ -135,7 +137,7 @@ class AllChallenge extends StatelessWidget {
                     color: Color(0xff7D7D7D),
                     fontSize: 12.sp,
                     fontWeight: FontWeight.w400,
-                    height: (20 / 14).h,
+                    height: (20 / 14),
                   ),
                 ],
               ),
@@ -174,7 +176,7 @@ class AllChallenge extends StatelessWidget {
                             color: Color(0xff7D7D7D),
                             fontSize: 14.sp,
                             fontWeight: FontWeight.w400,
-                            height: (20 / 14).h,
+                            height: (20 / 14),
                           ),
                         ],
                       ),
@@ -194,46 +196,59 @@ class AllChallenge extends StatelessWidget {
       padding: EdgeInsets.only(top: 4.0.h, bottom: 7.h),
       child: Column(
         children: [
-          Container(
-            height: 40.h,
-            decoration: BoxDecoration(
-              color: Color(0xffEDEDED),
-              borderRadius: BorderRadius.circular(5.r),
-            ),
-            child: TextField(
-              cursorColor: Color(0xff202020),
-              cursorWidth: 1.w,
-              maxLines: 1,
-              style: TextStyle(
-                color: Color(0xff0A0A0A),
-                fontSize: 14.sp,
-                fontWeight: FontWeight.w400,
+          CompositedTransformTarget(
+            link: AllChallengeController.to.layerLink,
+            child: Container(
+              height: 40.h,
+              decoration: BoxDecoration(
+                color: Color(0xffEDEDED),
+                borderRadius: BorderRadius.circular(5.r),
               ),
-              decoration: InputDecoration(
-                hintText: '어떤 챌린지를 찾아볼까요?',
-                hintStyle: TextStyle(
-                  color: Color(0xffA6A6A6),
+              child: TextField(
+                onTap: () {
+                  AllChallengeController.to.createOverlay('');
+                },
+                onChanged: (String text) {
+                  AllChallengeController.to.changeTextListener(text);
+                  AllChallengeController.to.createOverlay(text);
+                },
+                cursorColor: Color(0xff202020),
+                cursorWidth: 1.w,
+                maxLines: 1,
+                style: TextStyle(
+                  color: Color(0xff0A0A0A),
                   fontSize: 14.sp,
                   fontWeight: FontWeight.w400,
                   height: (24 / 14).h,
                 ),
-                suffixIcon: Icon(
-                  Icons.search,
-                  size: 24.r,
-                  color: Colors.black,
-                ),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(5.r),
-                  borderSide: BorderSide(
-                    width: 0.0,
-                    style: BorderStyle.none,
+                decoration: InputDecoration(
+                  hintText: '어떤 챌린지를 찾아볼까요?',
+                  hintStyle: TextStyle(
+                    color: Color(0xffA6A6A6),
+                    fontSize: 14.sp,
+                    fontWeight: FontWeight.w400,
+                    height: (24 / 14).h,
                   ),
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(5.r),
-                  borderSide: BorderSide(
-                    width: 0.0,
-                    style: BorderStyle.none,
+                  suffixIcon: Icon(
+                    Icons.search,
+                    size: 24.r,
+                    color: Colors.black,
+                  ),
+                  contentPadding:
+                      EdgeInsets.symmetric(vertical: 12.h, horizontal: 8.w),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(5.r),
+                    borderSide: BorderSide(
+                      width: 0.0,
+                      style: BorderStyle.none,
+                    ),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(5.r),
+                    borderSide: BorderSide(
+                      width: 0.0,
+                      style: BorderStyle.none,
+                    ),
                   ),
                 ),
               ),
@@ -244,7 +259,7 @@ class AllChallenge extends StatelessWidget {
     );
   }
 
-  Widget _overduedDiary() {
+  Widget _overdueDiary() {
     return Column(
       children: [
         Row(
@@ -256,7 +271,7 @@ class AllChallenge extends StatelessWidget {
               color: Colors.black,
               fontSize: 16.sp,
               fontWeight: FontWeight.w600,
-              height: (24 / 16).h,
+              height: (24 / 16),
             ),
             SizedBox(width: 4.w),
             CustomText(
@@ -264,7 +279,7 @@ class AllChallenge extends StatelessWidget {
               color: Color(0xffFF9900),
               fontSize: 16.sp,
               fontWeight: FontWeight.w600,
-              height: (24 / 16).h,
+              height: (24 / 16),
             ),
           ],
         ),

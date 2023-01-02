@@ -10,6 +10,7 @@ import 'package:dangdiarysample/pages/diary.dart';
 import 'package:dangdiarysample/pages/dog_profile_setting.dart';
 import 'package:dangdiarysample/pages/my_page.dart';
 import 'package:dangdiarysample/pages/notice.dart';
+import 'package:dangdiarysample/pages/notification_page.dart';
 import 'package:dangdiarysample/pages/posts.dart';
 import 'package:dangdiarysample/pages/report_detail.dart';
 import 'package:dangdiarysample/pages/write_diary.dart';
@@ -52,6 +53,7 @@ class MyApp extends StatelessWidget {
             GetPage(name: '/reportDetail', page: () => ReportDetail()),
             GetPage(name: '/completeDiary', page: () => CompleteDiary()),
             GetPage(name: '/diary', page: () => Diary()),
+            GetPage(name: '/notificationPage', page: () => NotificationPage()),
           ],
         );
       },

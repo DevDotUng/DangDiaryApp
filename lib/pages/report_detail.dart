@@ -29,7 +29,7 @@ class ReportDetail extends StatelessWidget {
           color: Colors.black,
           fontSize: 16.sp,
           fontWeight: FontWeight.w400,
-          height: (32 / 16).h,
+          height: (32 / 16),
         ),
         actions: [
           Padding(
@@ -54,7 +54,7 @@ class ReportDetail extends StatelessWidget {
                 color: Colors.black,
                 fontSize: 14.sp,
                 fontWeight: FontWeight.w600,
-                height: (24 / 14).h,
+                height: (24 / 14),
               ),
             ),
             Expanded(

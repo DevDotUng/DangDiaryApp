@@ -19,7 +19,7 @@ class MyPage extends StatelessWidget {
           color: Colors.black,
           fontSize: 16.sp,
           fontWeight: FontWeight.w400,
-          height: (32 / 16).h,
+          height: (32 / 16),
         ),
       ),
       body: Container(
@@ -65,7 +65,7 @@ class MyPage extends StatelessWidget {
                                       color: Colors.black,
                                       fontSize: 14.sp,
                                       fontWeight: FontWeight.w300,
-                                      height: (20 / 14).h,
+                                      height: (20 / 14),
                                     ),
                                   ],
                                 ),
@@ -81,7 +81,7 @@ class MyPage extends StatelessWidget {
                                       color: Colors.black,
                                       fontSize: 14.sp,
                                       fontWeight: FontWeight.w300,
-                                      height: (20 / 14).h,
+                                      height: (20 / 14),
                                     ),
                                   ],
                                 ),
@@ -215,7 +215,7 @@ class MyPage extends StatelessWidget {
                                         color: Colors.black,
                                         fontSize: 12.sp,
                                         fontWeight: FontWeight.w400,
-                                        height: (20 / 12).h,
+                                        height: (20 / 12),
                                       ),
                                       SizedBox(width: 3.w),
                                       Icon(Icons.male, size: 8.r),
@@ -225,7 +225,7 @@ class MyPage extends StatelessWidget {
                                         color: Colors.black,
                                         fontSize: 12.sp,
                                         fontWeight: FontWeight.w400,
-                                        height: (20 / 12).h,
+                                        height: (20 / 12),
                                       ),
                                       SizedBox(width: 16.w),
                                       CustomText(
@@ -233,7 +233,7 @@ class MyPage extends StatelessWidget {
                                         color: Colors.black,
                                         fontSize: 12.sp,
                                         fontWeight: FontWeight.w400,
-                                        height: (20 / 12).h,
+                                        height: (20 / 12),
                                       ),
                                     ],
                                   ),
@@ -258,7 +258,7 @@ class MyPage extends StatelessWidget {
                   color: Colors.black,
                   fontSize: 14.sp,
                   fontWeight: FontWeight.w600,
-                  height: (20 / 14).h,
+                  height: (20 / 14),
                 ),
               ],
             ),
@@ -279,7 +279,7 @@ class MyPage extends StatelessWidget {
                       color: Colors.black,
                       fontSize: 14.sp,
                       fontWeight: FontWeight.w400,
-                      height: (20 / 14).h,
+                      height: (20 / 14),
                     ),
                     Expanded(
                         child:
@@ -303,7 +303,7 @@ class MyPage extends StatelessWidget {
                       color: Colors.black,
                       fontSize: 14.sp,
                       fontWeight: FontWeight.w400,
-                      height: (20 / 14).h,
+                      height: (20 / 14),
                     ),
                     Expanded(
                         child:
@@ -323,7 +323,7 @@ class MyPage extends StatelessWidget {
                   color: Colors.black,
                   fontSize: 14.sp,
                   fontWeight: FontWeight.w600,
-                  height: (20 / 14).h,
+                  height: (20 / 14),
                 ),
               ],
             ),
@@ -341,7 +341,7 @@ class MyPage extends StatelessWidget {
                     color: Colors.black,
                     fontSize: 14.sp,
                     fontWeight: FontWeight.w400,
-                    height: (20 / 14).h,
+                    height: (20 / 14),
                   ),
                   Icon(Icons.arrow_forward_ios_outlined, size: 14.r),
                 ],
@@ -361,7 +361,7 @@ class MyPage extends StatelessWidget {
                       color: Colors.black,
                       fontSize: 14.sp,
                       fontWeight: FontWeight.w400,
-                      height: (20 / 14).h,
+                      height: (20 / 14),
                     ),
                     Expanded(
                         child:
@@ -385,7 +385,7 @@ class MyPage extends StatelessWidget {
                       color: Colors.black,
                       fontSize: 14.sp,
                       fontWeight: FontWeight.w400,
-                      height: (20 / 14).h,
+                      height: (20 / 14),
                     ),
                     Expanded(
                         child:

@@ -38,7 +38,7 @@ class CompleteDiary extends StatelessWidget {
               color: Colors.black,
               fontSize: 24.sp,
               fontWeight: FontWeight.w600,
-              height: (32 / 24).h,
+              height: (32 / 24),
             ),
             SizedBox(height: 54.h),
             Container(
@@ -84,7 +84,7 @@ class CompleteDiary extends StatelessWidget {
                   color: Color(0xff6B6B6B),
                   fontSize: 12.sp,
                   fontWeight: FontWeight.w400,
-                  height: (20 / 12).h,
+                  height: (20 / 12),
                   decoration: TextDecoration.underline,
                 ),
               ),

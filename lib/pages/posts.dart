@@ -34,7 +34,7 @@ class Posts extends StatelessWidget {
           color: Colors.black,
           fontSize: 16.sp,
           fontWeight: FontWeight.w400,
-          height: (32 / 16).h,
+          height: (32 / 16),
         ),
       ),
       body: Container(
@@ -75,7 +75,7 @@ class Posts extends StatelessWidget {
                         color: Color(0xff1D1D1D),
                         fontSize: 12.sp,
                         fontWeight: FontWeight.w400,
-                        height: (20 / 12).h,
+                        height: (20 / 12),
                       ),
                       SizedBox(width: 8.w),
                       CustomText(
@@ -83,7 +83,7 @@ class Posts extends StatelessWidget {
                         color: Color(0xff1D1D1D),
                         fontSize: 12.sp,
                         fontWeight: FontWeight.w400,
-                        height: (20 / 12).h,
+                        height: (20 / 12),
                       ),
                       SizedBox(width: 2.w),
                       Icon(Icons.male, size: 10.r),
@@ -112,7 +112,7 @@ class Posts extends StatelessWidget {
                         color: Colors.black,
                         fontSize: 16.sp,
                         fontWeight: FontWeight.w600,
-                        height: (20 / 16).h,
+                        height: (20 / 16),
                       ),
                       CustomText(
                         text: '서울 성북구 유니크원 카페',
@@ -129,7 +129,7 @@ class Posts extends StatelessWidget {
                             color: Color(0xff1D1D1D),
                             fontSize: 12.sp,
                             fontWeight: FontWeight.w400,
-                            height: (20 / 12).h,
+                            height: (20 / 12),
                           ),
                           Row(
                             children: [
@@ -172,7 +172,7 @@ class Posts extends StatelessWidget {
                                     color: Colors.black,
                                     fontSize: 14.sp,
                                     fontWeight: FontWeight.w400,
-                                    height: (24 / 14).h,
+                                    height: (24 / 14),
                                   ),
                                 ],
                               ),
@@ -210,7 +210,7 @@ class Posts extends StatelessWidget {
                         color: Colors.black,
                         fontSize: 14.sp,
                         fontWeight: FontWeight.w400,
-                        height: (20 / 14).h,
+                        height: (20 / 14),
                       ),
                       SizedBox(height: 53.h),
                     ],

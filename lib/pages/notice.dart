@@ -28,7 +28,7 @@ class Notice extends StatelessWidget {
           color: Colors.black,
           fontSize: 16.sp,
           fontWeight: FontWeight.w400,
-          height: (32 / 16).h,
+          height: (32 / 16),
         ),
       ),
       body: Container(
@@ -43,7 +43,7 @@ class Notice extends StatelessWidget {
                 color: Colors.black,
                 fontSize: 14.sp,
                 fontWeight: FontWeight.w600,
-                height: (24 / 14).h,
+                height: (24 / 14),
               ),
             ),
             Expanded(
@@ -87,7 +87,7 @@ class Notice extends StatelessWidget {
                           color: Colors.black,
                           fontSize: 12.sp,
                           fontWeight: FontWeight.w400,
-                          height: (16 / 12).h,
+                          height: (16 / 12),
                         ),
                       ],
                     ),

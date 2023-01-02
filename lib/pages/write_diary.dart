@@ -1,8 +1,10 @@
 import 'dart:io';
 
+import 'package:dangdiarysample/components/custom_switch.dart';
 import 'package:dangdiarysample/components/custom_text.dart';
 import 'package:dangdiarysample/controllers/write_diary_controller.dart';
 import 'package:dotted_border/dotted_border.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -106,7 +108,7 @@ class WriteDiary extends StatelessWidget {
                         fontSize: 12.sp,
                         fontWeight: FontWeight.w400,
                         decoration: TextDecoration.underline,
-                        height: (20 / 12).h,
+                        height: (20 / 12),
                       ),
                     ),
                   ],
@@ -122,10 +124,6 @@ class WriteDiary extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Get.put(WriteDiaryController());
-    return _writeDiaryWidget(context);
-  }
-
-  Widget _writeDiaryWidget(BuildContext context) {
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
@@ -136,309 +134,647 @@ class WriteDiary extends StatelessWidget {
             onTap: () {
               _showLaterWriteDialog(context);
             },
-            child: Icon(
-              Icons.arrow_back,
-              size: 32.r,
-              color: Colors.black,
+            child: Padding(
+              padding: EdgeInsets.only(left: 24.w),
+              child: Icon(
+                Icons.arrow_back,
+                size: 32.r,
+                color: Colors.black,
+              ),
             ),
           ),
           centerTitle: true,
           title: CustomText(
             text: '일기쓰기',
             color: Colors.black,
-            fontSize: 16.sp,
+            fontSize: 20.sp,
             fontWeight: FontWeight.w400,
-            height: (32 / 16).h,
+            height: (32 / 20),
           ),
-          actions: [
-            Padding(
-              padding: EdgeInsets.symmetric(vertical: 8.0, horizontal: 24.0.w),
-              child: GestureDetector(
-                onTap: () {
-                  WriteDiaryController.to.submitDiary(context);
-                },
-                child: Container(
-                  width: 71.w,
-                  height: 32.h,
-                  decoration: BoxDecoration(
-                    color: Color(0xffA6A6A6),
-                    borderRadius: BorderRadius.circular(10.0.r),
-                  ),
-                  child: Center(
-                    child: CustomText(
-                      text: '일기제출',
-                      color: Colors.white,
-                      fontSize: 14.sp,
-                      fontWeight: FontWeight.w400,
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          ],
         ),
         body: Container(
-          padding: EdgeInsets.symmetric(vertical: 16.0.h, horizontal: 24.0.w),
+          padding: EdgeInsets.symmetric(horizontal: 24.0.w),
           color: Colors.white,
-          child: SingleChildScrollView(
-            child: Column(
-              children: [
-                Container(
-                  width: double.infinity,
-                  height: 48.h,
-                  decoration: BoxDecoration(
-                    color: Color(0xffF5F5F5),
-                    borderRadius: BorderRadius.circular(15.0.r),
-                  ),
-                  child: Row(
-                    children: [
-                      SizedBox(width: 16.w),
-                      Icon(Icons.golf_course),
-                      SizedBox(width: 4.w),
-                      CustomText(
-                        text: '챌린지명',
-                        color: Color(0xff545454),
-                        fontSize: 14.sp,
-                        fontWeight: FontWeight.w600,
-                        height: (24 / 14).h,
-                      ),
-                      SizedBox(width: 29.w),
-                      CustomText(
-                        text: '한강공원 술래잡기',
-                        color: Colors.black,
-                        fontSize: 14.sp,
-                        fontWeight: FontWeight.w400,
-                        height: (24 / 14).h,
-                      ),
-                    ],
-                  ),
+          child: Column(
+            children: [
+              Container(
+                width: double.infinity,
+                height: 4.h,
+                decoration: BoxDecoration(
+                  color: Color(0xffD9D9D9),
+                  borderRadius: BorderRadius.circular(2.r),
                 ),
-                SizedBox(height: 16.h),
-                Container(
-                  padding: EdgeInsets.symmetric(vertical: 12.h, horizontal: 16),
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                    color: Color(0xffF5F5F5),
-                    borderRadius: BorderRadius.circular(15.0.r),
-                  ),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Row(
-                        children: [
-                          Icon(Icons.calendar_month, size: 16.r),
-                          SizedBox(width: 4.w),
-                          CustomText(
-                            text: '도전 날짜',
-                            color: Color(0xff545454),
-                            fontSize: 14.sp,
-                            fontWeight: FontWeight.w600,
+                child: Row(
+                  children: [
+                    Obx(
+                      () => AnimatedContainer(
+                        duration: Duration(milliseconds: 200),
+                        width: (Get.width - 48) /
+                            5 *
+                            WriteDiaryController.to.getProgress(),
+                        height: 4.h,
+                        decoration: BoxDecoration(
+                          color: Color(0xff7B61FF),
+                          borderRadius: BorderRadius.circular(2.r),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              SizedBox(height: 24.h),
+              Expanded(
+                child: ListView(
+                  children: [
+                    SizedBox(height: 16.h),
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        CustomText(
+                          text: '몇 월 며칠의 일기인가요?',
+                          color: Color(0xff545454),
+                          fontSize: 20.sp,
+                          fontWeight: FontWeight.w500,
+                          height: (32 / 20),
+                        ),
+                        SizedBox(width: 4.w),
+                        Container(
+                          width: 8.w,
+                          height: 8.h,
+                          decoration: BoxDecoration(
+                            color: Color(0xff7B61FF),
+                            borderRadius: BorderRadius.circular(4.r),
                           ),
-                          SizedBox(width: 24.w),
-                          GestureDetector(
-                            onTap: () {
-                              WriteDiaryController.to.changeDate(context);
-                            },
-                            child: Obx(
-                              () => CustomText(
-                                text: WriteDiaryController.to.date.value,
-                                color: Colors.black,
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 16.h),
+                    Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            GestureDetector(
+                              onTap: () {
+                                WriteDiaryController.to.changeDate(context);
+                              },
+                              child: Row(
+                                children: [
+                                  Icon(Icons.calendar_today, size: 16.r),
+                                  SizedBox(width: 4.w),
+                                  Obx(
+                                    () => CustomText(
+                                      text: WriteDiaryController.to.date.value,
+                                      color: Color(0xff545454),
+                                      fontSize: 16.sp,
+                                      fontWeight: FontWeight.w500,
+                                      height: (24 / 16),
+                                    ),
+                                  ),
+                                  SizedBox(width: 8.w),
+                                  Icon(Icons.keyboard_arrow_down, size: 16.r),
+                                ],
+                              ),
+                            ),
+                            SizedBox(height: 4.h),
+                            Container(
+                              width: 170.w,
+                              height: 1.h,
+                              color: Color(0xffD9D9D9),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 56.h),
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        CustomText(
+                          text: '그 날의 날씨는 어땠나요?',
+                          color: Color(0xff545454),
+                          fontSize: 20.sp,
+                          fontWeight: FontWeight.w500,
+                          height: (32 / 20),
+                        ),
+                        SizedBox(width: 4.w),
+                        Container(
+                          width: 8.w,
+                          height: 8.h,
+                          decoration: BoxDecoration(
+                            color: Color(0xff7B61FF),
+                            borderRadius: BorderRadius.circular(4.r),
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 16.h),
+                    GridView.builder(
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 3,
+                        crossAxisSpacing: 8.w,
+                        mainAxisSpacing: 8.h,
+                        mainAxisExtent: (Get.width - 64.w) / 3,
+                      ),
+                      shrinkWrap: true,
+                      physics: NeverScrollableScrollPhysics(),
+                      itemCount: 6,
+                      itemBuilder: (context, index) {
+                        return GestureDetector(
+                          onTap: () {
+                            WriteDiaryController.to.changeWeather(index);
+                          },
+                          child: Obx(
+                            () => Container(
+                              decoration: BoxDecoration(
+                                color: WriteDiaryController
+                                            .to.selectedWeatherIndex ==
+                                        index
+                                    ? Color(0xffA6A6A6)
+                                    : Color(0xffD9D9D9),
+                                borderRadius: BorderRadius.circular(10.r),
+                              ),
+                              child: Center(
+                                child: WriteDiaryController
+                                            .to.selectedWeatherIndex ==
+                                        index
+                                    ? Container(
+                                        decoration: BoxDecoration(
+                                          boxShadow: [
+                                            BoxShadow(
+                                              color:
+                                                  Colors.white.withOpacity(0.2),
+                                              blurRadius: 10.r,
+                                            ),
+                                          ],
+                                        ),
+                                        child: Text(
+                                          WriteDiaryController
+                                              .to.weathers[index],
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 14.sp,
+                                            fontWeight: FontWeight.w400,
+                                            height: (24 / 14).h,
+                                          ),
+                                        ),
+                                      )
+                                    : Text(
+                                        WriteDiaryController.to.weathers[index],
+                                        style: TextStyle(
+                                          color: Color(0xff545454),
+                                          fontSize: 14.sp,
+                                          fontWeight: FontWeight.w400,
+                                          height: (24 / 14).h,
+                                        ),
+                                      ),
+                              ),
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+                    SizedBox(height: 56.h),
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        CustomText(
+                          text: '초코의 기분은 어땠나요?',
+                          color: Color(0xff545454),
+                          fontSize: 20.sp,
+                          fontWeight: FontWeight.w500,
+                          height: (32 / 20),
+                        ),
+                        SizedBox(width: 4.w),
+                        Container(
+                          width: 8.w,
+                          height: 8.h,
+                          decoration: BoxDecoration(
+                            color: Color(0xff7B61FF),
+                            borderRadius: BorderRadius.circular(4.r),
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 16.h),
+                    GridView.builder(
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 3,
+                        crossAxisSpacing: 8.w,
+                        mainAxisSpacing: 8.h,
+                        mainAxisExtent: (Get.width - 64.w) / 3,
+                      ),
+                      shrinkWrap: true,
+                      physics: NeverScrollableScrollPhysics(),
+                      itemCount: 9,
+                      itemBuilder: (context, index) {
+                        return GestureDetector(
+                          onTap: () {
+                            WriteDiaryController.to.changeFeelings(index);
+                          },
+                          child: Obx(
+                            () => Container(
+                              decoration: BoxDecoration(
+                                color: WriteDiaryController
+                                            .to.selectedFeelingsIndex ==
+                                        index
+                                    ? Color(0xffA6A6A6)
+                                    : Color(0xffD9D9D9),
+                                borderRadius: BorderRadius.circular(10.r),
+                              ),
+                              child: Center(
+                                child: WriteDiaryController
+                                            .to.selectedFeelingsIndex ==
+                                        index
+                                    ? Container(
+                                        decoration: BoxDecoration(
+                                          boxShadow: [
+                                            BoxShadow(
+                                              color:
+                                                  Colors.white.withOpacity(0.2),
+                                              blurRadius: 10.r,
+                                            ),
+                                          ],
+                                        ),
+                                        child: Text(
+                                          WriteDiaryController
+                                              .to.feelings[index],
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 14.sp,
+                                            fontWeight: FontWeight.w400,
+                                            height: (24 / 14).h,
+                                          ),
+                                        ),
+                                      )
+                                    : Text(
+                                        WriteDiaryController.to.feelings[index],
+                                        style: TextStyle(
+                                          color: Color(0xff545454),
+                                          fontSize: 14.sp,
+                                          fontWeight: FontWeight.w400,
+                                          height: (24 / 14).h,
+                                        ),
+                                      ),
+                              ),
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+                    SizedBox(height: 56.h),
+                    CustomText(
+                      text: '일기 제목을 입력해 주세요',
+                      color: Color(0xff545454),
+                      fontSize: 20.sp,
+                      fontWeight: FontWeight.w500,
+                      height: (32 / 20),
+                    ),
+                    Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Container(
+                          width: (Get.width - 48.w) * 0.66,
+                          child: TextField(
+                            maxLength: 16,
+                            cursorColor: Colors.black,
+                            cursorHeight: 24.h,
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 14.sp,
+                              fontWeight: FontWeight.w400,
+                              height: (24 / 14).h,
+                            ),
+                            decoration: InputDecoration(
+                              hintText: '한강공원 술래잡기 (최대 16글자)',
+                              hintStyle: TextStyle(
+                                color: Color(0xffA6A6A6),
                                 fontSize: 14.sp,
                                 fontWeight: FontWeight.w400,
                                 height: (24 / 14).h,
-                                decoration: TextDecoration.underline,
                               ),
+                              counter: Container(),
+                              contentPadding: EdgeInsets.only(top: 8.h),
+                              prefixIconConstraints: BoxConstraints(
+                                minWidth: 8.w,
+                                maxHeight: 7.h,
+                              ),
+                              focusedBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: Color(0xffD9D9D9),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 56.h),
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        CustomText(
+                          text: '인증 사진을 올려주세요 (최대 3장)',
+                          color: Color(0xff545454),
+                          fontSize: 20.sp,
+                          fontWeight: FontWeight.w500,
+                          height: (32 / 20),
+                        ),
+                        SizedBox(width: 4.w),
+                        Container(
+                          width: 8.w,
+                          height: 8.h,
+                          decoration: BoxDecoration(
+                            color: Color(0xff7B61FF),
+                            borderRadius: BorderRadius.circular(4.r),
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 16.h),
+                    Obx(
+                      () => WriteDiaryController.to.images.isEmpty
+                          ? Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 0.5.w),
+                              child: DottedBorder(
+                                borderType: BorderType.RRect,
+                                radius: Radius.circular(10.r),
+                                color: Color(0xffD9D9D9),
+                                child: GestureDetector(
+                                  onTap: () {
+                                    WriteDiaryController.to.pickImages(context);
+                                  },
+                                  child: Container(
+                                    width: double.infinity,
+                                    height: 88.h,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(10.r),
+                                    ),
+                                    child: _emptyImageList(),
+                                  ),
+                                ),
+                              ),
+                            )
+                          : Container(
+                              width: double.infinity,
+                              height: 88.h,
+                              child: _imageList(),
+                            ),
+                    ),
+                    SizedBox(height: 56.h),
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        CustomText(
+                          text: '초코와 보낸 하루에 대해 적어주세요',
+                          color: Color(0xff545454),
+                          fontSize: 20.sp,
+                          fontWeight: FontWeight.w500,
+                          height: (32 / 20),
+                        ),
+                        SizedBox(width: 4.w),
+                        Container(
+                          width: 8.w,
+                          height: 8.h,
+                          decoration: BoxDecoration(
+                            color: Color(0xff7B61FF),
+                            borderRadius: BorderRadius.circular(4.r),
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 16.h),
+                    Container(
+                      padding: EdgeInsets.symmetric(horizontal: 16.w),
+                      width: double.infinity,
+                      height: 248.h,
+                      decoration: BoxDecoration(
+                        color: Color(0xffF5F5F5),
+                        borderRadius: BorderRadius.circular(10.r),
+                      ),
+                      child: TextField(
+                        onChanged: (String content) {
+                          WriteDiaryController.to
+                              .changeContentListener(content);
+                        },
+                        maxLines: 15,
+                        cursorColor: Colors.black,
+                        cursorWidth: 1.w,
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 14.sp,
+                          fontWeight: FontWeight.w400,
+                          height: (24 / 14).h,
+                        ),
+                        decoration: InputDecoration(
+                          hintText: '일기 내용을 작성해주세요',
+                          hintStyle: TextStyle(
+                            color: Color(0xffA6A6A6),
+                            fontSize: 14.sp,
+                            fontWeight: FontWeight.w400,
+                            height: (24 / 14).h,
+                          ),
+                          border: InputBorder.none,
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: 56.h),
+                    CustomText(
+                      text: '태그를 추가해 주세요',
+                      color: Color(0xff545454),
+                      fontSize: 20.sp,
+                      fontWeight: FontWeight.w500,
+                      height: (32 / 20),
+                    ),
+                    SizedBox(height: 16.h),
+                    Container(
+                      padding: EdgeInsets.symmetric(horizontal: 12.w),
+                      width: double.infinity,
+                      height: 40.h,
+                      decoration: BoxDecoration(
+                        color: Color(0xffD9D9D9),
+                        borderRadius: BorderRadius.circular(10.r),
+                      ),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.tag,
+                            size: 16.r,
+                            color: Colors.white,
+                          ),
+                          SizedBox(width: 8.w),
+                          Expanded(
+                            child: TextField(
+                              controller: WriteDiaryController
+                                  .to.tagTextEditingController,
+                              onSubmitted: (String tag) {
+                                WriteDiaryController.to.tagTextEditingController
+                                    .clear();
+                                WriteDiaryController.to.addTag(tag);
+                              },
+                              cursorColor: Colors.black,
+                              cursorWidth: 1.w,
+                              cursorHeight: 24.h,
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 14.sp,
+                                fontWeight: FontWeight.w400,
+                                height: (20 / 14).h,
+                              ),
+                              decoration: InputDecoration(
+                                contentPadding: EdgeInsets.only(bottom: 12.h),
+                                border: InputBorder.none,
+                              ),
+                            ),
+                          ),
+                          SizedBox(width: 8.w),
+                          GestureDetector(
+                            onTap: () {
+                              String tag = WriteDiaryController
+                                  .to.tagTextEditingController.text;
+                              WriteDiaryController.to.tagTextEditingController
+                                  .clear();
+                              WriteDiaryController.to.addTag(tag);
+                            },
+                            child: Icon(
+                              Icons.add,
+                              size: 16.r,
+                              color: Colors.white,
                             ),
                           ),
                         ],
                       ),
-                      Row(
-                        children: [
-                          Icon(Icons.fmd_good_outlined, size: 16.r),
-                          SizedBox(width: 4.w),
-                          CustomText(
-                            text: '장소',
-                            color: Color(0xff545454),
-                            fontSize: 14.sp,
-                            fontWeight: FontWeight.w600,
-                            height: (24 / 14).h,
-                          ),
-                          SizedBox(width: 52.w),
-                          CustomText(
-                            text: '캘리포니아 협재비치',
-                            color: Colors.black,
-                            fontSize: 14.sp,
-                            fontWeight: FontWeight.w400,
-                            height: (24 / 14).h,
-                            decoration: TextDecoration.underline,
-                          ),
-                        ],
-                      ),
-                      Row(
-                        children: [
-                          Icon(Icons.sunny, size: 16.r),
-                          SizedBox(width: 4.w),
-                          CustomText(
-                            text: '날씨',
-                            color: Color(0xff545454),
-                            fontSize: 14.sp,
-                            fontWeight: FontWeight.w600,
-                            height: (24 / 14).h,
-                          ),
-                          SizedBox(width: 52.w),
-                          CustomText(
-                            text: '맑음',
-                            color: Colors.black,
-                            fontSize: 14.sp,
-                            fontWeight: FontWeight.w400,
-                            height: (24 / 14).h,
-                            decoration: TextDecoration.underline,
-                          ),
-                        ],
-                      ),
-                      Row(
-                        children: [
-                          Icon(Icons.control_point, size: 16.r),
-                          SizedBox(width: 4.w),
-                          CustomText(
-                            text: '아이 기분',
-                            color: Color(0xff545454),
-                            fontSize: 14.sp,
-                            fontWeight: FontWeight.w600,
-                            height: (24 / 14).h,
-                          ),
-                          SizedBox(width: 24.w),
-                          CustomText(
-                            text: '아주 좋았어요',
-                            color: Colors.black,
-                            fontSize: 14.sp,
-                            fontWeight: FontWeight.w400,
-                            height: (24 / 14).h,
-                            decoration: TextDecoration.underline,
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-                SizedBox(height: 24.h),
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 8.0.w),
-                  child: TextField(
-                    cursorColor: Colors.black,
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 14.sp,
-                      fontWeight: FontWeight.w400,
-                      height: (24 / 14).h,
                     ),
-                    decoration: InputDecoration(
-                      hintText: '일기 제목을 작성해주세요',
-                      hintStyle: TextStyle(
-                        color: Color(0xffA6A6A6),
-                        fontSize: 14.sp,
-                        fontWeight: FontWeight.w400,
-                        height: (24 / 14).h,
-                      ),
-                      contentPadding: EdgeInsets.only(top: 3.h),
-                      prefixIcon: Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 4.0.w),
-                        child: Icon(
-                          Icons.book,
-                          size: 16.r,
-                          color: Colors.black,
-                        ),
-                      ),
-                      prefixIconConstraints: BoxConstraints(
-                        minWidth: 8.w,
-                        maxHeight: 7.h,
-                      ),
-                      focusedBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(
-                          color: Colors.black,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-                SizedBox(height: 15.h),
-                DottedBorder(
-                  borderType: BorderType.RRect,
-                  radius: Radius.circular(15.0.r),
-                  color: Color(0xffD9D9D9),
-                  child: GestureDetector(
-                    onTap: () {
-                      WriteDiaryController.to.pickImages();
-                    },
-                    child: Container(
-                      width: double.infinity,
-                      height: 104.h,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(15.0.r),
-                      ),
+                    SizedBox(height: 8.h),
+                    Container(
+                      height: 40.h,
                       child: Obx(
-                        () => WriteDiaryController.to.images.isEmpty
-                            ? _emptyImageList()
-                            : _imageList(),
+                        () => ListView.builder(
+                          scrollDirection: Axis.horizontal,
+                          itemCount: WriteDiaryController.to.tags.length,
+                          itemBuilder: (context, index) {
+                            if (index == 0) {
+                              return Container(
+                                margin: EdgeInsets.only(right: 8.w),
+                                padding: EdgeInsets.symmetric(
+                                    vertical: 6.h, horizontal: 16.w),
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(40.r),
+                                  border: Border.all(
+                                    color: Color(0xffD9D9D9),
+                                  ),
+                                ),
+                                child: Row(
+                                  children: [
+                                    Icon(
+                                      Icons.tag,
+                                      size: 16.r,
+                                      color: Color(0xff7B61FF),
+                                    ),
+                                    CustomText(
+                                      text: WriteDiaryController.to.tags[0],
+                                      color: Color(0xff7B61FF),
+                                      fontSize: 14.sp,
+                                      fontWeight: FontWeight.w400,
+                                      height: (20 / 14),
+                                    ),
+                                  ],
+                                ),
+                              );
+                            } else {
+                              return Container(
+                                margin: EdgeInsets.only(right: 8.w),
+                                padding: EdgeInsets.symmetric(
+                                    vertical: 6.h, horizontal: 16.w),
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(40.r),
+                                  border: Border.all(
+                                    color: Color(0xffD9D9D9),
+                                  ),
+                                ),
+                                child: Row(
+                                  children: [
+                                    Icon(
+                                      Icons.tag,
+                                      size: 16.r,
+                                      color: Color(0xff222222),
+                                    ),
+                                    CustomText(
+                                      text: WriteDiaryController.to.tags[index],
+                                      color: Color(0xff222222),
+                                      fontSize: 14.sp,
+                                      fontWeight: FontWeight.w400,
+                                      height: (20 / 14),
+                                    ),
+                                    SizedBox(width: 8.w),
+                                    GestureDetector(
+                                      onTap: () {
+                                        WriteDiaryController.to
+                                            .removeTag(index);
+                                      },
+                                      child: Icon(
+                                        Icons.clear,
+                                        size: 16.r,
+                                        color: Color(0xff6B6B6B),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              );
+                            }
+                          },
+                        ),
                       ),
                     ),
-                  ),
-                ),
-                SizedBox(height: 8.h),
-                Container(
-                  width: double.infinity,
-                  height: 290.h,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10.r),
-                    border: Border.all(color: Color(0xffD9D9D9)),
-                  ),
-                  child: TextField(
-                    maxLines: 15,
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 14.sp,
-                      fontWeight: FontWeight.w400,
-                      height: (24 / 14).h,
-                    ),
-                    decoration: InputDecoration(
-                      hintText: '일기 내용을 작성해주세요',
-                      hintStyle: TextStyle(
-                        color: Color(0xffA6A6A6),
-                        fontSize: 14.sp,
-                        fontWeight: FontWeight.w400,
-                        height: (24 / 14).h,
-                      ),
-                      prefixIcon: Column(
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        children: [
-                          SizedBox(height: 18.h),
-                          Row(
-                            children: [
-                              Expanded(child: Container()),
-                              Icon(
-                                Icons.book,
-                                size: 16.r,
-                                color: Colors.black,
-                              ),
-                              SizedBox(width: 4.w),
-                            ],
+                    SizedBox(height: 56.h),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        CustomText(
+                          text: '일기 공개여부',
+                          color: Color(0xff545454),
+                          fontSize: 20.sp,
+                          fontWeight: FontWeight.w500,
+                          height: (32 / 20),
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            WriteDiaryController.to.changePublic();
+                          },
+                          child: Obx(
+                            () => CustomSwitch(
+                              value: WriteDiaryController.to.isPublic.value,
+                            ),
                           ),
-                        ],
-                      ),
-                      prefixIconConstraints:
-                          BoxConstraints.tight(Size(36, double.infinity)),
-                      border: InputBorder.none,
-                      // focusedBorder: OutlineInputBorder(
-                      //   borderRadius: BorderRadius.circular(15.r),
-                      //   borderSide: BorderSide(
-                      //     color: Colors.black,
-                      //   ),
-                      // ),
+                        ),
+                      ],
                     ),
-                  ),
+                    SizedBox(height: 56.h),
+                    Container(
+                      width: double.infinity,
+                      height: 48.h,
+                      decoration: BoxDecoration(
+                        color: Color(0xff7D7D7D),
+                        borderRadius: BorderRadius.circular(10.0.r),
+                      ),
+                      child: Center(
+                        child: CustomText(
+                          text: '제출할게요',
+                          color: Colors.white,
+                          fontSize: 16.sp,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: 16.h),
+                  ],
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ),
@@ -450,10 +786,14 @@ class WriteDiary extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(Icons.camera_alt_outlined),
-          SizedBox(width: 10.w),
+          Icon(
+            Icons.camera_alt_outlined,
+            size: 16,
+            color: Color(0xff6B6B6B),
+          ),
+          SizedBox(width: 4.w),
           Text(
-            '인증 사진을 올려주세요 (최대 3장)',
+            '사진 추가하기',
             style: TextStyle(
               color: Color(0xffA6A6A6),
               fontSize: 14.sp,
@@ -466,26 +806,146 @@ class WriteDiary extends StatelessWidget {
   }
 
   Widget _imageList() {
-    return ListView.builder(
-      scrollDirection: Axis.horizontal,
-      itemCount: WriteDiaryController.to.images.length,
-      itemBuilder: (context, index) {
-        return Padding(
-          padding: EdgeInsets.all(8.0.r),
-          child: Container(
-            width: 104.w,
-            height: 104.h,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(10.r),
-              image: DecorationImage(
-                image: FileImage(
-                  File(WriteDiaryController.to.images[index].path),
+    return Builder(
+      builder: (context) {
+        if (WriteDiaryController.to.images.length == 1) {
+          return Row(
+            children: [
+              Container(
+                width: (Get.width - 64.w) / 3,
+                height: 88.h,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10.r),
+                  image: DecorationImage(
+                    image: FileImage(
+                      File(WriteDiaryController.to.images[0].path),
+                    ),
+                    fit: BoxFit.cover,
+                  ),
                 ),
-                fit: BoxFit.cover,
               ),
-            ),
-          ),
-        );
+              SizedBox(width: 8.w),
+              DottedBorder(
+                borderType: BorderType.RRect,
+                radius: Radius.circular(10.r),
+                color: Color(0xffD9D9D9),
+                child: GestureDetector(
+                  onTap: () {
+                    WriteDiaryController.to.pickImages(context);
+                  },
+                  child: Container(
+                    width: (Get.width - 64.w) / 3,
+                    height: 88.h,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10.r),
+                    ),
+                    child: Icon(Icons.add, size: 12.r),
+                  ),
+                ),
+              ),
+            ],
+          );
+        } else if (WriteDiaryController.to.images.length == 2) {
+          return Row(
+            children: [
+              Container(
+                width: (Get.width - 64.w) / 3,
+                height: 88.h,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10.r),
+                  image: DecorationImage(
+                    image: FileImage(
+                      File(WriteDiaryController.to.images[0].path),
+                    ),
+                    fit: BoxFit.cover,
+                  ),
+                ),
+              ),
+              SizedBox(width: 8.w),
+              Container(
+                width: (Get.width - 64.w) / 3,
+                height: 88.h,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10.r),
+                  image: DecorationImage(
+                    image: FileImage(
+                      File(WriteDiaryController.to.images[1].path),
+                    ),
+                    fit: BoxFit.cover,
+                  ),
+                ),
+              ),
+              SizedBox(width: 8.w),
+              Expanded(
+                child: DottedBorder(
+                  borderType: BorderType.RRect,
+                  radius: Radius.circular(10.r),
+                  color: Color(0xffD9D9D9),
+                  child: GestureDetector(
+                    onTap: () {
+                      WriteDiaryController.to.pickImages(context);
+                    },
+                    child: Container(
+                      height: 88.h,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10.r),
+                      ),
+                      child: Center(child: Icon(Icons.add, size: 12.r)),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          );
+        } else if (WriteDiaryController.to.images.length == 3) {
+          return Row(
+            children: [
+              Container(
+                width: (Get.width - 64.w) / 3,
+                height: 88.h,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10.r),
+                  image: DecorationImage(
+                    image: FileImage(
+                      File(WriteDiaryController.to.images[0].path),
+                    ),
+                    fit: BoxFit.cover,
+                  ),
+                ),
+              ),
+              SizedBox(width: 8.w),
+              Container(
+                width: (Get.width - 64.w) / 3,
+                height: 88.h,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10.r),
+                  image: DecorationImage(
+                    image: FileImage(
+                      File(WriteDiaryController.to.images[1].path),
+                    ),
+                    fit: BoxFit.cover,
+                  ),
+                ),
+              ),
+              SizedBox(width: 8.w),
+              Container(
+                width: (Get.width - 64.w) / 3,
+                height: 88.h,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10.r),
+                  image: DecorationImage(
+                    image: FileImage(
+                      File(WriteDiaryController.to.images[2].path),
+                    ),
+                    fit: BoxFit.cover,
+                  ),
+                ),
+              ),
+            ],
+          );
+        } else {
+          return Container();
+        }
       },
     );
   }

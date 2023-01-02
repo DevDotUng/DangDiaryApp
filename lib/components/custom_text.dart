@@ -35,6 +35,7 @@ class CustomText extends StatelessWidget {
         child: Text(
           text,
           maxLines: maxLines,
+          overflow: overflow,
           style: TextStyle(
             color: color,
             height: height,

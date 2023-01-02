@@ -12,12 +12,29 @@ class AllChallengeController extends GetxController {
   RxList<String> categoryList = ['전체', '산책', '간식', '여행', '훈련', '장난감'].obs;
   RxInt selectedCategory = 0.obs;
   RxBool isSearch = false.obs;
-  RxList overduedDiarys = [1].obs;
+  RxList overdueDiaries = [1].obs;
+  RxList searchHistory =
+      ['산책하기', '간식주기', '건강검진하기', '중란천 산책하기', '캠핑가기', '몰라유'].obs;
+  List<String> autoCompleteWords = [
+    '산책하기',
+    '간식주기',
+    '건강검진하기',
+    '중랑천 산책하기',
+    '캠핑가기',
+    '몰라유',
+  ];
+  RxList autoCompleteWord = [].obs;
 
   @override
   void onReady() {
     _showDoneDialog(context);
     super.onReady();
+  }
+
+  @override
+  void dispose() {
+    removeHighlightOverlay();
+    super.dispose();
   }
 
   void changeCategory(int index) {
@@ -31,6 +48,139 @@ class AllChallengeController extends GetxController {
   RxBool isFolded = true.obs;
   void fold(bool folded) {
     isFolded(folded);
+  }
+
+  final LayerLink layerLink = LayerLink();
+  OverlayEntry? overlayEntry;
+
+  void createOverlay(String text) {
+    removeHighlightOverlay();
+
+    assert(overlayEntry == null);
+
+    overlayEntry = OverlayEntry(
+      builder: (BuildContext context) {
+        return Positioned(
+          width: Get.width - 64.w,
+          child: CompositedTransformFollower(
+            link: layerLink,
+            showWhenUnlinked: false,
+            offset: Offset(8.w, 40.h),
+            child: Container(
+              padding: EdgeInsets.symmetric(vertical: 8.h, horizontal: 16.w),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.vertical(
+                  bottom: Radius.circular(10.r),
+                ),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.15),
+                    offset: Offset(0, 4.h),
+                    blurRadius: 4.r,
+                  ),
+                ],
+              ),
+              child: Obx(() => text.isEmpty
+                  ? _searchHistoryWidget()
+                  : _autoCompleteWidget()),
+            ),
+          ),
+        );
+      },
+    );
+    Overlay.of(context)?.insert(overlayEntry!);
+  }
+
+  void removeHighlightOverlay() {
+    overlayEntry?.remove();
+    overlayEntry = null;
+  }
+
+  void changeTextListener(String text) {
+    autoCompleteWord.clear();
+    for (String word in autoCompleteWords) {
+      if (word.contains(text)) {
+        autoCompleteWord.add(word);
+      }
+    }
+  }
+
+  Widget _searchHistoryWidget() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        CustomText(
+          text: '이전 검색 기록',
+          color: Color(0xff757575),
+          fontSize: 12.sp,
+          fontWeight: FontWeight.w400,
+          height: (24 / 12),
+          decoration: TextDecoration.none,
+        ),
+        SizedBox(height: 8.h),
+        ...List.generate(
+          AllChallengeController.to.searchHistory.length < 5
+              ? AllChallengeController.to.searchHistory.length
+              : 5,
+          (index) => Column(
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  CustomText(
+                    text: AllChallengeController.to.searchHistory[index],
+                    color: Color(0xff0A0A0A),
+                    fontSize: 12.sp,
+                    fontWeight: FontWeight.w400,
+                    height: (24 / 12),
+                    decoration: TextDecoration.none,
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      searchHistory.removeAt(index);
+                    },
+                    child: Icon(Icons.clear, size: 12.r),
+                  ),
+                ],
+              ),
+              Divider(
+                color: Color(0xffEBEBEB),
+                height: 9.h,
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _autoCompleteWidget() {
+    return ListView.builder(
+      padding: EdgeInsets.all(0),
+      shrinkWrap: true,
+      itemCount: autoCompleteWord.length,
+      itemBuilder: (context, index) {
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            CustomText(
+              text: AllChallengeController.to.autoCompleteWord[index],
+              color: Color(0xff0A0A0A),
+              fontSize: 12.sp,
+              fontWeight: FontWeight.w400,
+              height: (24 / 12),
+              decoration: TextDecoration.none,
+            ),
+            Divider(
+              color: Color(0xffEBEBEB),
+              height: 9.h,
+            ),
+          ],
+        );
+      },
+    );
   }
 
   void _showDoneDialog(BuildContext context) {
@@ -63,7 +213,7 @@ class AllChallengeController extends GetxController {
                         color: Colors.black,
                         fontSize: 20.sp,
                         fontWeight: FontWeight.w600,
-                        height: (24 / 20).h,
+                        height: (24 / 20),
                       ),
                       GestureDetector(
                         onTap: () {
@@ -232,7 +382,7 @@ class AllChallengeController extends GetxController {
                     color: Color(0xff7D7D7D),
                     fontSize: 12.sp,
                     fontWeight: FontWeight.w400,
-                    height: (16 / 12).h,
+                    height: (16 / 12),
                     overflow: TextOverflow.ellipsis,
                   ),
                 ),
