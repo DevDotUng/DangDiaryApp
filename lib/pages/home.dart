@@ -66,16 +66,11 @@ class Home extends StatelessWidget {
                 height: 56.h,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(28.0.r),
+                  border: Border.all(color: Colors.white),
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.black.withOpacity(0.1),
-                      offset: Offset(-0.1, -0.1),
-                      blurRadius: 4.0,
-                    ),
-                    BoxShadow(
-                      color: Colors.black.withOpacity(0.1),
-                      offset: Offset(0.1, 0.1),
-                      blurRadius: 4.0,
+                      color: Colors.black.withOpacity(0.25),
+                      blurRadius: 8.r,
                     ),
                   ],
                   image: DecorationImage(

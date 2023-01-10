@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
-class StickerController extends GetxController {
-  static StickerController get to => Get.find();
+class OverdueDiariesController extends GetxController {
+  static OverdueDiariesController get to => Get.find();
   RxInt tabBarIndex = 0.obs;
   RxBool isSliver = false.obs;
   late ScrollController scrollController;
@@ -35,7 +35,7 @@ class StickerController extends GetxController {
 
   double getTabBarPosition(int index) {
     if (index == 1) {
-      return 78;
+      return 75;
     } else {
       return 0;
     }
@@ -45,13 +45,7 @@ class StickerController extends GetxController {
     if (index == 1) {
       return 63;
     } else {
-      return 78;
+      return 75;
     }
-  }
-
-  RxBool isLoading = true.obs;
-  void loading() async {
-    await Future.delayed(Duration(seconds: 2));
-    isLoading(false);
   }
 }

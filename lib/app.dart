@@ -5,7 +5,7 @@ import 'dart:ui';
 import 'package:dangdiarysample/components/custom_text.dart';
 import 'package:dangdiarysample/components/triangle_painter.dart';
 import 'package:dangdiarysample/controllers/bottom_nav_controller.dart';
-import 'package:dangdiarysample/pages/diarys.dart';
+import 'package:dangdiarysample/pages/diaries.dart';
 import 'package:dangdiarysample/pages/home.dart';
 import 'package:dangdiarysample/pages/my_page.dart';
 import 'package:dangdiarysample/pages/browse.dart';
@@ -16,14 +16,21 @@ import 'package:get/get.dart';
 class App extends StatelessWidget {
   App({Key? key}) : super(key: key);
 
-  GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
+  final navigatorKeys = {
+    0: GlobalKey<NavigatorState>(),
+    1: GlobalKey<NavigatorState>(),
+    2: GlobalKey<NavigatorState>(),
+    3: GlobalKey<NavigatorState>(),
+  };
 
   @override
   Widget build(BuildContext context) {
     Get.put(BottomNavController());
     return WillPopScope(
       onWillPop: () async {
-        return !(await navigatorKey.currentState!.maybePop());
+        return !(await navigatorKeys[BottomNavController.to.pageIndex]!
+            .currentState!
+            .maybePop());
       },
       child: Obx(
         () => Scaffold(
@@ -33,14 +40,21 @@ class App extends StatelessWidget {
                 index: BottomNavController.to.pageIndex.value,
                 children: [
                   Navigator(
-                    key: navigatorKey,
+                    key: navigatorKeys[0],
                     onGenerateRoute: (routeSettings) {
                       return MaterialPageRoute(
                         builder: (context) => Home(),
                       );
                     },
                   ),
-                  Diarys(),
+                  Navigator(
+                    key: navigatorKeys[1],
+                    onGenerateRoute: (routeSettings) {
+                      return MaterialPageRoute(
+                        builder: (context) => Diaries(),
+                      );
+                    },
+                  ),
                   Browse(),
                   MyPage(),
                 ],
@@ -244,6 +258,12 @@ class App extends StatelessWidget {
     );
   }
 
+  void _bottomNavBack(int index) async {
+    if (BottomNavController.to.pageIndex.value == index) {
+      navigatorKeys[index]!.currentState?.popUntil((route) => route.isFirst);
+    }
+  }
+
   Widget _bottomNavBar(BuildContext context) {
     return Container(
       width: double.infinity,
@@ -392,45 +412,53 @@ class App extends StatelessWidget {
               ],
             ),
           ),
-          Positioned(
-            top: 30.h,
-            left: Get.width * 0.5 - 6.w,
-            child: Transform.rotate(
-              angle: pi,
-              child: CustomPaint(
-                painter: TrianglePainter(
-                  strokeColor: Color(0xffA6A6A6),
-                  strokeWidth: 10,
-                  paintingStyle: PaintingStyle.fill,
-                ),
-                child: Container(
-                  height: 12,
-                  width: 12,
-                ),
-              ),
-            ),
+          Obx(
+            () => BottomNavController.to.pageIndex == 0
+                ? Positioned(
+                    top: 30.h,
+                    left: Get.width * 0.5 - 6.w,
+                    child: Transform.rotate(
+                      angle: pi,
+                      child: CustomPaint(
+                        painter: TrianglePainter(
+                          strokeColor: Color(0xffA6A6A6),
+                          strokeWidth: 10,
+                          paintingStyle: PaintingStyle.fill,
+                        ),
+                        child: Container(
+                          height: 12,
+                          width: 12,
+                        ),
+                      ),
+                    ),
+                  )
+                : Container(),
           ),
-          Positioned(
-            top: 0,
-            left: Get.width * 0.5 - 95.5.w,
-            child: Container(
-              width: 191.w,
-              height: 30.h,
-              decoration: BoxDecoration(
-                color: Color(0xffA6A6A6),
-                borderRadius: BorderRadius.circular(10.r),
-              ),
-              child: Center(
-                child: Text(
-                  '오늘의 일일 챌린지를 확인해보세요!',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 12.sp,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-              ),
-            ),
+          Obx(
+            () => BottomNavController.to.pageIndex == 0
+                ? Positioned(
+                    top: 0,
+                    left: Get.width * 0.5 - 95.5.w,
+                    child: Container(
+                      width: 191.w,
+                      height: 30.h,
+                      decoration: BoxDecoration(
+                        color: Color(0xffA6A6A6),
+                        borderRadius: BorderRadius.circular(10.r),
+                      ),
+                      child: Center(
+                        child: Text(
+                          '오늘의 일일 챌린지를 확인해보세요!',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 12.sp,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      ),
+                    ),
+                  )
+                : Container(),
           ),
         ],
       ),
@@ -440,6 +468,7 @@ class App extends StatelessWidget {
   Widget _bottomNavigationBarItem(IconData icon, String label, int index) {
     return GestureDetector(
       onTap: () {
+        _bottomNavBack(index);
         BottomNavController.to.changeBottomNav(index);
         BottomNavController.to.isShowBottomModal(true);
       },

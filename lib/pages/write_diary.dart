@@ -185,6 +185,7 @@ class WriteDiary extends StatelessWidget {
               SizedBox(height: 24.h),
               Expanded(
                 child: ListView(
+                  controller: WriteDiaryController.to.scrollController,
                   children: [
                     SizedBox(height: 16.h),
                     Row(
@@ -754,19 +755,28 @@ class WriteDiary extends StatelessWidget {
                       ],
                     ),
                     SizedBox(height: 56.h),
-                    Container(
-                      width: double.infinity,
-                      height: 48.h,
-                      decoration: BoxDecoration(
-                        color: Color(0xff7D7D7D),
-                        borderRadius: BorderRadius.circular(10.0.r),
-                      ),
-                      child: Center(
-                        child: CustomText(
-                          text: '제출할게요',
-                          color: Colors.white,
-                          fontSize: 16.sp,
-                          fontWeight: FontWeight.w600,
+                    GestureDetector(
+                      onTap: () {
+                        WriteDiaryController.to.scrollController.animateTo(
+                          149.h, // 149.h, 469.h, 1034.h, 1226.h
+                          duration: Duration(milliseconds: 200),
+                          curve: Curves.linear,
+                        );
+                      },
+                      child: Container(
+                        width: double.infinity,
+                        height: 48.h,
+                        decoration: BoxDecoration(
+                          color: Color(0xff7D7D7D),
+                          borderRadius: BorderRadius.circular(10.0.r),
+                        ),
+                        child: Center(
+                          child: CustomText(
+                            text: '제출할게요',
+                            color: Colors.white,
+                            fontSize: 16.sp,
+                            fontWeight: FontWeight.w600,
+                          ),
                         ),
                       ),
                     ),
@@ -811,19 +821,7 @@ class WriteDiary extends StatelessWidget {
         if (WriteDiaryController.to.images.length == 1) {
           return Row(
             children: [
-              Container(
-                width: (Get.width - 64.w) / 3,
-                height: 88.h,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10.r),
-                  image: DecorationImage(
-                    image: FileImage(
-                      File(WriteDiaryController.to.images[0].path),
-                    ),
-                    fit: BoxFit.cover,
-                  ),
-                ),
-              ),
+              picture(context, 0),
               SizedBox(width: 8.w),
               DottedBorder(
                 borderType: BorderType.RRect,
@@ -848,33 +846,9 @@ class WriteDiary extends StatelessWidget {
         } else if (WriteDiaryController.to.images.length == 2) {
           return Row(
             children: [
-              Container(
-                width: (Get.width - 64.w) / 3,
-                height: 88.h,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10.r),
-                  image: DecorationImage(
-                    image: FileImage(
-                      File(WriteDiaryController.to.images[0].path),
-                    ),
-                    fit: BoxFit.cover,
-                  ),
-                ),
-              ),
+              picture(context, 0),
               SizedBox(width: 8.w),
-              Container(
-                width: (Get.width - 64.w) / 3,
-                height: 88.h,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10.r),
-                  image: DecorationImage(
-                    image: FileImage(
-                      File(WriteDiaryController.to.images[1].path),
-                    ),
-                    fit: BoxFit.cover,
-                  ),
-                ),
-              ),
+              picture(context, 1),
               SizedBox(width: 8.w),
               Expanded(
                 child: DottedBorder(
@@ -900,53 +874,51 @@ class WriteDiary extends StatelessWidget {
         } else if (WriteDiaryController.to.images.length == 3) {
           return Row(
             children: [
-              Container(
-                width: (Get.width - 64.w) / 3,
-                height: 88.h,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10.r),
-                  image: DecorationImage(
-                    image: FileImage(
-                      File(WriteDiaryController.to.images[0].path),
-                    ),
-                    fit: BoxFit.cover,
-                  ),
-                ),
-              ),
+              picture(context, 0),
               SizedBox(width: 8.w),
-              Container(
-                width: (Get.width - 64.w) / 3,
-                height: 88.h,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10.r),
-                  image: DecorationImage(
-                    image: FileImage(
-                      File(WriteDiaryController.to.images[1].path),
-                    ),
-                    fit: BoxFit.cover,
-                  ),
-                ),
-              ),
+              picture(context, 1),
               SizedBox(width: 8.w),
-              Container(
-                width: (Get.width - 64.w) / 3,
-                height: 88.h,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10.r),
-                  image: DecorationImage(
-                    image: FileImage(
-                      File(WriteDiaryController.to.images[2].path),
-                    ),
-                    fit: BoxFit.cover,
-                  ),
-                ),
-              ),
+              picture(context, 2)
             ],
           );
         } else {
           return Container();
         }
       },
+    );
+  }
+
+  Widget picture(BuildContext context, int index) {
+    return Container(
+      width: (Get.width - 64.w) / 3,
+      height: 88.h,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(10.r),
+        image: DecorationImage(
+          image: FileImage(
+            File(WriteDiaryController.to.images[index].path),
+          ),
+          fit: BoxFit.cover,
+        ),
+      ),
+      child: Stack(
+        children: [
+          Positioned(
+            top: 8.h,
+            right: 8.w,
+            child: GestureDetector(
+              onTap: () {
+                WriteDiaryController.to.images.removeAt(index);
+              },
+              child: Icon(
+                Icons.clear,
+                size: 16.r,
+                color: Color(0xffA6A6A6),
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

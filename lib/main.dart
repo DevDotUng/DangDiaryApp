@@ -13,6 +13,9 @@ import 'package:dangdiarysample/pages/notice.dart';
 import 'package:dangdiarysample/pages/notification_page.dart';
 import 'package:dangdiarysample/pages/posts.dart';
 import 'package:dangdiarysample/pages/report_detail.dart';
+import 'package:dangdiarysample/pages/search_diary.dart';
+import 'package:dangdiarysample/pages/sticker.dart';
+import 'package:dangdiarysample/pages/sticker_detail.dart';
 import 'package:dangdiarysample/pages/write_diary.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -54,6 +57,9 @@ class MyApp extends StatelessWidget {
             GetPage(name: '/completeDiary', page: () => CompleteDiary()),
             GetPage(name: '/diary', page: () => Diary()),
             GetPage(name: '/notificationPage', page: () => NotificationPage()),
+            GetPage(name: '/searchDiary', page: () => SearchDiary()),
+            GetPage(name: '/sticker', page: () => Sticker()),
+            GetPage(name: '/stickerDetail', page: () => StickerDetail()),
           ],
         );
       },

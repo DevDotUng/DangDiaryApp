@@ -1,19 +1,15 @@
 import 'package:dangdiarysample/components/custom_text.dart';
-import 'package:dangdiarysample/controllers/sticker_controller.dart';
+import 'package:dangdiarysample/controllers/overdue_diaries_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
-class Sticker extends StatelessWidget {
-  const Sticker({Key? key}) : super(key: key);
+class OverdueDiaries extends StatelessWidget {
+  const OverdueDiaries({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    Get.put(StickerController());
-    return _sticker(context);
-  }
-
-  Widget _sticker(BuildContext context) {
+    Get.put(OverdueDiariesController());
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
@@ -30,34 +26,19 @@ class Sticker extends StatelessWidget {
         ),
         centerTitle: true,
         title: CustomText(
-          text: '칭찬 스티커',
+          text: '밀린 일기',
           color: Colors.black,
           fontSize: 20.sp,
           fontWeight: FontWeight.w500,
           height: (28 / 20),
         ),
-        actions: [
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 24.0.w),
-            child: GestureDetector(
-              onTap: () {
-                Get.toNamed('/searchDiary');
-              },
-              child: Icon(
-                Icons.search,
-                color: Colors.black,
-                size: 32.r,
-              ),
-            ),
-          ),
-        ],
       ),
       body: Container(
         color: Colors.white,
         child: Stack(
           children: [
             ListView(
-              controller: StickerController.to.scrollController,
+              controller: OverdueDiariesController.to.scrollController,
               children: [
                 SizedBox(height: 16.h),
                 Container(
@@ -75,9 +56,9 @@ class Sticker extends StatelessWidget {
                             height: (32 / 20),
                           ),
                           children: <TextSpan>[
-                            TextSpan(text: '총 1000장 중에\n'),
+                            TextSpan(text: '지금까지\n'),
                             TextSpan(
-                              text: '455개의 ',
+                              text: '4장',
                               style: TextStyle(
                                 color: Color(0xff7B61FF),
                                 fontSize: 20.sp,
@@ -85,7 +66,7 @@ class Sticker extends StatelessWidget {
                                 height: (32 / 20),
                               ),
                             ),
-                            TextSpan(text: '스티커를 모았어요.'),
+                            TextSpan(text: '의 밀린 일기가 있어요.'),
                           ],
                         ),
                       ),
@@ -201,47 +182,14 @@ class Sticker extends StatelessWidget {
                   color: Color(0xffF5F5F5),
                 ),
                 SizedBox(height: 8.h),
-                _stickerTabBar(),
-                SizedBox(height: 8.h),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    Container(
-                      width: 16.w,
-                      height: 16.h,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(8.r),
-                        border: Border.all(
-                          color: Color(0xff7D7D7D7),
-                        ),
-                      ),
-                    ),
-                    SizedBox(width: 4.w),
-                    CustomText(
-                      text: '미보유 스티커 보기',
-                      color: Color(0xff7D7D7D),
-                      fontSize: 12.sp,
-                      fontWeight: FontWeight.w400,
-                      height: (20 / 12),
-                    ),
-                    SizedBox(width: 24.w),
-                  ],
-                ),
-                Obx(
-                  () => IndexedStack(
-                    index: StickerController.to.tabBarIndex.value,
-                    children: [
-                      _stickerGridView(),
-                      _stickerGridView(),
-                    ],
-                  ),
-                ),
+                _diariesTabBar(),
+                _overdueDiaries(),
               ],
             ),
             Positioned(
               child: Obx(
-                () => StickerController.to.isSliver.value
-                    ? _stickerTabBar()
+                () => OverdueDiariesController.to.isSliver.value
+                    ? _diariesTabBar()
                     : Container(),
               ),
             ),
@@ -251,7 +199,7 @@ class Sticker extends StatelessWidget {
     );
   }
 
-  Widget _stickerTabBar() {
+  Widget _diariesTabBar() {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 24.w),
       width: double.infinity,
@@ -264,13 +212,13 @@ class Sticker extends StatelessWidget {
             children: [
               GestureDetector(
                 onTap: () {
-                  StickerController.to.changeTabBarIndex(0);
+                  OverdueDiariesController.to.changeTabBarIndex(0);
                 },
                 child: SizedBox(
-                  width: 78.w,
+                  width: 75.w,
                   child: Center(
                     child: Text(
-                      '최근 획득순',
+                      '마감임박순',
                       style: TextStyle(
                         color: Color(0xff545454),
                         fontSize: 14.sp,
@@ -283,13 +231,13 @@ class Sticker extends StatelessWidget {
               ),
               GestureDetector(
                 onTap: () {
-                  StickerController.to.changeTabBarIndex(1);
+                  OverdueDiariesController.to.changeTabBarIndex(1);
                 },
                 child: SizedBox(
                   width: 63.w,
                   child: Center(
                     child: Text(
-                      '오래된순',
+                      '진행도순',
                       style: TextStyle(
                         color: Color(0xff545454),
                         fontSize: 14.sp,
@@ -317,15 +265,15 @@ class Sticker extends StatelessWidget {
                     duration: Duration(milliseconds: 200),
                     top: 0,
                     bottom: 0,
-                    left: StickerController.to
+                    left: OverdueDiariesController.to
                         .getTabBarPosition(
-                            StickerController.to.tabBarIndex.value)
+                            OverdueDiariesController.to.tabBarIndex.value)
                         .w,
                     child: AnimatedContainer(
                       duration: Duration(milliseconds: 200),
-                      width: StickerController.to
+                      width: OverdueDiariesController.to
                           .getTabBarWidth(
-                              StickerController.to.tabBarIndex.value)
+                              OverdueDiariesController.to.tabBarIndex.value)
                           .w,
                       height: 2.h,
                       decoration: BoxDecoration(
@@ -343,85 +291,112 @@ class Sticker extends StatelessWidget {
     );
   }
 
-  Widget _stickerGridView() {
+  Widget _overdueDiaries() {
     return Padding(
-      padding: EdgeInsets.fromLTRB(24.w, 10.h, 20.w, 24.h),
-      child: GridView.builder(
+      padding: EdgeInsets.fromLTRB(24.w, 24.h, 20.w, 24.h),
+      child: ListView.builder(
         physics: NeverScrollableScrollPhysics(),
         shrinkWrap: true,
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 2,
-          crossAxisSpacing: 15.w,
-          mainAxisSpacing: 16.h,
-          mainAxisExtent: 196.h,
-        ),
         itemCount: 10,
         itemBuilder: (context, index) {
           return Container(
-            padding: EdgeInsets.symmetric(vertical: 24.h, horizontal: 16.w),
+            margin: EdgeInsets.only(bottom: 16.h),
+            padding: EdgeInsets.symmetric(vertical: 16.h, horizontal: 16.w),
+            width: double.infinity,
+            height: 112.h,
             decoration: BoxDecoration(
-              color: Color(0xffF4F4F4),
+              color: Colors.white,
               borderRadius: BorderRadius.circular(10.r),
+              border: Border.all(color: Color(0xffEAEAEA)),
             ),
-            child: Column(
+            child: Row(
               children: [
-                index % 2 == 0
-                    ? GestureDetector(
-                        onTap: () {
-                          Get.toNamed('/stickerDetail');
-                        },
-                        child: Container(
-                          width: 108.w,
-                          height: 108.h,
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(54.r),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.black.withOpacity(0.15),
-                                offset: Offset(0, 4.h),
-                                blurRadius: 10.r,
-                              ),
-                            ],
-                            image: DecorationImage(
-                              image: AssetImage('assets/sticker.png'),
-                              fit: BoxFit.contain,
+                Container(
+                  width: 80.w,
+                  height: 80.h,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10.r),
+                    image: DecorationImage(
+                      image: AssetImage('assets/dog.png'),
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                ),
+                SizedBox(width: 16.w),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        Icon(
+                          Icons.access_time_rounded,
+                          size: 16.r,
+                          color: Color(0xff7D7D7D),
+                        ),
+                        SizedBox(width: 2.w),
+                        CustomText(
+                          text: '03:58:11 남음',
+                          color: Color(0xff7D7D7D),
+                          fontSize: 12.sp,
+                          fontWeight: FontWeight.w400,
+                          height: (14 / 12),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 4.h),
+                    SizedBox(
+                      width: Get.width - 176.w,
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: CustomText(
+                              text: '한강공원 술래잡기',
+                              color: Colors.black,
+                              fontSize: 16.sp,
+                              fontWeight: FontWeight.w400,
+                              height: (24 / 16),
                             ),
                           ),
-                        ),
-                      )
-                    : GestureDetector(
-                        onTap: () {
-                          Get.toNamed('/stickerDetail');
-                        },
-                        child: Container(
-                          margin: EdgeInsets.only(top: 8.h),
-                          width: 119.w,
-                          height: 100.h,
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(5.r),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.black.withOpacity(0.15),
-                                offset: Offset(0, 4.h),
-                                blurRadius: 10.r,
-                              ),
-                            ],
-                            image: DecorationImage(
-                              image: AssetImage('assets/sticker.png'),
-                              fit: BoxFit.cover,
-                            ),
+                          SizedBox(width: 8.w),
+                          Icon(
+                            Icons.arrow_forward_ios_sharp,
+                            size: 20.r,
+                            color: Color(0xffA6A6A6),
                           ),
-                        ),
+                        ],
                       ),
-                SizedBox(height: 16.h),
-                CustomText(
-                  text: '전기담요에서 간식먹기',
-                  color: Color(0xff222222),
-                  fontSize: 12.sp,
-                  fontWeight: FontWeight.w400,
-                  height: (20 / 12),
+                    ),
+                    Expanded(child: Container()),
+                    CustomText(
+                      text: '인증 사진 추가부터',
+                      color: Color(0xff7B61FF),
+                      fontSize: 12.sp,
+                      fontWeight: FontWeight.w400,
+                      height: (20 / 12),
+                    ),
+                    Container(
+                      width: Get.width - 176.w,
+                      height: 4.h,
+                      decoration: BoxDecoration(
+                        color: Color(0xffD9D9D9),
+                        borderRadius: BorderRadius.circular(2.r),
+                      ),
+                      child: Row(
+                        children: [
+                          Container(
+                            width: (Get.width - 176.w) / 5 * 3,
+                            height: 4.h,
+                            decoration: BoxDecoration(
+                              color: Color(0xff9C88FF),
+                              borderRadius: BorderRadius.circular(2.r),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
                 ),
               ],
             ),
