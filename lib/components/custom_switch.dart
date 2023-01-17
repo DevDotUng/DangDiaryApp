@@ -42,7 +42,7 @@ class CustomSwitch extends StatelessWidget {
             duration: Duration(milliseconds: 200),
             child: Container(
               width: 24.w,
-              height: 24.h,
+              height: 24.w,
               decoration: BoxDecoration(
                 color: value ? Color(0xff7B61FF) : Color(0xffA6A6A6),
                 borderRadius: BorderRadius.circular(12.r),

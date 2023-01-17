@@ -43,7 +43,6 @@ class CompleteDiary extends StatelessWidget {
             SizedBox(height: 54.h),
             Container(
               width: Get.width - 48.w,
-              height: Get.width - 48.w,
               child: Center(
                 child: CircularProgressIndicator(),
               ),

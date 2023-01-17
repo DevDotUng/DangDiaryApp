@@ -26,6 +26,13 @@ class WriteDiaryController extends GetxController {
   RxInt selectedFeelingsIndex = 9.obs;
   RxBool isPublic = true.obs;
   RxList<int> progress = [1, 0, 0, 0, 0].obs;
+  RxList essentialTextList = [
+    SizedBox(height: 16.h),
+    SizedBox(height: 16.h),
+    SizedBox(height: 16.h),
+    SizedBox(height: 16.h),
+    SizedBox(height: 16.h),
+  ].cast<Widget>().toList().obs;
   RxList<String> tags = ['한강공원 술래잡기'].obs;
   late TextEditingController tagTextEditingController;
   late ScrollController scrollController;
@@ -97,7 +104,7 @@ class WriteDiaryController extends GetxController {
 
   void pickImages(BuildContext context) async {
     final List<XFile>? imageList = await _picker.pickMultiImage();
-    if (imageList!.length > 3) {
+    if (imageList!.length + images.length > 3) {
       showDialog(
         context: context,
         builder: (BuildContext buildContext) {
@@ -180,7 +187,55 @@ class WriteDiaryController extends GetxController {
       } else {
         progress[3] = 1;
       }
-      images(imageList);
+      images.addAll(imageList);
+    }
+  }
+
+  void submit() {
+    List<int> isCompletes = [];
+    for (int i = 0; i < 5; i++) {
+      if (progress[i] == 0) {
+        isCompletes.add(i);
+        essentialTextList[i] = Padding(
+          padding: EdgeInsets.only(top: 4.h, bottom: 8.h),
+          child: CustomText(
+            text: '* 필수 답변 항목이에요!',
+            color: Color(0xff7B61FF),
+            fontSize: 14.sp,
+            fontWeight: FontWeight.w400,
+            height: (20 / 14),
+          ),
+        );
+      }
+    }
+
+    if (isCompletes.isEmpty) {
+      Get.offAndToNamed('/completeDiary');
+    } else {
+      double height;
+      switch (isCompletes[0]) {
+        case 0:
+        case 1:
+          height = 149.h;
+          break;
+        case 2:
+          height = 469.h;
+          break;
+        case 3:
+          height = 1034.h;
+          break;
+        case 4:
+          height = 1226.h;
+          break;
+        default:
+          height = 149.h;
+          break;
+      }
+      scrollController.animateTo(
+        height,
+        duration: Duration(milliseconds: 200),
+        curve: Curves.linear,
+      );
     }
   }
 }

@@ -1,4 +1,7 @@
 import 'package:dangdiarysample/components/custom_text.dart';
+import 'package:dangdiarysample/components/expandable_text.dart';
+import 'package:dangdiarysample/controllers/posts_controller.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -8,12 +11,7 @@ class Posts extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String postContent =
-        '한강공원 술래잡기 한강공원 술래잡기 한강공원 술래잡기 한강공원 술래잡기 한강공원 술래잡기 한강공원 술래잡기 '
-        '한강공원 술래잡기 한강공원 술래잡기 한강공원 술래잡기 한강공원 술래잡기 한강공원 술래잡기 한강공원 술래잡기 한강공원 술래잡기 한강공원 술래잡기 한강공원 술래잡기 한강공원 술래잡기 한강공원 술래잡기 한강공원 술래잡기 한강공원 술래잡기 '
-        '한강공원 술래잡기 한강공원 술래잡기 한강공원 술래잡기 한강공원 술래잡기 한강공원 술래잡기 한강공원 술래잡기 한강공원 술래잡기 한강공원 술래잡기 한강공원 술래잡기 한강공원 술래잡기 한강공원 술래잡기 한강공원 술래잡기 한강공원 술래잡기 '
-        '한강공원 술래잡기 한강공원 술래잡기 한강공원 술래잡기 한강공원 술래잡기 한강공원 술래잡기 한강공원 술래잡기 한강공원 술래잡기 한강공원 술래잡기 한강공원 술래잡기 한강공원 술래잡기 한강공원 술래잡기 한강공원 술래잡기 한강공원 술래잡기 '
-        '한강공원 술래잡기 한강공원 술래잡기 한강공원 술래잡기 한강공원 술래잡기 한강공원 술래잡기 한강공원 술래잡기 한강공원 술래잡기 한강공원 술래잡기 한강공원 술래잡기 한강공원 술래잡기 한강공원 술래잡기 한강공원 술래잡기 한강공원 술래잡기 ';
+    Get.put(PostsController());
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
@@ -32,195 +30,406 @@ class Posts extends StatelessWidget {
         title: CustomText(
           text: '둘러보기',
           color: Colors.black,
-          fontSize: 16.sp,
-          fontWeight: FontWeight.w400,
-          height: (32 / 16),
+          fontSize: 20.sp,
+          fontWeight: FontWeight.w500,
+          height: (28 / 20),
         ),
       ),
       body: Container(
+        padding: EdgeInsets.symmetric(vertical: 16),
         color: Colors.white,
-        child: SingleChildScrollView(
-          child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 24.w),
-            child: Column(
+        child: ListView.builder(
+          physics: const ClampingScrollPhysics(),
+          scrollDirection: Axis.vertical,
+          itemCount: 4,
+          itemBuilder: (context, index) {
+            return Column(
               children: [
-                SizedBox(height: 16.h),
-                Container(
-                  width: double.infinity,
-                  height: 38.h,
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(10.0.r),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withOpacity(0.15),
-                        blurRadius: 8,
-                      ),
-                    ],
-                  ),
-                  child: Row(
-                    children: [
-                      SizedBox(width: 8.w),
-                      Container(
-                        width: 30.w,
-                        height: 30.h,
-                        decoration: BoxDecoration(
-                          color: Color(0xffD9D9D9),
-                          borderRadius: BorderRadius.circular(15.r),
-                        ),
-                      ),
-                      SizedBox(width: 16.w),
-                      CustomText(
-                        text: '오또캐드',
-                        color: Color(0xff1D1D1D),
-                        fontSize: 12.sp,
-                        fontWeight: FontWeight.w400,
-                        height: (20 / 12),
-                      ),
-                      SizedBox(width: 8.w),
-                      CustomText(
-                        text: '초코',
-                        color: Color(0xff1D1D1D),
-                        fontSize: 12.sp,
-                        fontWeight: FontWeight.w400,
-                        height: (20 / 12),
-                      ),
-                      SizedBox(width: 2.w),
-                      Icon(Icons.male, size: 10.r),
-                    ],
-                  ),
-                ),
-                SizedBox(height: 8.h),
-                Container(
-                  padding: EdgeInsets.symmetric(horizontal: 8.w),
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(10.0.r),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withOpacity(0.15),
-                        blurRadius: 8,
-                      ),
-                    ],
-                  ),
-                  child: Column(
-                    children: [
-                      SizedBox(height: 16.h),
-                      CustomText(
-                        text: '초코와 술래잡기',
-                        color: Colors.black,
-                        fontSize: 16.sp,
-                        fontWeight: FontWeight.w600,
-                        height: (20 / 16),
-                      ),
-                      CustomText(
-                        text: '서울 성북구 유니크원 카페',
-                        color: Color(0xff7E7E7E),
-                        fontSize: 12.sp,
-                        fontWeight: FontWeight.w300,
-                      ),
-                      SizedBox(height: 8.h),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 24.w),
+                      child: Row(
                         children: [
-                          CustomText(
-                            text: '2022년 9월 11일 월요일',
-                            color: Color(0xff1D1D1D),
-                            fontSize: 12.sp,
-                            fontWeight: FontWeight.w400,
-                            height: (20 / 12),
-                          ),
-                          Row(
-                            children: [
-                              Icon(Icons.wb_sunny_outlined, size: 16.r),
-                              SizedBox(width: 8.w),
-                              Icon(Icons.sentiment_very_satisfied_sharp,
-                                  size: 16.r),
-                            ],
-                          ),
-                        ],
-                      ),
-                      SizedBox(height: 8.h),
-                      Container(
-                        width: double.infinity,
-                        height: 380.h,
-                        decoration: BoxDecoration(
-                          color: Color(0xffC4C4C4),
-                          borderRadius: BorderRadius.circular(5.r),
-                        ),
-                      ),
-                      SizedBox(height: 16.h),
-                      Row(
-                        children: [
-                          Expanded(
-                            flex: 207,
-                            child: Container(
-                              width: 100.w,
-                              height: 43.h,
-                              decoration: BoxDecoration(
-                                color: Color(0xffF5F5F5),
-                                borderRadius: BorderRadius.circular(10.r),
-                              ),
-                              child: Row(
-                                children: [
-                                  SizedBox(width: 8.w),
-                                  Icon(Icons.golf_course, size: 16.r),
-                                  SizedBox(width: 8.w),
-                                  CustomText(
-                                    text: '애견카페 방문기 작성하기',
-                                    color: Colors.black,
-                                    fontSize: 14.sp,
-                                    fontWeight: FontWeight.w400,
-                                    height: (24 / 14),
-                                  ),
-                                ],
+                          Container(
+                            width: 32.w,
+                            height: 32.w,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(16.r),
+                              image: DecorationImage(
+                                image: AssetImage('assets/dog.png'),
+                                fit: BoxFit.cover,
                               ),
                             ),
                           ),
                           SizedBox(width: 8.w),
-                          Expanded(
-                            flex: 96,
-                            child: Container(
-                              width: 100.w,
-                              height: 43.h,
-                              decoration: BoxDecoration(
-                                color: Color(0xffF5F5F5),
-                                borderRadius: BorderRadius.circular(10.r),
-                              ),
+                          CustomText(
+                            text: '초코',
+                            color: Color(0xff222222),
+                            fontSize: 14.sp,
+                            fontWeight: FontWeight.w500,
+                            height: (20 / 14),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 24.0.w),
+                      child: GestureDetector(
+                        onTap: () {
+                          PostsController.to.editDiary(context);
+                        },
+                        child: Icon(
+                          Icons.more_horiz,
+                          color: Colors.black,
+                          size: 24.r,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 11.h),
+                Container(
+                  margin: EdgeInsets.only(bottom: 24.h),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10.r),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.1),
+                        blurRadius: 4.r,
+                      ),
+                    ],
+                    image: DecorationImage(
+                      image: AssetImage('assets/diary_background.png'),
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                  child: Stack(
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.fromLTRB(16.w, 24.h, 24.w, 16.h),
+                        child: Row(
+                          children: [
+                            SizedBox(
+                              height: 375.h,
                               child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Icon(Icons.heart_broken, size: 18.r),
+                                  _clipHole(),
+                                  _clipHole(),
+                                  _clipHole(),
+                                  _clipHole(),
+                                  _clipHole(),
+                                  _clipHole(),
+                                ],
+                              ),
+                            ),
+                            SizedBox(width: 16.w),
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
                                   CustomText(
-                                    text: '119',
-                                    color: Color(0xff1D1D1D),
-                                    fontSize: 12.sp,
-                                    fontWeight: FontWeight.w400,
+                                    text: '눈밭에서 백덤블링하기',
+                                    color: Color(0xff222222),
+                                    fontSize: 16.sp,
+                                    fontWeight: FontWeight.w500,
+                                    height: (24 / 16),
+                                  ),
+                                  SizedBox(height: 4.h),
+                                  Container(
+                                    margin:
+                                        EdgeInsets.symmetric(horizontal: 41.w),
+                                    width: double.infinity,
+                                    height: 2.h,
+                                    decoration: BoxDecoration(
+                                      color: Color(0xffD9D9D9),
+                                      borderRadius: BorderRadius.circular(1.r),
+                                    ),
+                                  ),
+                                  SizedBox(height: 16.h),
+                                  Row(
+                                    children: [
+                                      CustomText(
+                                        text: '2022년 12월 06일 금요일',
+                                        color: Color(0xff6B6B6B),
+                                        fontSize: 12.sp,
+                                        fontWeight: FontWeight.w500,
+                                        height: (20 / 12),
+                                      ),
+                                      Expanded(child: Container()),
+                                      CustomText(
+                                        text: '날씨',
+                                        color: Color(0xffA6A6A6),
+                                        fontSize: 12.sp,
+                                        fontWeight: FontWeight.w500,
+                                        height: (20 / 12),
+                                      ),
+                                      SizedBox(width: 4.w),
+                                      Icon(
+                                        Icons.wb_sunny_outlined,
+                                        size: 16.r,
+                                        color: Color(0xff6B6B6B),
+                                      ),
+                                      SizedBox(width: 8.w),
+                                      CustomText(
+                                        text: '기분',
+                                        color: Color(0xffA6A6A6),
+                                        fontSize: 12.sp,
+                                        fontWeight: FontWeight.w500,
+                                        height: (20 / 12),
+                                      ),
+                                      SizedBox(width: 4.w),
+                                      Icon(
+                                        Icons.sentiment_very_satisfied,
+                                        size: 16.r,
+                                        color: Color(0xff6B6B6B),
+                                      ),
+                                    ],
+                                  ),
+                                  SizedBox(height: 8.h),
+                                  SizedBox(
+                                    height: 259.h,
+                                    child: Stack(
+                                      children: [
+                                        PageView.builder(
+                                          key: PageStorageKey('${index}'),
+                                          controller: PostsController
+                                              .to.pageViewControllerList[index],
+                                          itemCount: 3,
+                                          itemBuilder: (context, jndex) {
+                                            return Container(
+                                              width: double.infinity,
+                                              height: 259.h,
+                                              decoration: BoxDecoration(
+                                                borderRadius:
+                                                    BorderRadius.circular(5.r),
+                                                image: DecorationImage(
+                                                  image: AssetImage(
+                                                      'assets/dog.png'),
+                                                  fit: BoxFit.cover,
+                                                ),
+                                              ),
+                                            );
+                                          },
+                                        ),
+                                        Positioned(
+                                          bottom: 16.h,
+                                          left: (Get.width - 120.w) / 2 - 28.w,
+                                          child: SizedBox(
+                                            width: 56,
+                                            height: 4,
+                                            child: ListView.builder(
+                                              scrollDirection: Axis.horizontal,
+                                              itemCount: 3,
+                                              itemBuilder: (context, kndex) {
+                                                return Obx(
+                                                  () => Container(
+                                                    margin: EdgeInsets.only(
+                                                        right: 4.w),
+                                                    width: 16.w,
+                                                    height: 4.h,
+                                                    decoration: BoxDecoration(
+                                                      color: PostsController.to
+                                                                      .pageViewIndexList[
+                                                                  index] ==
+                                                              kndex
+                                                          ? Color(0xff6B6B6B)
+                                                          : Colors.white,
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              2.r),
+                                                    ),
+                                                  ),
+                                                );
+                                              },
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  SizedBox(height: 8.h),
+                                  Row(
+                                    children: [
+                                      Icon(
+                                        Icons.favorite,
+                                        size: 24.r,
+                                        color: Color(0xffFF9E90),
+                                      ),
+                                      SizedBox(width: 4.w),
+                                      CustomText(
+                                        text: '995 개',
+                                        color: Color(0xff6B6B6B),
+                                        fontSize: 12.sp,
+                                        fontWeight: FontWeight.w500,
+                                        height: (14 / 12),
+                                      ),
+                                    ],
+                                  ),
+                                  SizedBox(height: 8.h),
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      ExpandableText(
+                                        '초코와 보낸 하루는 너무 즐거웠다초코와 보낸 하루는 너무 즐거웠다초코와 보낸 하루는 너무 즐거웠다초코와 보낸 하루는 너무 즐거웠다초코와 보낸 하루는 너무 즐거웠다초코와 보낸 하루는 너무 즐거웠다초코와 보낸 하루는 너무 즐거웠다초코와 보낸 하루는 너무 즐거웠다초코와 보낸 하루는 너무 즐거웠다초코와 보낸 하루는 너무 즐거웠다초코와 보낸 하루는 너무 즐거웠다초코와 보낸 하루는 너무 즐거웠다',
+                                        expandText: '더보기',
+                                        maxLines: 2,
+                                        linkColor: Color(0xffA6A6A6),
+                                        animation: true,
+                                        animationDuration:
+                                            Duration(milliseconds: 500),
+                                        textAlign: TextAlign.left,
+                                        style: TextStyle(
+                                          color: Color(0xff6B6B6B),
+                                          fontSize: 14.sp,
+                                          fontWeight: FontWeight.w400,
+                                          height: (20 / 14),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  SizedBox(height: 24.h),
+                                  Container(
+                                    height: 32.h,
+                                    child: ListView.builder(
+                                      key: PageStorageKey('${index}'),
+                                      scrollDirection: Axis.horizontal,
+                                      itemCount: 5,
+                                      itemBuilder: (context, index) {
+                                        if (index == 0) {
+                                          return Container(
+                                            margin: EdgeInsets.only(right: 4.w),
+                                            padding: EdgeInsets.symmetric(
+                                                vertical: 6.h,
+                                                horizontal: 16.w),
+                                            decoration: BoxDecoration(
+                                              color: Colors.white,
+                                              borderRadius:
+                                                  BorderRadius.circular(16.r),
+                                              border: Border.all(
+                                                color: Color(0xffD9D9D9),
+                                              ),
+                                            ),
+                                            child: Row(
+                                              children: [
+                                                Icon(
+                                                  Icons.tag,
+                                                  size: 16.r,
+                                                  color: Color(0xff7B61FF),
+                                                ),
+                                                CustomText(
+                                                  text: '한강공원술래잡기',
+                                                  color: Color(0xff7B61FF),
+                                                  fontSize: 14.sp,
+                                                  fontWeight: FontWeight.w400,
+                                                ),
+                                              ],
+                                            ),
+                                          );
+                                        } else {
+                                          return Container(
+                                            margin: EdgeInsets.only(right: 4.w),
+                                            padding: EdgeInsets.symmetric(
+                                                vertical: 6.h,
+                                                horizontal: 16.w),
+                                            decoration: BoxDecoration(
+                                              color: Colors.white,
+                                              borderRadius:
+                                                  BorderRadius.circular(16.r),
+                                              border: Border.all(
+                                                color: Color(0xffD9D9D9),
+                                              ),
+                                            ),
+                                            child: Row(
+                                              children: [
+                                                Icon(
+                                                  Icons.tag,
+                                                  size: 16.r,
+                                                  color: Color(0xff222222),
+                                                ),
+                                                CustomText(
+                                                  text: '식빵궁뎅이',
+                                                  color: Color(0xff222222),
+                                                  fontSize: 14.sp,
+                                                  fontWeight: FontWeight.w400,
+                                                ),
+                                              ],
+                                            ),
+                                          );
+                                        }
+                                      },
+                                    ),
                                   ),
                                 ],
                               ),
                             ),
+                          ],
+                        ),
+                      ),
+                      Positioned(
+                        top: 0,
+                        left: 32.w,
+                        child: Container(
+                          width: 40.w,
+                          height: 66.h,
+                          decoration: BoxDecoration(
+                            color: Color(0xff9C88FF),
+                            borderRadius: BorderRadius.only(
+                              bottomLeft: Radius.circular(20.r),
+                              bottomRight: Radius.circular(20.r),
+                            ),
                           ),
-                        ],
+                          child: Column(
+                            children: [
+                              Expanded(child: Container()),
+                              Container(
+                                width: 32.w,
+                                height: 32.w,
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(16.r),
+                                  image: DecorationImage(
+                                    image: AssetImage('assets/sticker.png'),
+                                    fit: BoxFit.contain,
+                                  ),
+                                ),
+                              ),
+                              SizedBox(height: 4.h),
+                            ],
+                          ),
+                        ),
                       ),
-                      SizedBox(height: 16.h),
-                      CustomText(
-                        text: postContent,
-                        color: Colors.black,
-                        fontSize: 14.sp,
-                        fontWeight: FontWeight.w400,
-                        height: (20 / 14),
-                      ),
-                      SizedBox(height: 53.h),
                     ],
                   ),
                 ),
-                SizedBox(height: 38.h),
               ],
-            ),
-          ),
+            );
+          },
         ),
+      ),
+    );
+  }
+
+  Widget _clipHole() {
+    return Container(
+      width: 20.w,
+      height: 20.h,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(10.r),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.05),
+          ),
+          BoxShadow(
+            color: Colors.white,
+            blurRadius: 1.2.r,
+            spreadRadius: -1.2.r,
+          ),
+        ],
       ),
     );
   }

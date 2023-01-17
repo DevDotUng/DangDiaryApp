@@ -194,14 +194,14 @@ class WriteDiary extends StatelessWidget {
                         CustomText(
                           text: '몇 월 며칠의 일기인가요?',
                           color: Color(0xff545454),
-                          fontSize: 20.sp,
+                          fontSize: 18.sp,
                           fontWeight: FontWeight.w500,
-                          height: (32 / 20),
+                          height: (32 / 18),
                         ),
                         SizedBox(width: 4.w),
                         Container(
                           width: 8.w,
-                          height: 8.h,
+                          height: 8.w,
                           decoration: BoxDecoration(
                             color: Color(0xff7B61FF),
                             borderRadius: BorderRadius.circular(4.r),
@@ -209,7 +209,7 @@ class WriteDiary extends StatelessWidget {
                         ),
                       ],
                     ),
-                    SizedBox(height: 16.h),
+                    Obx(() => WriteDiaryController.to.essentialTextList[0]),
                     Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
@@ -255,14 +255,14 @@ class WriteDiary extends StatelessWidget {
                         CustomText(
                           text: '그 날의 날씨는 어땠나요?',
                           color: Color(0xff545454),
-                          fontSize: 20.sp,
+                          fontSize: 18.sp,
                           fontWeight: FontWeight.w500,
-                          height: (32 / 20),
+                          height: (32 / 18),
                         ),
                         SizedBox(width: 4.w),
                         Container(
                           width: 8.w,
-                          height: 8.h,
+                          height: 8.w,
                           decoration: BoxDecoration(
                             color: Color(0xff7B61FF),
                             borderRadius: BorderRadius.circular(4.r),
@@ -270,7 +270,7 @@ class WriteDiary extends StatelessWidget {
                         ),
                       ],
                     ),
-                    SizedBox(height: 16.h),
+                    Obx(() => WriteDiaryController.to.essentialTextList[1]),
                     GridView.builder(
                       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 3,
@@ -343,14 +343,14 @@ class WriteDiary extends StatelessWidget {
                         CustomText(
                           text: '초코의 기분은 어땠나요?',
                           color: Color(0xff545454),
-                          fontSize: 20.sp,
+                          fontSize: 18.sp,
                           fontWeight: FontWeight.w500,
-                          height: (32 / 20),
+                          height: (32 / 18),
                         ),
                         SizedBox(width: 4.w),
                         Container(
                           width: 8.w,
-                          height: 8.h,
+                          height: 8.w,
                           decoration: BoxDecoration(
                             color: Color(0xff7B61FF),
                             borderRadius: BorderRadius.circular(4.r),
@@ -358,7 +358,7 @@ class WriteDiary extends StatelessWidget {
                         ),
                       ],
                     ),
-                    SizedBox(height: 16.h),
+                    Obx(() => WriteDiaryController.to.essentialTextList[2]),
                     GridView.builder(
                       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 3,
@@ -428,9 +428,9 @@ class WriteDiary extends StatelessWidget {
                     CustomText(
                       text: '일기 제목을 입력해 주세요',
                       color: Color(0xff545454),
-                      fontSize: 20.sp,
+                      fontSize: 18.sp,
                       fontWeight: FontWeight.w500,
-                      height: (32 / 20),
+                      height: (32 / 18),
                     ),
                     Row(
                       mainAxisSize: MainAxisSize.min,
@@ -478,14 +478,14 @@ class WriteDiary extends StatelessWidget {
                         CustomText(
                           text: '인증 사진을 올려주세요 (최대 3장)',
                           color: Color(0xff545454),
-                          fontSize: 20.sp,
+                          fontSize: 18.sp,
                           fontWeight: FontWeight.w500,
-                          height: (32 / 20),
+                          height: (32 / 18),
                         ),
                         SizedBox(width: 4.w),
                         Container(
                           width: 8.w,
-                          height: 8.h,
+                          height: 8.w,
                           decoration: BoxDecoration(
                             color: Color(0xff7B61FF),
                             borderRadius: BorderRadius.circular(4.r),
@@ -493,7 +493,7 @@ class WriteDiary extends StatelessWidget {
                         ),
                       ],
                     ),
-                    SizedBox(height: 16.h),
+                    Obx(() => WriteDiaryController.to.essentialTextList[3]),
                     Obx(
                       () => WriteDiaryController.to.images.isEmpty
                           ? Padding(
@@ -530,14 +530,14 @@ class WriteDiary extends StatelessWidget {
                         CustomText(
                           text: '초코와 보낸 하루에 대해 적어주세요',
                           color: Color(0xff545454),
-                          fontSize: 20.sp,
+                          fontSize: 18.sp,
                           fontWeight: FontWeight.w500,
-                          height: (32 / 20),
+                          height: (32 / 18),
                         ),
                         SizedBox(width: 4.w),
                         Container(
                           width: 8.w,
-                          height: 8.h,
+                          height: 8.w,
                           decoration: BoxDecoration(
                             color: Color(0xff7B61FF),
                             borderRadius: BorderRadius.circular(4.r),
@@ -545,7 +545,7 @@ class WriteDiary extends StatelessWidget {
                         ),
                       ],
                     ),
-                    SizedBox(height: 16.h),
+                    Obx(() => WriteDiaryController.to.essentialTextList[4]),
                     Container(
                       padding: EdgeInsets.symmetric(horizontal: 16.w),
                       width: double.infinity,
@@ -584,9 +584,9 @@ class WriteDiary extends StatelessWidget {
                     CustomText(
                       text: '태그를 추가해 주세요',
                       color: Color(0xff545454),
-                      fontSize: 20.sp,
+                      fontSize: 18.sp,
                       fontWeight: FontWeight.w500,
-                      height: (32 / 20),
+                      height: (32 / 18),
                     ),
                     SizedBox(height: 16.h),
                     Container(
@@ -738,9 +738,9 @@ class WriteDiary extends StatelessWidget {
                         CustomText(
                           text: '일기 공개여부',
                           color: Color(0xff545454),
-                          fontSize: 20.sp,
+                          fontSize: 18.sp,
                           fontWeight: FontWeight.w500,
-                          height: (32 / 20),
+                          height: (32 / 18),
                         ),
                         GestureDetector(
                           onTap: () {
@@ -757,11 +757,12 @@ class WriteDiary extends StatelessWidget {
                     SizedBox(height: 56.h),
                     GestureDetector(
                       onTap: () {
-                        WriteDiaryController.to.scrollController.animateTo(
-                          149.h, // 149.h, 469.h, 1034.h, 1226.h
-                          duration: Duration(milliseconds: 200),
-                          curve: Curves.linear,
-                        );
+                        WriteDiaryController.to.submit();
+                        // WriteDiaryController.to.scrollController.animateTo(
+                        //   149.h, // 149.h, 469.h, 1034.h, 1226.h
+                        //   duration: Duration(milliseconds: 200),
+                        //   curve: Curves.linear,
+                        // );
                       },
                       child: Container(
                         width: double.infinity,
@@ -909,6 +910,11 @@ class WriteDiary extends StatelessWidget {
             child: GestureDetector(
               onTap: () {
                 WriteDiaryController.to.images.removeAt(index);
+                if (WriteDiaryController.to.images.isEmpty) {
+                  WriteDiaryController.to.progress[3] = 0;
+                } else {
+                  WriteDiaryController.to.progress[3] = 1;
+                }
               },
               child: Icon(
                 Icons.clear,

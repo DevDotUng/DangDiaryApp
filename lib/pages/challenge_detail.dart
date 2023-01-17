@@ -1,4 +1,5 @@
 import 'package:dangdiarysample/components/custom_text.dart';
+import 'package:dangdiarysample/components/expandable_text.dart';
 import 'package:dangdiarysample/components/later_dialog.dart';
 import 'package:dangdiarysample/controllers/challenge_detail_controller.dart';
 import 'package:dangdiarysample/skeletons/challenge_detail_skeleton.dart';
@@ -277,57 +278,28 @@ class ChallengeDetail extends StatelessWidget {
                       ],
                     ),
                     SizedBox(height: 24.h),
-                    AnimatedSize(
-                      duration: Duration(milliseconds: 500),
-                      curve: Curves.fastOutSlowIn,
-                      child: Obx(
-                        () => CustomText(
-                          text: ChallengeDetailController.to.challengeContent,
-                          maxLines: ChallengeDetailController.to.isMore.value
-                              ? 10
-                              : 4,
-                          color: Color(0xff7D7D7D),
-                          fontSize: 16.sp,
-                          fontWeight: FontWeight.w400,
-                          overflow: TextOverflow.ellipsis,
-                          height: (24 / 16),
-                        ),
-                      ),
-                    ),
-                    SizedBox(height: 16.h),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        GestureDetector(
-                          onTap: () {
-                            ChallengeDetailController.to.changeIsMore();
-                          },
-                          child: Row(
-                            children: [
-                              Obx(
-                                () => AnimatedRotation(
-                                  duration: Duration(milliseconds: 500),
-                                  turns:
-                                      ChallengeDetailController.to.isMore.value
-                                          ? 0.5
-                                          : 0.0,
-                                  child: Icon(
-                                    Icons.arrow_drop_down_outlined,
-                                    size: 24.r,
-                                  ),
-                                ),
-                              ),
-                              CustomText(
-                                text: '더보기',
-                                color: Colors.black,
-                                fontSize: 14.sp,
-                                fontWeight: FontWeight.w400,
-                                height: (24 / 14),
-                              ),
-                            ],
+                    SizedBox(
+                      width: double.infinity,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          ExpandableText(
+                            ChallengeDetailController.to.challengeContent,
+                            expandText: '더보기',
+                            collapseText: '접기',
+                            maxLines: 4,
+                            linkColor: Color(0xffA6A6A6),
+                            animation: true,
+                            animationDuration: Duration(milliseconds: 500),
+                            style: TextStyle(
+                              color: Color(0xff6B6B6B),
+                              fontSize: 16.sp,
+                              fontWeight: FontWeight.w400,
+                              height: (24 / 16),
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                     SizedBox(height: 24.h),
                     Container(
@@ -377,7 +349,7 @@ class ChallengeDetail extends StatelessWidget {
                         ],
                       ),
                     ),
-                    SizedBox(height: 36.h),
+                    SizedBox(height: 32.h),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [

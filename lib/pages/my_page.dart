@@ -10,43 +10,56 @@ class MyPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: Color(0xffB5C9FF),
         elevation: 0.0,
         centerTitle: true,
-        leading: Container(),
         title: CustomText(
-          text: '마이페이지',
+          text: 'MY',
           color: Colors.black,
-          fontSize: 16.sp,
-          fontWeight: FontWeight.w400,
-          height: (32 / 16),
+          fontSize: 20.sp,
+          fontWeight: FontWeight.w500,
+          height: (28 / 20),
         ),
+        actions: [
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 24.w),
+            child: GestureDetector(
+              onTap: () {},
+              child: Icon(
+                Icons.notifications_active_outlined,
+                size: 32.r,
+                color: Colors.black,
+              ),
+            ),
+          ),
+        ],
       ),
       body: Container(
-        padding: EdgeInsets.symmetric(horizontal: 24.0.w),
         color: Colors.white,
-        child: Column(
-          children: [
-            Container(
-              height: 200.h,
-              child: Stack(
-                children: [
-                  Positioned(
-                    top: 89.h,
-                    left: 0,
-                    right: 0,
-                    child: Container(
-                      padding:
-                          EdgeInsets.only(left: 20.w, top: 37.h, right: 20.w),
+        child: SingleChildScrollView(
+          physics: ClampingScrollPhysics(),
+          child: Column(
+            children: [
+              Container(
+                width: double.infinity,
+                height: 264.h,
+                color: Color(0xffB5C9FF),
+                child: Column(
+                  children: [
+                    Container(
+                      margin: EdgeInsets.symmetric(
+                          vertical: 16.h, horizontal: 24.w),
+                      padding: EdgeInsets.symmetric(
+                          vertical: 16.h, horizontal: 24.w),
                       width: double.infinity,
-                      height: 111.h,
+                      height: 216.h,
                       decoration: BoxDecoration(
-                        color: Color(0xffF2F2F2),
-                        borderRadius: BorderRadius.circular(11.07.r),
+                        color: Color(0xffF5F5F5),
+                        borderRadius: BorderRadius.circular(10.r),
                         boxShadow: [
                           BoxShadow(
-                            color: Colors.black.withOpacity(0.15),
-                            blurRadius: 8,
+                            color: Colors.black.withOpacity(0.25),
+                            blurRadius: 4.r,
                           ),
                         ],
                       ),
@@ -55,71 +68,286 @@ class MyPage extends StatelessWidget {
                           Row(
                             children: [
                               Expanded(
-                                flex: 6,
-                                child: Row(
+                                child: Column(
                                   children: [
-                                    Icon(Icons.menu, size: 16.r),
-                                    SizedBox(width: 8.w),
-                                    CustomText(
-                                      text: '나의 일기 000장',
-                                      color: Colors.black,
-                                      fontSize: 14.sp,
-                                      fontWeight: FontWeight.w300,
-                                      height: (20 / 14),
+                                    Row(
+                                      children: [
+                                        Icon(
+                                          Icons.sentiment_very_satisfied,
+                                          size: 24.r,
+                                          color: Color(0xff545454),
+                                        ),
+                                        SizedBox(width: 4.w),
+                                        CustomText(
+                                          text: '댕댕 주민등록증',
+                                          color: Color(0xff545454),
+                                          fontSize: 14.sp,
+                                          fontWeight: FontWeight.w500,
+                                          height: (20 / 14),
+                                        ),
+                                      ],
+                                    ),
+                                    SizedBox(height: 12.h),
+                                    Padding(
+                                      padding: EdgeInsets.only(bottom: 12.h),
+                                      child: Row(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.end,
+                                        children: [
+                                          CustomText(
+                                            text: '초코',
+                                            color: Color(0xff222222),
+                                            fontSize: 24.sp,
+                                            fontWeight: FontWeight.w600,
+                                            height: (32 / 24),
+                                          ),
+                                          SizedBox(width: 4.w),
+                                          Padding(
+                                            padding:
+                                                EdgeInsets.only(bottom: 2.h),
+                                            child: CustomText(
+                                              text: '/ 오또캐드 보호자님',
+                                              color: Color(0xff545454),
+                                              fontSize: 14.sp,
+                                              fontWeight: FontWeight.w500,
+                                              height: (20 / 14),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
                                     ),
                                   ],
                                 ),
                               ),
-                              Expanded(
-                                flex: 5,
-                                child: Row(
-                                  children: [
-                                    Icon(Icons.menu, size: 16.r),
-                                    SizedBox(width: 8.w),
-                                    CustomText(
-                                      text: '시작한지 000일',
-                                      color: Colors.black,
-                                      fontSize: 14.sp,
-                                      fontWeight: FontWeight.w300,
-                                      height: (20 / 14),
-                                    ),
-                                  ],
+                              Container(
+                                width: 64.w,
+                                height: 64.w,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(32.r),
+                                  image: DecorationImage(
+                                    image: AssetImage('assets/dog.png'),
+                                    fit: BoxFit.cover,
+                                  ),
                                 ),
                               ),
                             ],
                           ),
                           SizedBox(height: 8.h),
                           Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Expanded(
-                                flex: 6,
-                                child: Row(
-                                  children: [
-                                    Icon(Icons.menu, size: 16.r),
-                                    SizedBox(width: 8.w),
-                                    CustomText(
-                                      text: '받은 좋아요 00개',
-                                      color: Colors.black,
-                                      fontSize: 14.sp,
-                                      fontWeight: FontWeight.w300,
-                                    ),
-                                  ],
+                                child: Container(
+                                  height: 40.h,
+                                  decoration: BoxDecoration(
+                                    color: Colors.white.withOpacity(0.7),
+                                    borderRadius: BorderRadius.circular(5.r),
+                                  ),
+                                  child: Row(
+                                    children: [
+                                      Container(
+                                        width: 48.w,
+                                        height: 40.h,
+                                        decoration: BoxDecoration(
+                                          color: Color(0xffFF9900)
+                                              .withOpacity(0.5),
+                                          borderRadius: BorderRadius.only(
+                                            topLeft: Radius.circular(5.r),
+                                            bottomLeft: Radius.circular(5.r),
+                                          ),
+                                        ),
+                                        child: Center(
+                                          child: CustomText(
+                                            text: '견종',
+                                            color: Colors.white,
+                                            fontSize: 12.sp,
+                                            fontWeight: FontWeight.w600,
+                                            height: (20 / 12),
+                                          ),
+                                        ),
+                                      ),
+                                      Expanded(
+                                        child: Align(
+                                          alignment: Alignment.centerRight,
+                                          child: Padding(
+                                            padding: EdgeInsets.symmetric(
+                                                horizontal: 8.w),
+                                            child: CustomText(
+                                              text: '비글',
+                                              color: Color(0xff6B6B6B),
+                                              fontSize: 12.sp,
+                                              fontWeight: FontWeight.w500,
+                                              height: (24 / 12),
+                                              overflow: TextOverflow.ellipsis,
+                                              maxLines: 1,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ),
+                              SizedBox(width: 9.w),
                               Expanded(
-                                flex: 5,
-                                child: Row(
-                                  children: [
-                                    Icon(Icons.menu, size: 16.r),
-                                    SizedBox(width: 8.w),
-                                    CustomText(
-                                      text: '받은 도장 00개',
-                                      color: Colors.black,
-                                      fontSize: 14.sp,
-                                      fontWeight: FontWeight.w300,
-                                    ),
-                                  ],
+                                child: Container(
+                                  height: 40.h,
+                                  decoration: BoxDecoration(
+                                    color: Colors.white.withOpacity(0.7),
+                                    borderRadius: BorderRadius.circular(5.r),
+                                  ),
+                                  child: Row(
+                                    children: [
+                                      Container(
+                                        width: 48.w,
+                                        height: 40.h,
+                                        decoration: BoxDecoration(
+                                          color: Color(0xffFF9900)
+                                              .withOpacity(0.5),
+                                          borderRadius: BorderRadius.only(
+                                            topLeft: Radius.circular(5.r),
+                                            bottomLeft: Radius.circular(5.r),
+                                          ),
+                                        ),
+                                        child: Center(
+                                          child: CustomText(
+                                            text: '나이',
+                                            color: Colors.white,
+                                            fontSize: 12.sp,
+                                            fontWeight: FontWeight.w600,
+                                            height: (20 / 12),
+                                          ),
+                                        ),
+                                      ),
+                                      Expanded(
+                                        child: Align(
+                                          alignment: Alignment.centerRight,
+                                          child: Padding(
+                                            padding: EdgeInsets.symmetric(
+                                                horizontal: 8.w),
+                                            child: CustomText(
+                                              text: '만 3세',
+                                              color: Color(0xff6B6B6B),
+                                              fontSize: 12.sp,
+                                              fontWeight: FontWeight.w500,
+                                              height: (24 / 12),
+                                              overflow: TextOverflow.ellipsis,
+                                              maxLines: 1,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          SizedBox(height: 8.h),
+                          Row(
+                            children: [
+                              Expanded(
+                                child: Container(
+                                  height: 40.h,
+                                  decoration: BoxDecoration(
+                                    color: Colors.white.withOpacity(0.7),
+                                    borderRadius: BorderRadius.circular(5.r),
+                                  ),
+                                  child: Row(
+                                    children: [
+                                      Container(
+                                        width: 48.w,
+                                        height: 40.h,
+                                        decoration: BoxDecoration(
+                                          color: Color(0xffFF9900)
+                                              .withOpacity(0.5),
+                                          borderRadius: BorderRadius.only(
+                                            topLeft: Radius.circular(5.r),
+                                            bottomLeft: Radius.circular(5.r),
+                                          ),
+                                        ),
+                                        child: Center(
+                                          child: CustomText(
+                                            text: '성별',
+                                            color: Colors.white,
+                                            fontSize: 12.sp,
+                                            fontWeight: FontWeight.w600,
+                                            height: (20 / 12),
+                                          ),
+                                        ),
+                                      ),
+                                      Expanded(
+                                        child: Align(
+                                          alignment: Alignment.centerRight,
+                                          child: Padding(
+                                            padding: EdgeInsets.symmetric(
+                                                horizontal: 8.w),
+                                            child: CustomText(
+                                              text: '수컷',
+                                              color: Color(0xff6B6B6B),
+                                              fontSize: 12.sp,
+                                              fontWeight: FontWeight.w500,
+                                              height: (24 / 12),
+                                              overflow: TextOverflow.ellipsis,
+                                              maxLines: 1,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                              SizedBox(width: 9.w),
+                              Expanded(
+                                child: Container(
+                                  height: 40.h,
+                                  decoration: BoxDecoration(
+                                    color: Colors.white.withOpacity(0.7),
+                                    borderRadius: BorderRadius.circular(5.r),
+                                  ),
+                                  child: Row(
+                                    children: [
+                                      Container(
+                                        width: 48.w,
+                                        height: 40.h,
+                                        decoration: BoxDecoration(
+                                          color: Color(0xffFF9900)
+                                              .withOpacity(0.5),
+                                          borderRadius: BorderRadius.only(
+                                            topLeft: Radius.circular(5.r),
+                                            bottomLeft: Radius.circular(5.r),
+                                          ),
+                                        ),
+                                        child: Center(
+                                          child: CustomText(
+                                            text: '생일',
+                                            color: Colors.white,
+                                            fontSize: 12.sp,
+                                            fontWeight: FontWeight.w600,
+                                            height: (20 / 12),
+                                          ),
+                                        ),
+                                      ),
+                                      Expanded(
+                                        child: Align(
+                                          alignment: Alignment.centerRight,
+                                          child: Padding(
+                                            padding: EdgeInsets.symmetric(
+                                                horizontal: 8.w),
+                                            child: CustomText(
+                                              text: '2020.01.31',
+                                              color: Color(0xff6B6B6B),
+                                              fontSize: 12.sp,
+                                              fontWeight: FontWeight.w500,
+                                              height: (24 / 12),
+                                              overflow: TextOverflow.ellipsis,
+                                              maxLines: 1,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ),
                             ],
@@ -127,289 +355,190 @@ class MyPage extends StatelessWidget {
                         ],
                       ),
                     ),
-                  ),
-                  Positioned(
-                    top: 8.h,
-                    left: 0,
-                    right: 0,
-                    child: Container(
-                      width: double.infinity,
-                      height: 101.h,
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(11.07.r),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black.withOpacity(0.15),
-                            blurRadius: 8,
-                          ),
-                        ],
-                      ),
-                      child: Padding(
-                        padding: EdgeInsets.only(
-                            left: 16.w, top: 19.h, bottom: 26.h),
-                        child: Row(
-                          children: [
-                            Container(
-                              width: 56.w,
-                              height: 56.h,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(28.0.r),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.black.withOpacity(0.15),
-                                    blurRadius: 8.0,
-                                  ),
-                                ],
-                                image: DecorationImage(
-                                  image: AssetImage('assets/dog.png'),
-                                  fit: BoxFit.cover,
-                                ),
-                              ),
-                            ),
-                            SizedBox(width: 14.w),
-                            Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Container(
-                                  width: Get.width - 134.w,
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    crossAxisAlignment: CrossAxisAlignment.end,
-                                    children: [
-                                      Text(
-                                        '오또캐드',
-                                        style: TextStyle(
-                                          color: Colors.black,
-                                          fontSize: 16.sp,
-                                          fontWeight: FontWeight.w600,
-                                        ),
-                                      ),
-                                      SizedBox(width: 3.w),
-                                      Text(
-                                        '님과',
-                                        style: TextStyle(
-                                          color: Colors.black,
-                                          fontSize: 12.sp,
-                                          fontWeight: FontWeight.w400,
-                                        ),
-                                      ),
-                                      SizedBox(width: 4.w),
-                                      Text(
-                                        '초코',
-                                        style: TextStyle(
-                                          color: Colors.black,
-                                          fontSize: 16.sp,
-                                          fontWeight: FontWeight.w600,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                Container(
-                                  width: Get.width - 134.w,
-                                  child: Row(
-                                    children: [
-                                      CustomText(
-                                        text: '웰시코기',
-                                        color: Colors.black,
-                                        fontSize: 12.sp,
-                                        fontWeight: FontWeight.w400,
-                                        height: (20 / 12),
-                                      ),
-                                      SizedBox(width: 3.w),
-                                      Icon(Icons.male, size: 8.r),
-                                      SizedBox(width: 16.w),
-                                      CustomText(
-                                        text: '8살',
-                                        color: Colors.black,
-                                        fontSize: 12.sp,
-                                        fontWeight: FontWeight.w400,
-                                        height: (20 / 12),
-                                      ),
-                                      SizedBox(width: 16.w),
-                                      CustomText(
-                                        text: '2000-00-00',
-                                        color: Colors.black,
-                                        fontSize: 12.sp,
-                                        fontWeight: FontWeight.w400,
-                                        height: (20 / 12),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            SizedBox(height: 32.h),
-            Row(
-              children: [
-                Icon(Icons.menu, size: 16.r),
-                SizedBox(width: 8.w),
-                CustomText(
-                  text: '계정 관리',
-                  color: Colors.black,
-                  fontSize: 14.sp,
-                  fontWeight: FontWeight.w600,
-                  height: (20 / 14),
-                ),
-              ],
-            ),
-            Divider(
-              color: Colors.black.withOpacity(0.2),
-              thickness: 1.0.h,
-            ),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 4.0.w),
-              child: GestureDetector(
-                onTap: () {
-                  Get.toNamed('/dogProfileSetting');
-                },
-                child: Row(
-                  children: [
-                    CustomText(
-                      text: '견적사항 관리',
-                      color: Colors.black,
-                      fontSize: 14.sp,
-                      fontWeight: FontWeight.w400,
-                      height: (20 / 14),
-                    ),
-                    Expanded(
-                        child:
-                            Container(height: 20, color: Colors.transparent)),
-                    Icon(Icons.arrow_forward_ios_outlined, size: 14.r),
                   ],
                 ),
               ),
-            ),
-            SizedBox(height: 16.h),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 4.0.w),
-              child: GestureDetector(
-                onTap: () {
-                  Get.toNamed('/accountSetting');
-                },
+              SizedBox(height: 24.h),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 24.w),
                 child: Row(
                   children: [
+                    Icon(Icons.menu, size: 24.r),
+                    SizedBox(width: 8.w),
                     CustomText(
                       text: '계정 관리',
                       color: Colors.black,
-                      fontSize: 14.sp,
-                      fontWeight: FontWeight.w400,
-                      height: (20 / 14),
+                      fontSize: 16.sp,
+                      fontWeight: FontWeight.w600,
+                      height: (20 / 16),
                     ),
-                    Expanded(
-                        child:
-                            Container(height: 20, color: Colors.transparent)),
-                    Icon(Icons.arrow_forward_ios_outlined, size: 14.r),
                   ],
                 ),
               ),
-            ),
-            SizedBox(height: 36.h),
-            Row(
-              children: [
-                Icon(Icons.menu, size: 16.r),
-                SizedBox(width: 8.w),
-                CustomText(
-                  text: '앱 관리',
-                  color: Colors.black,
-                  fontSize: 14.sp,
-                  fontWeight: FontWeight.w600,
-                  height: (20 / 14),
-                ),
-              ],
-            ),
-            Divider(
-              color: Colors.black.withOpacity(0.2),
-              thickness: 1.0.h,
-            ),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 4.0.w),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  CustomText(
-                    text: '앱 설정',
-                    color: Colors.black,
-                    fontSize: 14.sp,
-                    fontWeight: FontWeight.w400,
-                    height: (20 / 14),
-                  ),
-                  Icon(Icons.arrow_forward_ios_outlined, size: 14.r),
-                ],
-              ),
-            ),
-            SizedBox(height: 16.h),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 4.0.w),
-              child: GestureDetector(
-                onTap: () {
-                  Get.toNamed('/customerCenter');
-                },
-                child: Row(
-                  children: [
-                    CustomText(
-                      text: '고객센터',
-                      color: Colors.black,
-                      fontSize: 14.sp,
-                      fontWeight: FontWeight.w400,
-                      height: (20 / 14),
-                    ),
-                    Expanded(
-                        child:
-                            Container(height: 20, color: Colors.transparent)),
-                    Icon(Icons.arrow_forward_ios_outlined, size: 14.r),
-                  ],
-                ),
-              ),
-            ),
-            SizedBox(height: 16.h),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 4.0.w),
-              child: GestureDetector(
-                onTap: () {
-                  Get.toNamed('/reportDetail');
-                },
-                child: Row(
-                  children: [
-                    CustomText(
-                      text: '신고내역',
-                      color: Colors.black,
-                      fontSize: 14.sp,
-                      fontWeight: FontWeight.w400,
-                      height: (20 / 14),
-                    ),
-                    Expanded(
-                        child:
-                            Container(height: 20, color: Colors.transparent)),
-                    Icon(Icons.arrow_forward_ios_outlined, size: 14.r),
-                  ],
-                ),
-              ),
-            ),
-            Flexible(
-              child: Center(
-                child: Text(
-                  'asdkjhluwhdlj aslkjdoiqw\nver 0.0.0',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: Color(0xffDDDDDD),
-                    fontSize: 12.sp,
-                    fontWeight: FontWeight.w400,
-                    height: (20 / 12).h,
+              SizedBox(height: 24.h),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 24.w),
+                child: GestureDetector(
+                  onTap: () {
+                    Get.toNamed('/dogProfileSetting');
+                  },
+                  child: Row(
+                    children: [
+                      CustomText(
+                        text: '댕댕 주민등록증 수정',
+                        color: Colors.black,
+                        fontSize: 16.sp,
+                        fontWeight: FontWeight.w400,
+                        height: (20 / 16),
+                      ),
+                      Expanded(
+                        child: Container(height: 20, color: Colors.transparent),
+                      ),
+                      Icon(
+                        Icons.arrow_forward_ios_outlined,
+                        size: 16.r,
+                        color: Color(0xffA6A6A6),
+                      ),
+                    ],
                   ),
                 ),
               ),
-            ),
-          ],
+              SizedBox(height: 24.h),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 24.w),
+                child: GestureDetector(
+                  onTap: () {
+                    Get.toNamed('/accountSetting');
+                  },
+                  child: Row(
+                    children: [
+                      CustomText(
+                        text: '계정 정보',
+                        color: Colors.black,
+                        fontSize: 16.sp,
+                        fontWeight: FontWeight.w400,
+                        height: (20 / 16),
+                      ),
+                      Expanded(
+                        child: Container(height: 20, color: Colors.transparent),
+                      ),
+                      Icon(
+                        Icons.arrow_forward_ios_outlined,
+                        size: 16.r,
+                        color: Color(0xffA6A6A6),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              SizedBox(height: 24.h),
+              Container(
+                width: double.infinity,
+                height: 8.h,
+                color: Color(0xffF5F5F5),
+              ),
+              SizedBox(height: 24.h),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 24.w),
+                child: Row(
+                  children: [
+                    Icon(Icons.menu, size: 24.r),
+                    SizedBox(width: 8.w),
+                    CustomText(
+                      text: '앱 관리',
+                      color: Colors.black,
+                      fontSize: 16.sp,
+                      fontWeight: FontWeight.w600,
+                      height: (20 / 16),
+                    ),
+                  ],
+                ),
+              ),
+              SizedBox(height: 24.h),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 24.w),
+                child: GestureDetector(
+                  onTap: () {},
+                  child: Row(
+                    children: [
+                      CustomText(
+                        text: '앱 설정',
+                        color: Colors.black,
+                        fontSize: 16.sp,
+                        fontWeight: FontWeight.w400,
+                        height: (20 / 16),
+                      ),
+                      Expanded(
+                        child: Container(height: 20, color: Colors.transparent),
+                      ),
+                      Icon(
+                        Icons.arrow_forward_ios_outlined,
+                        size: 16.r,
+                        color: Color(0xffA6A6A6),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              SizedBox(height: 24.h),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 24.w),
+                child: GestureDetector(
+                  onTap: () {
+                    Get.toNamed('/customerCenter');
+                  },
+                  child: Row(
+                    children: [
+                      CustomText(
+                        text: '고객센터',
+                        color: Colors.black,
+                        fontSize: 16.sp,
+                        fontWeight: FontWeight.w400,
+                        height: (20 / 16),
+                      ),
+                      Expanded(
+                        child: Container(height: 20, color: Colors.transparent),
+                      ),
+                      Icon(
+                        Icons.arrow_forward_ios_outlined,
+                        size: 16.r,
+                        color: Color(0xffA6A6A6),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              SizedBox(height: 24.h),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 24.w),
+                child: GestureDetector(
+                  onTap: () {
+                    Get.toNamed('/reportDetail');
+                  },
+                  child: Row(
+                    children: [
+                      CustomText(
+                        text: '신고내역',
+                        color: Colors.black,
+                        fontSize: 16.sp,
+                        fontWeight: FontWeight.w400,
+                        height: (20 / 16),
+                      ),
+                      Expanded(
+                        child: Container(height: 20, color: Colors.transparent),
+                      ),
+                      Icon(
+                        Icons.arrow_forward_ios_outlined,
+                        size: 16.r,
+                        color: Color(0xffA6A6A6),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              SizedBox(height: 171.h),
+            ],
+          ),
         ),
       ),
     );

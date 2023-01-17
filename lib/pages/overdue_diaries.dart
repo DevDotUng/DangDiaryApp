@@ -72,7 +72,7 @@ class OverdueDiaries extends StatelessWidget {
                       ),
                       Container(
                         width: 56.w,
-                        height: 56.h,
+                        height: 56.w,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(28.0.r),
                           border: Border.all(color: Colors.white),
@@ -181,7 +181,7 @@ class OverdueDiaries extends StatelessWidget {
                   height: 8.h,
                   color: Color(0xffF5F5F5),
                 ),
-                SizedBox(height: 8.h),
+                SizedBox(height: 16.h),
                 _diariesTabBar(),
                 _overdueDiaries(),
               ],
@@ -203,11 +203,11 @@ class OverdueDiaries extends StatelessWidget {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 24.w),
       width: double.infinity,
-      height: 46.h,
+      height: 38.h,
       color: Colors.white,
       child: Column(
         children: [
-          SizedBox(height: 16.h),
+          SizedBox(height: 8.h),
           Row(
             children: [
               GestureDetector(

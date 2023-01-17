@@ -14,10 +14,13 @@ import 'package:dangdiarysample/pages/notification_page.dart';
 import 'package:dangdiarysample/pages/posts.dart';
 import 'package:dangdiarysample/pages/report_detail.dart';
 import 'package:dangdiarysample/pages/search_diary.dart';
+import 'package:dangdiarysample/pages/search_posts.dart';
+import 'package:dangdiarysample/pages/search_posts_result.dart';
 import 'package:dangdiarysample/pages/sticker.dart';
 import 'package:dangdiarysample/pages/sticker_detail.dart';
 import 'package:dangdiarysample/pages/write_diary.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
@@ -40,13 +43,21 @@ class MyApp extends StatelessWidget {
         return GetMaterialApp(
           theme: ThemeData(fontFamily: 'Pretendard'),
           themeMode: ThemeMode.system,
+          localizationsDelegates: [
+            GlobalMaterialLocalizations.delegate,
+            GlobalCupertinoLocalizations.delegate,
+          ],
+          supportedLocales: [
+            Locale('ko', ''),
+            Locale('en', ''),
+          ],
           initialRoute: '/',
           getPages: [
             GetPage(name: '/', page: () => App()),
             GetPage(name: '/challengeDetail', page: () => ChallengeDetail()),
             GetPage(name: '/writeDiary', page: () => WriteDiary()),
             GetPage(name: '/myPage', page: () => MyPage()),
-            GetPage(name: '/post', page: () => Posts()),
+            GetPage(name: '/posts', page: () => Posts()),
             GetPage(
                 name: '/dogProfileSetting', page: () => DogProfileSetting()),
             GetPage(name: '/accountSetting', page: () => AccountSetting()),
@@ -60,6 +71,9 @@ class MyApp extends StatelessWidget {
             GetPage(name: '/searchDiary', page: () => SearchDiary()),
             GetPage(name: '/sticker', page: () => Sticker()),
             GetPage(name: '/stickerDetail', page: () => StickerDetail()),
+            GetPage(name: '/searchPosts', page: () => SearchPosts()),
+            GetPage(
+                name: '/searchPostsResult', page: () => SearchPostsResult()),
           ],
         );
       },

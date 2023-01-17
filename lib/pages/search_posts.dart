@@ -1,15 +1,15 @@
 import 'package:dangdiarysample/components/custom_text.dart';
-import 'package:dangdiarysample/controllers/search_diary_controller.dart';
+import 'package:dangdiarysample/controllers/search_posts_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
-class SearchDiary extends StatelessWidget {
-  const SearchDiary({Key? key}) : super(key: key);
+class SearchPosts extends StatelessWidget {
+  const SearchPosts({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    Get.put(SearchDiaryController());
+    Get.put(SearchPostsController());
     return GestureDetector(
       onTap: () {
         FocusManager.instance.primaryFocus?.unfocus();
@@ -30,7 +30,7 @@ class SearchDiary extends StatelessWidget {
             ),
           ),
           title: CustomText(
-            text: '일기장 검색하기',
+            text: '둘러보기 검색하기',
             color: Colors.black,
             fontSize: 16.sp,
             fontWeight: FontWeight.w500,
@@ -58,13 +58,17 @@ class SearchDiary extends StatelessWidget {
                     Expanded(
                       child: TextField(
                         controller:
-                            SearchDiaryController.to.textEditingController,
+                            SearchPostsController.to.textEditingController,
                         onChanged: (String text) {
-                          SearchDiaryController.to.changeTextListener(text);
+                          SearchPostsController.to.changeTextListener(text);
+                        },
+                        onSubmitted: (text) {
+                          Get.toNamed('/searchPostsResult');
                         },
                         autofocus: true,
                         cursorColor: Colors.black,
                         cursorWidth: 1.w,
+                        cursorHeight: 20.h,
                         textInputAction: TextInputAction.search,
                         style: TextStyle(
                           color: Colors.black,
@@ -75,7 +79,7 @@ class SearchDiary extends StatelessWidget {
                         decoration: InputDecoration(
                           contentPadding: EdgeInsets.only(bottom: 12.h),
                           border: InputBorder.none,
-                          hintText: '챌린지명 / 해시태그 / 일기 제목으로 검색해보세요.',
+                          hintText: '해시태그, 계정, 견종으로 검색해보세요.',
                           hintStyle: TextStyle(
                             color: Color(0xffA6A6A6),
                             fontSize: 14.sp,
@@ -86,13 +90,13 @@ class SearchDiary extends StatelessWidget {
                       ),
                     ),
                     Obx(
-                      () => SearchDiaryController.to.searchText.isEmpty
+                      () => SearchPostsController.to.searchText.isEmpty
                           ? Container()
                           : GestureDetector(
                               onTap: () {
-                                SearchDiaryController.to.textEditingController
+                                SearchPostsController.to.textEditingController
                                     .clear();
-                                SearchDiaryController.to.searchTextClear();
+                                SearchPostsController.to.searchTextClear();
                                 FocusManager.instance.primaryFocus?.unfocus();
                               },
                               child: Icon(
@@ -114,7 +118,7 @@ class SearchDiary extends StatelessWidget {
                   },
                   child: SingleChildScrollView(
                     child: Obx(
-                      () => SearchDiaryController.to.searchText.isEmpty
+                      () => SearchPostsController.to.searchText.isEmpty
                           ? _searchHistoryList()
                           : _autoCompleteList(),
                     ),
@@ -136,7 +140,7 @@ class SearchDiary extends StatelessWidget {
           padding: EdgeInsets.only(left: 12.w),
           child: CustomText(
             text:
-                SearchDiaryController.to.searchText.isEmpty ? '최근검색어' : '자동검색어',
+                SearchPostsController.to.searchText.isEmpty ? '최근검색어' : '자동검색어',
             color: Color(0xffA6A6A6),
             fontSize: 12.sp,
             fontWeight: FontWeight.w400,
@@ -146,7 +150,7 @@ class SearchDiary extends StatelessWidget {
         ListView.builder(
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
-          itemCount: SearchDiaryController.to.searchHistory.length,
+          itemCount: SearchPostsController.to.searchHistory.length,
           itemBuilder: (context, index) {
             return Padding(
               padding: EdgeInsets.fromLTRB(12.w, 8.h, 8.w, 16.h),
@@ -154,7 +158,7 @@ class SearchDiary extends StatelessWidget {
                 children: [
                   Expanded(
                     child: CustomText(
-                      text: SearchDiaryController.to.searchHistory[index],
+                      text: SearchPostsController.to.searchHistory[index],
                       color: Color(0xff6B6B6B),
                       fontSize: 16.sp,
                       fontWeight: FontWeight.w400,
@@ -166,7 +170,7 @@ class SearchDiary extends StatelessWidget {
                   SizedBox(width: 8.w),
                   GestureDetector(
                     onTap: () {
-                      SearchDiaryController.to.searchHistory.removeAt(index);
+                      SearchPostsController.to.searchHistory.removeAt(index);
                     },
                     child: Icon(
                       Icons.clear,
@@ -191,7 +195,7 @@ class SearchDiary extends StatelessWidget {
           padding: EdgeInsets.only(left: 12.w),
           child: CustomText(
             text:
-                SearchDiaryController.to.searchText.isEmpty ? '최근검색어' : '자동검색어',
+                SearchPostsController.to.searchText.isEmpty ? '최근검색어' : '자동검색어',
             color: Color(0xffA6A6A6),
             fontSize: 12.sp,
             fontWeight: FontWeight.w400,
@@ -201,7 +205,7 @@ class SearchDiary extends StatelessWidget {
         ListView.builder(
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
-          itemCount: SearchDiaryController.to.autoCompleteWord.length,
+          itemCount: SearchPostsController.to.autoCompleteWord.length,
           itemBuilder: (context, index) {
             return Padding(
               padding: EdgeInsets.fromLTRB(12.w, 8.h, 8.w, 16.h),
@@ -209,7 +213,7 @@ class SearchDiary extends StatelessWidget {
                 children: [
                   Expanded(
                     child: CustomText(
-                      text: SearchDiaryController.to.autoCompleteWord[index],
+                      text: SearchPostsController.to.autoCompleteWord[index],
                       color: Color(0xff6B6B6B),
                       fontSize: 16.sp,
                       fontWeight: FontWeight.w400,

@@ -23,7 +23,7 @@ class DiariesController extends GetxController {
   }
 
   void _scrollListener() {
-    if (scrollController.offset > 161.h) {
+    if (scrollController.offset > 169.h) {
       isSliver(true);
     } else {
       isSliver(false);
@@ -34,18 +34,18 @@ class DiariesController extends GetxController {
     if (index == 1) {
       diaryHolderBool(true);
     } else if (index == 2) {
-      if (scrollController.offset > 161.h) {
+      if (scrollController.offset > 169.h) {
         scrollController.animateTo(
-          161.h,
+          169.h,
           duration: Duration(milliseconds: 200),
           curve: Curves.linear,
         );
       }
       diaryHolderBool(false);
     } else {
-      if (scrollController.offset > 161.h) {
+      if (scrollController.offset > 169.h) {
         scrollController.animateTo(
-          161.h,
+          169.h,
           duration: Duration(milliseconds: 200),
           curve: Curves.linear,
         );

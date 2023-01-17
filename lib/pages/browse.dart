@@ -25,109 +25,143 @@ class Browse extends StatelessWidget {
         appBar: AppBar(
           backgroundColor: Colors.white,
           elevation: 0.0,
-          leading: Container(),
           centerTitle: true,
           title: CustomText(
             text: '둘러보기',
             color: Colors.black,
-            fontSize: 16.sp,
-            fontWeight: FontWeight.w400,
-            height: (32 / 16),
+            fontSize: 20.sp,
+            fontWeight: FontWeight.w500,
+            height: (28 / 20),
           ),
+          actions: [
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 24.0.w),
+              child: GestureDetector(
+                onTap: () {
+                  Get.toNamed('/searchPosts');
+                },
+                child: Icon(
+                  Icons.search,
+                  color: Colors.black,
+                  size: 32.r,
+                ),
+              ),
+            ),
+          ],
         ),
         body: Container(
-          padding: EdgeInsets.symmetric(vertical: 12.h, horizontal: 24.w),
+          padding: EdgeInsets.fromLTRB(24.w, 16.h, 24.w, 0),
           color: Colors.white,
-          child: Column(
-            children: [
-              Row(
-                children: [
-                  Expanded(
-                    child: Container(
-                      height: 40.h,
-                      decoration: BoxDecoration(
-                        color: Color(0xffEDEDED),
-                        borderRadius: BorderRadius.circular(5.r),
-                      ),
-                      child: Focus(
-                        onFocusChange: (isFocus) {
-                          if (isFocus == true) {
-                            BrowseController.to.changeFocus(isFocus);
-                          }
-                        },
-                        child: TextField(
-                          cursorColor: Color(0xff202020),
-                          cursorWidth: 1.w,
-                          maxLines: 1,
-                          style: TextStyle(
-                            color: Color(0xff0A0A0A),
-                            fontSize: 14.sp,
-                            fontWeight: FontWeight.w400,
-                            height: (24 / 14).h,
-                          ),
-                          decoration: InputDecoration(
-                            hintText: '어떤 이야기를 찾아볼까요?',
-                            hintStyle: TextStyle(
-                              color: Color(0xffA6A6A6),
-                              fontSize: 14.sp,
-                              fontWeight: FontWeight.w400,
-                              height: (24 / 14).h,
-                            ),
-                            contentPadding:
-                                EdgeInsets.only(left: 8.0.w, top: 24.h),
-                            suffixIcon: Icon(
-                              Icons.search,
-                              size: 16.r,
-                              color: Colors.black,
-                            ),
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(5.r),
-                              borderSide: BorderSide(
-                                width: 0.0,
-                                style: BorderStyle.none,
+          child: ListView.builder(
+            itemCount: 10,
+            itemBuilder: (context, index) {
+              if (index % 3 == 0) {
+                return Container(
+                  margin: EdgeInsets.only(bottom: 16.h),
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(10.r),
+                    border: Border.all(color: Color(0xffD9D9D9)),
+                  ),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Expanded(
+                        child: Container(
+                          margin: EdgeInsets.fromLTRB(24.w, 24.h, 0, 24.h),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              CustomText(
+                                text: '지난 주 가장 인기 있는 일기에\n선정되었어요!',
+                                color: Color(0xff222222),
+                                fontSize: 20.sp,
+                                fontWeight: FontWeight.w600,
+                                height: (30 / 20),
                               ),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(5.r),
-                              borderSide: BorderSide(
-                                width: 0.0,
-                                style: BorderStyle.none,
+                              SizedBox(height: 6.h),
+                              CustomText(
+                                text: '축하해요 🎉',
+                                color: Color(0xff545454),
+                                fontSize: 12.sp,
+                                fontWeight: FontWeight.w500,
                               ),
-                            ),
+                            ],
                           ),
                         ),
                       ),
+                      Container(
+                        margin: EdgeInsets.symmetric(
+                            vertical: 16.h, horizontal: 16.w),
+                        width: 16.w,
+                        height: 16.w,
+                        decoration: BoxDecoration(
+                          color: Color(0xff7B61FF),
+                          borderRadius: BorderRadius.circular(8.r),
+                        ),
+                      ),
+                    ],
+                  ),
+                );
+              } else {
+                return GestureDetector(
+                  onTap: () {
+                    Get.toNamed('/posts');
+                  },
+                  child: Container(
+                    margin: EdgeInsets.only(bottom: 16.h),
+                    width: double.infinity,
+                    height: 410.h,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10.r),
+                      border: Border.all(color: Color(0xffD9D9D9)),
+                      image: DecorationImage(
+                        image: AssetImage('assets/dog.png'),
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Expanded(
+                          child: Container(
+                            margin: EdgeInsets.fromLTRB(24.w, 24.h, 0, 24.h),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                CustomText(
+                                  text: '지난 주\n가장 인기 있는 일기',
+                                  color: Colors.white,
+                                  fontSize: 24.sp,
+                                  fontWeight: FontWeight.w600,
+                                  height: (32 / 24),
+                                ),
+                                SizedBox(height: 8.h),
+                                CustomText(
+                                  text: '지난 주에 좋아요를 가장 많이 받은 일기를 모아봤어요.',
+                                  color: Colors.white,
+                                  fontSize: 12.sp,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.fromLTRB(16.w, 40.h, 24.w, 0),
+                          child: Icon(
+                            Icons.arrow_forward_ios_sharp,
+                            size: 24.r,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ],
                     ),
                   ),
-                  Obx(
-                    () => BrowseController.to.isFocus.value
-                        ? Padding(
-                            padding: EdgeInsets.only(left: 12.0.w),
-                            child: GestureDetector(
-                              onTap: () {
-                                BrowseController.to.changeFocus(false);
-                                FocusScope.of(context).unfocus();
-                              },
-                              child: Container(
-                                width: 16.w,
-                                height: 16.h,
-                                child: Center(
-                                  child: Icon(Icons.clear, size: 15.r),
-                                ),
-                              ),
-                            ),
-                          )
-                        : Container(),
-                  ),
-                ],
-              ),
-              SizedBox(height: 8.h),
-              Obx(
-                () => BrowseController.to.isFocus.value
-                    ? _searchHistory()
-                    : _posts(),
-              ),
-            ],
+                );
+              }
+            },
           ),
         ),
       ),

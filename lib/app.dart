@@ -1,8 +1,8 @@
-import 'dart:io';
 import 'dart:math';
 import 'dart:ui';
 
 import 'package:dangdiarysample/components/custom_text.dart';
+import 'package:dangdiarysample/components/reactive_device.dart';
 import 'package:dangdiarysample/components/triangle_painter.dart';
 import 'package:dangdiarysample/controllers/bottom_nav_controller.dart';
 import 'package:dangdiarysample/pages/diaries.dart';
@@ -55,8 +55,22 @@ class App extends StatelessWidget {
                       );
                     },
                   ),
-                  Browse(),
-                  MyPage(),
+                  Navigator(
+                    key: navigatorKeys[2],
+                    onGenerateRoute: (routeSettings) {
+                      return MaterialPageRoute(
+                        builder: (context) => Browse(),
+                      );
+                    },
+                  ),
+                  Navigator(
+                    key: navigatorKeys[3],
+                    onGenerateRoute: (routeSettings) {
+                      return MaterialPageRoute(
+                        builder: (context) => MyPage(),
+                      );
+                    },
+                  ),
                 ],
               ),
               IgnorePointer(
@@ -265,26 +279,35 @@ class App extends StatelessWidget {
   }
 
   Widget _bottomNavBar(BuildContext context) {
-    return Container(
+    return SizedBox(
       width: double.infinity,
-      height: Platform.isAndroid ? 156.h : 171.h,
+      height: ReactiveDevice().hasHomeIndicator(context) ? 171.h : 137.h,
       child: Stack(
         children: [
           Positioned(
             bottom: 0,
             left: 0,
             right: 0,
-            child: Container(
-              width: double.infinity,
-              height: Platform.isAndroid ? 95.h : 110.h,
-              decoration: BoxDecoration(
-                color: Colors.white.withOpacity(0.8),
-                borderRadius: BorderRadius.vertical(top: Radius.circular(30.r)),
+            child: ClipRRect(
+              borderRadius: BorderRadius.vertical(top: Radius.circular(30.r)),
+              child: BackdropFilter(
+                filter: ImageFilter.blur(sigmaX: 3, sigmaY: 3),
+                child: Container(
+                  width: double.infinity,
+                  height:
+                      ReactiveDevice().hasHomeIndicator(context) ? 110.h : 76.h,
+                  decoration: BoxDecoration(
+                    color: Colors.white.withOpacity(0.8),
+                    borderRadius:
+                        BorderRadius.vertical(top: Radius.circular(30.r)),
+                    border: Border.all(color: Color(0xffEAEAEA)),
+                  ),
+                ),
               ),
             ),
           ),
           Positioned(
-            bottom: Platform.isAndroid ? 15.h : 30.h,
+            bottom: ReactiveDevice().hasHomeIndicator(context) ? 30.h : -4.h,
             left: 0,
             right: 0,
             child: Container(
@@ -346,7 +369,7 @@ class App extends StatelessWidget {
                   },
                   child: Container(
                     width: 64.w,
-                    height: 64.h,
+                    height: 64.w,
                     decoration: BoxDecoration(
                       color: BottomNavController.to.isShowBottomModal.value
                           ? Colors.white
@@ -366,7 +389,7 @@ class App extends StatelessWidget {
                           left: 0,
                           child: Container(
                             width: 64.w,
-                            height: 64.h,
+                            height: 64.w,
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(32.r),
                               border: Border.all(
@@ -389,7 +412,7 @@ class App extends StatelessWidget {
                           right: 0,
                           child: Container(
                             width: 16.w,
-                            height: 16.h,
+                            height: 16.w,
                             decoration: BoxDecoration(
                               color: Color(0xff7B61FF),
                               borderRadius: BorderRadius.circular(8.r),

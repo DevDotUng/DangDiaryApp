@@ -22,7 +22,7 @@ class OverdueDiariesController extends GetxController {
   }
 
   void _scrollListener() {
-    if (scrollController.offset > 161.h) {
+    if (scrollController.offset > 169.h) {
       isSliver(true);
     } else {
       isSliver(false);

@@ -43,7 +43,7 @@ class StickerDetail extends StatelessWidget {
                 children: [
                   Container(
                     width: 154.w,
-                    height: 154.h,
+                    height: 154.w,
                     decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(77.r),
@@ -61,7 +61,7 @@ class StickerDetail extends StatelessWidget {
                     right: 0,
                     child: Container(
                       width: 40.w,
-                      height: 40.h,
+                      height: 40.w,
                       decoration: BoxDecoration(
                         color: Color(0xff7B61FF),
                         borderRadius: BorderRadius.circular(20.r),

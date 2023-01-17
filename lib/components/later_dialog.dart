@@ -231,7 +231,7 @@ class _LaterDialogState extends State<LaterDialog> {
           _checkBoxBoolList[index]
               ? Container(
                   width: 24.w,
-                  height: 24.h,
+                  height: 24.w,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(12.0.r),
                     border: Border.all(
@@ -241,7 +241,7 @@ class _LaterDialogState extends State<LaterDialog> {
                   child: Center(
                     child: Container(
                       width: 12.w,
-                      height: 12.h,
+                      height: 12.w,
                       decoration: BoxDecoration(
                         color: Color(0xff7D7D7D),
                         borderRadius: BorderRadius.circular(6.0.r),
@@ -254,7 +254,7 @@ class _LaterDialogState extends State<LaterDialog> {
                 )
               : Container(
                   width: 24.w,
-                  height: 24.h,
+                  height: 24.w,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(12.0.r),
                     border: Border.all(
