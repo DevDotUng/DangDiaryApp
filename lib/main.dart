@@ -1,7 +1,9 @@
 import 'dart:io';
 
+import 'package:dangdiarysample/components/reactive_device.dart';
 import 'package:dangdiarysample/pages/account_setting.dart';
 import 'package:dangdiarysample/pages/all_challenge.dart';
+import 'package:dangdiarysample/pages/app_setting.dart';
 import 'package:dangdiarysample/pages/challenge_detail.dart';
 import 'package:dangdiarysample/app.dart';
 import 'package:dangdiarysample/pages/complete_diary.dart';
@@ -38,7 +40,6 @@ class MyApp extends StatelessWidget {
           ? Size(Get.width * 0.8, Get.height * 0.8)
           : Size(Get.width, Get.height),
       minTextAdapt: true,
-      splitScreenMode: true,
       builder: (context, child) {
         return GetMaterialApp(
           theme: ThemeData(fontFamily: 'Pretendard'),
@@ -74,6 +75,7 @@ class MyApp extends StatelessWidget {
             GetPage(name: '/searchPosts', page: () => SearchPosts()),
             GetPage(
                 name: '/searchPostsResult', page: () => SearchPostsResult()),
+            GetPage(name: '/appSetting', page: () => AppSetting()),
           ],
         );
       },

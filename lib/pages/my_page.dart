@@ -458,7 +458,9 @@ class MyPage extends StatelessWidget {
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 24.w),
                 child: GestureDetector(
-                  onTap: () {},
+                  onTap: () {
+                    Get.toNamed('/appSetting');
+                  },
                   child: Row(
                     children: [
                       CustomText(

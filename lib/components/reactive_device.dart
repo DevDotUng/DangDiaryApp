@@ -1,9 +1,9 @@
 import 'dart:io';
 
-import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class ReactiveDevice {
-  bool hasHomeIndicator(BuildContext context) {
-    return Platform.isIOS && MediaQuery.of(context).size.height >= 810;
+  bool hasHomeIndicator() {
+    return Platform.isIOS && Get.height >= 810;
   }
 }

@@ -413,8 +413,7 @@ class DogProfileSetting extends StatelessWidget {
               right: 0,
               child: Container(
                 width: double.infinity,
-                height:
-                    ReactiveDevice().hasHomeIndicator(context) ? 102.h : 68.h,
+                height: ReactiveDevice().hasHomeIndicator() ? 102.h : 68.h,
                 color: Colors.white,
                 child: Column(
                   children: [

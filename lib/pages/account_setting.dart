@@ -12,144 +12,152 @@ class AccountSetting extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0.0,
-        leading: GestureDetector(
-          onTap: () {
-            Get.back();
-          },
-          child: Icon(
-            Icons.arrow_back,
-            size: 32.r,
-            color: Colors.black,
+        centerTitle: true,
+        leading: Padding(
+          padding: EdgeInsets.only(left: 24.w),
+          child: GestureDetector(
+            onTap: () {
+              Get.back();
+            },
+            child: SizedBox(
+              width: 32.w,
+              child: Icon(
+                Icons.arrow_back,
+                size: 32.r,
+                color: Colors.black,
+              ),
+            ),
           ),
         ),
-        centerTitle: true,
         title: CustomText(
-          text: '계정 관리',
+          text: '계정 정보',
           color: Colors.black,
-          fontSize: 16.sp,
-          fontWeight: FontWeight.w400,
-          height: (32 / 16),
+          fontSize: 20.sp,
+          fontWeight: FontWeight.w500,
+          height: (28 / 20),
         ),
       ),
       body: Container(
-        padding: EdgeInsets.symmetric(horizontal: 24.0.w),
         color: Colors.white,
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Container(
-              padding: EdgeInsets.only(left: 16.w, right: 32.w),
-              width: double.infinity,
-              height: 36.h,
-              decoration: BoxDecoration(
-                color: Color(0xffF5F5F5),
-                borderRadius: BorderRadius.circular(15.r),
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  CustomText(
-                    text: '사용자명',
-                    color: Color(0xff545454),
-                    fontSize: 14.sp,
-                    fontWeight: FontWeight.w600,
-                    height: (24 / 14),
-                  ),
-                  CustomText(
-                    text: '오또캐드',
-                    color: Color(0xff545454),
-                    fontSize: 14.sp,
-                    fontWeight: FontWeight.w600,
-                    height: (24 / 14),
-                  ),
-                ],
+            SizedBox(height: 16.h),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 24.w),
+              child: CustomText(
+                text: '현재 로그인한 계정',
+                color: Color(0xff6B6B6B),
+                fontSize: 14.sp,
+                fontWeight: FontWeight.w500,
+                height: (20 / 14),
               ),
             ),
-            SizedBox(height: 9.h),
-            Container(
-              padding: EdgeInsets.only(left: 24.w, right: 24.w),
-              width: double.infinity,
-              height: 36.h,
-              decoration: BoxDecoration(
-                color: Color(0xffF5F5F5),
-                borderRadius: BorderRadius.circular(15.r),
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  CustomText(
-                    text: '아이디',
-                    color: Color(0xff545454),
-                    fontSize: 14.sp,
-                    fontWeight: FontWeight.w600,
-                    height: (24 / 14),
-                  ),
-                  CustomText(
-                    text: 'asdalk821',
-                    color: Color(0xff545454),
-                    fontSize: 14.sp,
-                    fontWeight: FontWeight.w600,
-                    height: (24 / 14),
-                  ),
-                ],
-              ),
-            ),
-            SizedBox(height: 9.h),
-            Container(
-              width: double.infinity,
-              height: 78.h,
-              decoration: BoxDecoration(
-                color: Color(0xffF5F5F5),
-                borderRadius: BorderRadius.circular(15.r),
-              ),
-              child: Center(
-                child: CustomText(
-                  text: '카카오톡계정 정보',
-                  color: Color(0xff545454),
-                  fontSize: 14.sp,
-                  fontWeight: FontWeight.w600,
-                  height: (24 / 14),
+            SizedBox(height: 8.h),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 24.w),
+              child: Container(
+                width: double.infinity,
+                height: 40.h,
+                decoration: BoxDecoration(
+                  color: Color(0xffFEE500),
+                  borderRadius: BorderRadius.circular(5.r),
                 ),
               ),
             ),
-            SizedBox(height: 15.h),
+            SizedBox(height: 24.h),
             Container(
               width: double.infinity,
-              height: 48.h,
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(10.r),
-                border: Border.all(
-                  color: Color(0xffF02E2E),
-                ),
-              ),
-              child: Center(
-                child: CustomText(
-                  text: '로그아웃',
-                  color: Color(0xffF02E2E),
-                  fontSize: 14.sp,
-                  fontWeight: FontWeight.w600,
-                  height: (32 / 16),
+              height: 8.h,
+              color: Color(0xffF5F5F5),
+            ),
+            SizedBox(height: 24.h),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 24.w),
+              child: GestureDetector(
+                onTap: () {},
+                child: Row(
+                  children: [
+                    CustomText(
+                      text: '이용 약관',
+                      color: Color(0xff222222),
+                      fontSize: 16.sp,
+                      fontWeight: FontWeight.w400,
+                      height: (20 / 16),
+                    ),
+                    Expanded(
+                      child: Container(height: 20, color: Colors.transparent),
+                    ),
+                    Icon(
+                      Icons.arrow_forward_ios_outlined,
+                      size: 16.r,
+                      color: Color(0xffA6A6A6),
+                    ),
+                  ],
                 ),
               ),
             ),
-            SizedBox(height: 9.h),
+            SizedBox(height: 24.h),
             Container(
               width: double.infinity,
-              height: 48.h,
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(10.r),
-                border: Border.all(
-                  color: Color(0xffF02E2E),
+              height: 8.h,
+              color: Color(0xffF5F5F5),
+            ),
+            SizedBox(height: 24.h),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 24.w),
+              child: GestureDetector(
+                onTap: () {},
+                child: Row(
+                  children: [
+                    CustomText(
+                      text: '로그아웃',
+                      color: Color(0xff222222),
+                      fontSize: 16.sp,
+                      fontWeight: FontWeight.w400,
+                      height: (20 / 16),
+                    ),
+                    Expanded(
+                      child: Container(height: 20, color: Colors.transparent),
+                    ),
+                    Icon(
+                      Icons.arrow_forward_ios_outlined,
+                      size: 16.r,
+                      color: Color(0xffA6A6A6),
+                    ),
+                  ],
                 ),
               ),
-              child: Center(
-                child: CustomText(
-                  text: '아쉽지만 탈퇴할래요!',
-                  color: Color(0xffF02E2E),
-                  fontSize: 14.sp,
-                  fontWeight: FontWeight.w600,
-                  height: (32 / 16),
+            ),
+            SizedBox(height: 24.h),
+            Container(
+              width: double.infinity,
+              height: 8.h,
+              color: Color(0xffF5F5F5),
+            ),
+            SizedBox(height: 24.h),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 24.w),
+              child: GestureDetector(
+                onTap: () {},
+                child: Row(
+                  children: [
+                    CustomText(
+                      text: '계정 삭제',
+                      color: Color(0xff222222),
+                      fontSize: 16.sp,
+                      fontWeight: FontWeight.w400,
+                      height: (20 / 16),
+                    ),
+                    Expanded(
+                      child: Container(height: 20, color: Colors.transparent),
+                    ),
+                    Icon(
+                      Icons.arrow_forward_ios_outlined,
+                      size: 16.r,
+                      color: Color(0xffA6A6A6),
+                    ),
+                  ],
                 ),
               ),
             ),

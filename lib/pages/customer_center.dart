@@ -14,22 +14,28 @@ class CustomerCenter extends StatelessWidget {
         backgroundColor: Colors.transparent,
         elevation: 0.0,
         centerTitle: true,
-        leading: GestureDetector(
-          onTap: () {
-            Get.back();
-          },
-          child: Icon(
-            Icons.arrow_back,
-            size: 32.r,
-            color: Colors.black,
+        leading: Padding(
+          padding: EdgeInsets.only(left: 24.w),
+          child: GestureDetector(
+            onTap: () {
+              Get.back();
+            },
+            child: SizedBox(
+              width: 32.w,
+              child: Icon(
+                Icons.arrow_back,
+                size: 32.r,
+                color: Colors.black,
+              ),
+            ),
           ),
         ),
         title: CustomText(
           text: '고객센터',
           color: Colors.black,
-          fontSize: 16.sp,
-          fontWeight: FontWeight.w400,
-          height: (32 / 16),
+          fontSize: 20.sp,
+          fontWeight: FontWeight.w500,
+          height: (28 / 20),
         ),
       ),
       body: Stack(
@@ -43,77 +49,37 @@ class CustomerCenter extends StatelessWidget {
             ),
           ),
           Positioned(
-            bottom: Get.height * 0.7 + 26.h,
-            child: Container(
-              padding: EdgeInsets.symmetric(horizontal: 24.0.w),
-              width: Get.width,
-              child: Column(
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      CustomText(
-                        text: '공지사항',
-                        color: Colors.black,
+            bottom: Get.height * 0.756 + 32.h,
+            left: 0,
+            right: 0,
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 24.w),
+              child: Container(
+                padding: EdgeInsets.symmetric(horizontal: 8.w),
+                width: double.infinity,
+                height: 48.h,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(10.r),
+                ),
+                child: Row(
+                  children: [
+                    Icon(
+                      Icons.notifications_none,
+                      size: 24.r,
+                    ),
+                    SizedBox(width: 8.w),
+                    Expanded(
+                      child: CustomText(
+                        text: '[공지] 이용 중 학대가 의심되는 일기를 발견하면 신고바랍니다!',
+                        color: Color(0xff272727),
                         fontSize: 14.sp,
-                        fontWeight: FontWeight.w600,
-                        height: (24 / 14),
+                        fontWeight: FontWeight.w400,
+                        maxLines: 1,
                       ),
-                      Padding(
-                        padding: EdgeInsets.only(right: 4.0.w),
-                        child: GestureDetector(
-                          onTap: () {
-                            Get.toNamed('/notice');
-                          },
-                          child: CustomText(
-                            text: '전체 보기',
-                            color: Color(0xff666666),
-                            fontSize: 11.sp,
-                            fontWeight: FontWeight.w400,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: 3.h),
-                  Container(
-                    padding: EdgeInsets.all(8.0.r),
-                    width: double.infinity,
-                    height: 82.h,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(11.r),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black.withOpacity(0.15),
-                          blurRadius: 8,
-                        ),
-                      ],
                     ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          '2022/00/00 ver.1.1',
-                          style: TextStyle(
-                            color: Color(0xffB8B8B8),
-                            fontSize: 10.sp,
-                            fontWeight: FontWeight.w400,
-                          ),
-                        ),
-                        SizedBox(height: 4.h),
-                        CustomText(
-                          text:
-                              '아 공지사항 공지사항입니다. 이러이러한 개선점이 있으니 참고하시기 바랍니다. 참고하라고^^',
-                          color: Colors.black,
-                          fontSize: 12.sp,
-                          fontWeight: FontWeight.w400,
-                          height: (16 / 12),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           ),
@@ -122,7 +88,7 @@ class CustomerCenter extends StatelessWidget {
             child: Container(
               padding: EdgeInsets.only(top: 16.h, left: 24.w, right: 24.w),
               width: Get.width,
-              height: Get.height * 0.7,
+              height: Get.height * 0.756,
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.only(
@@ -136,83 +102,133 @@ class CustomerCenter extends StatelessWidget {
                     children: [
                       CustomText(
                         text: 'FAQ',
-                        color: Colors.black,
-                        fontSize: 16.sp,
+                        color: Color(0xff272727),
+                        fontSize: 20.sp,
                         fontWeight: FontWeight.w600,
-                        height: (24 / 16),
+                        height: (32 / 20),
                       ),
-                      SizedBox(width: 12.w),
+                      SizedBox(width: 8.w),
                       CustomText(
                         text: '사용자들이 자주 묻는 질문을 확인하세요.',
-                        color: Color(0xff929292),
+                        color: Color(0xff696969),
                         fontSize: 12.sp,
                         fontWeight: FontWeight.w400,
-                        height: (24 / 12),
+                        height: (20 / 12),
                       ),
                     ],
                   ),
-                  SizedBox(height: 1.h),
+                  SizedBox(height: 12.h),
                   Expanded(
-                    child: ListView.builder(
-                      padding: EdgeInsets.zero,
-                      itemCount: 8,
-                      itemBuilder: (context, index) {
-                        return Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Container(
+                    child: SingleChildScrollView(
+                      child: Column(
+                        children: [
+                          ...List.generate(
+                            11,
+                            (index) => Padding(
                               padding: EdgeInsets.symmetric(vertical: 12.h),
-                              child: CustomText(
-                                text: '개발자님이 잘생겼다는데 사실인가요?',
-                                color: Colors.black,
-                                fontSize: 14.sp,
-                                fontWeight: FontWeight.w400,
-                                height: (16 / 14),
+                              child: GestureDetector(
+                                onTap: () {
+                                  Get.toNamed('/appSetting');
+                                },
+                                child: Row(
+                                  children: [
+                                    CustomText(
+                                      text: '앱 설정',
+                                      color: Color(0xff222222),
+                                      fontSize: 14.sp,
+                                      fontWeight: FontWeight.w400,
+                                      height: (20 / 14),
+                                    ),
+                                    Expanded(
+                                      child: Container(
+                                          height: 20,
+                                          color: Colors.transparent),
+                                    ),
+                                    Icon(
+                                      Icons.arrow_forward_ios_outlined,
+                                      size: 16.r,
+                                      color: Color(0xffA6A6A6),
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
-                            Container(
-                              width: double.infinity,
-                              height: 1.h,
-                              color: Colors.black.withOpacity(0.2),
-                            ),
-                          ],
-                        );
-                      },
+                          ),
+                          SizedBox(height: 32.h),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              CustomText(
+                                text: '원하는 답변을 찾을 수 없나요?',
+                                color: Color(0xff272727),
+                                fontSize: 18.sp,
+                                fontWeight: FontWeight.w600,
+                                height: (32 / 18),
+                              ),
+                              SizedBox(height: 8.h),
+                              Row(
+                                children: [
+                                  Flexible(
+                                    child: Container(
+                                      height: 48.h,
+                                      decoration: BoxDecoration(
+                                        borderRadius:
+                                            BorderRadius.circular(10.r),
+                                        border: Border.all(
+                                          color: Color(0xffA6A6A6),
+                                        ),
+                                      ),
+                                      child: Center(
+                                        child: CustomText(
+                                          text: '1:1 문의하기',
+                                          color: Color(0xffA6A6A6),
+                                          fontSize: 16.sp,
+                                          fontWeight: FontWeight.w600,
+                                          height: (32 / 16),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  SizedBox(width: 8.w),
+                                  Flexible(
+                                    child: Container(
+                                      height: 48.h,
+                                      decoration: BoxDecoration(
+                                        borderRadius:
+                                            BorderRadius.circular(10.r),
+                                        border: Border.all(
+                                          color: Color(0xffA6A6A6),
+                                        ),
+                                      ),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Icon(
+                                            Icons.message,
+                                            size: 24.r,
+                                            color: Color(0xff696969),
+                                          ),
+                                          SizedBox(width: 4.w),
+                                          CustomText(
+                                            text: '1대1 문의',
+                                            color: Color(0xffA6A6A6),
+                                            fontSize: 16.sp,
+                                            fontWeight: FontWeight.w600,
+                                            height: (32 / 16),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              SizedBox(height: 61.h),
+                            ],
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                  SizedBox(height: 16.h),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      CustomText(
-                        text: '또다른 궁금한 내용이 있나요?',
-                        color: Colors.black,
-                        fontSize: 14.sp,
-                        fontWeight: FontWeight.w600,
-                        height: (24 / 14),
-                      ),
-                      SizedBox(height: 8.h),
-                      Container(
-                        width: double.infinity,
-                        height: 48.h,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10.r),
-                          border: Border.all(
-                            color: Color(0xffA6A6A6),
-                          ),
-                        ),
-                        child: Center(
-                          child: CustomText(
-                            text: '1대1 문의',
-                            color: Color(0xffA6A6A6),
-                            fontSize: 16.sp,
-                            fontWeight: FontWeight.w600,
-                            height: (32 / 16),
-                          ),
-                        ),
-                      ),
-                      SizedBox(height: 61.h),
-                    ],
                   ),
                 ],
               ),

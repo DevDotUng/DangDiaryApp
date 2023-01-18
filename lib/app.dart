@@ -281,7 +281,7 @@ class App extends StatelessWidget {
   Widget _bottomNavBar(BuildContext context) {
     return SizedBox(
       width: double.infinity,
-      height: ReactiveDevice().hasHomeIndicator(context) ? 171.h : 137.h,
+      height: ReactiveDevice().hasHomeIndicator() ? 171.h : 137.h,
       child: Stack(
         children: [
           Positioned(
@@ -294,8 +294,7 @@ class App extends StatelessWidget {
                 filter: ImageFilter.blur(sigmaX: 3, sigmaY: 3),
                 child: Container(
                   width: double.infinity,
-                  height:
-                      ReactiveDevice().hasHomeIndicator(context) ? 110.h : 76.h,
+                  height: ReactiveDevice().hasHomeIndicator() ? 110.h : 76.h,
                   decoration: BoxDecoration(
                     color: Colors.white.withOpacity(0.8),
                     borderRadius:
@@ -307,7 +306,7 @@ class App extends StatelessWidget {
             ),
           ),
           Positioned(
-            bottom: ReactiveDevice().hasHomeIndicator(context) ? 30.h : -4.h,
+            bottom: ReactiveDevice().hasHomeIndicator() ? 30.h : -4.h,
             left: 0,
             right: 0,
             child: Container(
