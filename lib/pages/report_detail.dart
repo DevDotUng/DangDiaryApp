@@ -61,7 +61,15 @@ class ReportDetail extends StatelessWidget {
               child: ListView.builder(
                 itemCount: 3,
                 itemBuilder: (context, index) {
-                  return ReportDropdownContainer();
+                  return NoticeDropdown(
+                    title: '[공지] 이용 중 학대가 의심되는 일기를 발견하면 신고바랍니다!',
+                    registerDate: '2023.01.17',
+                    content: '안녕하세요, 댕댕일기에요.\n'
+                        '서비스 이용 중 학대가 의심되는 일기를 발견하시면 지체없이 신고하기 버튼을 눌러주세요!\n'
+                        '신고하신 일기는 운영진이 꼼꼼히 검토하여 내부 규정에 따라 해당 유저에게 조치를 취하도록 하겠습니다.\n'
+                        '클린하고 즐거운 댕댕일기를 함께 만들어 가요!\n'
+                        '감사합니다.',
+                  );
                 },
               ),
             ),

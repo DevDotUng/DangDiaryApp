@@ -7,13 +7,21 @@ import 'package:dangdiarysample/pages/app_setting.dart';
 import 'package:dangdiarysample/pages/challenge_detail.dart';
 import 'package:dangdiarysample/app.dart';
 import 'package:dangdiarysample/pages/complete_diary.dart';
+import 'package:dangdiarysample/pages/complete_inquiry.dart';
 import 'package:dangdiarysample/pages/customer_center.dart';
 import 'package:dangdiarysample/pages/diary.dart';
 import 'package:dangdiarysample/pages/dog_profile_setting.dart';
+import 'package:dangdiarysample/pages/my_inquiry_history.dart';
+import 'package:dangdiarysample/pages/my_inquiry_history_detail.dart';
 import 'package:dangdiarysample/pages/my_page.dart';
+import 'package:dangdiarysample/pages/my_report_history.dart';
+import 'package:dangdiarysample/pages/my_report_history_detail.dart';
 import 'package:dangdiarysample/pages/notice.dart';
 import 'package:dangdiarysample/pages/notification_page.dart';
+import 'package:dangdiarysample/pages/onboarding.dart';
+import 'package:dangdiarysample/pages/one_to_one_inquiry.dart';
 import 'package:dangdiarysample/pages/posts.dart';
+import 'package:dangdiarysample/pages/register_profile.dart';
 import 'package:dangdiarysample/pages/report_detail.dart';
 import 'package:dangdiarysample/pages/search_diary.dart';
 import 'package:dangdiarysample/pages/search_posts.dart';
@@ -37,7 +45,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return ScreenUtilInit(
       designSize: Platform.isAndroid
-          ? Size(Get.width * 0.8, Get.height * 0.8)
+          ? Size(Get.width, Get.height)
           : Size(Get.width, Get.height),
       minTextAdapt: true,
       builder: (context, child) {
@@ -54,7 +62,8 @@ class MyApp extends StatelessWidget {
           ],
           initialRoute: '/',
           getPages: [
-            GetPage(name: '/', page: () => App()),
+            GetPage(name: '/', page: () => Onboarding()),
+            GetPage(name: '/app', page: () => App()),
             GetPage(name: '/challengeDetail', page: () => ChallengeDetail()),
             GetPage(name: '/writeDiary', page: () => WriteDiary()),
             GetPage(name: '/myPage', page: () => MyPage()),
@@ -76,6 +85,17 @@ class MyApp extends StatelessWidget {
             GetPage(
                 name: '/searchPostsResult', page: () => SearchPostsResult()),
             GetPage(name: '/appSetting', page: () => AppSetting()),
+            GetPage(name: '/oneToOneInquiry', page: () => OneToOneInquiry()),
+            GetPage(name: '/completeInquiry', page: () => CompleteInquiry()),
+            GetPage(name: '/myInquiryHistory', page: () => MyInquiryHistory()),
+            GetPage(
+                name: '/myInquiryHistoryDetail',
+                page: () => MyInquiryHistoryDetail()),
+            GetPage(name: '/myReportHistory', page: () => MyReportHistory()),
+            GetPage(
+                name: '/myReportHistoryDetail',
+                page: () => MyReportHistoryDetail()),
+            GetPage(name: '/registerProfile', page: () => RegisterProfile()),
           ],
         );
       },

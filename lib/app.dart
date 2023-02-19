@@ -3,12 +3,13 @@ import 'dart:ui';
 
 import 'package:dangdiarysample/components/custom_text.dart';
 import 'package:dangdiarysample/components/reactive_device.dart';
-import 'package:dangdiarysample/components/triangle_painter.dart';
 import 'package:dangdiarysample/controllers/bottom_nav_controller.dart';
 import 'package:dangdiarysample/pages/diaries.dart';
 import 'package:dangdiarysample/pages/home.dart';
 import 'package:dangdiarysample/pages/my_page.dart';
 import 'package:dangdiarysample/pages/browse.dart';
+import 'package:dangdiarysample/static/color.dart';
+import 'package:dangdiarysample/static/icon.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -97,7 +98,7 @@ class App extends StatelessWidget {
                                 height: 4.h,
                                 decoration: BoxDecoration(
                                   color: BottomNavController.to.page.value < 0.5
-                                      ? Color(0xff7B61FF)
+                                      ? StaticColor.main
                                       : Color(0xffD9D9D9),
                                   borderRadius: BorderRadius.circular(2.r),
                                 ),
@@ -109,7 +110,7 @@ class App extends StatelessWidget {
                                 height: 4.h,
                                 decoration: BoxDecoration(
                                   color: BottomNavController.to.page.value > 0.5
-                                      ? Color(0xff7B61FF)
+                                      ? StaticColor.main
                                       : Color(0xffD9D9D9),
                                   borderRadius: BorderRadius.circular(2.r),
                                 ),
@@ -320,12 +321,12 @@ class App extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           _bottomNavigationBarItem(
-                            Icons.home,
+                            IconsPath.home_bold,
                             '홈',
                             0,
                           ),
                           _bottomNavigationBarItem(
-                            Icons.menu_book,
+                            IconsPath.diary_bold,
                             '일기장',
                             1,
                           ),
@@ -340,12 +341,12 @@ class App extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           _bottomNavigationBarItem(
-                            Icons.search,
+                            IconsPath.search_bold,
                             '둘러보기',
                             2,
                           ),
                           _bottomNavigationBarItem(
-                            Icons.account_circle,
+                            IconsPath.my_bold,
                             'MY',
                             3,
                           ),
@@ -370,9 +371,7 @@ class App extends StatelessWidget {
                     width: 64.w,
                     height: 64.w,
                     decoration: BoxDecoration(
-                      color: BottomNavController.to.isShowBottomModal.value
-                          ? Colors.white
-                          : Color(0xff545454).withOpacity(0.6),
+                      color: StaticColor.white,
                       borderRadius: BorderRadius.circular(32.r),
                       boxShadow: [
                         BoxShadow(
@@ -392,19 +391,23 @@ class App extends StatelessWidget {
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(32.r),
                               border: Border.all(
-                                color: Color(0xffD9D9D9),
+                                color: StaticColor.main,
                                 width: 2.r,
                               ),
                             ),
                           ),
                         ),
                         Positioned(
-                          top: 16.h,
-                          left: 16.w,
+                          top: BottomNavController.to.isShowBottomModal.value
+                              ? 14.h
+                              : 16.h,
+                          left: BottomNavController.to.isShowBottomModal.value
+                              ? 14.h
+                              : 16.h,
                           child: BottomNavController.to.isShowBottomModal.value
-                              ? Icon(Icons.add_alert, size: 32.r)
-                              : Icon(Icons.clear,
-                                  size: 32.r, color: Colors.white),
+                              ? StaticIcon(IconsPath.challenge_bold, size: 36.w)
+                              : StaticIcon(IconsPath.quit_bold,
+                                  size: 32.w, color: StaticColor.main),
                         ),
                         Positioned(
                           top: 0,
@@ -413,7 +416,7 @@ class App extends StatelessWidget {
                             width: 16.w,
                             height: 16.w,
                             decoration: BoxDecoration(
-                              color: Color(0xff7B61FF),
+                              color: StaticColor.main,
                               borderRadius: BorderRadius.circular(8.r),
                             ),
                           ),
@@ -434,60 +437,12 @@ class App extends StatelessWidget {
               ],
             ),
           ),
-          Obx(
-            () => BottomNavController.to.pageIndex == 0
-                ? Positioned(
-                    top: 30.h,
-                    left: Get.width * 0.5 - 6.w,
-                    child: Transform.rotate(
-                      angle: pi,
-                      child: CustomPaint(
-                        painter: TrianglePainter(
-                          strokeColor: Color(0xffA6A6A6),
-                          strokeWidth: 10,
-                          paintingStyle: PaintingStyle.fill,
-                        ),
-                        child: Container(
-                          height: 12,
-                          width: 12,
-                        ),
-                      ),
-                    ),
-                  )
-                : Container(),
-          ),
-          Obx(
-            () => BottomNavController.to.pageIndex == 0
-                ? Positioned(
-                    top: 0,
-                    left: Get.width * 0.5 - 95.5.w,
-                    child: Container(
-                      width: 191.w,
-                      height: 30.h,
-                      decoration: BoxDecoration(
-                        color: Color(0xffA6A6A6),
-                        borderRadius: BorderRadius.circular(10.r),
-                      ),
-                      child: Center(
-                        child: Text(
-                          '오늘의 일일 챌린지를 확인해보세요!',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 12.sp,
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
-                      ),
-                    ),
-                  )
-                : Container(),
-          ),
         ],
       ),
     );
   }
 
-  Widget _bottomNavigationBarItem(IconData icon, String label, int index) {
+  Widget _bottomNavigationBarItem(String iconsPath, String label, int index) {
     return GestureDetector(
       onTap: () {
         _bottomNavBack(index);
@@ -497,14 +452,14 @@ class App extends StatelessWidget {
       child: Column(
         children: [
           SizedBox(height: 16.h),
-          Icon(
-            icon,
-            size: 32.r,
+          StaticIcon(
+            iconsPath,
+            size: 24.r,
             color: BottomNavController.to.pageIndex == index
-                ? Colors.orangeAccent
-                : Color(0xffA6A6A6),
+                ? StaticColor.main
+                : StaticColor.icon,
           ),
-          SizedBox(height: 4.h),
+          SizedBox(height: 8.h),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [

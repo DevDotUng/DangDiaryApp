@@ -1,5 +1,6 @@
 import 'package:dangdiarysample/components/custom_text.dart';
 import 'package:dangdiarysample/controllers/sticker_controller.dart';
+import 'package:dangdiarysample/static/color.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -69,7 +70,7 @@ class Sticker extends StatelessWidget {
                       RichText(
                         text: TextSpan(
                           style: TextStyle(
-                            color: Color(0xff545454),
+                            color: StaticColor.font_main,
                             fontSize: 20.sp,
                             fontWeight: FontWeight.w500,
                             height: (32 / 20),
@@ -79,7 +80,7 @@ class Sticker extends StatelessWidget {
                             TextSpan(
                               text: '455개의 ',
                               style: TextStyle(
-                                color: Color(0xff7B61FF),
+                                color: StaticColor.main,
                                 fontSize: 20.sp,
                                 fontWeight: FontWeight.w500,
                                 height: (32 / 20),
@@ -329,7 +330,7 @@ class Sticker extends StatelessWidget {
                           .w,
                       height: 2.h,
                       decoration: BoxDecoration(
-                        color: Color(0xff7B61FF),
+                        color: StaticColor.main,
                         borderRadius: BorderRadius.circular(1.r),
                       ),
                     ),

@@ -1,7 +1,8 @@
 import 'package:dangdiarysample/components/custom_text.dart';
+import 'package:dangdiarysample/static/color.dart';
+import 'package:dangdiarysample/static/icon.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:get/get.dart';
 
 class LaterDialog extends StatefulWidget {
   LaterDialog({
@@ -28,7 +29,7 @@ class _LaterDialogState extends State<LaterDialog> {
           ),
           insetPadding: EdgeInsets.all(24.0.r),
           child: Container(
-            padding: EdgeInsets.all(24.0.r),
+            padding: EdgeInsets.symmetric(vertical: 40.h, horizontal: 24.w),
             width: double.infinity,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(15.r),
@@ -40,7 +41,11 @@ class _LaterDialogState extends State<LaterDialog> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    Icon(Icons.message, size: 24.r),
+                    StaticIcon(
+                      IconsPath.message,
+                      size: 24.r,
+                      color: StaticColor.font_main,
+                    ),
                     SizedBox(width: 8.w),
                     CustomText(
                       text: '이유를 제출했어요!',
@@ -52,33 +57,25 @@ class _LaterDialogState extends State<LaterDialog> {
                   ],
                 ),
                 SizedBox(height: 16.h),
-                RichText(
-                  text: TextSpan(
-                    style: TextStyle(
-                      color: Color(0xff7D7D7D),
-                      fontSize: 14.0.sp,
-                      fontWeight: FontWeight.w400,
-                      height: (20 / 14).h,
+                CustomText(
+                  text: '보호자님의 답변을 참고하여 딱 맞는 챌린지를 추천할 수 있도록 노력할게요.',
+                  color: StaticColor.icon,
+                  fontSize: 14.sp,
+                  fontWeight: FontWeight.w400,
+                  height: (20 / 14),
+                ),
+                SizedBox(height: 24.h),
+                Container(
+                  width: double.infinity,
+                  height: 120.h,
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: AssetImage('assets/illusts/overdue_diary.png'),
+                      fit: BoxFit.fitHeight,
                     ),
-                    children: <TextSpan>[
-                      TextSpan(
-                          text: '보호자님의 의견을 잘 참고해서 초고에게 딱 맞는'
-                              '챌린지를 추천할 수 있도록 노력할게요.\n'
-                              '해당 챌린지는 '),
-                      TextSpan(
-                        text: '리워드 탭> 전체 챌린지 목록',
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 14.0.sp,
-                          fontWeight: FontWeight.w400,
-                          height: (20 / 14).h,
-                        ),
-                      ),
-                      TextSpan(text: '에서 언제든지 다시 도전할 수 있어요.'),
-                    ],
                   ),
                 ),
-                SizedBox(height: 124.h),
+                SizedBox(height: 32.h),
                 GestureDetector(
                   onTap: () {
                     Navigator.pop(context);
@@ -86,7 +83,7 @@ class _LaterDialogState extends State<LaterDialog> {
                   child: Container(
                     height: 48.h,
                     decoration: BoxDecoration(
-                      color: Color(0xff7D7D7D),
+                      color: StaticColor.main,
                       borderRadius: BorderRadius.circular(10.0.r),
                     ),
                     child: Center(
@@ -98,26 +95,6 @@ class _LaterDialogState extends State<LaterDialog> {
                       ),
                     ),
                   ),
-                ),
-                SizedBox(height: 12.h),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.pop(context);
-                        Get.offAndToNamed('/allChallenge');
-                      },
-                      child: CustomText(
-                        text: '챌린지 목록으로 이동하고 싶어요',
-                        color: Color(0xff6B6B6B),
-                        fontSize: 12.sp,
-                        fontWeight: FontWeight.w400,
-                        height: (20 / 12),
-                        decoration: TextDecoration.underline,
-                      ),
-                    ),
-                  ],
                 ),
               ],
             ),
@@ -136,7 +113,7 @@ class _LaterDialogState extends State<LaterDialog> {
       ),
       insetPadding: EdgeInsets.all(24.0.r),
       child: Container(
-        padding: EdgeInsets.all(24.0.r),
+        padding: EdgeInsets.symmetric(vertical: 40.h, horizontal: 24.w),
         width: double.infinity,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(15.r),
@@ -148,23 +125,45 @@ class _LaterDialogState extends State<LaterDialog> {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                CustomText(
-                  text: '혹시 아이가 좋아하지 않나요?',
-                  color: Colors.black,
-                  fontSize: 20.sp,
-                  fontWeight: FontWeight.w600,
-                  height: (24 / 20),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    StaticIcon(
+                      IconsPath.caution,
+                      size: 30.w,
+                      color: StaticColor.font_main,
+                    ),
+                    SizedBox(width: 8.w),
+                    CustomText(
+                      text: '정말 그만두시겠어요?',
+                      color: Colors.black,
+                      fontSize: 20.sp,
+                      fontWeight: FontWeight.w600,
+                      height: (24 / 20),
+                    ),
+                  ],
                 ),
-                SizedBox(height: 16.h),
+                SizedBox(height: 8.h),
                 CustomText(
-                  text: '보호자님이 이 챌린지를 미루시는 이유가 궁금해요.\n'
+                  text: '이 챌린지를 미루시는 이유가 궁금해요.\n'
                       '답변해주시면 다음엔 더 좋은 챌린지를 추천드릴게요.',
                   color: Color(0xff7D7D7D),
                   fontSize: 14.sp,
                   fontWeight: FontWeight.w400,
                   height: (20 / 14),
                 ),
-                SizedBox(height: 114.h),
+                SizedBox(height: 24.h),
+                Container(
+                  width: double.infinity,
+                  height: 120.h,
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: AssetImage('assets/illusts/overdue_diary.png'),
+                      fit: BoxFit.fitHeight,
+                    ),
+                  ),
+                ),
+                SizedBox(height: 24.h),
                 ..._checkBoxList(),
               ],
             ),
@@ -177,12 +176,12 @@ class _LaterDialogState extends State<LaterDialog> {
               child: Container(
                 height: 48.h,
                 decoration: BoxDecoration(
-                  color: Color(0xff7D7D7D),
+                  color: StaticColor.main,
                   borderRadius: BorderRadius.circular(10.0.r),
                 ),
                 child: Center(
                   child: CustomText(
-                    text: '이런 이유에요',
+                    text: '제출할게요',
                     color: Colors.white,
                     fontSize: 16.sp,
                     fontWeight: FontWeight.w600,
@@ -210,11 +209,7 @@ class _LaterDialogState extends State<LaterDialog> {
         padding: EdgeInsets.only(bottom: 10.0.h),
         child: _checkBox(2, '챌린지에 필요한 준비물이 없어요.'),
       ),
-      Padding(
-        padding: EdgeInsets.only(bottom: 10.0.h),
-        child: _checkBox(3, '그냥 나중에 하고 싶어요.'),
-      ),
-      _checkBox(4, '기타 이유'),
+      _checkBox(3, '기타 이유'),
     ];
   }
 
@@ -235,7 +230,8 @@ class _LaterDialogState extends State<LaterDialog> {
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(12.0.r),
                     border: Border.all(
-                      color: Color(0xff7D7D7D),
+                      color: StaticColor.link,
+                      width: 1.5.w,
                     ),
                   ),
                   child: Center(
@@ -243,11 +239,8 @@ class _LaterDialogState extends State<LaterDialog> {
                       width: 12.w,
                       height: 12.w,
                       decoration: BoxDecoration(
-                        color: Color(0xff7D7D7D),
+                        color: StaticColor.main,
                         borderRadius: BorderRadius.circular(6.0.r),
-                        border: Border.all(
-                          color: Color(0xff7D7D7D),
-                        ),
                       ),
                     ),
                   ),
@@ -258,7 +251,7 @@ class _LaterDialogState extends State<LaterDialog> {
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(12.0.r),
                     border: Border.all(
-                      color: Color(0xffA6A6A6),
+                      color: StaticColor.line,
                     ),
                   ),
                 ),

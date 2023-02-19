@@ -3,6 +3,8 @@ import 'package:dangdiarysample/controllers/bottom_nav_controller.dart';
 import 'package:dangdiarysample/controllers/home_controller.dart';
 import 'package:dangdiarysample/pages/notification_page.dart';
 import 'package:dangdiarysample/skeletons/home_skeleton.dart';
+import 'package:dangdiarysample/static/color.dart';
+import 'package:dangdiarysample/static/icon.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -98,10 +100,22 @@ class Home extends StatelessWidget {
               Navigator.push(context,
                   MaterialPageRoute(builder: (context) => NotificationPage()));
             },
-            child: Icon(
-              Icons.notifications_active_outlined,
-              size: 32.r,
-              color: Colors.black,
+            child: Stack(
+              children: [
+                StaticIcon(IconsPath.notification_off, size: 32.w),
+                Positioned(
+                  top: 0,
+                  right: 5.w,
+                  child: Container(
+                    width: 4.w,
+                    height: 4.h,
+                    decoration: BoxDecoration(
+                      color: StaticColor.main,
+                      borderRadius: BorderRadius.circular(2.w),
+                    ),
+                  ),
+                ),
+              ],
             ),
           ),
         ),

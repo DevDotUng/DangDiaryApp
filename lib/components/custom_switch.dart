@@ -1,3 +1,4 @@
+import 'package:dangdiarysample/static/color.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -29,7 +30,7 @@ class CustomSwitch extends StatelessWidget {
             duration: Duration(milliseconds: 200),
             child: CustomText(
               text: value ? 'ON' : 'OFF',
-              color: value ? Color(0xff7B61FF) : Color(0xffA6A6A6),
+              color: value ? StaticColor.main : StaticColor.icon,
               fontSize: 14.sp,
               fontWeight: FontWeight.w400,
               height: (24 / 14),
@@ -44,7 +45,7 @@ class CustomSwitch extends StatelessWidget {
               width: 24.w,
               height: 24.w,
               decoration: BoxDecoration(
-                color: value ? Color(0xff7B61FF) : Color(0xffA6A6A6),
+                color: value ? StaticColor.main : StaticColor.icon,
                 borderRadius: BorderRadius.circular(12.r),
               ),
             ),

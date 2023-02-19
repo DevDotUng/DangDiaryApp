@@ -44,6 +44,8 @@ dependencies:
   flutter_screenutil: ^5.6.0
   flutter_swiper: ^1.1.6
   fluttertoast: ^8.1.2
+  flutter_svg: ^1.1.6
+  http: ^0.13.4
 
 dev_dependencies:
   flutter_test:
@@ -73,6 +75,9 @@ flutter:
   #   - images/a_dot_ham.jpeg
   assets:
     - assets/
+    - assets/icons/
+    - assets/illusts/
+    - assets/onboarding_images/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

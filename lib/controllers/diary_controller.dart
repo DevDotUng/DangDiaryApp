@@ -8,6 +8,42 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 
+enum coverColors {
+  RED,
+  PEACH,
+  CHERRY,
+  ORANGE,
+  YELLOW,
+  LEMON,
+  GREEN,
+  LIME,
+  LEAF,
+  MINT,
+  BLUE,
+  SKY,
+  PUPLE,
+  LAVENDER,
+  PINK,
+}
+
+enum holderColors {
+  HOLDER_RED,
+  HOLDER_PEACH,
+  HOLDER_CHERRY,
+  HOLDER_ORANGE,
+  HOLDER_YELLOW,
+  HOLDER_LEMON,
+  HOLDER_GREEN,
+  HOLDER_LIME,
+  HOLDER_LEAF,
+  HOLDER_MINT,
+  HOLDER_BLUE,
+  HOLDER_SKY,
+  HOLDER_PUPLE,
+  HOLDER_LAVENDER,
+  HOLDER_PINK,
+}
+
 class DiaryController extends GetxController {
   static DiaryController get to => Get.find();
   late BuildContext context;

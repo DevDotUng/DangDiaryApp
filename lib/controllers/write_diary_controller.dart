@@ -1,4 +1,6 @@
 import 'package:dangdiarysample/components/custom_text.dart';
+import 'package:dangdiarysample/static/color.dart';
+import 'package:dangdiarysample/static/icon.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -11,6 +13,14 @@ class WriteDiaryController extends GetxController {
   final ImagePicker _picker = ImagePicker();
   RxList images = [].obs;
   List<String> weathers = ['맑음', '흐림', '비', '눈', '천둥번개', '안개'];
+  List<String> weatherIcons = [
+    IconsPath.sunny_bold,
+    IconsPath.cloudy_bold,
+    IconsPath.rain_bold,
+    IconsPath.snow_bold,
+    IconsPath.thunder_bold,
+    IconsPath.fog_bold,
+  ];
   RxInt selectedWeatherIndex = 6.obs;
   List<String> feelings = [
     '기뻐요',
@@ -33,7 +43,9 @@ class WriteDiaryController extends GetxController {
     SizedBox(height: 16.h),
     SizedBox(height: 16.h),
   ].cast<Widget>().toList().obs;
-  RxList<String> tags = ['한강공원 술래잡기'].obs;
+  RxBool isShake = false.obs;
+  RxBool isShowPopup = false.obs;
+  RxList<String> tags = ['한강공원_술래잡기'].obs;
   late TextEditingController tagTextEditingController;
   late ScrollController scrollController;
 
@@ -102,8 +114,10 @@ class WriteDiaryController extends GetxController {
     }
   }
 
-  void pickImages(BuildContext context) async {
+  Future<void> pickImages(BuildContext context) async {
+    print('aa');
     final List<XFile>? imageList = await _picker.pickMultiImage();
+    print('a');
     if (imageList!.length + images.length > 3) {
       showDialog(
         context: context,
@@ -191,19 +205,29 @@ class WriteDiaryController extends GetxController {
     }
   }
 
-  void submit() {
+  void submit() async {
     List<int> isCompletes = [];
     for (int i = 0; i < 5; i++) {
       if (progress[i] == 0) {
         isCompletes.add(i);
         essentialTextList[i] = Padding(
           padding: EdgeInsets.only(top: 4.h, bottom: 8.h),
-          child: CustomText(
-            text: '* 필수 답변 항목이에요!',
-            color: Color(0xff7B61FF),
-            fontSize: 14.sp,
-            fontWeight: FontWeight.w400,
-            height: (20 / 14),
+          child: Row(
+            children: [
+              Obx(
+                () => AnimatedContainer(
+                  duration: Duration(milliseconds: 100),
+                  width: isShake.value ? 10.w : 0,
+                ),
+              ),
+              CustomText(
+                text: '* 필수 답변 항목이에요!',
+                color: StaticColor.main,
+                fontSize: 14.sp,
+                fontWeight: FontWeight.w400,
+                height: (20 / 14),
+              ),
+            ],
           ),
         );
       }
@@ -236,6 +260,22 @@ class WriteDiaryController extends GetxController {
         duration: Duration(milliseconds: 200),
         curve: Curves.linear,
       );
+      await Future.delayed(Duration(milliseconds: 100), () {
+        isShake(!isShake.value);
+      });
+      await Future.delayed(Duration(milliseconds: 100), () {
+        isShake(!isShake.value);
+      });
+      await Future.delayed(Duration(milliseconds: 100), () {
+        isShake(!isShake.value);
+      });
+      await Future.delayed(Duration(milliseconds: 100), () {
+        isShake(!isShake.value);
+      });
     }
+  }
+
+  void changeIsShowPopup() {
+    isShowPopup(!isShowPopup.value);
   }
 }

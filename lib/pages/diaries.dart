@@ -5,6 +5,7 @@ import 'package:dangdiarysample/controllers/diaries_controller.dart';
 import 'package:dangdiarysample/pages/overdue_diaries.dart';
 import 'package:dangdiarysample/pages/search_diary.dart';
 import 'package:dangdiarysample/pages/sticker.dart';
+import 'package:dangdiarysample/static/color.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -60,7 +61,7 @@ class Diaries extends StatelessWidget {
                       RichText(
                         text: TextSpan(
                           style: TextStyle(
-                            color: Color(0xff545454),
+                            color: StaticColor.font_main,
                             fontSize: 20.sp,
                             fontWeight: FontWeight.w500,
                             height: (32 / 20),
@@ -70,7 +71,7 @@ class Diaries extends StatelessWidget {
                             TextSpan(
                               text: '999일',
                               style: TextStyle(
-                                color: Color(0xff7B61FF),
+                                color: StaticColor.main,
                                 fontSize: 20.sp,
                                 fontWeight: FontWeight.w500,
                                 height: (32 / 20),
@@ -86,12 +87,6 @@ class Diaries extends StatelessWidget {
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(28.0.r),
                           border: Border.all(color: Colors.white),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.black.withOpacity(0.25),
-                              blurRadius: 8,
-                            ),
-                          ],
                           image: DecorationImage(
                             image: AssetImage('assets/dog.png'),
                             fit: BoxFit.cover,
@@ -340,7 +335,7 @@ class Diaries extends StatelessWidget {
                           .w,
                       height: 2.h,
                       decoration: BoxDecoration(
-                        color: Color(0xff7B61FF),
+                        color: StaticColor.main,
                         borderRadius: BorderRadius.circular(1.r),
                       ),
                     ),
@@ -589,7 +584,7 @@ class Diaries extends StatelessWidget {
                     right: 1.5.w,
                     child: Obx(
                       () => AnimatedContainer(
-                        duration: Duration(milliseconds: 300),
+                        duration: Duration(milliseconds: 500),
                         curve: Curves.easeOut,
                         width: DiariesController.to.diaryHolderBool.value
                             ? 8.w

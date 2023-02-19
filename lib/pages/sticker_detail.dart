@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:dangdiarysample/components/custom_text.dart';
+import 'package:dangdiarysample/static/color.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -63,7 +64,7 @@ class StickerDetail extends StatelessWidget {
                       width: 40.w,
                       height: 40.w,
                       decoration: BoxDecoration(
-                        color: Color(0xff7B61FF),
+                        color: StaticColor.main,
                         borderRadius: BorderRadius.circular(20.r),
                       ),
                       child: Center(
@@ -83,7 +84,7 @@ class StickerDetail extends StatelessWidget {
               SizedBox(height: 16.h),
               CustomText(
                 text: '눈밭에서 백덤블링하기',
-                color: Color(0xff7B61FF),
+                color: StaticColor.main,
                 fontSize: 20.sp,
                 fontWeight: FontWeight.w600,
                 height: (28 / 20),

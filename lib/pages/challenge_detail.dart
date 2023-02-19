@@ -3,6 +3,7 @@ import 'package:dangdiarysample/components/expandable_text.dart';
 import 'package:dangdiarysample/components/later_dialog.dart';
 import 'package:dangdiarysample/controllers/challenge_detail_controller.dart';
 import 'package:dangdiarysample/skeletons/challenge_detail_skeleton.dart';
+import 'package:dangdiarysample/static/color.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -67,7 +68,7 @@ class ChallengeDetail extends StatelessWidget {
                   child: Container(
                     height: 48.h,
                     decoration: BoxDecoration(
-                      color: Color(0xff7D7D7D),
+                      color: StaticColor.main,
                       borderRadius: BorderRadius.circular(10.0.r),
                     ),
                     child: Center(
@@ -86,7 +87,7 @@ class ChallengeDetail extends StatelessWidget {
                     Navigator.pop(context);
                   },
                   child: CustomText(
-                    text: '일기는 다음에 쓸게요',
+                    text: '다음에 쓸게요',
                     color: Color(0xff6B6B6B),
                     fontSize: 12.sp,
                     fontWeight: FontWeight.w400,
@@ -127,68 +128,65 @@ class ChallengeDetail extends StatelessWidget {
     return Scaffold(
       body: Container(
         color: Colors.white,
-        child: CustomScrollView(
-          controller: ChallengeDetailController.to.scrollController,
-          slivers: [
-            SliverAppBar(
-              leading: GestureDetector(
-                onTap: () {
-                  Get.back();
-                },
-                child: Obx(
-                  () => Icon(
-                    Icons.arrow_back,
-                    size: 32.r,
-                    color: ChallengeDetailController.to.scrollPosition > 150.h
-                        ? Colors.black
-                        : Colors.white,
-                  ),
-                ),
-              ),
-              backgroundColor: Colors.white,
-              elevation: 0.0,
-              pinned: true,
-              expandedHeight: 228.h,
-              primary: true,
-              flexibleSpace: Stack(
-                children: [
-                  FlexibleSpaceBar(
-                    background: SizedBox(
-                      height: Get.width,
-                      width: Get.width,
-                      child: Image.asset(
-                        'assets/dog.png',
-                        fit: BoxFit.cover,
+        child: Stack(
+          children: [
+            CustomScrollView(
+              controller: ChallengeDetailController.to.scrollController,
+              physics: const ClampingScrollPhysics(),
+              slivers: [
+                SliverAppBar(
+                  leading: GestureDetector(
+                    onTap: () {
+                      Get.back();
+                    },
+                    child: Obx(
+                      () => Icon(
+                        Icons.arrow_back,
+                        size: 32.r,
+                        color:
+                            ChallengeDetailController.to.scrollPosition > 150.h
+                                ? Colors.black
+                                : Colors.white,
                       ),
                     ),
                   ),
-                  SizedBox(
-                    height: 70.h,
-                    child: FlexibleSpaceBar(
-                      collapseMode: CollapseMode.none,
-                      background: Container(
-                        decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                            begin: Alignment.topCenter,
-                            end: Alignment.bottomCenter,
-                            colors: [Colors.black38, Colors.transparent],
-                            stops: [0.0, 0.15],
+                  backgroundColor: Colors.white,
+                  elevation: 0.0,
+                  pinned: true,
+                  expandedHeight: 228.h,
+                  primary: true,
+                  flexibleSpace: Stack(
+                    children: [
+                      FlexibleSpaceBar(
+                        background: SizedBox(
+                          height: Get.width,
+                          width: Get.width,
+                          child: Image.asset(
+                            'assets/dog.png',
+                            fit: BoxFit.cover,
                           ),
                         ),
                       ),
-                    ),
-                  ),
-                  Positioned(
-                    bottom: -2.h,
-                    left: 0,
-                    right: 0,
-                    child: Obx(
-                      () => AnimatedOpacity(
-                        opacity:
-                            ChallengeDetailController.to.scrollPosition > 150.h
-                                ? 0
-                                : 1,
-                        duration: Duration(milliseconds: 200),
+                      SizedBox(
+                        height: 70.h,
+                        child: FlexibleSpaceBar(
+                          collapseMode: CollapseMode.none,
+                          background: Container(
+                            decoration: BoxDecoration(
+                              gradient: LinearGradient(
+                                begin: Alignment.topCenter,
+                                end: Alignment.bottomCenter,
+                                colors: [Colors.black38, Colors.transparent],
+                                stops: [0.0, 0.15],
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      Positioned(
+                        bottom: -2.h,
+                        left: 0,
+                        right: 0,
                         child: Container(
                           height: 34.h,
                           decoration: BoxDecoration(
@@ -199,278 +197,290 @@ class ChallengeDetail extends StatelessWidget {
                           ),
                         ),
                       ),
-                    ),
-                  )
-                ],
-              ),
-            ),
-            SliverPadding(
-              padding: EdgeInsets.symmetric(horizontal: 24.w),
-              sliver: SliverList(
-                delegate: SliverChildListDelegate(
-                  [
-                    CustomText(
-                      text: '한강공원 술래잡기',
-                      color: Colors.black,
-                      fontSize: 24.sp,
-                      fontWeight: FontWeight.w600,
-                      height: (32 / 24),
-                    ),
-                    SizedBox(height: 16.h),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Row(
+                      FlexibleSpaceBar(
+                        collapseMode: CollapseMode.none,
+                        background: Stack(
                           children: [
-                            CustomText(
-                              text: '총 00회 진행',
-                              color: Colors.black,
-                              fontSize: 16.sp,
-                              fontWeight: FontWeight.w600,
-                              height: (24 / 16),
-                            ),
-                            Padding(
-                              padding: EdgeInsets.symmetric(horizontal: 8.0.w),
+                            Positioned(
+                              bottom: ChallengeDetailController
+                                  .to.scrollPosition.value,
+                              right: 44.w,
                               child: Container(
-                                width: 2.w,
-                                height: 20.h,
-                                color: Colors.black,
+                                width: 52.w,
+                                height: 32.h,
+                                color: Color(0xffFFB872),
                               ),
-                            ),
-                            CustomText(
-                              text: '총 00회 진행',
-                              color: Colors.black,
-                              fontSize: 16.sp,
-                              fontWeight: FontWeight.w600,
-                              height: (24 / 16),
                             ),
                           ],
                         ),
-                        Container(
-                          width: 104.w,
-                          height: 32.h,
-                          decoration: BoxDecoration(
-                            color: Colors.black,
-                            borderRadius: BorderRadius.circular(16.r),
-                          ),
-                          child: Center(
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
+                      ),
+                    ],
+                  ),
+                ),
+                SliverPadding(
+                  padding: EdgeInsets.symmetric(horizontal: 24.w),
+                  sliver: SliverList(
+                    delegate: SliverChildListDelegate(
+                      [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Column(
                               children: [
-                                Icon(
-                                  Icons.share,
-                                  size: 16.r,
-                                  color: Colors.white,
+                                CustomText(
+                                  text: '한강공원 술래잡기',
+                                  color: Colors.black,
+                                  fontSize: 24.sp,
+                                  fontWeight: FontWeight.w600,
+                                  height: (32 / 24),
                                 ),
-                                SizedBox(width: 8.w),
-                                Text(
-                                  '챌린지 공유',
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 12.sp,
-                                    fontWeight: FontWeight.w400,
-                                  ),
+                                SizedBox(height: 16.h),
+                                CustomText(
+                                  text: '처음 도전하는 챌린지에요!',
+                                  color: Colors.black,
+                                  fontSize: 16.sp,
+                                  fontWeight: FontWeight.w600,
+                                  height: (24 / 16),
                                 ),
                               ],
                             ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    SizedBox(height: 24.h),
-                    SizedBox(
-                      width: double.infinity,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          ExpandableText(
-                            ChallengeDetailController.to.challengeContent,
-                            expandText: '더보기',
-                            collapseText: '접기',
-                            maxLines: 4,
-                            linkColor: Color(0xffA6A6A6),
-                            animation: true,
-                            animationDuration: Duration(milliseconds: 500),
-                            style: TextStyle(
-                              color: Color(0xff6B6B6B),
-                              fontSize: 16.sp,
-                              fontWeight: FontWeight.w400,
-                              height: (24 / 16),
+                            Container(
+                              margin: EdgeInsets.only(right: 20.w),
+                              width: 52.w,
+                              height: 54.h,
+                              decoration: BoxDecoration(
+                                color: Color(0xffFFB872),
+                                borderRadius: BorderRadius.only(
+                                  bottomLeft: Radius.circular(26.r),
+                                  bottomRight: Radius.circular(26.r),
+                                ),
+                              ),
+                              child: Column(
+                                children: [
+                                  Expanded(child: Container()),
+                                  Container(
+                                    width: 44.w,
+                                    height: 44.w,
+                                    decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.circular(22.r),
+                                      image: DecorationImage(
+                                        image: AssetImage('assets/sticker.png'),
+                                        fit: BoxFit.contain,
+                                      ),
+                                    ),
+                                  ),
+                                  SizedBox(height: 4.h),
+                                ],
+                              ),
                             ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    SizedBox(height: 24.h),
-                    Container(
-                      padding: EdgeInsets.symmetric(
-                          vertical: 12.h, horizontal: 16.w),
-                      width: 327.w,
-                      decoration: BoxDecoration(
-                        border: Border.all(
-                          color: Color(0xffA6A6A6),
+                          ],
                         ),
-                        borderRadius: BorderRadius.circular(15.0.r),
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          CustomText(
-                            text: '인증 방법',
-                            color: Colors.black,
-                            fontSize: 16.sp,
-                            fontWeight: FontWeight.w600,
-                            height: (24 / 16),
-                          ),
-                          SizedBox(height: 4.h),
-                          Row(
+                        SizedBox(height: 24.h),
+                        SizedBox(
+                          width: double.infinity,
+                          child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Icon(
-                                Icons.rocket_launch_sharp,
-                                size: 16.r,
-                              ),
-                              SizedBox(width: 4.w),
-                              Container(
-                                width: Get.width - 102.w,
-                                child: CustomText(
-                                  text:
-                                      '인증 방법 설명 인증 방법 설명 인증 방법 설명 인증 방법 설명 인증 방법 설명 인증 방법 설명 인증 방법 설명 인증 방법 설명',
-                                  maxLines: 10,
-                                  color: Colors.black,
-                                  fontSize: 14.sp,
+                              ExpandableText(
+                                ChallengeDetailController.to.challengeContent,
+                                expandText: '더보기',
+                                collapseText: '접기',
+                                maxLines: 4,
+                                linkColor: Color(0xffA6A6A6),
+                                animation: true,
+                                animationDuration: Duration(milliseconds: 500),
+                                style: TextStyle(
+                                  color: Color(0xff6B6B6B),
+                                  fontSize: 16.sp,
                                   fontWeight: FontWeight.w400,
-                                  height: (20 / 14),
-                                  overflow: TextOverflow.ellipsis,
+                                  height: (24 / 16),
                                 ),
                               ),
                             ],
                           ),
-                        ],
-                      ),
-                    ),
-                    SizedBox(height: 32.h),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        CustomText(
-                          text: '다른 아이들은 이렇게 했어요!',
-                          color: Colors.black,
-                          fontSize: 16.sp,
-                          fontWeight: FontWeight.w600,
-                          height: (24 / 16),
                         ),
-                        Icon(Icons.arrow_forward_ios_sharp, size: 16.r),
+                        SizedBox(height: 24.h),
+                        Container(
+                          padding: EdgeInsets.symmetric(
+                              vertical: 12.h, horizontal: 16.w),
+                          width: 327.w,
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                              color: Color(0xffA6A6A6),
+                            ),
+                            borderRadius: BorderRadius.circular(15.0.r),
+                          ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              CustomText(
+                                text: '인증 방법',
+                                color: Colors.black,
+                                fontSize: 16.sp,
+                                fontWeight: FontWeight.w600,
+                                height: (24 / 16),
+                              ),
+                              SizedBox(height: 4.h),
+                              Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Icon(
+                                    Icons.rocket_launch_sharp,
+                                    size: 16.r,
+                                  ),
+                                  SizedBox(width: 4.w),
+                                  Container(
+                                    width: Get.width - 102.w,
+                                    child: CustomText(
+                                      text:
+                                          '인증 방법 설명 인증 방법 설명 인증 방법 설명 인증 방법 설명 인증 방법 설명 인증 방법 설명 인증 방법 설명 인증 방법 설명',
+                                      maxLines: 10,
+                                      color: Colors.black,
+                                      fontSize: 14.sp,
+                                      fontWeight: FontWeight.w400,
+                                      height: (20 / 14),
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+                        SizedBox(height: 32.h),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            CustomText(
+                              text: '다른 아이들은 이렇게 했어요!',
+                              color: Colors.black,
+                              fontSize: 16.sp,
+                              fontWeight: FontWeight.w600,
+                              height: (24 / 16),
+                            ),
+                            Icon(Icons.arrow_forward_ios_sharp, size: 16.r),
+                          ],
+                        ),
+                        SizedBox(height: 4.h),
+                        SizedBox(
+                          height: 104.h,
+                          child: ListView.builder(
+                            scrollDirection: Axis.horizontal,
+                            itemCount: 10,
+                            itemBuilder: (BuildContext context, int index) {
+                              return Padding(
+                                padding: EdgeInsets.only(right: 8.0.w),
+                                child: GestureDetector(
+                                  onTap: () {
+                                    Get.toNamed("/post");
+                                  },
+                                  child: Container(
+                                    width: 104.w,
+                                    height: 104.h,
+                                    decoration: BoxDecoration(
+                                      color: Colors.grey,
+                                      borderRadius:
+                                          BorderRadius.circular(10.0.r),
+                                    ),
+                                  ),
+                                ),
+                              );
+                            },
+                          ),
+                        ),
+                        SizedBox(height: 102.h),
                       ],
                     ),
-                    SizedBox(height: 4.h),
-                    Container(
-                      height: 104.h,
-                      child: ListView.builder(
-                        scrollDirection: Axis.horizontal,
-                        itemCount: 10,
-                        itemBuilder: (BuildContext context, int index) {
-                          return Padding(
-                            padding: EdgeInsets.only(right: 8.0.w),
-                            child: GestureDetector(
-                              onTap: () {
-                                Get.toNamed("/post");
-                              },
-                              child: Container(
-                                width: 104.w,
-                                height: 104.h,
-                                decoration: BoxDecoration(
-                                  color: Colors.grey,
-                                  borderRadius: BorderRadius.circular(10.0.r),
-                                ),
-                              ),
-                            ),
-                          );
-                        },
-                      ),
-                    ),
-                    SizedBox(height: 49.h),
-                    Obx(
-                      () => ChallengeDetailController.to.isChallenge.value
-                          ? Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: [
-                                Flexible(
-                                  child: GestureDetector(
-                                    onTap: () {
-                                      _showLaterDialog(context);
-                                    },
-                                    child: Container(
-                                      height: 48.h,
-                                      decoration: BoxDecoration(
-                                        color: Colors.white,
-                                        borderRadius:
-                                            BorderRadius.circular(10.0.r),
-                                        border: Border.all(
-                                          color: Color(0xffA6A6A6),
-                                        ),
-                                      ),
-                                      child: Center(
-                                        child: CustomText(
-                                          text: '다음에 다시 할게요',
-                                          color: Color(0xffA6A6A6),
-                                          fontSize: 16.sp,
-                                          fontWeight: FontWeight.w600,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                SizedBox(width: 8.w),
-                                Flexible(
-                                  child: GestureDetector(
-                                    onTap: () {
-                                      _showDoneDialog(context);
-                                    },
-                                    child: Container(
-                                      height: 48.h,
-                                      decoration: BoxDecoration(
-                                        color: Color(0xff7D7D7D),
-                                        borderRadius:
-                                            BorderRadius.circular(10.0.r),
-                                      ),
-                                      child: Center(
-                                        child: CustomText(
-                                          text: '다했어요!',
-                                          color: Colors.white,
-                                          fontSize: 16.sp,
-                                          fontWeight: FontWeight.w600,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            )
-                          : GestureDetector(
-                              onTap: () {
-                                ChallengeDetailController.to
-                                    .setIsChallenge(true);
-                              },
-                              child: Container(
-                                height: 48.h,
-                                decoration: BoxDecoration(
-                                  color: Color(0xff7D7D7D),
-                                  borderRadius: BorderRadius.circular(10.0.r),
-                                ),
-                                child: Center(
-                                  child: CustomText(
-                                    text: '도전할래요',
+                  ),
+                ),
+              ],
+            ),
+            Positioned(
+              bottom: 0,
+              left: 0,
+              right: 0,
+              child: Container(
+                padding: EdgeInsets.fromLTRB(24.w, 8.h, 24.w, 46.h),
+                width: double.infinity,
+                height: 102.h,
+                color: StaticColor.white,
+                child: Obx(
+                  () => ChallengeDetailController.to.isChallenge.value
+                      ? Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            Flexible(
+                              child: GestureDetector(
+                                onTap: () {
+                                  _showLaterDialog(context);
+                                },
+                                child: Container(
+                                  height: 48.h,
+                                  decoration: BoxDecoration(
                                     color: Colors.white,
-                                    fontSize: 16.sp,
-                                    fontWeight: FontWeight.w600,
+                                    borderRadius: BorderRadius.circular(10.0.r),
+                                    border: Border.all(
+                                      color: Color(0xffA6A6A6),
+                                    ),
+                                  ),
+                                  child: Center(
+                                    child: CustomText(
+                                      text: '다음에 할게요',
+                                      color: Color(0xffA6A6A6),
+                                      fontSize: 16.sp,
+                                      fontWeight: FontWeight.w600,
+                                    ),
                                   ),
                                 ),
                               ),
                             ),
-                    ),
-                    SizedBox(height: 32.h),
-                  ],
+                            SizedBox(width: 8.w),
+                            Flexible(
+                              child: GestureDetector(
+                                onTap: () {
+                                  _showDoneDialog(context);
+                                },
+                                child: Container(
+                                  height: 48.h,
+                                  decoration: BoxDecoration(
+                                    color: StaticColor.main,
+                                    borderRadius: BorderRadius.circular(10.0.r),
+                                  ),
+                                  child: Center(
+                                    child: CustomText(
+                                      text: '다했어요!',
+                                      color: Colors.white,
+                                      fontSize: 16.sp,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        )
+                      : GestureDetector(
+                          onTap: () {
+                            ChallengeDetailController.to.setIsChallenge(true);
+                          },
+                          child: Container(
+                            height: 48.h,
+                            decoration: BoxDecoration(
+                              color: StaticColor.main,
+                              borderRadius: BorderRadius.circular(10.0.r),
+                            ),
+                            child: Center(
+                              child: CustomText(
+                                text: '도전할래요',
+                                color: Colors.white,
+                                fontSize: 16.sp,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                          ),
+                        ),
                 ),
               ),
             ),
