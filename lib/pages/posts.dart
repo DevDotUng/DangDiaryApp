@@ -1,6 +1,8 @@
 import 'package:dangdiarysample/components/custom_text.dart';
 import 'package:dangdiarysample/components/expandable_text.dart';
 import 'package:dangdiarysample/controllers/posts_controller.dart';
+import 'package:dangdiarysample/static/color.dart';
+import 'package:dangdiarysample/static/icon.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -58,7 +60,7 @@ class Posts extends StatelessWidget {
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(16.r),
                               image: DecorationImage(
-                                image: AssetImage('assets/dog.png'),
+                                image: AssetImage('assets/dog2.png'),
                                 fit: BoxFit.cover,
                               ),
                             ),
@@ -182,10 +184,10 @@ class Posts extends StatelessWidget {
                                         height: (20 / 12),
                                       ),
                                       SizedBox(width: 4.w),
-                                      Icon(
-                                        Icons.sentiment_very_satisfied,
+                                      StaticIcon(
+                                        IconsPath.nervous,
                                         size: 16.r,
-                                        color: Color(0xff6B6B6B),
+                                        color: StaticColor.icon,
                                       ),
                                     ],
                                   ),
@@ -208,7 +210,7 @@ class Posts extends StatelessWidget {
                                                     BorderRadius.circular(5.r),
                                                 image: DecorationImage(
                                                   image: AssetImage(
-                                                      'assets/dog.png'),
+                                                      'assets/dog4.png'),
                                                   fit: BoxFit.cover,
                                                 ),
                                               ),
@@ -236,7 +238,8 @@ class Posts extends StatelessWidget {
                                                                       .pageViewIndexList[
                                                                   index] ==
                                                               kndex
-                                                          ? Color(0xff6B6B6B)
+                                                          ? StaticColor
+                                                              .main_light
                                                           : Colors.white,
                                                       borderRadius:
                                                           BorderRadius.circular(
@@ -254,15 +257,15 @@ class Posts extends StatelessWidget {
                                   SizedBox(height: 8.h),
                                   Row(
                                     children: [
-                                      Icon(
-                                        Icons.favorite,
+                                      StaticIcon(
+                                        IconsPath.like_outlined,
                                         size: 24.r,
-                                        color: Color(0xffFF9E90),
+                                        color: Color(0xff202020),
                                       ),
                                       SizedBox(width: 4.w),
                                       CustomText(
                                         text: '995 개',
-                                        color: Color(0xff6B6B6B),
+                                        color: StaticColor.font_main,
                                         fontSize: 12.sp,
                                         fontWeight: FontWeight.w500,
                                         height: (14 / 12),
@@ -275,7 +278,7 @@ class Posts extends StatelessWidget {
                                         CrossAxisAlignment.start,
                                     children: [
                                       ExpandableText(
-                                        '초코와 보낸 하루는 너무 즐거웠다초코와 보낸 하루는 너무 즐거웠다초코와 보낸 하루는 너무 즐거웠다초코와 보낸 하루는 너무 즐거웠다초코와 보낸 하루는 너무 즐거웠다초코와 보낸 하루는 너무 즐거웠다초코와 보낸 하루는 너무 즐거웠다초코와 보낸 하루는 너무 즐거웠다초코와 보낸 하루는 너무 즐거웠다초코와 보낸 하루는 너무 즐거웠다초코와 보낸 하루는 너무 즐거웠다초코와 보낸 하루는 너무 즐거웠다',
+                                        '찌롱이 정기 건강 검진 할 때가 됐긴 했다. 마침 챌린지로 건강 검진이 올라와서 바~로 병원행! 건강한 줄 찌롱이 정기 건강 검진 할 때가 됐긴 했다. 마침 챌린지로 건강 검진이 올라와서 바~로 병원행!',
                                         expandText: '더보기',
                                         maxLines: 2,
                                         linkColor: Color(0xffA6A6A6),
@@ -316,14 +319,15 @@ class Posts extends StatelessWidget {
                                             ),
                                             child: Row(
                                               children: [
-                                                Icon(
-                                                  Icons.tag,
-                                                  size: 16.r,
-                                                  color: Color(0xff7B61FF),
+                                                CustomText(
+                                                  text: '# ',
+                                                  color: StaticColor.main,
+                                                  fontSize: 14.sp,
+                                                  fontWeight: FontWeight.w400,
                                                 ),
                                                 CustomText(
-                                                  text: '한강공원술래잡기',
-                                                  color: Color(0xff7B61FF),
+                                                  text: '건강검진하기',
+                                                  color: StaticColor.main,
                                                   fontSize: 14.sp,
                                                   fontWeight: FontWeight.w400,
                                                 ),
@@ -346,14 +350,15 @@ class Posts extends StatelessWidget {
                                             ),
                                             child: Row(
                                               children: [
-                                                Icon(
-                                                  Icons.tag,
-                                                  size: 16.r,
-                                                  color: Color(0xff222222),
+                                                CustomText(
+                                                  text: '# ',
+                                                  color: StaticColor.font_main,
+                                                  fontSize: 14.sp,
+                                                  fontWeight: FontWeight.w400,
                                                 ),
                                                 CustomText(
-                                                  text: '식빵궁뎅이',
-                                                  color: Color(0xff222222),
+                                                  text: '아프지마',
+                                                  color: StaticColor.font_main,
                                                   fontSize: 14.sp,
                                                   fontWeight: FontWeight.w400,
                                                 ),
@@ -377,7 +382,7 @@ class Posts extends StatelessWidget {
                           width: 40.w,
                           height: 66.h,
                           decoration: BoxDecoration(
-                            color: Color(0xff9C88FF),
+                            color: StaticColor.main_light,
                             borderRadius: BorderRadius.only(
                               bottomLeft: Radius.circular(20.r),
                               bottomRight: Radius.circular(20.r),

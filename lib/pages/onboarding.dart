@@ -87,7 +87,7 @@ class _OnboardingState extends State<Onboarding>
                         height: 10.w,
                         decoration: BoxDecoration(
                           color:
-                              index == 0 ? StaticColor.sub : Color(0xffD9D9D9),
+                              index == 0 ? StaticColor.main : Color(0xffD9D9D9),
                           borderRadius: BorderRadius.circular(5.r),
                         ),
                       ),
@@ -98,7 +98,7 @@ class _OnboardingState extends State<Onboarding>
                         height: 10.w,
                         decoration: BoxDecoration(
                           color:
-                              index == 1 ? StaticColor.sub : Color(0xffD9D9D9),
+                              index == 1 ? StaticColor.main : Color(0xffD9D9D9),
                           borderRadius: BorderRadius.circular(5.r),
                         ),
                       ),
@@ -109,7 +109,7 @@ class _OnboardingState extends State<Onboarding>
                         height: 10.w,
                         decoration: BoxDecoration(
                           color:
-                              index == 2 ? StaticColor.sub : Color(0xffD9D9D9),
+                              index == 2 ? StaticColor.main : Color(0xffD9D9D9),
                           borderRadius: BorderRadius.circular(5.r),
                         ),
                       ),
@@ -120,7 +120,7 @@ class _OnboardingState extends State<Onboarding>
                         height: 10.w,
                         decoration: BoxDecoration(
                           color:
-                              index == 3 ? StaticColor.sub : Color(0xffD9D9D9),
+                              index == 3 ? StaticColor.main : Color(0xffD9D9D9),
                           borderRadius: BorderRadius.circular(5.r),
                         ),
                       ),
@@ -131,7 +131,7 @@ class _OnboardingState extends State<Onboarding>
                         height: 10.w,
                         decoration: BoxDecoration(
                           color:
-                              index == 4 ? StaticColor.sub : Color(0xffD9D9D9),
+                              index == 4 ? StaticColor.main : Color(0xffD9D9D9),
                           borderRadius: BorderRadius.circular(5.r),
                         ),
                       ),

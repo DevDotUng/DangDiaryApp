@@ -1,5 +1,6 @@
 import 'package:dangdiarysample/components/custom_text.dart';
 import 'package:dangdiarysample/static/color.dart';
+import 'package:dangdiarysample/static/icon.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -72,8 +73,8 @@ class MyPage extends StatelessWidget {
                               children: [
                                 Row(
                                   children: [
-                                    Icon(
-                                      Icons.sentiment_very_satisfied,
+                                    StaticIcon(
+                                      IconsPath.customer_center,
                                       size: 24.r,
                                       color: Color(0xff545454),
                                     ),
@@ -147,7 +148,7 @@ class MyPage extends StatelessWidget {
                                     width: 48.w,
                                     height: 40.h,
                                     decoration: BoxDecoration(
-                                      color: Color(0xffFF9900).withOpacity(0.5),
+                                      color: StaticColor.main_light,
                                       borderRadius: BorderRadius.only(
                                         topLeft: Radius.circular(5.r),
                                         bottomLeft: Radius.circular(5.r),
@@ -199,7 +200,7 @@ class MyPage extends StatelessWidget {
                                     width: 48.w,
                                     height: 40.h,
                                     decoration: BoxDecoration(
-                                      color: Color(0xffFF9900).withOpacity(0.5),
+                                      color: StaticColor.main_light,
                                       borderRadius: BorderRadius.only(
                                         topLeft: Radius.circular(5.r),
                                         bottomLeft: Radius.circular(5.r),
@@ -255,7 +256,7 @@ class MyPage extends StatelessWidget {
                                     width: 48.w,
                                     height: 40.h,
                                     decoration: BoxDecoration(
-                                      color: Color(0xffFF9900).withOpacity(0.5),
+                                      color: StaticColor.main_light,
                                       borderRadius: BorderRadius.only(
                                         topLeft: Radius.circular(5.r),
                                         bottomLeft: Radius.circular(5.r),
@@ -307,7 +308,7 @@ class MyPage extends StatelessWidget {
                                     width: 48.w,
                                     height: 40.h,
                                     decoration: BoxDecoration(
-                                      color: Color(0xffFF9900).withOpacity(0.5),
+                                      color: StaticColor.main_light,
                                       borderRadius: BorderRadius.only(
                                         topLeft: Radius.circular(5.r),
                                         bottomLeft: Radius.circular(5.r),
@@ -356,7 +357,11 @@ class MyPage extends StatelessWidget {
                 padding: EdgeInsets.symmetric(horizontal: 24.w),
                 child: Row(
                   children: [
-                    Icon(Icons.menu, size: 24.r),
+                    StaticIcon(
+                      IconsPath.customer_center,
+                      size: 24.r,
+                      color: Color(0xff202020),
+                    ),
                     SizedBox(width: 8.w),
                     CustomText(
                       text: '계정 관리',
@@ -435,7 +440,11 @@ class MyPage extends StatelessWidget {
                 padding: EdgeInsets.symmetric(horizontal: 24.w),
                 child: Row(
                   children: [
-                    Icon(Icons.menu, size: 24.r),
+                    StaticIcon(
+                      IconsPath.setting,
+                      size: 24.r,
+                      color: Color(0xff202020),
+                    ),
                     SizedBox(width: 8.w),
                     CustomText(
                       text: '앱 관리',

@@ -1,5 +1,6 @@
 import 'package:dangdiarysample/components/custom_text.dart';
 import 'package:dangdiarysample/controllers/bottom_nav_controller.dart';
+import 'package:dangdiarysample/static/color.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -41,13 +42,31 @@ class CompleteDiary extends StatelessWidget {
               height: (32 / 24),
             ),
             SizedBox(height: 54.h),
-            Container(
-              width: Get.width - 48.w,
-              child: Center(
-                child: CircularProgressIndicator(),
+            Expanded(
+              child: Container(
+                width: Get.width - 48.w,
+                child: Center(
+                  child: Container(
+                    width: 150.w,
+                    height: 150.w,
+                    decoration: BoxDecoration(
+                      color: StaticColor.white,
+                      borderRadius: BorderRadius.circular(75.r),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withOpacity(0.25),
+                          blurRadius: 4.r,
+                        ),
+                      ],
+                      image: DecorationImage(
+                        image: AssetImage('assets/illusts/overdue_diary.png'),
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                  ),
+                ),
               ),
             ),
-            Expanded(child: Container()),
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 24.w),
               child: GestureDetector(
@@ -57,7 +76,7 @@ class CompleteDiary extends StatelessWidget {
                 child: Container(
                   height: 48.h,
                   decoration: BoxDecoration(
-                    color: Color(0xff7D7D7D),
+                    color: StaticColor.main,
                     borderRadius: BorderRadius.circular(10.0.r),
                   ),
                   child: Center(
@@ -79,8 +98,8 @@ class CompleteDiary extends StatelessWidget {
                   BottomNavController.to.changeBottomNav(3);
                 },
                 child: CustomText(
-                  text: '칭찬도장 페이지로 이동할래요',
-                  color: Color(0xff6B6B6B),
+                  text: '일기장으로 이동할래요',
+                  color: StaticColor.link,
                   fontSize: 12.sp,
                   fontWeight: FontWeight.w400,
                   height: (20 / 12),
@@ -88,7 +107,7 @@ class CompleteDiary extends StatelessWidget {
                 ),
               ),
             ),
-            SizedBox(height: 46.h),
+            SizedBox(height: 72.h),
           ],
         ),
       ),

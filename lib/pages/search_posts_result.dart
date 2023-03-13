@@ -1,5 +1,6 @@
 import 'package:dangdiarysample/components/custom_text.dart';
 import 'package:dangdiarysample/controllers/search_posts_result_controller.dart';
+import 'package:dangdiarysample/static/color.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -176,7 +177,7 @@ class SearchPostsResult extends StatelessWidget {
                           color: SearchPostsResultController
                                       .to.tabBarIndex.value ==
                                   0
-                              ? Color(0xff7B61FF)
+                              ? StaticColor.main
                               : Color(0xff7D7D7D),
                           fontSize: 14.sp,
                           fontWeight: FontWeight.w500,
@@ -202,7 +203,7 @@ class SearchPostsResult extends StatelessWidget {
                           color: SearchPostsResultController
                                       .to.tabBarIndex.value ==
                                   1
-                              ? Color(0xff7B61FF)
+                              ? StaticColor.main
                               : Color(0xff7D7D7D),
                           fontSize: 14.sp,
                           fontWeight: FontWeight.w500,
@@ -228,7 +229,7 @@ class SearchPostsResult extends StatelessWidget {
                           color: SearchPostsResultController
                                       .to.tabBarIndex.value ==
                                   2
-                              ? Color(0xff7B61FF)
+                              ? StaticColor.main
                               : Color(0xff7D7D7D),
                           fontSize: 14.sp,
                           fontWeight: FontWeight.w500,
@@ -265,7 +266,7 @@ class SearchPostsResult extends StatelessWidget {
                       width: (Get.width - 48.w) / 3,
                       height: 2.h,
                       decoration: BoxDecoration(
-                        color: Color(0xff7B61FF),
+                        color: StaticColor.main,
                         borderRadius: BorderRadius.circular(1.r),
                       ),
                     ),
@@ -287,26 +288,31 @@ class SearchPostsResult extends StatelessWidget {
       itemBuilder: (context, index) {
         return Padding(
           padding: EdgeInsets.fromLTRB(12.w, 8.h, 8.w, 16.h),
-          child: Row(
-            children: [
-              Expanded(
-                child: CustomText(
-                  text: '#한강',
-                  color: Color(0xff6B6B6B),
-                  fontSize: 16.sp,
-                  fontWeight: FontWeight.w400,
-                  height: (24 / 16),
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
+          child: GestureDetector(
+            onTap: () {
+              Get.toNamed('/posts');
+            },
+            child: Row(
+              children: [
+                Expanded(
+                  child: CustomText(
+                    text: '#한강',
+                    color: Color(0xff6B6B6B),
+                    fontSize: 16.sp,
+                    fontWeight: FontWeight.w400,
+                    height: (24 / 16),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  ),
                 ),
-              ),
-              SizedBox(width: 8.w),
-              Icon(
-                Icons.arrow_forward_ios_sharp,
-                size: 14.r,
-                color: Color(0xffA6A6A6),
-              ),
-            ],
+                SizedBox(width: 8.w),
+                Icon(
+                  Icons.arrow_forward_ios_sharp,
+                  size: 14.r,
+                  color: Color(0xffA6A6A6),
+                ),
+              ],
+            ),
           ),
         );
       },
@@ -321,36 +327,41 @@ class SearchPostsResult extends StatelessWidget {
       itemBuilder: (context, index) {
         return Padding(
           padding: EdgeInsets.fromLTRB(12.w, 8.h, 8.w, 16.h),
-          child: Row(
-            children: [
-              CustomText(
-                text: '한강이',
-                color: Color(0xff6B6B6B),
-                fontSize: 16.sp,
-                fontWeight: FontWeight.w400,
-                height: (24 / 16),
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-              ),
-              SizedBox(width: 4.w),
-              Expanded(
-                child: CustomText(
-                  text: '오또캐드',
-                  color: Color(0xff7D7D7D),
-                  fontSize: 12.sp,
+          child: GestureDetector(
+            onTap: () {
+              Get.toNamed('/posts');
+            },
+            child: Row(
+              children: [
+                CustomText(
+                  text: '한강이',
+                  color: Color(0xff6B6B6B),
+                  fontSize: 16.sp,
                   fontWeight: FontWeight.w400,
                   height: (24 / 16),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                 ),
-              ),
-              SizedBox(width: 8.w),
-              Icon(
-                Icons.arrow_forward_ios_sharp,
-                size: 14.r,
-                color: Color(0xffA6A6A6),
-              ),
-            ],
+                SizedBox(width: 4.w),
+                Expanded(
+                  child: CustomText(
+                    text: '오또캐드',
+                    color: Color(0xff7D7D7D),
+                    fontSize: 12.sp,
+                    fontWeight: FontWeight.w400,
+                    height: (24 / 16),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ),
+                SizedBox(width: 8.w),
+                Icon(
+                  Icons.arrow_forward_ios_sharp,
+                  size: 14.r,
+                  color: Color(0xffA6A6A6),
+                ),
+              ],
+            ),
           ),
         );
       },
@@ -365,26 +376,31 @@ class SearchPostsResult extends StatelessWidget {
       itemBuilder: (context, index) {
         return Padding(
           padding: EdgeInsets.fromLTRB(12.w, 8.h, 8.w, 16.h),
-          child: Row(
-            children: [
-              Expanded(
-                child: CustomText(
-                  text: '포메라니안',
-                  color: Color(0xff6B6B6B),
-                  fontSize: 16.sp,
-                  fontWeight: FontWeight.w400,
-                  height: (24 / 16),
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
+          child: GestureDetector(
+            onTap: () {
+              Get.toNamed('/posts');
+            },
+            child: Row(
+              children: [
+                Expanded(
+                  child: CustomText(
+                    text: '포메라니안',
+                    color: Color(0xff6B6B6B),
+                    fontSize: 16.sp,
+                    fontWeight: FontWeight.w400,
+                    height: (24 / 16),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  ),
                 ),
-              ),
-              SizedBox(width: 8.w),
-              Icon(
-                Icons.arrow_forward_ios_sharp,
-                size: 14.r,
-                color: Color(0xffA6A6A6),
-              ),
-            ],
+                SizedBox(width: 8.w),
+                Icon(
+                  Icons.arrow_forward_ios_sharp,
+                  size: 14.r,
+                  color: Color(0xffA6A6A6),
+                ),
+              ],
+            ),
           ),
         );
       },

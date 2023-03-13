@@ -28,24 +28,4 @@ class OverdueDiariesController extends GetxController {
       isSliver(false);
     }
   }
-
-  void changeTabBarIndex(int index) {
-    tabBarIndex(index);
-  }
-
-  double getTabBarPosition(int index) {
-    if (index == 1) {
-      return 75;
-    } else {
-      return 0;
-    }
-  }
-
-  double getTabBarWidth(int index) {
-    if (index == 1) {
-      return 63;
-    } else {
-      return 75;
-    }
-  }
 }

@@ -27,6 +27,7 @@ class IconsPath {
   static String get caution_bold => 'assets/icons/caution_bold.svg';
   static String get challenge => 'assets/icons/challenge.svg';
   static String get challenge_bold => 'assets/icons/challenge_bold.svg';
+  static String get check => 'assets/icons/check.svg';
   static String get check_bold => 'assets/icons/check_bold.svg';
   static String get cloudy => 'assets/icons/cloudy.svg';
   static String get cloudy_bold => 'assets/icons/cloudy_bold.svg';
@@ -107,4 +108,13 @@ class IconsPath {
   static String get waterdrop_bold => 'assets/icons/waterdrop_bold.svg';
   static String get write => 'assets/icons/write.svg';
   static String get write_bold => 'assets/icons/write_bold.svg';
+  static String get browse => 'assets/icons/browse.svg';
+  static String get afraid => 'assets/icons/afraid.svg';
+  static String get angry => 'assets/icons/angry.svg';
+  static String get annoying => 'assets/icons/annoying.svg';
+  static String get dont_know => 'assets/icons/dont_know.svg';
+  static String get full_energy => 'assets/icons/full_energy.svg';
+  static String get fun => 'assets/icons/fun.svg';
+  static String get happy => 'assets/icons/happy.svg';
+  static String get nervous => 'assets/icons/nervous.svg';
 }

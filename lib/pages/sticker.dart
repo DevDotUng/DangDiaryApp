@@ -385,7 +385,8 @@ class Sticker extends StatelessWidget {
                               ),
                             ],
                             image: DecorationImage(
-                              image: AssetImage('assets/sticker.png'),
+                              image: AssetImage(
+                                  'assets/sticker${index % 4 + 1}.png'),
                               fit: BoxFit.contain,
                             ),
                           ),
@@ -410,7 +411,8 @@ class Sticker extends StatelessWidget {
                               ),
                             ],
                             image: DecorationImage(
-                              image: AssetImage('assets/sticker.png'),
+                              image: AssetImage(
+                                  'assets/sticker${index % 4 + 1}.png'),
                               fit: BoxFit.cover,
                             ),
                           ),

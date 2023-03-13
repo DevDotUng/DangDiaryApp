@@ -9,8 +9,10 @@ import 'package:dangdiarysample/app.dart';
 import 'package:dangdiarysample/pages/complete_diary.dart';
 import 'package:dangdiarysample/pages/complete_inquiry.dart';
 import 'package:dangdiarysample/pages/customer_center.dart';
+import 'package:dangdiarysample/pages/diaries.dart';
 import 'package:dangdiarysample/pages/diary.dart';
 import 'package:dangdiarysample/pages/dog_profile_setting.dart';
+import 'package:dangdiarysample/pages/login.dart';
 import 'package:dangdiarysample/pages/my_inquiry_history.dart';
 import 'package:dangdiarysample/pages/my_inquiry_history_detail.dart';
 import 'package:dangdiarysample/pages/my_page.dart';
@@ -33,8 +35,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
 
 void main() {
+  KakaoSdk.init(
+    nativeAppKey: 'b8dae3679aac82ab76c71988353705ad',
+  );
+
   runApp(const MyApp());
 }
 
@@ -60,7 +67,7 @@ class MyApp extends StatelessWidget {
             Locale('ko', ''),
             Locale('en', ''),
           ],
-          initialRoute: '/',
+          initialRoute: '/registerProfile',
           getPages: [
             GetPage(name: '/', page: () => Onboarding()),
             GetPage(name: '/app', page: () => App()),
@@ -77,6 +84,7 @@ class MyApp extends StatelessWidget {
             GetPage(name: '/reportDetail', page: () => ReportDetail()),
             GetPage(name: '/completeDiary', page: () => CompleteDiary()),
             GetPage(name: '/diary', page: () => Diary()),
+            GetPage(name: '/diaries', page: () => Diaries()),
             GetPage(name: '/notificationPage', page: () => NotificationPage()),
             GetPage(name: '/searchDiary', page: () => SearchDiary()),
             GetPage(name: '/sticker', page: () => Sticker()),
@@ -96,6 +104,7 @@ class MyApp extends StatelessWidget {
                 name: '/myReportHistoryDetail',
                 page: () => MyReportHistoryDetail()),
             GetPage(name: '/registerProfile', page: () => RegisterProfile()),
+            GetPage(name: '/login', page: () => Login()),
           ],
         );
       },

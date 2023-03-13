@@ -1,9 +1,11 @@
 import 'package:dangdiarysample/components/custom_text.dart';
 import 'package:dangdiarysample/components/expandable_text.dart';
 import 'package:dangdiarysample/components/later_dialog.dart';
+import 'package:dangdiarysample/controllers/bottom_nav_controller.dart';
 import 'package:dangdiarysample/controllers/challenge_detail_controller.dart';
 import 'package:dangdiarysample/skeletons/challenge_detail_skeleton.dart';
 import 'package:dangdiarysample/static/color.dart';
+import 'package:dangdiarysample/static/icon.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -21,7 +23,7 @@ class ChallengeDetail extends StatelessWidget {
             borderRadius: BorderRadius.circular(15.r),
           ),
           child: Container(
-            padding: EdgeInsets.all(24.r),
+            padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 40.h),
             width: double.infinity,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(15.r),
@@ -114,9 +116,12 @@ class ChallengeDetail extends StatelessWidget {
     );
   }
 
+  String twoDigits(int n) => n.toString().padLeft(2, '0');
+
   @override
   Widget build(BuildContext context) {
     Get.put(ChallengeDetailController());
+    Get.put(BottomNavController());
     return Obx(
       () => ChallengeDetailController.to.isLoading.value
           ? ChallengeDetailSkeleton()
@@ -162,7 +167,7 @@ class ChallengeDetail extends StatelessWidget {
                           height: Get.width,
                           width: Get.width,
                           child: Image.asset(
-                            'assets/dog.png',
+                            'assets/challenge_sample1.png',
                             fit: BoxFit.cover,
                           ),
                         ),
@@ -227,6 +232,7 @@ class ChallengeDetail extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 CustomText(
                                   text: '한강공원 술래잡기',
@@ -236,13 +242,32 @@ class ChallengeDetail extends StatelessWidget {
                                   height: (32 / 24),
                                 ),
                                 SizedBox(height: 16.h),
-                                CustomText(
-                                  text: '처음 도전하는 챌린지에요!',
-                                  color: Colors.black,
-                                  fontSize: 16.sp,
-                                  fontWeight: FontWeight.w600,
-                                  height: (24 / 16),
-                                ),
+                                ChallengeDetailController.to.isChallenge.value
+                                    ? Row(
+                                        children: [
+                                          StaticIcon(
+                                            IconsPath.history,
+                                            size: 24.r,
+                                            color: StaticColor.font_main,
+                                          ),
+                                          SizedBox(width: 4.w),
+                                          CustomText(
+                                            text:
+                                                '${twoDigits(BottomNavController.to.duration.value.inHours)}:${twoDigits(BottomNavController.to.duration.value.inMinutes.remainder(60))}:${twoDigits(BottomNavController.to.duration.value.inSeconds.remainder(60))}',
+                                            color: StaticColor.font_main,
+                                            fontSize: 16.sp,
+                                            fontWeight: FontWeight.w500,
+                                            height: (24 / 16),
+                                          ),
+                                        ],
+                                      )
+                                    : CustomText(
+                                        text: '처음 도전하는 챌린지에요!',
+                                        color: StaticColor.font_main,
+                                        fontSize: 16.sp,
+                                        fontWeight: FontWeight.w500,
+                                        height: (24 / 16),
+                                      ),
                               ],
                             ),
                             Container(
@@ -308,7 +333,7 @@ class ChallengeDetail extends StatelessWidget {
                           width: 327.w,
                           decoration: BoxDecoration(
                             border: Border.all(
-                              color: Color(0xffA6A6A6),
+                              color: StaticColor.sub_light,
                             ),
                             borderRadius: BorderRadius.circular(15.0.r),
                           ),
@@ -323,28 +348,18 @@ class ChallengeDetail extends StatelessWidget {
                                 height: (24 / 16),
                               ),
                               SizedBox(height: 4.h),
-                              Row(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Icon(
-                                    Icons.rocket_launch_sharp,
-                                    size: 16.r,
-                                  ),
-                                  SizedBox(width: 4.w),
-                                  Container(
-                                    width: Get.width - 102.w,
-                                    child: CustomText(
-                                      text:
-                                          '인증 방법 설명 인증 방법 설명 인증 방법 설명 인증 방법 설명 인증 방법 설명 인증 방법 설명 인증 방법 설명 인증 방법 설명',
-                                      maxLines: 10,
-                                      color: Colors.black,
-                                      fontSize: 14.sp,
-                                      fontWeight: FontWeight.w400,
-                                      height: (20 / 14),
-                                      overflow: TextOverflow.ellipsis,
-                                    ),
-                                  ),
-                                ],
+                              Container(
+                                width: Get.width - 80.w,
+                                child: CustomText(
+                                  text:
+                                      '공공장소 하네스 착용은 필수! 보호자가 2인 이상 함께하는 걸 권장해요. 하네스를 착용하고 한강공원에서 술래잡기 하는 사진을 1장 이상 찍어 업로드하면 돼요. ',
+                                  maxLines: 10,
+                                  color: Colors.black,
+                                  fontSize: 14.sp,
+                                  fontWeight: FontWeight.w400,
+                                  height: (20 / 14),
+                                  overflow: TextOverflow.ellipsis,
+                                ),
                               ),
                             ],
                           ),
@@ -360,29 +375,42 @@ class ChallengeDetail extends StatelessWidget {
                               fontWeight: FontWeight.w600,
                               height: (24 / 16),
                             ),
-                            Icon(Icons.arrow_forward_ios_sharp, size: 16.r),
+                            GestureDetector(
+                              onTap: () {
+                                Get.toNamed('/posts');
+                              },
+                              child: StaticIcon(
+                                IconsPath.forward_bold,
+                                size: 20.r,
+                                color: StaticColor.font_main,
+                              ),
+                            ),
                           ],
                         ),
                         SizedBox(height: 4.h),
                         SizedBox(
-                          height: 104.h,
+                          height: 88.h,
                           child: ListView.builder(
                             scrollDirection: Axis.horizontal,
-                            itemCount: 10,
+                            itemCount: 4,
                             itemBuilder: (BuildContext context, int index) {
                               return Padding(
                                 padding: EdgeInsets.only(right: 8.0.w),
                                 child: GestureDetector(
                                   onTap: () {
-                                    Get.toNamed("/post");
+                                    Get.toNamed("/posts");
                                   },
                                   child: Container(
                                     width: 104.w,
-                                    height: 104.h,
+                                    height: 88.h,
                                     decoration: BoxDecoration(
-                                      color: Colors.grey,
                                       borderRadius:
                                           BorderRadius.circular(10.0.r),
+                                      image: DecorationImage(
+                                        image: AssetImage(
+                                            'assets/challenge_detail_sample${index + 1}.png'),
+                                        fit: BoxFit.cover,
+                                      ),
                                     ),
                                   ),
                                 ),
@@ -390,7 +418,7 @@ class ChallengeDetail extends StatelessWidget {
                             },
                           ),
                         ),
-                        SizedBox(height: 102.h),
+                        SizedBox(height: 118.h),
                       ],
                     ),
                   ),

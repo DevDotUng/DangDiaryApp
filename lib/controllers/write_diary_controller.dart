@@ -33,6 +33,17 @@ class WriteDiaryController extends GetxController {
     '불안해요',
     '모르겠어요'
   ];
+  List<String> feelingIcons = [
+    IconsPath.happy,
+    IconsPath.fun,
+    IconsPath.happy,
+    IconsPath.full_energy,
+    IconsPath.angry,
+    IconsPath.annoying,
+    IconsPath.afraid,
+    IconsPath.nervous,
+    IconsPath.dont_know,
+  ];
   RxInt selectedFeelingsIndex = 9.obs;
   RxBool isPublic = true.obs;
   RxList<int> progress = [1, 0, 0, 0, 0].obs;
@@ -115,9 +126,7 @@ class WriteDiaryController extends GetxController {
   }
 
   Future<void> pickImages(BuildContext context) async {
-    print('aa');
     final List<XFile>? imageList = await _picker.pickMultiImage();
-    print('a');
     if (imageList!.length + images.length > 3) {
       showDialog(
         context: context,
@@ -139,10 +148,10 @@ class WriteDiaryController extends GetxController {
                 children: [
                   Row(
                     children: [
-                      Icon(
-                        Icons.error,
-                        size: 24,
-                        color: Colors.black,
+                      StaticIcon(
+                        IconsPath.caution,
+                        size: 24.r,
+                        color: StaticColor.font_main,
                       ),
                       SizedBox(width: 8.w),
                       CustomText(
@@ -165,7 +174,11 @@ class WriteDiaryController extends GetxController {
                   Container(
                     width: double.infinity,
                     height: 120.h,
-                    color: Colors.grey,
+                    decoration: BoxDecoration(
+                      image: DecorationImage(
+                          image: AssetImage('assets/illusts/exceed_images.png'),
+                          fit: BoxFit.fitHeight),
+                    ),
                   ),
                   SizedBox(height: 32.h),
                   GestureDetector(
@@ -176,7 +189,7 @@ class WriteDiaryController extends GetxController {
                     child: Container(
                       height: 48.h,
                       decoration: BoxDecoration(
-                        color: Color(0xff7D7D7D),
+                        color: StaticColor.main,
                         borderRadius: BorderRadius.circular(10.0.r),
                       ),
                       child: Center(

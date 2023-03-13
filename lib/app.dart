@@ -24,6 +24,8 @@ class App extends StatelessWidget {
     3: GlobalKey<NavigatorState>(),
   };
 
+  String twoDigits(int n) => n.toString().padLeft(2, '0');
+
   @override
   Widget build(BuildContext context) {
     Get.put(BottomNavController());
@@ -118,14 +120,44 @@ class App extends StatelessWidget {
                             ],
                           ),
                           SizedBox(height: 12.h),
-                          CustomText(
-                            text: BottomNavController.to.page.value < 0.5
-                                ? '진행중인 챌린지'
-                                : '추천 챌린지',
-                            color: Colors.black,
-                            fontSize: 20.sp,
-                            fontWeight: FontWeight.w500,
-                            height: (28 / 20),
+                          Row(
+                            children: [
+                              Expanded(child: Container()),
+                              CustomText(
+                                text: BottomNavController.to.page.value < 0.5
+                                    ? '진행중인 챌린지'
+                                    : '추천 챌린지',
+                                color: Colors.black,
+                                fontSize: 20.sp,
+                                fontWeight: FontWeight.w500,
+                                height: (28 / 20),
+                              ),
+                              Expanded(
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: [
+                                    BottomNavController.to.page.value < 0.5
+                                        ? Container()
+                                        : Padding(
+                                            padding:
+                                                EdgeInsets.only(right: 24.w),
+                                            child: GestureDetector(
+                                              onTap: () {
+                                                BottomNavController.to
+                                                    .showExplanationDialog(
+                                                        context);
+                                              },
+                                              child: StaticIcon(
+                                                IconsPath.caution,
+                                                size: 24.r,
+                                                color: StaticColor.link,
+                                              ),
+                                            ),
+                                          ),
+                                  ],
+                                ),
+                              ),
+                            ],
                           ),
                           SizedBox(height: Get.height * 0.85 + 16.h),
                         ],
@@ -147,13 +179,13 @@ class App extends StatelessWidget {
                 child: Container(
                   width: double.infinity,
                   height: Get.height * 0.85,
-                  child: PageView.builder(
+                  child: PageView(
                     controller: BottomNavController.to.pageController,
-                    itemCount: 2,
-                    itemBuilder: (context, index) {
-                      return ListView.builder(
+                    children: [
+                      ListView.builder(
                         padding: EdgeInsets.all(0),
-                        itemCount: 10,
+                        itemCount: BottomNavController
+                            .to.inProgressChallengeImage.length,
                         itemBuilder: (context, index) {
                           return Padding(
                             padding: EdgeInsets.fromLTRB(24.w, 0, 24.w, 16.h),
@@ -179,7 +211,9 @@ class App extends StatelessWidget {
                                         borderRadius:
                                             BorderRadius.circular(10.r),
                                         image: DecorationImage(
-                                          image: AssetImage('assets/dog.png'),
+                                          image: AssetImage(BottomNavController
+                                              .to
+                                              .inProgressChallengeImage[index]),
                                           fit: BoxFit.cover,
                                         ),
                                       ),
@@ -199,7 +233,9 @@ class App extends StatelessWidget {
                                             children: [
                                               Expanded(
                                                 child: CustomText(
-                                                  text: '반포 한강공원 술래잡기',
+                                                  text: BottomNavController.to
+                                                          .inProgressChallengeTitle[
+                                                      index],
                                                   color: Colors.black,
                                                   fontSize: 16.sp,
                                                   fontWeight: FontWeight.w400,
@@ -210,36 +246,44 @@ class App extends StatelessWidget {
                                                 ),
                                               ),
                                               SizedBox(width: 4.w),
-                                              Container(
-                                                padding: EdgeInsets.symmetric(
-                                                    horizontal: 8.w),
-                                                height: 22.h,
-                                                decoration: BoxDecoration(
-                                                  color: Color(0xff7B61FF),
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          11.r),
-                                                ),
-                                                child: Center(
-                                                  child: Text(
-                                                    '00:00:00 남음',
-                                                    style: TextStyle(
-                                                      color: Colors.white,
-                                                      fontSize: 12.sp,
-                                                      fontWeight:
-                                                          FontWeight.w400,
-                                                    ),
-                                                  ),
-                                                ),
-                                              ),
+                                              index == 0
+                                                  ? Container(
+                                                      padding:
+                                                          EdgeInsets.symmetric(
+                                                              horizontal: 8.w),
+                                                      height: 22.h,
+                                                      decoration: BoxDecoration(
+                                                        color: StaticColor.main,
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(11.r),
+                                                      ),
+                                                      child: Center(
+                                                        child: Obx(
+                                                          () => Text(
+                                                            '${twoDigits(BottomNavController.to.duration.value.inHours)}:${twoDigits(BottomNavController.to.duration.value.inMinutes.remainder(60))}:${twoDigits(BottomNavController.to.duration.value.inSeconds.remainder(60))} 남음',
+                                                            style: TextStyle(
+                                                              color:
+                                                                  Colors.white,
+                                                              fontSize: 12.sp,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w400,
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    )
+                                                  : Container(),
                                             ],
                                           ),
                                         ),
                                         SizedBox(
                                           width: Get.width - 176.w,
                                           child: CustomText(
-                                            text:
-                                                '한강공원 술래잡기 한강공원 술래잡기 한강공원 술래잡기 한강공원 술래잡기 한강공원 술래잡기 ',
+                                            text: BottomNavController.to
+                                                    .inProgressChallengeContent[
+                                                index],
                                             color: Color(0xff7D7D7D),
                                             fontSize: 14.sp,
                                             fontWeight: FontWeight.w400,
@@ -255,8 +299,122 @@ class App extends StatelessWidget {
                             ),
                           );
                         },
-                      );
-                    },
+                      ),
+                      ListView.builder(
+                        padding: EdgeInsets.all(0),
+                        itemCount: BottomNavController
+                            .to.recommendChallengeImage.length,
+                        itemBuilder: (context, index) {
+                          return Padding(
+                            padding: EdgeInsets.fromLTRB(24.w, 0, 24.w, 16.h),
+                            child: GestureDetector(
+                              onTap: () {
+                                Get.toNamed('/challengeDetail');
+                              },
+                              child: Container(
+                                padding: EdgeInsets.symmetric(
+                                    vertical: 16.h, horizontal: 16.w),
+                                width: double.infinity,
+                                height: 112.h,
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(10.r),
+                                ),
+                                child: Row(
+                                  children: [
+                                    Container(
+                                      width: 80.w,
+                                      height: 80.h,
+                                      decoration: BoxDecoration(
+                                        borderRadius:
+                                            BorderRadius.circular(10.r),
+                                        image: DecorationImage(
+                                          image: AssetImage(BottomNavController
+                                              .to
+                                              .recommendChallengeImage[index]),
+                                          fit: BoxFit.cover,
+                                        ),
+                                      ),
+                                    ),
+                                    SizedBox(width: 16.w),
+                                    Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        SizedBox(
+                                          width: Get.width - 176.w,
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Expanded(
+                                                child: CustomText(
+                                                  text: BottomNavController.to
+                                                          .recommendChallengeTitle[
+                                                      index],
+                                                  color: Colors.black,
+                                                  fontSize: 16.sp,
+                                                  fontWeight: FontWeight.w400,
+                                                  height: (24 / 16),
+                                                  maxLines: 1,
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
+                                                ),
+                                              ),
+                                              SizedBox(width: 4.w),
+                                              index == 0
+                                                  ? Container(
+                                                      padding:
+                                                          EdgeInsets.symmetric(
+                                                              horizontal: 8.w),
+                                                      height: 22.h,
+                                                      decoration: BoxDecoration(
+                                                        color: StaticColor.main,
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(11.r),
+                                                      ),
+                                                      child: Center(
+                                                        child: Text(
+                                                          '일일 챌린지',
+                                                          style: TextStyle(
+                                                            color: Colors.white,
+                                                            fontSize: 12.sp,
+                                                            fontWeight:
+                                                                FontWeight.w400,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    )
+                                                  : Container(),
+                                            ],
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          width: Get.width - 176.w,
+                                          child: CustomText(
+                                            text: BottomNavController.to
+                                                    .recommendChallengeContent[
+                                                index],
+                                            color: Color(0xff7D7D7D),
+                                            fontSize: 14.sp,
+                                            fontWeight: FontWeight.w400,
+                                            height: (20 / 14),
+                                            maxLines: 2,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          );
+                        },
+                      ),
+                    ],
                   ),
                 ),
               ),
@@ -341,7 +499,7 @@ class App extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           _bottomNavigationBarItem(
-                            IconsPath.search_bold,
+                            IconsPath.browse,
                             '둘러보기',
                             2,
                           ),

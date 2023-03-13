@@ -2,6 +2,8 @@ import 'dart:math';
 
 import 'package:dangdiarysample/components/custom_text.dart';
 import 'package:dangdiarysample/components/random_position_sticker.dart';
+import 'package:dangdiarysample/static/color.dart';
+import 'package:dangdiarysample/static/icon.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -53,6 +55,7 @@ class DiaryController extends GetxController {
   RxList randomPositionStickerList = [].obs;
   RxInt pageIndex = 0.obs;
   List<PageController> pageViewControllerList = [];
+  List<RxBool> isLikeList = [];
   List<RxInt> pageViewIndexList = [];
   RxBool isShowEditDiaryColorModal = false.obs;
   List coverColorList = [
@@ -125,6 +128,11 @@ class DiaryController extends GetxController {
       pageViewControllerList[i].addListener(() {
         pageScrollListener(i);
       });
+      if (i % 2 == 0) {
+        isLikeList.add(true.obs);
+      } else {
+        isLikeList.add(false.obs);
+      }
     }
   }
 
@@ -134,6 +142,10 @@ class DiaryController extends GetxController {
     } else {
       pageViewIndexList[index](pageViewControllerList[index].page!.toInt() + 1);
     }
+  }
+
+  void changeisLike(int index) {
+    isLikeList[index](!isLikeList[index].value);
   }
 
   void changeCoverIndex(int index) {
@@ -475,33 +487,7 @@ class DiaryController extends GetxController {
               ),
               GestureDetector(
                 onTap: () {
-                  print('일기 수정');
-                },
-                child: Container(
-                  color: Colors.white,
-                  child: Column(
-                    children: [
-                      SizedBox(height: 16.h),
-                      CustomText(
-                        text: '일기를 수정할래요',
-                        color: Color(0xff4D4D4D),
-                        fontSize: 18.sp,
-                        fontWeight: FontWeight.w400,
-                        height: (32 / 18),
-                      ),
-                      SizedBox(height: 16.h),
-                    ],
-                  ),
-                ),
-              ),
-              Container(
-                width: double.infinity,
-                height: 1.h,
-                color: Color(0xffF5F5F5),
-              ),
-              GestureDetector(
-                onTap: () {
-                  print('일기 삭제');
+                  showDeleteDiaryDialog(context);
                 },
                 child: Container(
                   color: Colors.white,
@@ -641,7 +627,7 @@ class DiaryController extends GetxController {
                         child: Container(
                           height: 48.h,
                           decoration: BoxDecoration(
-                            color: Color(0xff7D7D7D),
+                            color: StaticColor.main,
                             borderRadius: BorderRadius.circular(10.0.r),
                           ),
                           child: Center(
@@ -668,7 +654,6 @@ class DiaryController extends GetxController {
   void showDeleteDiaryDialog(BuildContext context) {
     showDialog(
       context: context,
-      barrierDismissible: false,
       builder: (BuildContext context) {
         return Dialog(
           shape: RoundedRectangleBorder(
@@ -688,34 +673,24 @@ class DiaryController extends GetxController {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    Icon(
-                      Icons.restore_from_trash,
+                    StaticIcon(
+                      IconsPath.trash,
                       size: 24.r,
-                      color: Color(0xff202020),
+                      color: StaticColor.error,
                     ),
                     SizedBox(width: 8.w),
                     CustomText(
-                      text: '일기를 삭제할까요?',
-                      color: Colors.black,
+                      text: '모든 일기를 삭제할까요?',
+                      color: StaticColor.font_main,
                       fontSize: 20.sp,
                       fontWeight: FontWeight.w600,
                     ),
                     Expanded(child: SizedBox()),
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.pop(context);
-                      },
-                      child: Icon(
-                        Icons.clear,
-                        size: 24.r,
-                        color: Color(0xff202020),
-                      ),
-                    ),
                   ],
                 ),
                 SizedBox(height: 16.h),
                 CustomText(
-                  text: '한번 삭제된 일기의 내용과 사진들은 다시 복구할 수 없습니다. 정말로 일기장을 삭제할건가요?',
+                  text: '한번 삭제된 일기의 내용과 사진들은 다시 복구할 수 없습니다.',
                   color: Color(0xff7D7D7D),
                   fontSize: 14.sp,
                   fontWeight: FontWeight.w400,
@@ -725,31 +700,66 @@ class DiaryController extends GetxController {
                 Container(
                   width: double.infinity,
                   height: 120.h,
-                  color: Color(0xffD9D9D9),
-                ),
-                SizedBox(height: 24.h),
-                GestureDetector(
-                  onTap: () {
-                    Navigator.pop(context);
-                  },
-                  child: Container(
-                    height: 48.h,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(10.0.r),
-                      border: Border.all(
-                        color: Color(0xffF02E2E),
-                      ),
-                    ),
-                    child: Center(
-                      child: CustomText(
-                        text: '삭제할래요',
-                        color: Color(0xffF02E2E),
-                        fontSize: 16.sp,
-                        fontWeight: FontWeight.w600,
-                      ),
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: AssetImage('assets/illusts/delete_diary.png'),
+                      fit: BoxFit.fitHeight,
                     ),
                   ),
+                ),
+                SizedBox(height: 24.h),
+                Row(
+                  children: [
+                    Flexible(
+                      child: GestureDetector(
+                        onTap: () {
+                          Navigator.pop(context);
+                        },
+                        child: Container(
+                          height: 48.h,
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(10.0.r),
+                            border: Border.all(
+                              color: StaticColor.line,
+                            ),
+                          ),
+                          child: Center(
+                            child: CustomText(
+                              text: '취소할게요',
+                              color: StaticColor.link,
+                              fontSize: 16.sp,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    SizedBox(width: 8.w),
+                    Flexible(
+                      child: GestureDetector(
+                        onTap: () {
+                          Navigator.pop(context);
+                          Navigator.pop(context);
+                        },
+                        child: Container(
+                          height: 48.h,
+                          decoration: BoxDecoration(
+                            color: StaticColor.error,
+                            borderRadius: BorderRadius.circular(10.0.r),
+                          ),
+                          child: Center(
+                            child: CustomText(
+                              text: '삭제할래요',
+                              color: StaticColor.white,
+                              fontSize: 16.sp,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ],
             ),

@@ -1,6 +1,8 @@
 import 'package:dangdiarysample/components/custom_text.dart';
 import 'package:dangdiarysample/components/reactive_device.dart';
 import 'package:dangdiarysample/controllers/dog_profile_setting_controller.dart';
+import 'package:dangdiarysample/static/color.dart';
+import 'package:dangdiarysample/static/icon.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -73,14 +75,14 @@ class DogProfileSetting extends StatelessWidget {
                             width: 24.w,
                             height: 24.w,
                             decoration: BoxDecoration(
-                              color: Colors.black,
+                              color: StaticColor.main,
                               borderRadius: BorderRadius.circular(12.r),
                             ),
                             child: Center(
-                              child: Icon(
-                                Icons.edit,
-                                size: 16.r,
-                                color: Colors.white,
+                              child: StaticIcon(
+                                IconsPath.photo,
+                                size: 18.r,
+                                color: StaticColor.white,
                               ),
                             ),
                           ),

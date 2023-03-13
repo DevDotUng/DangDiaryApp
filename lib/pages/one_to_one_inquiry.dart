@@ -1,5 +1,6 @@
 import 'package:dangdiarysample/components/custom_text.dart';
 import 'package:dangdiarysample/controllers/one_to_one_inquiry_controller.dart';
+import 'package:dangdiarysample/static/color.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -62,7 +63,7 @@ class OneToOneInquiry extends StatelessWidget {
                       width: 8.w,
                       height: 8.w,
                       decoration: BoxDecoration(
-                        color: Color(0xff7B61FF),
+                        color: StaticColor.sub_deeper,
                         borderRadius: BorderRadius.circular(4.r),
                       ),
                     ),
@@ -132,7 +133,7 @@ class OneToOneInquiry extends StatelessWidget {
                       width: 8.w,
                       height: 8.w,
                       decoration: BoxDecoration(
-                        color: Color(0xff7B61FF),
+                        color: StaticColor.sub_deeper,
                         borderRadius: BorderRadius.circular(4.r),
                       ),
                     ),
@@ -189,7 +190,7 @@ class OneToOneInquiry extends StatelessWidget {
                       width: 8.w,
                       height: 8.w,
                       decoration: BoxDecoration(
-                        color: Color(0xff7B61FF),
+                        color: StaticColor.sub_deeper,
                         borderRadius: BorderRadius.circular(4.r),
                       ),
                     ),

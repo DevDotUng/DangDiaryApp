@@ -2,6 +2,8 @@ import 'dart:math';
 
 import 'package:dangdiarysample/components/custom_text.dart';
 import 'package:dangdiarysample/controllers/diary_controller.dart';
+import 'package:dangdiarysample/static/color.dart';
+import 'package:dangdiarysample/static/icon.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
@@ -11,12 +13,7 @@ class Diary extends StatelessWidget {
   Diary({Key? key}) : super(key: key);
 
   String postContent =
-      '한강공원 술래잡기 한강공원 술래잡기 한강공원 술래잡기 한강공원 술래잡기 한강공원 술래잡기 한강공원 술래잡기 '
-      '한강공원 술래잡기 한강공원 술래잡기 한강공원 술래잡기 한강공원 술래잡기 한강공원 술래잡기 한강공원 술래잡기 한강공원 술래잡기 한강공원 술래잡기 한강공원 술래잡기 한강공원 술래잡기 한강공원 술래잡기 한강공원 술래잡기 한강공원 술래잡기 '
-      '한강공원 술래잡기 한강공원 술래잡기 한강공원 술래잡기 한강공원 술래잡기 한강공원 술래잡기 한강공원 술래잡기 한강공원 술래잡기 한강공원 술래잡기 한강공원 술래잡기 한강공원 술래잡기 한강공원 술래잡기 한강공원 술래잡기 한강공원 술래잡기 '
-      '한강공원 술래잡기 한강공원 술래잡기 한강공원 술래잡기 한강공원 술래잡기 한강공원 술래잡기 한강공원 술래잡기 한강공원 술래잡기 한강공원 술래잡기 한강공원 술래잡기 한강공원 술래잡기 한강공원 술래잡기 한강공원 술래잡기 한강공원 술래잡기 '
-      '한강공원 술래잡기 한강공원 술래잡기 한강공원 술래잡기 한강공원 술래잡기 한강공원 술래잡기 한강공원 술래잡기 한강공원 술래잡기 한강공원 술래잡기 한강공원 술래잡기 한강공원 술래잡기 한강공원 술래잡기 한강공원 술래잡기 한강공원 술래잡기 '
-      '한강공원 술래잡기 한강공원 술래잡기 한강공원 술래잡기 한강공원 술래잡기 한강공원 술래잡기 한강공원 술래잡기 한강공원 술래잡기 한강공원 술래잡기 한강공원 술래잡기 한강공원 술래잡기 한강공원 술래잡기 한강공원 술래잡기 한강공원 술래잡기 ';
+      '나는 평소에 초코가 되게 얌전하고 게으른 줄 알았는데, 오늘 챌린지를 하면서 완전 오해라는 걸 깨달았다... 초코.. 보통이 아닌 댕댕이다... 얼마나 뛰는 걸 좋아하던지, 내가 먼저 지쳐 나가 떨어졌다!😭 그래도 초코가 활기차게 뛰어 노는 걸 보니 앞으로도 종종 이렇게 전력질주 하는 날을 만들어 줘야겠다는 생각이 들었다 :)';
 
   @override
   Widget build(BuildContext context) {
@@ -61,10 +58,10 @@ class Diary extends StatelessWidget {
                         DiaryController.to.editDiary(context);
                       }
                     },
-                    child: Icon(
-                      Icons.more_horiz,
-                      color: Colors.black,
-                      size: 21.r,
+                    child: StaticIcon(
+                      IconsPath.more_bold,
+                      size: 24.r,
+                      color: Color(0xff272727),
                     ),
                   ),
                 ),
@@ -148,32 +145,27 @@ class Diary extends StatelessWidget {
                             ),
                           ),
                           Positioned(
-                            top: 94.h,
+                            top: 96.h,
                             left: 24.w,
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                CustomText(
-                                  text: '2022년 8월',
-                                  color: Colors.white,
-                                  fontSize: 16.sp,
-                                  fontWeight: FontWeight.w600,
-                                  height: (24 / 16),
-                                ),
-                                SizedBox(height: 14.h),
-                                Obx(
-                                  () => CustomText(
-                                    text: DiaryController.to.diaryTitle.value,
-                                    color: Colors.black,
-                                    fontSize: 20.sp,
-                                    fontWeight: FontWeight.w600,
-                                    height: (22 / 20),
+                                SizedBox(
+                                  width: Get.width - 128.w,
+                                  child: Obx(
+                                    () => CustomText(
+                                      text: DiaryController.to.diaryTitle.value,
+                                      color: Colors.black,
+                                      fontSize: 20.sp,
+                                      fontWeight: FontWeight.w600,
+                                      height: (22 / 20),
+                                    ),
                                   ),
                                 ),
-                                SizedBox(height: 8.h),
+                                SizedBox(height: 16.h),
                                 CustomText(
                                   text: '열아홉 날의 이야기',
-                                  color: Colors.white,
+                                  color: StaticColor.font_main,
                                   fontSize: 14.sp,
                                   fontWeight: FontWeight.w500,
                                   height: (24 / 14),
@@ -182,15 +174,15 @@ class Diary extends StatelessWidget {
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.end,
                                   children: [
-                                    Icon(
-                                      Icons.favorite,
-                                      size: 14.r,
-                                      color: Colors.white,
+                                    StaticIcon(
+                                      IconsPath.like,
+                                      size: 16.r,
+                                      color: StaticColor.font_main,
                                     ),
-                                    SizedBox(width: 4.w),
+                                    SizedBox(width: 10.w),
                                     CustomText(
                                       text: '000',
-                                      color: Colors.white,
+                                      color: StaticColor.font_main,
                                       fontSize: 12.sp,
                                       fontWeight: FontWeight.w500,
                                     ),
@@ -251,52 +243,25 @@ class Diary extends StatelessWidget {
                   } else {
                     return Padding(
                       padding: EdgeInsets.only(top: 16.h),
-                      child: Container(
-                        padding: EdgeInsets.fromLTRB(12.w, 24.h, 24.w, 32.h),
-                        decoration: BoxDecoration(
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.black.withOpacity(0.1),
-                              blurRadius: 4.r,
-                            ),
-                          ],
-                          image: DecorationImage(
-                            image: AssetImage('assets/diary_background.png'),
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                        child: Stack(
-                          children: [
-                            Positioned(
-                              bottom: sin(25 * pi / 180) * 119.h / 2 + 57.h,
-                              right: 14.w,
-                              child: Transform.rotate(
-                                angle: -25 * pi / 180,
-                                child: Opacity(
-                                  opacity: 0.2,
-                                  child: Container(
-                                    width: 119.w,
-                                    height: 100.h,
-                                    decoration: BoxDecoration(
-                                      color: Colors.white,
-                                      borderRadius: BorderRadius.circular(5.r),
-                                      boxShadow: [
-                                        BoxShadow(
-                                          color: Colors.black.withOpacity(0.15),
-                                          offset: Offset(0, 4.h),
-                                          blurRadius: 10.r,
-                                        ),
-                                      ],
-                                      image: DecorationImage(
-                                        image: AssetImage('assets/sticker.png'),
-                                        fit: BoxFit.cover,
-                                      ),
-                                    ),
-                                  ),
+                      child: Stack(
+                        children: [
+                          Container(
+                            padding:
+                                EdgeInsets.fromLTRB(12.w, 24.h, 24.w, 32.h),
+                            decoration: BoxDecoration(
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.black.withOpacity(0.1),
+                                  blurRadius: 4.r,
                                 ),
+                              ],
+                              image: DecorationImage(
+                                image:
+                                    AssetImage('assets/diary_background.png'),
+                                fit: BoxFit.cover,
                               ),
                             ),
-                            Row(
+                            child: Row(
                               children: [
                                 Padding(
                                   padding: EdgeInsets.symmetric(vertical: 81.h),
@@ -319,12 +284,32 @@ class Diary extends StatelessWidget {
                                     crossAxisAlignment:
                                         CrossAxisAlignment.center,
                                     children: [
-                                      CustomText(
-                                        text: '눈밭에서 백덤블링하기',
-                                        color: Color(0xff222222),
-                                        fontSize: 16.sp,
-                                        fontWeight: FontWeight.w500,
-                                        height: (24 / 16),
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Expanded(child: Container()),
+                                          CustomText(
+                                            text: '한강공원 술래잡기',
+                                            color: Color(0xff222222),
+                                            fontSize: 16.sp,
+                                            fontWeight: FontWeight.w500,
+                                            height: (24 / 16),
+                                          ),
+                                          Expanded(
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.end,
+                                              children: [
+                                                StaticIcon(
+                                                  IconsPath.unlock,
+                                                  size: 16.r,
+                                                  color: StaticColor.icon,
+                                                )
+                                              ],
+                                            ),
+                                          ),
+                                        ],
                                       ),
                                       SizedBox(height: 4.h),
                                       Container(
@@ -397,7 +382,7 @@ class Diary extends StatelessWidget {
                                                             5.r),
                                                     image: DecorationImage(
                                                       image: AssetImage(
-                                                          'assets/dog.png'),
+                                                          'assets/dog${3 - jndex % 2}.png'),
                                                       fit: BoxFit.cover,
                                                     ),
                                                   ),
@@ -431,8 +416,8 @@ class Diary extends StatelessWidget {
                                                                       index -
                                                                           1] ==
                                                                   kndex
-                                                              ? Color(
-                                                                  0xff6B6B6B)
+                                                              ? StaticColor
+                                                                  .main_light
                                                               : Colors.white,
                                                           borderRadius:
                                                               BorderRadius
@@ -451,15 +436,28 @@ class Diary extends StatelessWidget {
                                       SizedBox(height: 8.h),
                                       Row(
                                         children: [
-                                          Icon(
-                                            Icons.favorite,
-                                            size: 24.r,
-                                            color: Color(0xffFF9E90),
+                                          GestureDetector(
+                                            onTap: () {
+                                              DiaryController.to
+                                                  .changeisLike(index - 1);
+                                            },
+                                            child: Obx(
+                                              () => StaticIcon(
+                                                IconsPath.like,
+                                                size: 24.r,
+                                                color: DiaryController
+                                                        .to
+                                                        .isLikeList[index - 1]
+                                                        .value
+                                                    ? StaticColor.like
+                                                    : Color(0xffD8D8D8),
+                                              ),
+                                            ),
                                           ),
                                           SizedBox(width: 4.w),
                                           CustomText(
                                             text: '3',
-                                            color: Color(0xff6B6B6B),
+                                            color: StaticColor.icon,
                                             fontSize: 12.sp,
                                             fontWeight: FontWeight.w500,
                                             height: (14 / 12),
@@ -497,19 +495,21 @@ class Diary extends StatelessWidget {
                                                       BorderRadius.circular(
                                                           16.r),
                                                   border: Border.all(
-                                                    color: Color(0xffD9D9D9),
+                                                    color: StaticColor.line2,
                                                   ),
                                                 ),
                                                 child: Row(
                                                   children: [
-                                                    Icon(
-                                                      Icons.tag,
-                                                      size: 16.r,
-                                                      color: Color(0xff7B61FF),
+                                                    CustomText(
+                                                      text: '# ',
+                                                      color: StaticColor.main,
+                                                      fontSize: 14.sp,
+                                                      fontWeight:
+                                                          FontWeight.w400,
                                                     ),
                                                     CustomText(
-                                                      text: '한강공원술래잡기',
-                                                      color: Color(0xff7B61FF),
+                                                      text: '한강공원 술래잡기',
+                                                      color: StaticColor.main,
                                                       fontSize: 14.sp,
                                                       fontWeight:
                                                           FontWeight.w400,
@@ -530,19 +530,23 @@ class Diary extends StatelessWidget {
                                                       BorderRadius.circular(
                                                           16.r),
                                                   border: Border.all(
-                                                    color: Color(0xffD9D9D9),
+                                                    color: StaticColor.line2,
                                                   ),
                                                 ),
                                                 child: Row(
                                                   children: [
-                                                    Icon(
-                                                      Icons.tag,
-                                                      size: 16.r,
-                                                      color: Color(0xff222222),
+                                                    CustomText(
+                                                      text: '# ',
+                                                      color:
+                                                          StaticColor.font_main,
+                                                      fontSize: 14.sp,
+                                                      fontWeight:
+                                                          FontWeight.w400,
                                                     ),
                                                     CustomText(
                                                       text: '식빵궁뎅이',
-                                                      color: Color(0xff222222),
+                                                      color:
+                                                          StaticColor.font_main,
                                                       fontSize: 14.sp,
                                                       fontWeight:
                                                           FontWeight.w400,
@@ -559,8 +563,41 @@ class Diary extends StatelessWidget {
                                 ),
                               ],
                             ),
-                          ],
-                        ),
+                          ),
+                          Positioned(
+                            top: 0,
+                            left: 28.w,
+                            child: Container(
+                              width: 40.w,
+                              height: 66.h,
+                              decoration: BoxDecoration(
+                                color: StaticColor.main_light,
+                                borderRadius: BorderRadius.only(
+                                  bottomLeft: Radius.circular(20.r),
+                                  bottomRight: Radius.circular(20.r),
+                                ),
+                              ),
+                              child: Column(
+                                children: [
+                                  Expanded(child: Container()),
+                                  Container(
+                                    width: 32.w,
+                                    height: 32.w,
+                                    decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.circular(16.r),
+                                      image: DecorationImage(
+                                        image: AssetImage('assets/sticker.png'),
+                                        fit: BoxFit.contain,
+                                      ),
+                                    ),
+                                  ),
+                                  SizedBox(height: 4.h),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     );
                   }
@@ -897,7 +934,7 @@ class Diary extends StatelessWidget {
                             child: Container(
                               height: 48.h,
                               decoration: BoxDecoration(
-                                color: Color(0xff7D7D7D),
+                                color: StaticColor.main,
                                 borderRadius: BorderRadius.circular(10.0.r),
                               ),
                               child: Center(

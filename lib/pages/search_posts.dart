@@ -154,31 +154,36 @@ class SearchPosts extends StatelessWidget {
           itemBuilder: (context, index) {
             return Padding(
               padding: EdgeInsets.fromLTRB(12.w, 8.h, 8.w, 16.h),
-              child: Row(
-                children: [
-                  Expanded(
-                    child: CustomText(
-                      text: SearchPostsController.to.searchHistory[index],
-                      color: Color(0xff6B6B6B),
-                      fontSize: 16.sp,
-                      fontWeight: FontWeight.w400,
-                      height: (24 / 16),
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
+              child: GestureDetector(
+                onTap: () {
+                  Get.toNamed('/searchPostsResult');
+                },
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: CustomText(
+                        text: SearchPostsController.to.searchHistory[index],
+                        color: Color(0xff6B6B6B),
+                        fontSize: 16.sp,
+                        fontWeight: FontWeight.w400,
+                        height: (24 / 16),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
                     ),
-                  ),
-                  SizedBox(width: 8.w),
-                  GestureDetector(
-                    onTap: () {
-                      SearchPostsController.to.searchHistory.removeAt(index);
-                    },
-                    child: Icon(
-                      Icons.clear,
-                      size: 14.r,
-                      color: Color(0xffA6A6A6),
+                    SizedBox(width: 8.w),
+                    GestureDetector(
+                      onTap: () {
+                        SearchPostsController.to.searchHistory.removeAt(index);
+                      },
+                      child: Icon(
+                        Icons.clear,
+                        size: 14.r,
+                        color: Color(0xffA6A6A6),
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             );
           },
@@ -209,26 +214,31 @@ class SearchPosts extends StatelessWidget {
           itemBuilder: (context, index) {
             return Padding(
               padding: EdgeInsets.fromLTRB(12.w, 8.h, 8.w, 16.h),
-              child: Row(
-                children: [
-                  Expanded(
-                    child: CustomText(
-                      text: SearchPostsController.to.autoCompleteWord[index],
-                      color: Color(0xff6B6B6B),
-                      fontSize: 16.sp,
-                      fontWeight: FontWeight.w400,
-                      height: (24 / 16),
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
+              child: GestureDetector(
+                onTap: () {
+                  Get.toNamed('/searchPostsResult');
+                },
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: CustomText(
+                        text: SearchPostsController.to.autoCompleteWord[index],
+                        color: Color(0xff6B6B6B),
+                        fontSize: 16.sp,
+                        fontWeight: FontWeight.w400,
+                        height: (24 / 16),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
                     ),
-                  ),
-                  SizedBox(width: 8.w),
-                  Icon(
-                    Icons.arrow_forward_ios_sharp,
-                    size: 14.r,
-                    color: Color(0xffA6A6A6),
-                  ),
-                ],
+                    SizedBox(width: 8.w),
+                    Icon(
+                      Icons.arrow_forward_ios_sharp,
+                      size: 14.r,
+                      color: Color(0xffA6A6A6),
+                    ),
+                  ],
+                ),
               ),
             );
           },

@@ -22,6 +22,7 @@ class RandomPositionSticker extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    int stickerIndex = Random().nextInt(4);
     if (shape == 'rectangle') {
       return Positioned(
         top: top,
@@ -32,6 +33,7 @@ class RandomPositionSticker extends StatelessWidget {
             width: size,
             height: size * 0.7,
             decoration: BoxDecoration(
+              color: Colors.white,
               borderRadius: BorderRadius.circular(5.r),
               boxShadow: [
                 BoxShadow(
@@ -40,7 +42,7 @@ class RandomPositionSticker extends StatelessWidget {
                 ),
               ],
               image: DecorationImage(
-                image: AssetImage('assets/dog.png'),
+                image: AssetImage('assets/sticker${stickerIndex + 1}.png'),
                 fit: BoxFit.cover,
               ),
             ),
@@ -55,6 +57,7 @@ class RandomPositionSticker extends StatelessWidget {
           width: size,
           height: size,
           decoration: BoxDecoration(
+            color: Colors.white,
             borderRadius: BorderRadius.circular(size / 2),
             boxShadow: [
               BoxShadow(
@@ -63,7 +66,7 @@ class RandomPositionSticker extends StatelessWidget {
               ),
             ],
             image: DecorationImage(
-              image: AssetImage('assets/dog.png'),
+              image: AssetImage('assets/sticker${stickerIndex + 1}.png'),
               fit: BoxFit.cover,
             ),
           ),

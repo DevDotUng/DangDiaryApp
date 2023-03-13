@@ -1,6 +1,8 @@
 import 'package:dangdiarysample/components/auto_loop_scroll_view.dart';
 import 'package:dangdiarysample/components/custom_text.dart';
 import 'package:dangdiarysample/controllers/customer_center_controller.dart';
+import 'package:dangdiarysample/static/color.dart';
+import 'package:dangdiarysample/static/icon.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -11,11 +13,12 @@ class CustomerCenter extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Get.put(CustomerCenterController());
-    return Obx(
-      () => CustomerCenterController.to.customerCenter.value == null
-          ? Container(color: Colors.white)
-          : _customerCenterWidget(),
-    );
+    return _customerCenterWidget();
+    // return Obx(
+    //   () => CustomerCenterController.to.customerCenter.value == null
+    //       ? Container(color: Colors.white)
+    //       : _customerCenterWidget(),
+    // );
   }
 
   Widget _customerCenterWidget() {
@@ -56,7 +59,7 @@ class CustomerCenter extends StatelessWidget {
             child: Container(
               width: Get.width,
               height: Get.height * 0.4,
-              color: Color(0xffD9D9D9),
+              color: StaticColor.sub_light,
             ),
           ),
           Positioned(
@@ -79,9 +82,10 @@ class CustomerCenter extends StatelessWidget {
                   ),
                   child: Row(
                     children: [
-                      Icon(
-                        Icons.notifications_none,
+                      StaticIcon(
+                        IconsPath.report,
                         size: 24.r,
+                        color: StaticColor.sub_deeper,
                       ),
                       SizedBox(width: 8.w),
                       Expanded(
@@ -234,8 +238,8 @@ class CustomerCenter extends StatelessWidget {
                                           mainAxisAlignment:
                                               MainAxisAlignment.center,
                                           children: [
-                                            Icon(
-                                              Icons.message,
+                                            StaticIcon(
+                                              IconsPath.consult,
                                               size: 24.r,
                                               color: Color(0xff696969),
                                             ),

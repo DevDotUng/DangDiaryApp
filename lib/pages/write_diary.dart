@@ -490,40 +490,60 @@ class WriteDiary extends StatelessWidget {
                                         : Border.all(color: StaticColor.line2),
                                   ),
                                   child: Center(
-                                    child: WriteDiaryController
-                                                .to.selectedFeelingsIndex ==
-                                            index
-                                        ? Container(
-                                            decoration: BoxDecoration(
-                                              boxShadow: [
-                                                BoxShadow(
-                                                  color: Colors.white
-                                                      .withOpacity(0.2),
-                                                  blurRadius: 10.r,
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        StaticIcon(
+                                          WriteDiaryController
+                                              .to.feelingIcons[index],
+                                          size: 24.r,
+                                          color: WriteDiaryController
+                                                      .to
+                                                      .selectedFeelingsIndex
+                                                      .value ==
+                                                  index
+                                              ? StaticColor.white
+                                              : StaticColor.icon,
+                                        ),
+                                        WriteDiaryController
+                                                    .to
+                                                    .selectedFeelingsIndex
+                                                    .value ==
+                                                index
+                                            ? Container(
+                                                decoration: BoxDecoration(
+                                                  boxShadow: [
+                                                    BoxShadow(
+                                                      color: Colors.white
+                                                          .withOpacity(0.2),
+                                                      blurRadius: 10.r,
+                                                    ),
+                                                  ],
                                                 ),
-                                              ],
-                                            ),
-                                            child: Text(
-                                              WriteDiaryController
-                                                  .to.feelings[index],
-                                              style: TextStyle(
-                                                color: Colors.white,
-                                                fontSize: 14.sp,
-                                                fontWeight: FontWeight.w400,
-                                                height: (24 / 14).h,
+                                                child: Text(
+                                                  WriteDiaryController
+                                                      .to.feelings[index],
+                                                  style: TextStyle(
+                                                    color: StaticColor.white,
+                                                    fontSize: 14.sp,
+                                                    fontWeight: FontWeight.w400,
+                                                    height: (24 / 14).h,
+                                                  ),
+                                                ),
+                                              )
+                                            : Text(
+                                                WriteDiaryController
+                                                    .to.feelings[index],
+                                                style: TextStyle(
+                                                  color: StaticColor.icon,
+                                                  fontSize: 14.sp,
+                                                  fontWeight: FontWeight.w400,
+                                                  height: (24 / 14).h,
+                                                ),
                                               ),
-                                            ),
-                                          )
-                                        : Text(
-                                            WriteDiaryController
-                                                .to.feelings[index],
-                                            style: TextStyle(
-                                              color: Color(0xff545454),
-                                              fontSize: 14.sp,
-                                              fontWeight: FontWeight.w400,
-                                              height: (24 / 14).h,
-                                            ),
-                                          ),
+                                      ],
+                                    ),
                                   ),
                                 ),
                               ),

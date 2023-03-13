@@ -1,4 +1,6 @@
 import 'package:dangdiarysample/components/custom_text.dart';
+import 'package:dangdiarysample/static/color.dart';
+import 'package:dangdiarysample/static/icon.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -60,8 +62,8 @@ class MyReportHistoryDetail extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           SizedBox(width: 16.w),
-                          Icon(
-                            Icons.details,
+                          StaticIcon(
+                            IconsPath.caution,
                             size: 24.r,
                             color: Color(0xff202020),
                           ),
@@ -132,15 +134,15 @@ class MyReportHistoryDetail extends StatelessWidget {
                       SizedBox(height: 24.h),
                       Row(
                         children: [
-                          Icon(
-                            Icons.message,
+                          StaticIcon(
+                            IconsPath.consult,
                             size: 24.r,
-                            color: Color(0xff6C8FDF),
+                            color: StaticColor.sub_deeper,
                           ),
                           SizedBox(width: 4.w),
                           CustomText(
                             text: '처리를 완료했어요.',
-                            color: Color(0xff6C8FDF),
+                            color: StaticColor.sub_deeper,
                             fontSize: 18.sp,
                             fontWeight: FontWeight.w600,
                             height: (32 / 18),
@@ -159,7 +161,7 @@ class MyReportHistoryDetail extends StatelessWidget {
                       SizedBox(height: 8.h),
                       CustomText(
                         text: '2023.01.17',
-                        color: Color(0xff696969),
+                        color: StaticColor.icon,
                         fontSize: 12.sp,
                         fontWeight: FontWeight.w400,
                         height: (20 / 12),

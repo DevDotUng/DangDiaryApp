@@ -211,40 +211,16 @@ class OverdueDiaries extends StatelessWidget {
           SizedBox(height: 8.h),
           Row(
             children: [
-              GestureDetector(
-                onTap: () {
-                  OverdueDiariesController.to.changeTabBarIndex(0);
-                },
-                child: SizedBox(
-                  width: 75.w,
-                  child: Center(
-                    child: Text(
-                      '마감임박순',
-                      style: TextStyle(
-                        color: Color(0xff545454),
-                        fontSize: 14.sp,
-                        fontWeight: FontWeight.w500,
-                        height: (20 / 14),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-              GestureDetector(
-                onTap: () {
-                  OverdueDiariesController.to.changeTabBarIndex(1);
-                },
-                child: SizedBox(
-                  width: 63.w,
-                  child: Center(
-                    child: Text(
-                      '진행도순',
-                      style: TextStyle(
-                        color: Color(0xff545454),
-                        fontSize: 14.sp,
-                        fontWeight: FontWeight.w500,
-                        height: (20 / 14),
-                      ),
+              SizedBox(
+                width: 75.w,
+                child: Center(
+                  child: Text(
+                    '마감임박순',
+                    style: TextStyle(
+                      color: Color(0xff545454),
+                      fontSize: 14.sp,
+                      fontWeight: FontWeight.w500,
+                      height: (20 / 14),
                     ),
                   ),
                 ),
@@ -259,29 +235,14 @@ class OverdueDiaries extends StatelessWidget {
               color: Color(0xffD9D9D9),
               borderRadius: BorderRadius.circular(1.r),
             ),
-            child: Stack(
+            child: Row(
               children: [
-                Obx(
-                  () => AnimatedPositioned(
-                    duration: Duration(milliseconds: 200),
-                    top: 0,
-                    bottom: 0,
-                    left: OverdueDiariesController.to
-                        .getTabBarPosition(
-                            OverdueDiariesController.to.tabBarIndex.value)
-                        .w,
-                    child: AnimatedContainer(
-                      duration: Duration(milliseconds: 200),
-                      width: OverdueDiariesController.to
-                          .getTabBarWidth(
-                              OverdueDiariesController.to.tabBarIndex.value)
-                          .w,
-                      height: 2.h,
-                      decoration: BoxDecoration(
-                        color: StaticColor.main,
-                        borderRadius: BorderRadius.circular(1.r),
-                      ),
-                    ),
+                Container(
+                  width: 75.w,
+                  height: 2.h,
+                  decoration: BoxDecoration(
+                    color: StaticColor.main,
+                    borderRadius: BorderRadius.circular(1.r),
                   ),
                 ),
               ],
@@ -296,7 +257,7 @@ class OverdueDiaries extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.fromLTRB(24.w, 24.h, 20.w, 24.h),
       child: ListView.builder(
-        physics: NeverScrollableScrollPhysics(),
+        physics: const NeverScrollableScrollPhysics(),
         shrinkWrap: true,
         itemCount: 10,
         itemBuilder: (context, index) {
@@ -308,7 +269,7 @@ class OverdueDiaries extends StatelessWidget {
             decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.circular(10.r),
-              border: Border.all(color: Color(0xffEAEAEA)),
+              border: Border.all(color: StaticColor.line2),
             ),
             child: Row(
               children: [
@@ -318,7 +279,8 @@ class OverdueDiaries extends StatelessWidget {
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10.r),
                     image: DecorationImage(
-                      image: AssetImage('assets/dog.png'),
+                      image: AssetImage(
+                          'assets/challenge_sample${index % 5 + 1}.png'),
                       fit: BoxFit.cover,
                     ),
                   ),
@@ -327,52 +289,59 @@ class OverdueDiaries extends StatelessWidget {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: [
-                        Icon(
-                          Icons.access_time_rounded,
-                          size: 16.r,
-                          color: Color(0xff7D7D7D),
-                        ),
-                        SizedBox(width: 2.w),
-                        CustomText(
-                          text: '03:58:11 남음',
-                          color: Color(0xff7D7D7D),
-                          fontSize: 12.sp,
-                          fontWeight: FontWeight.w400,
-                          height: (14 / 12),
-                        ),
-                      ],
+                    CustomText(
+                      text: '한강공원 술래잡기',
+                      color: Colors.black,
+                      fontSize: 16.sp,
+                      fontWeight: FontWeight.w400,
+                      height: (24 / 16),
                     ),
-                    SizedBox(height: 4.h),
-                    SizedBox(
-                      width: Get.width - 176.w,
-                      child: Row(
-                        children: [
-                          Expanded(
-                            child: CustomText(
-                              text: '한강공원 술래잡기',
-                              color: Colors.black,
-                              fontSize: 16.sp,
-                              fontWeight: FontWeight.w400,
-                              height: (24 / 16),
+                    index == 0
+                        ? SizedBox(
+                            width: Get.width - 176.w,
+                            child: Row(
+                              children: [
+                                Icon(
+                                  Icons.access_time_rounded,
+                                  size: 16.r,
+                                  color: StaticColor.main,
+                                ),
+                                SizedBox(width: 2.w),
+                                Expanded(
+                                  child: CustomText(
+                                    text: '03:58:11 남음',
+                                    color: StaticColor.main,
+                                    fontSize: 12.sp,
+                                    fontWeight: FontWeight.w400,
+                                    height: (14 / 12),
+                                  ),
+                                ),
+                                SizedBox(width: 8.w),
+                                Icon(
+                                  Icons.arrow_forward_ios_sharp,
+                                  size: 20.r,
+                                  color: Color(0xffA6A6A6),
+                                ),
+                              ],
+                            ),
+                          )
+                        : SizedBox(
+                            width: Get.width - 176.w,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                Icon(
+                                  Icons.arrow_forward_ios_sharp,
+                                  size: 20.r,
+                                  color: Color(0xffA6A6A6),
+                                ),
+                              ],
                             ),
                           ),
-                          SizedBox(width: 8.w),
-                          Icon(
-                            Icons.arrow_forward_ios_sharp,
-                            size: 20.r,
-                            color: Color(0xffA6A6A6),
-                          ),
-                        ],
-                      ),
-                    ),
                     Expanded(child: Container()),
                     CustomText(
                       text: '인증 사진 추가부터',
-                      color: Color(0xff7B61FF),
+                      color: Color(0xff696969),
                       fontSize: 12.sp,
                       fontWeight: FontWeight.w400,
                       height: (20 / 12),
@@ -390,7 +359,7 @@ class OverdueDiaries extends StatelessWidget {
                             width: (Get.width - 176.w) / 5 * 3,
                             height: 4.h,
                             decoration: BoxDecoration(
-                              color: Color(0xff9C88FF),
+                              color: StaticColor.main,
                               borderRadius: BorderRadius.circular(2.r),
                             ),
                           ),

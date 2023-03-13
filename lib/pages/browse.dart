@@ -117,7 +117,7 @@ class Browse extends StatelessWidget {
                       borderRadius: BorderRadius.circular(10.r),
                       border: Border.all(color: Color(0xffD9D9D9)),
                       image: DecorationImage(
-                        image: AssetImage('assets/dog.png'),
+                        image: AssetImage('assets/browse${index % 3}.png'),
                         fit: BoxFit.cover,
                       ),
                     ),

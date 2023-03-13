@@ -6,6 +6,7 @@ import 'package:dangdiarysample/pages/overdue_diaries.dart';
 import 'package:dangdiarysample/pages/search_diary.dart';
 import 'package:dangdiarysample/pages/sticker.dart';
 import 'package:dangdiarysample/static/color.dart';
+import 'package:dangdiarysample/static/icon.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -287,25 +288,6 @@ class Diaries extends StatelessWidget {
                   ),
                 ),
               ),
-              GestureDetector(
-                onTap: () {
-                  DiariesController.to.changeTabBarIndex(2);
-                },
-                child: SizedBox(
-                  width: 63.w,
-                  child: Center(
-                    child: Text(
-                      '챌린지별',
-                      style: TextStyle(
-                        color: Color(0xff545454),
-                        fontSize: 14.sp,
-                        fontWeight: FontWeight.w500,
-                        height: (20 / 14),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
             ],
           ),
           SizedBox(height: 8.h),
@@ -329,10 +311,7 @@ class Diaries extends StatelessWidget {
                         .w,
                     child: AnimatedContainer(
                       duration: Duration(milliseconds: 200),
-                      width: DiariesController.to
-                          .getTabBarWidth(
-                              DiariesController.to.tabBarIndex.value)
-                          .w,
+                      width: 40.w,
                       height: 2.h,
                       decoration: BoxDecoration(
                         color: StaticColor.main,
@@ -353,7 +332,7 @@ class Diaries extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.fromLTRB(24.w, 24.h, 20.w, 24.h),
       child: GridView.builder(
-        physics: NeverScrollableScrollPhysics(),
+        physics: const NeverScrollableScrollPhysics(),
         shrinkWrap: true,
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 2,
@@ -377,12 +356,8 @@ class Diaries extends StatelessWidget {
                     width: (Get.width - 55.w) / 2 - 20.w,
                     height: ((Get.width - 55.w) / 2 - 20.w) * 1.35,
                     decoration: BoxDecoration(
-                      color: Color(0xffB6CAFF),
+                      color: Color(0xffEAEAEA),
                       borderRadius: BorderRadius.circular(10.r),
-                      image: DecorationImage(
-                        image: AssetImage('assets/dog2.png'),
-                        fit: BoxFit.cover,
-                      ),
                     ),
                   ),
                 ),
@@ -394,12 +369,8 @@ class Diaries extends StatelessWidget {
                     width: (Get.width - 55.w) / 2 - 20.w,
                     height: ((Get.width - 55.w) / 2 - 20.w) * 1.35,
                     decoration: BoxDecoration(
-                      color: Color(0xffB6CAFF),
+                      color: StaticColor.line2,
                       borderRadius: BorderRadius.circular(10.r),
-                      image: DecorationImage(
-                        image: AssetImage('assets/dog.png'),
-                        fit: BoxFit.cover,
-                      ),
                     ),
                   ),
                 ),
@@ -408,39 +379,29 @@ class Diaries extends StatelessWidget {
                   width: (Get.width - 55.w) / 2 - 20.w,
                   height: ((Get.width - 55.w) / 2 - 20.w) * 1.35,
                   decoration: BoxDecoration(
-                    color: Color(0xffB6CAFF),
+                    color: DiariesController.to.coverColors[index % 3],
                     borderRadius: BorderRadius.circular(10.r),
                   ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       CustomText(
-                        text: '2022년 12월',
-                        color: Colors.white,
+                        text: '2022년 ${11 - index}월',
+                        color: StaticColor.font_main,
                         fontSize: 12.sp,
                         fontWeight: FontWeight.w500,
                         height: (20 / 12),
                       ),
                       SizedBox(height: 8.h),
-                      CustomText(
-                        text: '초코와 겨울',
-                        color: Color(0xff222222),
-                        fontSize: 12.sp,
-                        fontWeight: FontWeight.w600,
-                        height: (24 / 12),
-                      ),
-                      Expanded(child: Container()),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          CustomText(
-                            text: '열아홉 날의 이야기',
-                            color: Colors.white,
-                            fontSize: 12.sp,
-                            fontWeight: FontWeight.w500,
-                            height: (20 / 12),
-                          ),
-                        ],
+                      SizedBox(
+                        width: 90.w,
+                        child: CustomText(
+                          text: DiariesController.to.diaryTitles[index % 3],
+                          color: Color(0xff222222),
+                          fontSize: 14.sp,
+                          fontWeight: FontWeight.w600,
+                          height: (20 / 14),
+                        ),
                       ),
                     ],
                   ),
@@ -452,16 +413,16 @@ class Diaries extends StatelessWidget {
                     padding: EdgeInsets.symmetric(horizontal: 8.w),
                     height: 24.h,
                     decoration: BoxDecoration(
-                      color: Color(0xff8BACFF),
+                      color: DiariesController.to.holderColors[index % 3],
                       borderRadius: BorderRadius.circular(10.r),
                     ),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Icon(
-                          Icons.favorite,
+                        StaticIcon(
+                          IconsPath.like,
                           size: 16.r,
-                          color: Colors.white,
+                          color: Color(0xff272727),
                         ),
                         SizedBox(width: 4.w),
                         Container(
@@ -470,9 +431,9 @@ class Diaries extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.end,
                             children: [
                               Text(
-                                '1',
+                                '52',
                                 style: TextStyle(
-                                  color: Colors.white,
+                                  color: StaticColor.font_main,
                                   fontSize: 12.sp,
                                   fontWeight: FontWeight.w500,
                                 ),
@@ -498,7 +459,7 @@ class Diaries extends StatelessWidget {
       child: SizedBox(
         height: DiariesController.to.tabBarIndex == 1 ? null : 0,
         child: GridView.builder(
-          physics: NeverScrollableScrollPhysics(),
+          physics: const NeverScrollableScrollPhysics(),
           shrinkWrap: true,
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 2,
@@ -550,31 +511,21 @@ class Diaries extends StatelessWidget {
                       children: [
                         CustomText(
                           text: '2022년 12월',
-                          color: Colors.white,
+                          color: StaticColor.font_main,
                           fontSize: 12.sp,
                           fontWeight: FontWeight.w500,
                           height: (20 / 12),
                         ),
                         SizedBox(height: 8.h),
-                        CustomText(
-                          text: '초코와 겨울',
-                          color: Color(0xff222222),
-                          fontSize: 12.sp,
-                          fontWeight: FontWeight.w600,
-                          height: (24 / 12),
-                        ),
-                        Expanded(child: Container()),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            CustomText(
-                              text: '열아홉 날의 이야기',
-                              color: Colors.white,
-                              fontSize: 12.sp,
-                              fontWeight: FontWeight.w500,
-                              height: (20 / 12),
-                            ),
-                          ],
+                        SizedBox(
+                          width: 90.w,
+                          child: CustomText(
+                            text: '초코와 겨울',
+                            color: Color(0xff222222),
+                            fontSize: 14.sp,
+                            fontWeight: FontWeight.w600,
+                            height: (20 / 14),
+                          ),
                         ),
                       ],
                     ),
@@ -609,7 +560,7 @@ class Diaries extends StatelessWidget {
                   color: Color(0xffB6CAFF),
                   borderRadius: BorderRadius.circular(10.r),
                   image: DecorationImage(
-                    image: AssetImage('assets/dog.png'),
+                    image: AssetImage('assets/dog${index % 2 + 2}.png'),
                     fit: BoxFit.cover,
                   ),
                 ),
@@ -623,14 +574,14 @@ class Diaries extends StatelessWidget {
                           padding: EdgeInsets.symmetric(horizontal: 8.w),
                           height: 24.h,
                           decoration: BoxDecoration(
-                            color: Color(0xffB6CAFF),
+                            color: StaticColor.white,
                             borderRadius: BorderRadius.circular(10.r),
                           ),
                           child: Center(
                             child: Text(
                               '12월 25일',
                               style: TextStyle(
-                                color: Colors.white,
+                                color: StaticColor.font_main,
                                 fontSize: 12.sp,
                                 fontWeight: FontWeight.w500,
                               ),
@@ -638,10 +589,10 @@ class Diaries extends StatelessWidget {
                           ),
                         ),
                         Expanded(child: Container()),
-                        Icon(
-                          Icons.favorite,
+                        StaticIcon(
+                          IconsPath.like_outlined,
                           size: 16.r,
-                          color: Colors.white,
+                          color: StaticColor.white,
                         ),
                         SizedBox(width: 16.w),
                         Text(

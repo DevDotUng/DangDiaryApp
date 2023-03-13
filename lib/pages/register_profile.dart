@@ -66,7 +66,7 @@ class RegisterProfile extends StatelessWidget {
                                     1),
                             height: 4.h,
                             decoration: BoxDecoration(
-                              color: StaticColor.sub,
+                              color: StaticColor.main,
                               borderRadius: BorderRadius.circular(2.r),
                             ),
                           ),
@@ -201,7 +201,7 @@ class RegisterProfile extends StatelessWidget {
                           ),
                           child: Center(
                             child: CustomText(
-                              text: '일기 쓰러가기',
+                              text: '추억 쌓으러 가기',
                               color: Colors.white,
                               fontSize: 16.sp,
                               fontWeight: FontWeight.w600,
@@ -342,8 +342,7 @@ class RegisterProfile extends StatelessWidget {
         ),
         SizedBox(height: 8.h),
         GestureDetector(
-          onTap: () =>
-              RegisterProfileController.to.showCupertinoBreedPicker(context),
+          onTap: () => RegisterProfileController.to.pickBreed(context),
           child: Container(
             padding: EdgeInsets.symmetric(horizontal: 8.w),
             width: double.infinity,
@@ -355,14 +354,12 @@ class RegisterProfile extends StatelessWidget {
             child: Row(
               children: [
                 Expanded(
-                  child: Obx(
-                    () => CustomText(
-                      text: RegisterProfileController.to.breed.value,
-                      color: Color(0xff222222),
-                      fontSize: 16.sp,
-                      fontWeight: FontWeight.w500,
-                      height: (20 / 16),
-                    ),
+                  child: CustomText(
+                    text: '견종을 검색해보세요',
+                    color: StaticColor.line,
+                    fontSize: 16.sp,
+                    fontWeight: FontWeight.w500,
+                    height: (20 / 16),
                   ),
                 ),
                 StaticIcon(
@@ -720,10 +717,20 @@ class RegisterProfile extends StatelessWidget {
                     height: 64.w,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(32.r),
-                      image: DecorationImage(
-                        image: AssetImage('assets/dog.png'),
-                        fit: BoxFit.cover,
-                      ),
+                      image: RegisterProfileController.to.profileImage.value ==
+                              null
+                          ? DecorationImage(
+                              image: AssetImage(
+                                  'assets/default_profile_image.png'),
+                              fit: BoxFit.cover,
+                            )
+                          : DecorationImage(
+                              image: FileImage(
+                                File(RegisterProfileController
+                                    .to.profileImage.value!.path),
+                              ),
+                              fit: BoxFit.cover,
+                            ),
                     ),
                   ),
                 ],
@@ -744,7 +751,7 @@ class RegisterProfile extends StatelessWidget {
                             width: 48.w,
                             height: 40.h,
                             decoration: BoxDecoration(
-                              color: Color(0xffFF9900).withOpacity(0.5),
+                              color: StaticColor.main_light,
                               borderRadius: BorderRadius.only(
                                 topLeft: Radius.circular(5.r),
                                 bottomLeft: Radius.circular(5.r),
@@ -796,7 +803,7 @@ class RegisterProfile extends StatelessWidget {
                             width: 48.w,
                             height: 40.h,
                             decoration: BoxDecoration(
-                              color: Color(0xffFF9900).withOpacity(0.5),
+                              color: StaticColor.main_light,
                               borderRadius: BorderRadius.only(
                                 topLeft: Radius.circular(5.r),
                                 bottomLeft: Radius.circular(5.r),
@@ -852,7 +859,7 @@ class RegisterProfile extends StatelessWidget {
                             width: 48.w,
                             height: 40.h,
                             decoration: BoxDecoration(
-                              color: Color(0xffFF9900).withOpacity(0.5),
+                              color: StaticColor.main_light,
                               borderRadius: BorderRadius.only(
                                 topLeft: Radius.circular(5.r),
                                 bottomLeft: Radius.circular(5.r),
@@ -904,7 +911,7 @@ class RegisterProfile extends StatelessWidget {
                             width: 48.w,
                             height: 40.h,
                             decoration: BoxDecoration(
-                              color: Color(0xffFF9900).withOpacity(0.5),
+                              color: StaticColor.main_light,
                               borderRadius: BorderRadius.only(
                                 topLeft: Radius.circular(5.r),
                                 bottomLeft: Radius.circular(5.r),
@@ -952,30 +959,45 @@ class RegisterProfile extends StatelessWidget {
   }
 
   Widget _profileImageWidget(BuildContext context) {
-    return RegisterProfileController.to.profileImage == null
+    return RegisterProfileController.to.profileImage.value == null
         ? Column(
             children: [
               GestureDetector(
                 onTap: () {
                   RegisterProfileController.to.pickImage(context);
                 },
-                child: Container(
-                  width: 134.w,
-                  height: 134.w,
-                  decoration: BoxDecoration(
-                    color: Color(0xffF6F6F6),
-                    borderRadius: BorderRadius.circular(67.r),
-                    border: Border.all(
-                      color: StaticColor.sub,
-                      width: 2.w,
+                child: Stack(
+                  children: [
+                    Container(
+                      width: 134.w,
+                      height: 134.w,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(67.r),
+                        image: DecorationImage(
+                          image: AssetImage('assets/default_profile_image.png'),
+                          fit: BoxFit.cover,
+                        ),
+                      ),
                     ),
-                  ),
-                  child: Center(
-                    child: StaticIcon(
-                      IconsPath.plus_bold,
-                      color: StaticColor.sub,
+                    Container(
+                      width: 134.w,
+                      height: 134.w,
+                      decoration: BoxDecoration(
+                        color: Color(0xffF6F6F6).withOpacity(0.7),
+                        borderRadius: BorderRadius.circular(67.r),
+                        border: Border.all(
+                          color: StaticColor.line,
+                          width: 2.w,
+                        ),
+                      ),
+                      child: Center(
+                        child: StaticIcon(
+                          IconsPath.plus_bold,
+                          color: StaticColor.main,
+                        ),
+                      ),
                     ),
-                  ),
+                  ],
                 ),
               ),
               SizedBox(height: 8.h),
@@ -996,9 +1018,10 @@ class RegisterProfile extends StatelessWidget {
               width: 134.w,
               height: 134.w,
               decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(67.r),
                 image: DecorationImage(
                   image: FileImage(
-                    File(RegisterProfileController.to.profileImage!.value.path),
+                    File(RegisterProfileController.to.profileImage.value!.path),
                   ),
                   fit: BoxFit.cover,
                 ),

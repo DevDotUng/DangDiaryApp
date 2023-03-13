@@ -2,12 +2,26 @@ import 'dart:ui';
 
 import 'package:dangdiarysample/components/custom_text.dart';
 import 'package:dangdiarysample/static/color.dart';
+import 'package:dangdiarysample/static/icon.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 class StickerDetail extends StatelessWidget {
-  const StickerDetail({Key? key}) : super(key: key);
+  StickerDetail({Key? key}) : super(key: key);
+
+  List colorList = [
+    Color(0xffB0DBAB),
+    Color(0xffFFE092),
+    Color(0xffEFD5FF),
+    Color(0xffD3E0FF),
+  ];
+  List titleList = [
+    '함께하는 화가놀이',
+    '초상화 그린 날',
+    '나보다 잘 그리는데? 캬캬...',
+    '엄마 그려드린 날',
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -55,6 +69,10 @@ class StickerDetail extends StatelessWidget {
                           blurRadius: 10.r,
                         ),
                       ],
+                      image: DecorationImage(
+                        image: AssetImage('assets/sticker.png'),
+                        fit: BoxFit.cover,
+                      ),
                     ),
                   ),
                   Positioned(
@@ -83,8 +101,8 @@ class StickerDetail extends StatelessWidget {
               ),
               SizedBox(height: 16.h),
               CustomText(
-                text: '눈밭에서 백덤블링하기',
-                color: StaticColor.main,
+                text: '함께하는 화가놀이',
+                color: StaticColor.font_main,
                 fontSize: 20.sp,
                 fontWeight: FontWeight.w600,
                 height: (28 / 20),
@@ -92,7 +110,7 @@ class StickerDetail extends StatelessWidget {
               SizedBox(height: 8.h),
               CustomText(
                 text: '첫 획득 일자 2022.03.09',
-                color: Colors.black,
+                color: StaticColor.main,
                 fontSize: 16.sp,
                 fontWeight: FontWeight.w400,
                 height: (24 / 16),
@@ -100,7 +118,7 @@ class StickerDetail extends StatelessWidget {
               SizedBox(height: 4.h),
               CustomText(
                 text: '최근 획득 일자  2022.05.05',
-                color: Color(0xff7D7D7D),
+                color: StaticColor.icon,
                 fontSize: 14.sp,
                 fontWeight: FontWeight.w400,
                 height: (20 / 14),
@@ -127,79 +145,66 @@ class StickerDetail extends StatelessWidget {
               Padding(
                 padding: EdgeInsets.symmetric(vertical: 24.h, horizontal: 24.w),
                 child: ListView.builder(
-                  physics: NeverScrollableScrollPhysics(),
+                  physics: const NeverScrollableScrollPhysics(),
                   shrinkWrap: true,
-                  itemCount: 10,
+                  itemCount: 4,
                   itemBuilder: (context, index) {
                     return Container(
                       margin: EdgeInsets.only(bottom: 8.h),
                       width: double.infinity,
                       height: 56.h,
                       decoration: BoxDecoration(
+                        color: colorList[index],
                         borderRadius: BorderRadius.circular(10.r),
-                        image: DecorationImage(
-                          image: AssetImage('assets/dog.png'),
-                          fit: BoxFit.cover,
-                        ),
                       ),
-                      child: Container(
-                        color: Colors.white.withOpacity(0.5),
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(10.r),
-                          child: BackdropFilter(
-                            filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-                            child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                SizedBox(width: 16.w),
-                                Container(
-                                  padding:
-                                      EdgeInsets.symmetric(horizontal: 8.w),
-                                  height: 24.h,
-                                  decoration: BoxDecoration(
-                                    color: Color(0xffB6CAFF),
-                                    borderRadius: BorderRadius.circular(10.r),
-                                  ),
-                                  child: Center(
-                                    child: Text(
-                                      '12월 25일',
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 12.sp,
-                                        fontWeight: FontWeight.w500,
-                                      ),
-                                    ),
-                                  ),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          SizedBox(width: 16.w),
+                          Container(
+                            padding: EdgeInsets.symmetric(horizontal: 8.w),
+                            height: 24.h,
+                            decoration: BoxDecoration(
+                              color: StaticColor.white,
+                              borderRadius: BorderRadius.circular(10.r),
+                            ),
+                            child: Center(
+                              child: Text(
+                                '22년 12월 25일',
+                                style: TextStyle(
+                                  color: StaticColor.font_main,
+                                  fontSize: 12.sp,
+                                  fontWeight: FontWeight.w500,
                                 ),
-                                SizedBox(width: 4.w),
-                                Text(
-                                  '전기담요에서 간식먹기',
-                                  style: TextStyle(
-                                    color: Color(0xff222222),
-                                    fontSize: 14.sp,
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                                ),
-                                Expanded(child: Container()),
-                                Icon(
-                                  Icons.favorite,
-                                  size: 16.r,
-                                  color: Colors.white,
-                                ),
-                                SizedBox(width: 18.w),
-                                Text(
-                                  '3',
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 12.sp,
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                ),
-                                SizedBox(width: 16.w),
-                              ],
+                              ),
                             ),
                           ),
-                        ),
+                          SizedBox(width: 8.w),
+                          Text(
+                            titleList[index],
+                            style: TextStyle(
+                              color: Color(0xff222222),
+                              fontSize: 14.sp,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                          Expanded(child: Container()),
+                          StaticIcon(
+                            IconsPath.like,
+                            size: 16.r,
+                            color: Color(0xff272727),
+                          ),
+                          SizedBox(width: 8.w),
+                          Text(
+                            '32',
+                            style: TextStyle(
+                              color: StaticColor.font_main,
+                              fontSize: 12.sp,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                          SizedBox(width: 16.w),
+                        ],
                       ),
                     );
                   },

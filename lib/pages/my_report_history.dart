@@ -1,4 +1,5 @@
 import 'package:dangdiarysample/components/custom_text.dart';
+import 'package:dangdiarysample/static/color.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -60,7 +61,7 @@ class MyReportHistory extends StatelessWidget {
                         ),
                         CustomText(
                           text: '3건',
-                          color: Color(0xffDE3730),
+                          color: StaticColor.error,
                           fontSize: 18.sp,
                           fontWeight: FontWeight.w600,
                           height: (32 / 18),
@@ -189,13 +190,13 @@ class MyReportHistory extends StatelessWidget {
   Color _getColor(String status) {
     switch (status) {
       case '신고 처리중':
-        return Color(0xffB6CAFF);
+        return StaticColor.error;
       case '접수 완료':
         return Color(0xffD9E2FF);
       case '처리 완료':
-        return Color(0xffA6A6A6);
+        return StaticColor.link;
       default:
-        return Color(0xffB6CAFF);
+        return StaticColor.error;
     }
   }
 }
