@@ -1,10 +1,12 @@
 import 'package:dangdiarysample/components/custom_text.dart';
+import 'package:dangdiarysample/repositories/register_profile_repository.dart';
 import 'package:dangdiarysample/static/color.dart';
 import 'package:dangdiarysample/static/icon.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:hive/hive.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 
@@ -15,6 +17,8 @@ class RegisterProfileController extends GetxController {
   final profileImage = Rxn<XFile>();
   List<String> genderList = ['암컷', '수컷'];
   RxString breed = ''.obs;
+  RxString breedText = '모르겠어요'.obs;
+  Rx<int> breedIndex = 0.obs;
   RxString searchText = ''.obs;
   RxList autoCompleteWord = [].obs;
   RxString birth = '2022.01.31'.obs;
@@ -25,6 +29,7 @@ class RegisterProfileController extends GetxController {
   RxBool isBlankDogName = true.obs;
   RxBool isBlankUserName = true.obs;
   late TextEditingController dogNameTextEditingController;
+  late TextEditingController breedTextEditingController;
   late TextEditingController userNameTextEditingController;
   late ScrollController scrollController;
 
@@ -32,6 +37,7 @@ class RegisterProfileController extends GetxController {
   void onInit() {
     scrollController = ScrollController();
     dogNameTextEditingController = TextEditingController();
+    breedTextEditingController = TextEditingController();
     userNameTextEditingController = TextEditingController();
     super.onInit();
   }
@@ -40,6 +46,7 @@ class RegisterProfileController extends GetxController {
   void dispose() {
     scrollController.dispose();
     dogNameTextEditingController.dispose();
+    breedTextEditingController.dispose();
     userNameTextEditingController.dispose();
     super.dispose();
   }
@@ -86,9 +93,12 @@ class RegisterProfileController extends GetxController {
     age(tempAge);
   }
 
-  void nextPage() {
+  void nextPage() async {
     if (pageIndex.value == 4) {
-      Get.offAndToNamed('/app');
+      int responseCode = await _registerProfile();
+      if (responseCode == 201) {
+        Get.offAndToNamed('/app');
+      }
     } else {
       pageIndex(pageIndex.value + 1);
     }
@@ -112,6 +122,30 @@ class RegisterProfileController extends GetxController {
       if (word.contains(text)) {
         autoCompleteWord.add(word);
       }
+    }
+
+    changeBreedWidgetAndBreedText();
+  }
+
+  void changeBreedWidgetAndBreedText() {
+    if (breedTextEditingController.text.isEmpty && breed.value.isEmpty) {
+      breedText('모르겠어요');
+    } else if (breed.value.isNotEmpty) {
+      breedText('선택 완료');
+    } else {
+      breedText('새로운 품종으로 등록하기');
+    }
+
+    if (breedTextEditingController.text.isEmpty && breed.value.isEmpty) {
+      breedIndex(0);
+    } else if (breedTextEditingController.text.isNotEmpty &&
+        autoCompleteWord.isNotEmpty) {
+      breedIndex(1);
+    } else if (breedTextEditingController.text.isNotEmpty &&
+        autoCompleteWord.isEmpty) {
+      breedIndex(2);
+    } else {
+      breedIndex(0);
     }
   }
 
@@ -154,6 +188,7 @@ class RegisterProfileController extends GetxController {
                   borderRadius: BorderRadius.circular(10.r),
                 ),
                 child: TextField(
+                  controller: breedTextEditingController,
                   onChanged: (text) {
                     changeTextListener(text);
                   },
@@ -188,77 +223,22 @@ class RegisterProfileController extends GetxController {
                   ),
                 ),
               ),
-              SizedBox(height: 24.h),
+              SizedBox(height: 64.h),
               Expanded(
                 child: Obx(
-                  () => ListView.builder(
-                    itemCount: autoCompleteWord.length,
-                    itemBuilder: (context, index) {
-                      return Column(
-                        children: [
-                          GestureDetector(
-                            onTap: () {
-                              breed(breedList[index]);
-                            },
-                            child: Obx(
-                              () => breed.value == breedList[index]
-                                  ? Row(
-                                      children: [
-                                        Expanded(
-                                          child: Padding(
-                                            padding: EdgeInsets.symmetric(
-                                                horizontal: 12.w),
-                                            child: CustomText(
-                                              text: autoCompleteWord[index],
-                                              color: StaticColor.main,
-                                              fontSize: 14.sp,
-                                              fontWeight: FontWeight.w400,
-                                              height: (24 / 14),
-                                            ),
-                                          ),
-                                        ),
-                                        Padding(
-                                          padding: EdgeInsets.only(right: 8.w),
-                                          child: StaticIcon(
-                                            IconsPath.check,
-                                            size: 24.r,
-                                            color: StaticColor.main,
-                                          ),
-                                        ),
-                                      ],
-                                    )
-                                  : Container(
-                                      padding: EdgeInsets.symmetric(
-                                          horizontal: 12.w),
-                                      width: double.infinity,
-                                      child: CustomText(
-                                        text: autoCompleteWord[index],
-                                        color: StaticColor.font_main,
-                                        fontSize: 14.sp,
-                                        fontWeight: FontWeight.w400,
-                                        height: (24 / 14),
-                                      ),
-                                    ),
-                            ),
-                          ),
-                          SizedBox(height: 8.h),
-                          Container(
-                            width: double.infinity,
-                            height: 1.h,
-                            color: Color(0xffF5F5F5),
-                          ),
-                          SizedBox(height: 8.h),
-                        ],
-                      );
-                    },
-                  ),
+                  () => _breedWidget(),
                 ),
               ),
-              SizedBox(height: 24.h),
               GestureDetector(
                 onTap: () {
-                  if (!RegisterProfileController.to.isBlankDogName.value) {
-                    RegisterProfileController.to.nextPage();
+                  if (breedText.value == '모르겠어요') {
+                    breed('미설정');
+                    Navigator.pop(context);
+                  } else if (breedText.value == '선택 완료') {
+                    Navigator.pop(context);
+                  } else if (breedText.value == '새로운 품종으로 등록하기') {
+                    breed(breedTextEditingController.text);
+                    Navigator.pop(context);
                   }
                 },
                 child: Container(
@@ -270,11 +250,13 @@ class RegisterProfileController extends GetxController {
                     borderRadius: BorderRadius.circular(10.0.r),
                   ),
                   child: Center(
-                    child: CustomText(
-                      text: '다음',
-                      color: Colors.white,
-                      fontSize: 16.sp,
-                      fontWeight: FontWeight.w600,
+                    child: Obx(
+                      () => CustomText(
+                        text: breedText.value,
+                        color: Colors.white,
+                        fontSize: 16.sp,
+                        fontWeight: FontWeight.w600,
+                      ),
                     ),
                   ),
                 ),
@@ -284,6 +266,160 @@ class RegisterProfileController extends GetxController {
           ),
         );
       },
+    );
+  }
+
+  Widget _breedWidget() {
+    return IndexedStack(
+      index: breedIndex.value,
+      children: [
+        Center(
+          child: Column(
+            children: [
+              Container(
+                width: 160.w,
+                height: 160.h,
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                    image: AssetImage('assets/illusts/unknown_breed.png'),
+                    fit: BoxFit.cover,
+                  ),
+                ),
+              ),
+              SizedBox(height: 16.h),
+              RichText(
+                text: TextSpan(
+                  style: TextStyle(
+                    color: StaticColor.font_main,
+                    fontSize: 14.sp,
+                    fontWeight: FontWeight.w500,
+                    height: (24 / 14),
+                  ),
+                  children: <TextSpan>[
+                    TextSpan(text: '잘 모르시면 아래 \''),
+                    TextSpan(
+                      text: '모르겠어요',
+                      style: TextStyle(
+                        color: StaticColor.font_main,
+                        fontSize: 14.sp,
+                        fontWeight: FontWeight.w600,
+                        height: (24 / 14),
+                      ),
+                    ),
+                    TextSpan(text: '\' 버튼을 눌러주세요.'),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+        ListView.builder(
+          itemCount: autoCompleteWord.length,
+          itemBuilder: (context, index) {
+            return Column(
+              children: [
+                GestureDetector(
+                  onTap: () {
+                    if (breed.value == autoCompleteWord[index]) {
+                      breed('');
+                    } else {
+                      breed(autoCompleteWord[index]);
+                    }
+                    changeBreedWidgetAndBreedText();
+                  },
+                  child: Obx(
+                    () => breed.value == autoCompleteWord[index]
+                        ? Row(
+                            children: [
+                              Expanded(
+                                child: Padding(
+                                  padding:
+                                      EdgeInsets.symmetric(horizontal: 12.w),
+                                  child: CustomText(
+                                    text: autoCompleteWord[index],
+                                    color: StaticColor.main,
+                                    fontSize: 14.sp,
+                                    fontWeight: FontWeight.w400,
+                                    height: (24 / 14),
+                                  ),
+                                ),
+                              ),
+                              Padding(
+                                padding: EdgeInsets.only(right: 8.w),
+                                child: StaticIcon(
+                                  IconsPath.check,
+                                  size: 24.r,
+                                  color: StaticColor.main,
+                                ),
+                              ),
+                            ],
+                          )
+                        : Container(
+                            padding: EdgeInsets.symmetric(horizontal: 12.w),
+                            width: double.infinity,
+                            child: CustomText(
+                              text: autoCompleteWord[index],
+                              color: StaticColor.font_main,
+                              fontSize: 14.sp,
+                              fontWeight: FontWeight.w400,
+                              height: (24 / 14),
+                            ),
+                          ),
+                  ),
+                ),
+                SizedBox(height: 8.h),
+                Container(
+                  width: double.infinity,
+                  height: 1.h,
+                  color: Color(0xffF5F5F5),
+                ),
+                SizedBox(height: 8.h),
+              ],
+            );
+          },
+        ),
+        Center(
+          child: Column(
+            children: [
+              Container(
+                width: 160.w,
+                height: 160.h,
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                    image: AssetImage('assets/illusts/no_breed.png'),
+                    fit: BoxFit.cover,
+                  ),
+                ),
+              ),
+              SizedBox(height: 16.h),
+              RichText(
+                text: TextSpan(
+                  style: TextStyle(
+                    color: StaticColor.font_main,
+                    fontSize: 14.sp,
+                    fontWeight: FontWeight.w500,
+                    height: (24 / 14),
+                  ),
+                  children: <TextSpan>[
+                    TextSpan(
+                        text: '                     앗, 검색 결과가 없어요!\n아래 \''),
+                    TextSpan(
+                      text: '새로운 품종으로 등록하기',
+                      style: TextStyle(
+                        color: StaticColor.font_main,
+                        fontSize: 14.sp,
+                        fontWeight: FontWeight.w600,
+                        height: (24 / 14),
+                      ),
+                    ),
+                    TextSpan(text: '\' 버튼을 눌러주세요.'),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
     );
   }
 
@@ -414,6 +550,38 @@ class RegisterProfileController extends GetxController {
         ),
       ),
     );
+  }
+
+  Future<int> _registerProfile() async {
+    Box homeBox = await Hive.openBox('userInfo');
+    int userId = homeBox.get('userId');
+
+    String? breedArgument;
+    if (breed.value == '미설정') {
+      breedArgument = null;
+    } else {
+      breedArgument = breed.value;
+    }
+    String birthArgument = birth.value.replaceAll('.', '-');
+
+    String? imagePath;
+    if (profileImage.value == null) {
+      imagePath = null;
+    } else {
+      imagePath = profileImage.value!.path;
+    }
+
+    int responseCode = await RegisterProfileRepository().registerProfile(
+      userId,
+      userNameTextEditingController.text,
+      dogNameTextEditingController.text,
+      imagePath,
+      breedArgument,
+      birthArgument,
+      gender.value,
+    );
+
+    return responseCode;
   }
 
   List<String> breedList = [

@@ -1,8 +1,13 @@
+import 'package:dangdiarysample/models/home/home_model.dart';
+import 'package:dangdiarysample/repositories/home_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class HomeController extends GetxController {
   static HomeController get to => Get.find();
+
+  final homeModel = Rxn<HomeModel>();
+
   late PageController pageController;
   RxList imageList = [
     'assets/dog.png',
@@ -22,7 +27,7 @@ class HomeController extends GetxController {
   void onInit() {
     pageController = PageController(viewportFraction: 0.177);
     pageController.addListener(pageScrollListener);
-    loading();
+    homeInit();
     super.onInit();
   }
 
@@ -30,6 +35,11 @@ class HomeController extends GetxController {
   void dispose() {
     pageController.dispose();
     super.dispose();
+  }
+
+  Future<void> homeInit() async {
+    HomeModel homeModelTemp = await HomeRepository().getHomeView();
+    homeModel(homeModelTemp);
   }
 
   void pageScrollListener() {
@@ -41,11 +51,5 @@ class HomeController extends GetxController {
   void changeIndex(int index) {
     mainIndex(index);
     print(mainIndex);
-  }
-
-  RxBool isLoading = true.obs;
-  void loading() async {
-    await Future.delayed(Duration(seconds: 2));
-    isLoading(false);
   }
 }

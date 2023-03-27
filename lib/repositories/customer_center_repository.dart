@@ -1,10 +1,11 @@
 import 'dart:convert';
 
 import 'package:dangdiarysample/models/customer_center/customer_center_model.dart';
+import 'package:dangdiarysample/repositories/public_repository.dart';
 import 'package:http/http.dart';
 
 class CustomerCenterRepository {
-  final String _baseUrl = "localhost:8080";
+  final String _baseUrl = PublicRepository.baseUrl;
 
   Future<CustomerCenterModel> getCustomerCenterView() async {
     Uri url = Uri.http(_baseUrl, '/api/customerCenter');

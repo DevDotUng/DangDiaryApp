@@ -1,20 +1,42 @@
+import 'dart:async';
+
+import 'package:dangdiarysample/components/custom_text.dart';
+import 'package:dangdiarysample/models/challenge_detail/challenge_detail_model.dart';
+import 'package:dangdiarysample/repositories/challenge_detail_repository.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 
 class ChallengeDetailController extends GetxController {
+  late BuildContext context;
+  late int challengeId;
+  ChallengeDetailController({required this.context, required this.challengeId});
   static ChallengeDetailController get to => Get.find();
+
+  final challengeDetailModel = Rxn<ChallengeDetailModel>();
+
+  late Duration countdownDuration;
+  Rx<Duration> duration = Duration().obs;
+  Timer? timer;
+  RxBool countDown = true.obs;
+
+  late FToast fToast;
   late ScrollController scrollController;
   RxDouble scrollPosition = 0.0.obs;
-  String challengeContent =
-      '한강공원에서 반려견과 술래잡기를 해보세요! 신나게 뛰어 놀다 보면 시간도 뚝딱! 매일 지루한 산책만 하기 보단, 더 활발하게 뛰어 노는 걸 우리 아이도 분명 좋아할 거에요. 물론 보호자님은 좀 힘들겠지만요 한강공원에서 반려견과 술래잡기를 해보세요! 신나게 뛰어 놀다 보면 시간도 뚝딱! 매일 지루한 산책만 하기 보단, 더 활발하게 뛰어 노는 걸 우리 아이도 분명 좋아할 거에요. 물론 보호자님은 좀 힘들겠지만요 한강공원에서 반려견과 술래잡기를 해보세요! 신나게 뛰어 놀다 보면 시간도 뚝딱! 매일 지루한 산책만 하기 보단, 더 활발하게 뛰어 노는 걸 우리 아이도 분명 좋아할 거에요. 물론 보호자님은 좀 힘들겠지만요';
   RxBool isChallenge = false.obs;
   RxBool isMore = false.obs;
 
   @override
-  void onInit() {
+  void onInit() async {
     scrollController = ScrollController();
     scrollController.addListener(_scrollListener);
-    loading();
+    fToast = FToast();
+    fToast.init(context);
+    await challengeDetailInit();
+    reset();
+    startTimer();
     super.onInit();
   }
 
@@ -22,6 +44,124 @@ class ChallengeDetailController extends GetxController {
   void dispose() {
     scrollController.dispose();
     super.dispose();
+  }
+
+  Future<void> challengeDetailInit() async {
+    ChallengeDetailModel challengeDetailModelTemp =
+        await ChallengeDetailRepository().getChallengeDetailView(challengeId);
+    challengeDetailModel(challengeDetailModelTemp);
+    isChallenge(challengeDetailModel.value!.isChallenge);
+
+    if (challengeDetailModel.value?.recommendDate != null) {
+      setDuration(challengeDetailModel.value!.recommendDate);
+    } else {
+      countdownDuration = const Duration(hours: 0, minutes: 0, seconds: 0);
+    }
+  }
+
+  void setDuration(String recommendDate) {
+    DateTime datetime = DateFormat("yyyy-MM-dd hh:mm:ss").parse(recommendDate);
+    DateTime now = DateTime.now();
+    int hour = (datetime.millisecondsSinceEpoch - now.millisecondsSinceEpoch) ~/
+        (1000 * 60 * 60);
+    int minute =
+        ((datetime.millisecondsSinceEpoch - now.millisecondsSinceEpoch) ~/
+                (1000 * 60)) %
+            60;
+    int second =
+        (((datetime.millisecondsSinceEpoch - now.millisecondsSinceEpoch) /
+                    1000) %
+                60)
+            .toInt();
+    countdownDuration = Duration(hours: hour, minutes: minute, seconds: second);
+  }
+
+  void reset() {
+    if (countDown.value) {
+      duration.value = countdownDuration;
+    } else {
+      duration.value = Duration();
+    }
+  }
+
+  void startTimer() {
+    timer = Timer.periodic(Duration(seconds: 1), (_) => addTime());
+  }
+
+  void addTime() {
+    final addSeconds = countDown.value ? -1 : 1;
+    final seconds = duration.value.inSeconds + addSeconds;
+    if (seconds < 0) {
+      timer?.cancel();
+    } else {
+      duration.value = Duration(seconds: seconds);
+    }
+  }
+
+  void stopTimer({bool resets = true}) {
+    if (resets) {
+      reset();
+    }
+    timer?.cancel();
+  }
+
+  void startChallenge() async {
+    bool response =
+        await ChallengeDetailRepository().startChallenge(challengeId);
+    if (response) {
+      isChallenge(response);
+      showToast('화이팅✨ 도전을 시작했어요!');
+    }
+  }
+
+  void stopChallenge() async {
+    bool response =
+        await ChallengeDetailRepository().stopChallenge(challengeId);
+    if (!response) {
+      isChallenge(response);
+    }
+  }
+
+  void endChallenge() async {
+    int diaryId = await ChallengeDetailRepository().endChallenge(challengeId);
+    isChallenge(false);
+  }
+
+  void endChallengeAndToWrite() async {
+    int diaryId = await ChallengeDetailRepository().endChallenge(challengeId);
+    isChallenge(false);
+    Get.toNamed('/writeDiary', arguments: {'diaryId': diaryId});
+  }
+
+  showToast(String text) {
+    Widget toast = Container(
+      width: Get.width - 48.w,
+      height: 48.h,
+      padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 12.h),
+      decoration: BoxDecoration(
+        color: Colors.black.withOpacity(0.8),
+        borderRadius: BorderRadius.circular(10.r),
+      ),
+      child: Center(
+        child: CustomText(
+          text: text,
+          color: Colors.white,
+          fontSize: 14.sp,
+          fontWeight: FontWeight.w400,
+        ),
+      ),
+    );
+
+    fToast.showToast(
+        child: toast,
+        toastDuration: Duration(seconds: 2),
+        positionedToastBuilder: (context, child) {
+          return Positioned(
+            child: child,
+            bottom: 106.h,
+            left: 24.w,
+          );
+        });
   }
 
   void _scrollListener() {
@@ -38,11 +178,5 @@ class ChallengeDetailController extends GetxController {
     } else {
       isMore(true);
     }
-  }
-
-  RxBool isLoading = true.obs;
-  void loading() async {
-    await Future.delayed(Duration(seconds: 2));
-    isLoading(false);
   }
 }

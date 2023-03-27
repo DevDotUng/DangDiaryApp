@@ -1,4 +1,6 @@
 import 'package:dangdiarysample/components/custom_text.dart';
+import 'package:dangdiarysample/controllers/my_page_controller.dart';
+import 'package:dangdiarysample/repositories/public_repository.dart';
 import 'package:dangdiarysample/static/color.dart';
 import 'package:dangdiarysample/static/icon.dart';
 import 'package:flutter/material.dart';
@@ -10,6 +12,15 @@ class MyPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Get.put(MyPageController());
+    return Obx(
+      () => MyPageController.to.myPageModel.value == null
+          ? Container(color: Colors.white)
+          : _myPageView(),
+    );
+  }
+
+  Widget _myPageView() {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Color(0xffB5C9FF),
@@ -96,7 +107,8 @@ class MyPage extends StatelessWidget {
                                         CrossAxisAlignment.start,
                                     children: [
                                       CustomText(
-                                        text: '초코',
+                                        text: MyPageController
+                                            .to.myPageModel.value!.dogName,
                                         color: Color(0xff222222),
                                         fontSize: 24.sp,
                                         fontWeight: FontWeight.w600,
@@ -106,7 +118,8 @@ class MyPage extends StatelessWidget {
                                       Padding(
                                         padding: EdgeInsets.only(bottom: 2.h),
                                         child: CustomText(
-                                          text: '/ 오또캐드 보호자님',
+                                          text:
+                                              '/ ${MyPageController.to.myPageModel.value!.nickname} 보호자님',
                                           color: Color(0xff545454),
                                           fontSize: 14.sp,
                                           fontWeight: FontWeight.w500,
@@ -125,7 +138,15 @@ class MyPage extends StatelessWidget {
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(32.r),
                               image: DecorationImage(
-                                image: AssetImage('assets/dog.png'),
+                                image: MyPageController.to.myPageModel.value
+                                            ?.profileImage ==
+                                        null
+                                    ? AssetImage(
+                                            'assets/default_profile_image.png')
+                                        as ImageProvider
+                                    : NetworkImage(PublicRepository()
+                                        .getProfileImageUrl(MyPageController.to
+                                            .myPageModel.value!.profileImage)),
                                 fit: BoxFit.cover,
                               ),
                             ),
@@ -171,7 +192,12 @@ class MyPage extends StatelessWidget {
                                         padding: EdgeInsets.symmetric(
                                             horizontal: 8.w),
                                         child: CustomText(
-                                          text: '비글',
+                                          text: MyPageController.to.myPageModel
+                                                      .value?.breed ==
+                                                  null
+                                              ? '미설정'
+                                              : MyPageController
+                                                  .to.myPageModel.value!.breed,
                                           color: Color(0xff6B6B6B),
                                           fontSize: 12.sp,
                                           fontWeight: FontWeight.w500,
@@ -223,7 +249,8 @@ class MyPage extends StatelessWidget {
                                         padding: EdgeInsets.symmetric(
                                             horizontal: 8.w),
                                         child: CustomText(
-                                          text: '만 3세',
+                                          text:
+                                              '만 ${MyPageController.to.myPageModel.value!.age}세',
                                           color: Color(0xff6B6B6B),
                                           fontSize: 12.sp,
                                           fontWeight: FontWeight.w500,
@@ -279,7 +306,8 @@ class MyPage extends StatelessWidget {
                                         padding: EdgeInsets.symmetric(
                                             horizontal: 8.w),
                                         child: CustomText(
-                                          text: '수컷',
+                                          text: MyPageController
+                                              .to.myPageModel.value!.gender,
                                           color: Color(0xff6B6B6B),
                                           fontSize: 12.sp,
                                           fontWeight: FontWeight.w500,
@@ -331,7 +359,8 @@ class MyPage extends StatelessWidget {
                                         padding: EdgeInsets.symmetric(
                                             horizontal: 8.w),
                                         child: CustomText(
-                                          text: '2020.01.31',
+                                          text: MyPageController
+                                              .to.myPageModel.value!.birth,
                                           color: Color(0xff6B6B6B),
                                           fontSize: 12.sp,
                                           fontWeight: FontWeight.w500,

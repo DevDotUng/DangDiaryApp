@@ -28,6 +28,7 @@ import 'package:dangdiarysample/pages/report_detail.dart';
 import 'package:dangdiarysample/pages/search_diary.dart';
 import 'package:dangdiarysample/pages/search_posts.dart';
 import 'package:dangdiarysample/pages/search_posts_result.dart';
+import 'package:dangdiarysample/pages/splash.dart';
 import 'package:dangdiarysample/pages/sticker.dart';
 import 'package:dangdiarysample/pages/sticker_detail.dart';
 import 'package:dangdiarysample/pages/write_diary.dart';
@@ -35,12 +36,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:hive/hive.dart';
+import 'package:hive_flutter/adapters.dart';
 import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
 
-void main() {
+void main() async {
   KakaoSdk.init(
     nativeAppKey: 'b8dae3679aac82ab76c71988353705ad',
   );
+  await Hive.initFlutter();
 
   runApp(const MyApp());
 }
@@ -67,7 +71,7 @@ class MyApp extends StatelessWidget {
             Locale('ko', ''),
             Locale('en', ''),
           ],
-          initialRoute: '/registerProfile',
+          initialRoute: '/splash',
           getPages: [
             GetPage(name: '/', page: () => Onboarding()),
             GetPage(name: '/app', page: () => App()),
@@ -105,6 +109,7 @@ class MyApp extends StatelessWidget {
                 page: () => MyReportHistoryDetail()),
             GetPage(name: '/registerProfile', page: () => RegisterProfile()),
             GetPage(name: '/login', page: () => Login()),
+            GetPage(name: '/splash', page: () => Splash()),
           ],
         );
       },

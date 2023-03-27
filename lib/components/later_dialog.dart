@@ -1,4 +1,5 @@
 import 'package:dangdiarysample/components/custom_text.dart';
+import 'package:dangdiarysample/controllers/challenge_detail_controller.dart';
 import 'package:dangdiarysample/static/color.dart';
 import 'package:dangdiarysample/static/icon.dart';
 import 'package:flutter/material.dart';
@@ -22,6 +23,7 @@ class _LaterDialogState extends State<LaterDialog> {
   void _showSubmitDialog() async {
     await showDialog(
       context: context,
+      barrierDismissible: false,
       builder: (BuildContext context) {
         return Dialog(
           shape: RoundedRectangleBorder(

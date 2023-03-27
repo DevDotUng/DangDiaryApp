@@ -564,6 +564,8 @@ class WriteDiary extends StatelessWidget {
                             Container(
                               width: (Get.width - 48.w) * 0.66,
                               child: TextField(
+                                controller: WriteDiaryController
+                                    .to.titleTextEditingController,
                                 maxLength: 16,
                                 cursorColor: Colors.black,
                                 cursorHeight: 24.h,
@@ -607,7 +609,7 @@ class WriteDiary extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             CustomText(
-                              text: '인증 사진을 올려주세요 (최대 3장)',
+                              text: '인증 사진을 올려주세요 (최대 10장)',
                               color: StaticColor.font_main,
                               fontSize: 18.sp,
                               fontWeight: FontWeight.w500,
@@ -651,10 +653,10 @@ class WriteDiary extends StatelessWidget {
                                     ),
                                   ),
                                 )
-                              : Container(
+                              : SizedBox(
                                   width: double.infinity,
                                   height: 88.h,
-                                  child: _imageList(),
+                                  child: _imageList(context),
                                 ),
                         ),
                         SizedBox(height: 56.h),
@@ -689,6 +691,8 @@ class WriteDiary extends StatelessWidget {
                             borderRadius: BorderRadius.circular(10.r),
                           ),
                           child: TextField(
+                            controller: WriteDiaryController
+                                .to.contentTextEditingController,
                             onChanged: (String content) {
                               WriteDiaryController.to
                                   .changeContentListener(content);
@@ -846,15 +850,18 @@ class WriteDiary extends StatelessWidget {
                                     ),
                                     child: Row(
                                       children: [
-                                        Icon(
-                                          Icons.tag,
-                                          size: 16.r,
-                                          color: Color(0xff222222),
+                                        Text(
+                                          '# ',
+                                          style: TextStyle(
+                                            color: StaticColor.font_main,
+                                            fontSize: 14.sp,
+                                            fontWeight: FontWeight.w600,
+                                          ),
                                         ),
                                         CustomText(
                                           text: WriteDiaryController
                                               .to.tags[index],
-                                          color: Color(0xff222222),
+                                          color: StaticColor.font_main,
                                           fontSize: 14.sp,
                                           fontWeight: FontWeight.w400,
                                           height: (20 / 14),
@@ -977,81 +984,46 @@ class WriteDiary extends StatelessWidget {
     );
   }
 
-  Widget _imageList() {
-    return Builder(
-      builder: (context) {
-        if (WriteDiaryController.to.images.length == 1) {
-          return Row(
-            children: [
-              picture(context, 0),
-              SizedBox(width: 8.w),
-              DottedBorder(
-                borderType: BorderType.RRect,
-                radius: Radius.circular(10.r),
-                color: Color(0xffD9D9D9),
-                child: GestureDetector(
-                  onTap: () {
-                    WriteDiaryController.to.pickImages(context);
-                  },
-                  child: Container(
-                    width: (Get.width - 64.w) / 3,
-                    height: 88.h,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10.r),
-                    ),
-                    child: Icon(Icons.add, size: 12.r),
-                  ),
-                ),
-              ),
-            ],
-          );
-        } else if (WriteDiaryController.to.images.length == 2) {
-          return Row(
-            children: [
-              picture(context, 0),
-              SizedBox(width: 8.w),
-              picture(context, 1),
-              SizedBox(width: 8.w),
-              Expanded(
-                child: DottedBorder(
-                  borderType: BorderType.RRect,
-                  radius: Radius.circular(10.r),
-                  color: Color(0xffD9D9D9),
-                  child: GestureDetector(
-                    onTap: () {
-                      WriteDiaryController.to.pickImages(context);
-                    },
-                    child: Container(
-                      height: 88.h,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10.r),
+  Widget _imageList(BuildContext context) {
+    return SingleChildScrollView(
+      scrollDirection: Axis.horizontal,
+      child: Row(
+        children: [
+          ...List.generate(
+            WriteDiaryController.to.images.length,
+            (index) => picture(index),
+          ),
+          WriteDiaryController.to.images.length == 10
+              ? Container()
+              : Padding(
+                  padding: EdgeInsets.only(right: 8.w),
+                  child: DottedBorder(
+                    borderType: BorderType.RRect,
+                    radius: Radius.circular(10.r),
+                    color: Color(0xffD9D9D9),
+                    child: GestureDetector(
+                      onTap: () {
+                        WriteDiaryController.to.pickImages(context);
+                      },
+                      child: Container(
+                        width: (Get.width - 64.w) / 3,
+                        height: 88.h,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10.r),
+                        ),
+                        child: Icon(Icons.add, size: 12.r),
                       ),
-                      child: Center(child: Icon(Icons.add, size: 12.r)),
                     ),
                   ),
                 ),
-              ),
-            ],
-          );
-        } else if (WriteDiaryController.to.images.length == 3) {
-          return Row(
-            children: [
-              picture(context, 0),
-              SizedBox(width: 8.w),
-              picture(context, 1),
-              SizedBox(width: 8.w),
-              picture(context, 2)
-            ],
-          );
-        } else {
-          return Container();
-        }
-      },
+        ],
+      ),
     );
   }
 
-  Widget picture(BuildContext context, int index) {
+  Widget picture(int index) {
     return Container(
+      margin: EdgeInsets.only(right: 8.w),
       width: (Get.width - 64.w) / 3,
       height: 88.h,
       decoration: BoxDecoration(

@@ -1,17 +1,37 @@
 import 'package:dangdiarysample/components/custom_text.dart';
 import 'package:dangdiarysample/controllers/sticker_controller.dart';
+import 'package:dangdiarysample/models/sticker/locked_sticker_model.dart';
+import 'package:dangdiarysample/models/sticker/my_sticker_model.dart';
+import 'package:dangdiarysample/repositories/public_repository.dart';
+import 'package:dangdiarysample/skeletons/home_skeleton.dart';
 import 'package:dangdiarysample/static/color.dart';
+import 'package:dangdiarysample/static/icon.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
-class Sticker extends StatelessWidget {
+class Sticker extends StatefulWidget {
   const Sticker({Key? key}) : super(key: key);
+
+  @override
+  State<Sticker> createState() => _StickerState();
+}
+
+class _StickerState extends State<Sticker> {
+  @override
+  void dispose() {
+    Get.delete<StickerController>();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     Get.put(StickerController());
-    return _sticker(context);
+    return Obx(
+      () => StickerController.to.stickerModel.value == null
+          ? const HomeSkeleton()
+          : _sticker(context),
+    );
   }
 
   Widget _sticker(BuildContext context) {
@@ -37,21 +57,6 @@ class Sticker extends StatelessWidget {
           fontWeight: FontWeight.w500,
           height: (28 / 20),
         ),
-        actions: [
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 24.0.w),
-            child: GestureDetector(
-              onTap: () {
-                Get.toNamed('/searchDiary');
-              },
-              child: Icon(
-                Icons.search,
-                color: Colors.black,
-                size: 32.r,
-              ),
-            ),
-          ),
-        ],
       ),
       body: Container(
         color: Colors.white,
@@ -76,9 +81,12 @@ class Sticker extends StatelessWidget {
                             height: (32 / 20),
                           ),
                           children: <TextSpan>[
-                            TextSpan(text: '총 1000장 중에\n'),
                             TextSpan(
-                              text: '455개의 ',
+                                text:
+                                    '총 ${StickerController.to.stickerModel.value?.numberOfTotalSticker}장 중에\n'),
+                            TextSpan(
+                              text:
+                                  '${StickerController.to.stickerModel.value?.numberOfSticker}개의 ',
                               style: TextStyle(
                                 color: StaticColor.main,
                                 fontSize: 20.sp,
@@ -103,7 +111,14 @@ class Sticker extends StatelessWidget {
                             ),
                           ],
                           image: DecorationImage(
-                            image: AssetImage('assets/dog.png'),
+                            image: StickerController
+                                        .to.stickerModel.value?.profileImage ==
+                                    null
+                                ? AssetImage('assets/default_profile_image.png')
+                                    as ImageProvider
+                                : NetworkImage(PublicRepository()
+                                    .getProfileImageUrl(StickerController
+                                        .to.stickerModel.value!.profileImage)),
                             fit: BoxFit.cover,
                           ),
                         ),
@@ -129,7 +144,8 @@ class Sticker extends StatelessWidget {
                               height: (20 / 12),
                             ),
                             CustomText(
-                              text: '995장',
+                              text:
+                                  '${StickerController.to.stickerModel.value?.numberOfDiary}장',
                               color: Color(0xff6B6B6B),
                               fontSize: 12.sp,
                               fontWeight: FontWeight.w500,
@@ -156,7 +172,8 @@ class Sticker extends StatelessWidget {
                               height: (20 / 12),
                             ),
                             CustomText(
-                              text: '4장',
+                              text:
+                                  '${StickerController.to.stickerModel.value?.numberOfOverdueDiary}장',
                               color: Color(0xff6B6B6B),
                               fontSize: 12.sp,
                               fontWeight: FontWeight.w500,
@@ -183,7 +200,8 @@ class Sticker extends StatelessWidget {
                               height: (20 / 12),
                             ),
                             CustomText(
-                              text: '499장',
+                              text:
+                                  '${StickerController.to.stickerModel.value?.numberOfSticker}장',
                               color: Color(0xff6B6B6B),
                               fontSize: 12.sp,
                               fontWeight: FontWeight.w500,
@@ -204,36 +222,71 @@ class Sticker extends StatelessWidget {
                 SizedBox(height: 16.h),
                 _stickerTabBar(),
                 SizedBox(height: 8.h),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    Container(
-                      width: 16.w,
-                      height: 16.w,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(8.r),
-                        border: Border.all(
-                          color: Color(0xff7D7D7D7),
+                GestureDetector(
+                  onTap: () => StickerController.to.changeShowLockedSticker(),
+                  child: Container(
+                    color: Colors.transparent,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        StickerController.to.showLockedSticker.value
+                            ? Container(
+                                width: 16.w,
+                                height: 16.w,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(8.r),
+                                  border: Border.all(
+                                    color: StaticColor.link,
+                                  ),
+                                ),
+                                child: Center(
+                                  child: Container(
+                                    width: 8.w,
+                                    height: 8.w,
+                                    decoration: BoxDecoration(
+                                      color: StaticColor.main_light,
+                                      borderRadius: BorderRadius.circular(4.r),
+                                    ),
+                                  ),
+                                ),
+                              )
+                            : Container(
+                                width: 16.w,
+                                height: 16.w,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(8.r),
+                                  border: Border.all(
+                                    color: StaticColor.link,
+                                  ),
+                                ),
+                              ),
+                        SizedBox(width: 4.w),
+                        CustomText(
+                          text: '미보유 스티커 보기',
+                          color: Color(0xff7D7D7D),
+                          fontSize: 12.sp,
+                          fontWeight: FontWeight.w400,
+                          height: (20 / 12),
                         ),
-                      ),
+                        SizedBox(width: 24.w),
+                      ],
                     ),
-                    SizedBox(width: 4.w),
-                    CustomText(
-                      text: '미보유 스티커 보기',
-                      color: Color(0xff7D7D7D),
-                      fontSize: 12.sp,
-                      fontWeight: FontWeight.w400,
-                      height: (20 / 12),
-                    ),
-                    SizedBox(width: 24.w),
-                  ],
+                  ),
                 ),
                 Obx(
                   () => IndexedStack(
                     index: StickerController.to.tabBarIndex.value,
                     children: [
-                      _stickerGridView(),
-                      _stickerGridView(),
+                      _stickerGridView(
+                        StickerController.to.showLockedSticker.value
+                            ? StickerController.to.latestOrderList
+                            : StickerController.to.myLatestOrderList,
+                      ),
+                      _stickerGridView(
+                        StickerController.to.showLockedSticker.value
+                            ? StickerController.to.oldOrderList
+                            : StickerController.to.myOldOrderList,
+                      ),
                     ],
                   ),
                 ),
@@ -344,11 +397,11 @@ class Sticker extends StatelessWidget {
     );
   }
 
-  Widget _stickerGridView() {
+  Widget _stickerGridView(List<dynamic> orderedList) {
     return Padding(
       padding: EdgeInsets.fromLTRB(24.w, 10.h, 20.w, 24.h),
       child: GridView.builder(
-        physics: NeverScrollableScrollPhysics(),
+        physics: const NeverScrollableScrollPhysics(),
         shrinkWrap: true,
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 2,
@@ -356,79 +409,161 @@ class Sticker extends StatelessWidget {
           mainAxisSpacing: 16.h,
           mainAxisExtent: 196.h,
         ),
-        itemCount: 10,
+        itemCount: orderedList.length,
         itemBuilder: (context, index) {
-          return Container(
-            padding: EdgeInsets.symmetric(vertical: 24.h, horizontal: 16.w),
-            decoration: BoxDecoration(
-              color: Color(0xffF4F4F4),
-              borderRadius: BorderRadius.circular(10.r),
-            ),
-            child: Column(
-              children: [
-                index % 2 == 0
-                    ? GestureDetector(
-                        onTap: () {
-                          Get.toNamed('/stickerDetail');
-                        },
-                        child: Container(
-                          width: 108.w,
-                          height: 108.w,
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(54.r),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.black.withOpacity(0.15),
-                                offset: Offset(0, 4.h),
-                                blurRadius: 10.r,
+          if (orderedList[index] is MyStickerModel) {
+            return Container(
+              padding: orderedList[index].stickerShape == 'circle'
+                  ? EdgeInsets.symmetric(vertical: 16.h, horizontal: 16.w)
+                  : EdgeInsets.only(top: 27.h, left: 16.w, right: 16.w),
+              decoration: BoxDecoration(
+                color: StaticColor.white,
+                borderRadius: BorderRadius.circular(10.r),
+                border: Border.all(
+                  color: Color(0xffF5F5F5),
+                ),
+              ),
+              child: Column(
+                children: [
+                  orderedList[index].stickerShape == 'circle'
+                      ? GestureDetector(
+                          onTap: () {
+                            Get.toNamed('/stickerDetail');
+                          },
+                          child: Container(
+                            width: 124.w,
+                            height: 124.w,
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(62.r),
+                              image: DecorationImage(
+                                image: NetworkImage(PublicRepository()
+                                    .getStickerImageUrl(
+                                        orderedList[index].stickerImage)),
+                                fit: BoxFit.cover,
                               ),
-                            ],
-                            image: DecorationImage(
-                              image: AssetImage(
-                                  'assets/sticker${index % 4 + 1}.png'),
-                              fit: BoxFit.contain,
+                            ),
+                          ),
+                        )
+                      : GestureDetector(
+                          onTap: () {
+                            Get.toNamed('/stickerDetail');
+                          },
+                          child: Container(
+                            width: 124.w,
+                            height: 105.h,
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(5.r),
+                              image: DecorationImage(
+                                image: NetworkImage(PublicRepository()
+                                    .getStickerImageUrl(
+                                        orderedList[index].stickerImage)),
+                                fit: BoxFit.cover,
+                              ),
                             ),
                           ),
                         ),
-                      )
-                    : GestureDetector(
-                        onTap: () {
-                          Get.toNamed('/stickerDetail');
-                        },
-                        child: Container(
-                          margin: EdgeInsets.only(top: 8.h),
-                          width: 119.w,
-                          height: 100.h,
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(5.r),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.black.withOpacity(0.15),
-                                offset: Offset(0, 4.h),
-                                blurRadius: 10.r,
+                  orderedList[index].stickerShape == 'circle'
+                      ? SizedBox(height: 8.h)
+                      : SizedBox(height: 16.h),
+                  CustomText(
+                    text: orderedList[index].challengeTitle,
+                    color: Color(0xff222222),
+                    fontSize: 12.sp,
+                    fontWeight: FontWeight.w400,
+                    height: (20 / 12),
+                  ),
+                ],
+              ),
+            );
+          } else if (orderedList[index] is LockedStickerModel) {
+            return Container(
+              padding: orderedList[index].stickerShape == 'circle'
+                  ? EdgeInsets.symmetric(vertical: 16.h, horizontal: 16.w)
+                  : EdgeInsets.only(top: 27.h, left: 16.w, right: 16.w),
+              decoration: BoxDecoration(
+                color: StaticColor.white,
+                borderRadius: BorderRadius.circular(10.r),
+                border: Border.all(
+                  color: Color(0xffF5F5F5),
+                ),
+              ),
+              child: Column(
+                children: [
+                  Stack(
+                    children: [
+                      Opacity(
+                        opacity: 0.2,
+                        child: orderedList[index].stickerShape == 'circle'
+                            ? GestureDetector(
+                                onTap: () {
+                                  Get.toNamed('/stickerDetail');
+                                },
+                                child: Container(
+                                  width: 124.w,
+                                  height: 124.w,
+                                  decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(62.r),
+                                    image: DecorationImage(
+                                      image: NetworkImage(PublicRepository()
+                                          .getStickerImageUrl(
+                                              orderedList[index].stickerImage)),
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
+                                ),
+                              )
+                            : GestureDetector(
+                                onTap: () {
+                                  Get.toNamed('/stickerDetail');
+                                },
+                                child: Container(
+                                  width: 124.w,
+                                  height: 105.h,
+                                  decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(5.r),
+                                    image: DecorationImage(
+                                      image: NetworkImage(PublicRepository()
+                                          .getStickerImageUrl(
+                                              orderedList[index].stickerImage)),
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
+                                ),
                               ),
-                            ],
-                            image: DecorationImage(
-                              image: AssetImage(
-                                  'assets/sticker${index % 4 + 1}.png'),
-                              fit: BoxFit.cover,
-                            ),
-                          ),
+                      ),
+                      Positioned(
+                        top: orderedList[index].stickerShape == 'circle'
+                            ? 46.h
+                            : 36.5.h,
+                        left: 46.w,
+                        child: StaticIcon(
+                          IconsPath.lock_bold,
+                          size: 32.w,
+                          color: StaticColor.icon,
                         ),
                       ),
-                SizedBox(height: 16.h),
-                CustomText(
-                  text: '전기담요에서 간식먹기',
-                  color: Color(0xff222222),
-                  fontSize: 12.sp,
-                  fontWeight: FontWeight.w400,
-                  height: (20 / 12),
-                ),
-              ],
-            ),
-          );
+                    ],
+                  ),
+                  orderedList[index].stickerShape == 'circle'
+                      ? SizedBox(height: 8.h)
+                      : SizedBox(height: 16.h),
+                  CustomText(
+                    text: '아직 획득하지 못했어요',
+                    color: StaticColor.link,
+                    fontSize: 12.sp,
+                    fontWeight: FontWeight.w400,
+                    height: (20 / 12),
+                  ),
+                ],
+              ),
+            );
+          } else {
+            return Container();
+          }
         },
       ),
     );

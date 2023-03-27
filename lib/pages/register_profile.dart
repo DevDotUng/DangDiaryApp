@@ -342,7 +342,9 @@ class RegisterProfile extends StatelessWidget {
         ),
         SizedBox(height: 8.h),
         GestureDetector(
-          onTap: () => RegisterProfileController.to.pickBreed(context),
+          onTap: () {
+            RegisterProfileController.to.pickBreed(context);
+          },
           child: Container(
             padding: EdgeInsets.symmetric(horizontal: 8.w),
             width: double.infinity,
@@ -355,8 +357,12 @@ class RegisterProfile extends StatelessWidget {
               children: [
                 Expanded(
                   child: CustomText(
-                    text: '견종을 검색해보세요',
-                    color: StaticColor.line,
+                    text: RegisterProfileController.to.breed.value == ''
+                        ? '견종을 검색해보세요'
+                        : RegisterProfileController.to.breed.value,
+                    color: RegisterProfileController.to.breed.value == ''
+                        ? StaticColor.line
+                        : Color(0xff222222),
                     fontSize: 16.sp,
                     fontWeight: FontWeight.w500,
                     height: (20 / 16),

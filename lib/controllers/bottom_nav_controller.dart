@@ -1,23 +1,31 @@
 import 'dart:async';
 
 import 'package:dangdiarysample/components/custom_text.dart';
+import 'package:dangdiarysample/models/challenge/challenge_model.dart';
+import 'package:dangdiarysample/models/challenge/recommend_challenge_model.dart';
+import 'package:dangdiarysample/repositories/challenge_repository.dart';
 import 'package:dangdiarysample/static/color.dart';
 import 'package:dangdiarysample/static/icon.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 
 enum PageName { HOME, DIARY, BROWSE, MYPAGE }
 
 class BottomNavController extends GetxController {
   static BottomNavController get to => Get.find();
+
+  final challengeModel = Rxn<ChallengeModel>();
+  List<RecommendChallengeModel> recommendList = [];
+  List<RecommendChallengeModel> inProgressList = [];
+
   RxInt pageIndex = 0.obs;
   RxBool isShowBottomModal = true.obs;
   late PageController pageController;
   RxDouble page = 0.0.obs;
 
-  static const countdownDuration =
-      Duration(hours: 10, minutes: 14, seconds: 29);
+  late Duration countdownDuration;
   Rx<Duration> duration = Duration().obs;
   Timer? timer;
   RxBool countDown = true.obs;
@@ -61,11 +69,10 @@ class BottomNavController extends GetxController {
   ];
 
   @override
-  void onInit() {
+  void onInit() async {
     pageController = PageController();
     pageController.addListener(pageChangeListener);
-    reset();
-    startTimer();
+    await challengeInit();
     super.onInit();
   }
 
@@ -73,6 +80,44 @@ class BottomNavController extends GetxController {
   void dispose() {
     pageController.dispose();
     super.dispose();
+  }
+
+  Future<void> challengeInit() async {
+    ChallengeModel challengeModelTemp =
+        await ChallengeRepository().getChallengeView();
+    challengeModel(challengeModelTemp);
+
+    if (challengeModel.value!.inProgressChallenges.isNotEmpty) {
+      for (RecommendChallengeModel inProgressChallengeModel
+          in challengeModel.value!.inProgressChallenges) {
+        if (inProgressChallengeModel.recommendType == 'daily') {
+          setDuration(inProgressChallengeModel.recommendDate);
+        } else {
+          countdownDuration = const Duration(hours: 0, minutes: 0, seconds: 0);
+        }
+      }
+    } else {
+      countdownDuration = const Duration(hours: 0, minutes: 0, seconds: 0);
+    }
+    reset();
+    startTimer();
+  }
+
+  void setDuration(String recommendDate) {
+    DateTime datetime = DateFormat("yyyy-MM-dd hh:mm:ss").parse(recommendDate);
+    DateTime now = DateTime.now();
+    int hour = (datetime.millisecondsSinceEpoch - now.millisecondsSinceEpoch) ~/
+        (1000 * 60 * 60);
+    int minute =
+        ((datetime.millisecondsSinceEpoch - now.millisecondsSinceEpoch) ~/
+                (1000 * 60)) %
+            60;
+    int second =
+        (((datetime.millisecondsSinceEpoch - now.millisecondsSinceEpoch) /
+                    1000) %
+                60)
+            .toInt();
+    countdownDuration = Duration(hours: hour, minutes: minute, seconds: second);
   }
 
   void reset() {

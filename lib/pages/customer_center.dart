@@ -13,12 +13,11 @@ class CustomerCenter extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Get.put(CustomerCenterController());
-    return _customerCenterWidget();
-    // return Obx(
-    //   () => CustomerCenterController.to.customerCenter.value == null
-    //       ? Container(color: Colors.white)
-    //       : _customerCenterWidget(),
-    // );
+    return Obx(
+      () => CustomerCenterController.to.customerCenter.value == null
+          ? Container(color: Colors.white)
+          : _customerCenterWidget(),
+    );
   }
 
   Widget _customerCenterWidget() {
@@ -92,14 +91,24 @@ class CustomerCenter extends StatelessWidget {
                         child: AutoLoopScrollView(
                           duration: Duration(seconds: 100),
                           scrollDirection: Axis.horizontal,
-                          child: CustomText(
-                            text:
-                                '[공지] ${CustomerCenterController.to.customerCenter.value?.notices[0].title}',
-                            color: Color(0xff272727),
-                            fontSize: 14.sp,
-                            fontWeight: FontWeight.w400,
-                            maxLines: 1,
-                          ),
+                          child: CustomerCenterController.to.customerCenter
+                                      .value?.notices.length ==
+                                  0
+                              ? CustomText(
+                                  text: '[공지]',
+                                  color: Color(0xff272727),
+                                  fontSize: 14.sp,
+                                  fontWeight: FontWeight.w400,
+                                  maxLines: 1,
+                                )
+                              : CustomText(
+                                  text:
+                                      '[공지] ${CustomerCenterController.to.customerCenter.value!.notices[0].title}',
+                                  color: Color(0xff272727),
+                                  fontSize: 14.sp,
+                                  fontWeight: FontWeight.w400,
+                                  maxLines: 1,
+                                ),
                         ),
                       ),
                     ],
@@ -148,7 +157,8 @@ class CustomerCenter extends StatelessWidget {
                       child: Column(
                         children: [
                           ...List.generate(
-                            CustomerCenterController.to.FAQs.length,
+                            CustomerCenterController
+                                .to.customerCenter.value!.FAQs.length,
                             (index) => Padding(
                               padding: EdgeInsets.symmetric(vertical: 12.h),
                               child: GestureDetector(
@@ -160,7 +170,11 @@ class CustomerCenter extends StatelessWidget {
                                     Expanded(
                                       child: CustomText(
                                         text: CustomerCenterController
-                                            .to.FAQs[index],
+                                            .to
+                                            .customerCenter
+                                            .value!
+                                            .FAQs[index]
+                                            .question,
                                         color: Color(0xff222222),
                                         fontSize: 14.sp,
                                         fontWeight: FontWeight.w400,

@@ -47,6 +47,10 @@ dependencies:
   flutter_svg: ^1.1.6
   http: ^0.13.4
   kakao_flutter_sdk_user: ^1.4.1
+  hive: ^2.2.3
+  hive_flutter: ^1.1.0
+  dio: ^4.0.6
+  sign_in_with_apple: ^4.3.0
 
 dev_dependencies:
   flutter_test:

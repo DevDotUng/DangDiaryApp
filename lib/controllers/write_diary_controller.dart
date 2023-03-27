@@ -1,9 +1,11 @@
 import 'package:dangdiarysample/components/custom_text.dart';
+import 'package:dangdiarysample/repositories/write_diary_repository.dart';
 import 'package:dangdiarysample/static/color.dart';
 import 'package:dangdiarysample/static/icon.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:hive/hive.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 
@@ -57,12 +59,16 @@ class WriteDiaryController extends GetxController {
   RxBool isShake = false.obs;
   RxBool isShowPopup = false.obs;
   RxList<String> tags = ['한강공원_술래잡기'].obs;
+  late TextEditingController titleTextEditingController;
+  late TextEditingController contentTextEditingController;
   late TextEditingController tagTextEditingController;
   late ScrollController scrollController;
 
   @override
   void onInit() {
     scrollController = ScrollController();
+    titleTextEditingController = TextEditingController();
+    contentTextEditingController = TextEditingController();
     tagTextEditingController = TextEditingController();
     super.onInit();
   }
@@ -70,6 +76,8 @@ class WriteDiaryController extends GetxController {
   @override
   void dispose() {
     scrollController.dispose();
+    titleTextEditingController.dispose();
+    contentTextEditingController.dispose();
     tagTextEditingController.dispose();
     super.dispose();
   }
@@ -97,7 +105,19 @@ class WriteDiaryController extends GetxController {
   }
 
   void addTag(String tag) {
-    tags.add(tag);
+    String filteredString = getFilteredString(tag);
+    if (tag.isNotEmpty) {
+      tags.add(filteredString);
+    }
+  }
+
+  String getFilteredString(String text) {
+    RegExp basicReg = RegExp("[^ㄱ-ㅎ가-힣0-9a-zA-Z\\s_]");
+    String filteredString = text;
+    filteredString = filteredString.replaceAll(basicReg, "");
+    filteredString = filteredString.replaceAll(RegExp(r"\s+"), "_");
+
+    return filteredString;
   }
 
   void removeTag(int index) {
@@ -127,7 +147,7 @@ class WriteDiaryController extends GetxController {
 
   Future<void> pickImages(BuildContext context) async {
     final List<XFile>? imageList = await _picker.pickMultiImage();
-    if (imageList!.length + images.length > 3) {
+    if (imageList!.length + images.length > 10) {
       showDialog(
         context: context,
         builder: (BuildContext buildContext) {
@@ -155,7 +175,7 @@ class WriteDiaryController extends GetxController {
                       ),
                       SizedBox(width: 8.w),
                       CustomText(
-                        text: '사진 개수가 3장을 초과했어요',
+                        text: '사진 개수가 10장을 초과했어요',
                         color: Colors.black,
                         fontSize: 20.sp,
                         fontWeight: FontWeight.w600,
@@ -164,7 +184,7 @@ class WriteDiaryController extends GetxController {
                     ],
                   ),
                   CustomText(
-                    text: '일기에는 사진을 최대 3장까지 업로드 할 수 있어요.',
+                    text: '일기에는 사진을 최대 10장까지 업로드 할 수 있어요.',
                     color: Color(0xff7D7D7D),
                     fontSize: 14.sp,
                     fontWeight: FontWeight.w400,
@@ -247,7 +267,32 @@ class WriteDiaryController extends GetxController {
     }
 
     if (isCompletes.isEmpty) {
-      Get.offAndToNamed('/completeDiary');
+      int userId = await getUserId();
+      int challengeId = 1;
+      String endDate = getEndDate(date.value);
+      String title;
+      if (titleTextEditingController.text.isEmpty) {
+        title = '한강공원 술래잡기';
+      } else {
+        title = titleTextEditingController.text;
+      }
+      List<String> imagePaths = getImagePaths();
+      int statusCode = await WriteDiaryRepository().writeDiary(
+        userId,
+        challengeId,
+        endDate,
+        weathers[selectedWeatherIndex.value],
+        feelings[selectedFeelingsIndex.value],
+        title,
+        contentTextEditingController.text,
+        imagePaths,
+        tags,
+        isPublic.value,
+      );
+
+      if (statusCode == 201) {
+        Get.offAndToNamed('/completeDiary');
+      }
     } else {
       double height;
       switch (isCompletes[0]) {
@@ -286,6 +331,29 @@ class WriteDiaryController extends GetxController {
         isShake(!isShake.value);
       });
     }
+  }
+
+  Future<int> getUserId() async {
+    Box homeBox = await Hive.openBox('userInfo');
+    int userId = homeBox.get('userId');
+
+    return userId;
+  }
+
+  String getEndDate(String date) {
+    DateTime parseDate = DateFormat("yyyy'년' MM'월' dd'일'").parse(date);
+    String endDate = DateFormat("yyyy-MM-dd HH:mm:ss").format(parseDate);
+
+    return endDate;
+  }
+
+  List<String> getImagePaths() {
+    List<String> imagePaths = [];
+    images.value.forEach((image) {
+      imagePaths.add(image!.path);
+    });
+
+    return imagePaths;
   }
 
   void changeIsShowPopup() {

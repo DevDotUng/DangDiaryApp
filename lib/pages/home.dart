@@ -2,6 +2,7 @@ import 'package:dangdiarysample/components/custom_text.dart';
 import 'package:dangdiarysample/controllers/bottom_nav_controller.dart';
 import 'package:dangdiarysample/controllers/home_controller.dart';
 import 'package:dangdiarysample/pages/notification_page.dart';
+import 'package:dangdiarysample/repositories/public_repository.dart';
 import 'package:dangdiarysample/skeletons/home_skeleton.dart';
 import 'package:dangdiarysample/static/color.dart';
 import 'package:dangdiarysample/static/icon.dart';
@@ -16,7 +17,7 @@ class Home extends StatelessWidget {
   Widget build(BuildContext context) {
     Get.put(HomeController());
     return Obx(
-      () => HomeController.to.isLoading.value
+      () => HomeController.to.homeModel.value == null
           ? HomeSkeleton()
           : _homeWidget(context),
     );
@@ -35,7 +36,11 @@ class Home extends StatelessWidget {
             height: double.infinity,
             decoration: BoxDecoration(
               image: DecorationImage(
-                image: AssetImage('assets/dog3.png'),
+                image: HomeController.to.homeModel.value?.backgroundImage ==
+                        null
+                    ? AssetImage('assets/dog3.png') as ImageProvider
+                    : NetworkImage(PublicRepository().getDiaryImageUrl(
+                        HomeController.to.homeModel.value!.backgroundImage)),
                 fit: BoxFit.cover,
               ),
             ),
@@ -76,7 +81,12 @@ class Home extends StatelessWidget {
                     ),
                   ],
                   image: DecorationImage(
-                    image: AssetImage('assets/dog.png'),
+                    image: HomeController.to.homeModel.value?.profileImage ==
+                            null
+                        ? AssetImage('assets/default_profile_image.png')
+                            as ImageProvider
+                        : NetworkImage(PublicRepository().getProfileImageUrl(
+                            HomeController.to.homeModel.value!.profileImage)),
                     fit: BoxFit.cover,
                   ),
                 ),

@@ -3,9 +3,11 @@ import 'package:dangdiarysample/components/expandable_text.dart';
 import 'package:dangdiarysample/components/later_dialog.dart';
 import 'package:dangdiarysample/controllers/bottom_nav_controller.dart';
 import 'package:dangdiarysample/controllers/challenge_detail_controller.dart';
+import 'package:dangdiarysample/repositories/public_repository.dart';
 import 'package:dangdiarysample/skeletons/challenge_detail_skeleton.dart';
 import 'package:dangdiarysample/static/color.dart';
 import 'package:dangdiarysample/static/icon.dart';
+import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -64,8 +66,8 @@ class ChallengeDetail extends StatelessWidget {
                 SizedBox(height: 29.h),
                 GestureDetector(
                   onTap: () {
+                    ChallengeDetailController.to.endChallengeAndToWrite();
                     Navigator.pop(context);
-                    Get.toNamed('/writeDiary');
                   },
                   child: Container(
                     height: 48.h,
@@ -86,6 +88,7 @@ class ChallengeDetail extends StatelessWidget {
                 SizedBox(height: 8.h),
                 GestureDetector(
                   onTap: () {
+                    ChallengeDetailController.to.endChallenge();
                     Navigator.pop(context);
                   },
                   child: CustomText(
@@ -110,7 +113,7 @@ class ChallengeDetail extends StatelessWidget {
       context: context,
       builder: (BuildContext context) {
         return LaterDialog(onClose: () {
-          ChallengeDetailController.to.setIsChallenge(false);
+          ChallengeDetailController.to.stopChallenge();
         });
       },
     );
@@ -120,10 +123,11 @@ class ChallengeDetail extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Get.put(ChallengeDetailController());
+    Get.put(ChallengeDetailController(
+        context: context, challengeId: Get.arguments['challengeId']));
     Get.put(BottomNavController());
     return Obx(
-      () => ChallengeDetailController.to.isLoading.value
+      () => ChallengeDetailController.to.challengeDetailModel.value == null
           ? ChallengeDetailSkeleton()
           : _challengeDetailWidget(context),
     );
@@ -166,8 +170,10 @@ class ChallengeDetail extends StatelessWidget {
                         background: SizedBox(
                           height: Get.width,
                           width: Get.width,
-                          child: Image.asset(
-                            'assets/challenge_sample1.png',
+                          child: Image.network(
+                            PublicRepository().getChallengeImageUrl(
+                                ChallengeDetailController
+                                    .to.challengeDetailModel.value!.image),
                             fit: BoxFit.cover,
                           ),
                         ),
@@ -235,14 +241,22 @@ class ChallengeDetail extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 CustomText(
-                                  text: '한강공원 술래잡기',
+                                  text:
+                                      '${ChallengeDetailController.to.challengeDetailModel.value!.title}',
                                   color: Colors.black,
                                   fontSize: 24.sp,
                                   fontWeight: FontWeight.w600,
                                   height: (32 / 24),
                                 ),
                                 SizedBox(height: 16.h),
-                                ChallengeDetailController.to.isChallenge.value
+                                ChallengeDetailController
+                                            .to.isChallenge.value &&
+                                        ChallengeDetailController
+                                                .to
+                                                .challengeDetailModel
+                                                .value
+                                                ?.recommendDate !=
+                                            null
                                     ? Row(
                                         children: [
                                           StaticIcon(
@@ -253,7 +267,7 @@ class ChallengeDetail extends StatelessWidget {
                                           SizedBox(width: 4.w),
                                           CustomText(
                                             text:
-                                                '${twoDigits(BottomNavController.to.duration.value.inHours)}:${twoDigits(BottomNavController.to.duration.value.inMinutes.remainder(60))}:${twoDigits(BottomNavController.to.duration.value.inSeconds.remainder(60))}',
+                                                '${twoDigits(ChallengeDetailController.to.duration.value.inHours)}:${twoDigits(ChallengeDetailController.to.duration.value.inMinutes.remainder(60))}:${twoDigits(ChallengeDetailController.to.duration.value.inSeconds.remainder(60))}',
                                             color: StaticColor.font_main,
                                             fontSize: 16.sp,
                                             fontWeight: FontWeight.w500,
@@ -262,7 +276,14 @@ class ChallengeDetail extends StatelessWidget {
                                         ],
                                       )
                                     : CustomText(
-                                        text: '처음 도전하는 챌린지에요!',
+                                        text: ChallengeDetailController
+                                                    .to
+                                                    .challengeDetailModel
+                                                    .value!
+                                                    .numberOfComplete ==
+                                                0
+                                            ? '처음 도전하는 챌린지에요!'
+                                            : '${ChallengeDetailController.to.challengeDetailModel.value!.numberOfComplete}번째 도전하는 챌린지에요!',
                                         color: StaticColor.font_main,
                                         fontSize: 16.sp,
                                         fontWeight: FontWeight.w500,
@@ -291,7 +312,13 @@ class ChallengeDetail extends StatelessWidget {
                                       color: Colors.white,
                                       borderRadius: BorderRadius.circular(22.r),
                                       image: DecorationImage(
-                                        image: AssetImage('assets/sticker.png'),
+                                        image: NetworkImage(PublicRepository()
+                                            .getStickerImageUrl(
+                                                ChallengeDetailController
+                                                    .to
+                                                    .challengeDetailModel
+                                                    .value!
+                                                    .stickerImage)),
                                         fit: BoxFit.contain,
                                       ),
                                     ),
@@ -309,7 +336,8 @@ class ChallengeDetail extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               ExpandableText(
-                                ChallengeDetailController.to.challengeContent,
+                                ChallengeDetailController
+                                    .to.challengeDetailModel.value!.content,
                                 expandText: '더보기',
                                 collapseText: '접기',
                                 maxLines: 4,
@@ -351,8 +379,11 @@ class ChallengeDetail extends StatelessWidget {
                               Container(
                                 width: Get.width - 80.w,
                                 child: CustomText(
-                                  text:
-                                      '공공장소 하네스 착용은 필수! 보호자가 2인 이상 함께하는 걸 권장해요. 하네스를 착용하고 한강공원에서 술래잡기 하는 사진을 1장 이상 찍어 업로드하면 돼요. ',
+                                  text: ChallengeDetailController
+                                      .to
+                                      .challengeDetailModel
+                                      .value!
+                                      .authenticationMethod,
                                   maxLines: 10,
                                   color: Colors.black,
                                   fontSize: 14.sp,
@@ -388,36 +419,73 @@ class ChallengeDetail extends StatelessWidget {
                           ],
                         ),
                         SizedBox(height: 4.h),
-                        SizedBox(
-                          height: 88.h,
-                          child: ListView.builder(
-                            scrollDirection: Axis.horizontal,
-                            itemCount: 4,
-                            itemBuilder: (BuildContext context, int index) {
-                              return Padding(
-                                padding: EdgeInsets.only(right: 8.0.w),
-                                child: GestureDetector(
-                                  onTap: () {
-                                    Get.toNamed("/posts");
-                                  },
-                                  child: Container(
-                                    width: 104.w,
-                                    height: 88.h,
-                                    decoration: BoxDecoration(
-                                      borderRadius:
-                                          BorderRadius.circular(10.0.r),
-                                      image: DecorationImage(
-                                        image: AssetImage(
-                                            'assets/challenge_detail_sample${index + 1}.png'),
-                                        fit: BoxFit.cover,
-                                      ),
+                        ChallengeDetailController.to.challengeDetailModel.value!
+                                .otherDogChallenges.isEmpty
+                            ? DottedBorder(
+                                borderType: BorderType.RRect,
+                                radius: Radius.circular(10.r),
+                                color: StaticColor.sub_light,
+                                child: Container(
+                                  width: double.infinity,
+                                  height: 88.h,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(10.r),
+                                  ),
+                                  child: Center(
+                                    child: CustomText(
+                                      text: '첫 도전의 영광을 누려보세요!',
+                                      color: StaticColor.sub_deeper,
+                                      fontSize: 14.sp,
+                                      fontWeight: FontWeight.w400,
                                     ),
                                   ),
                                 ),
-                              );
-                            },
-                          ),
-                        ),
+                              )
+                            : SizedBox(
+                                height: 88.h,
+                                child: ListView.builder(
+                                  scrollDirection: Axis.horizontal,
+                                  itemCount: ChallengeDetailController
+                                      .to
+                                      .challengeDetailModel
+                                      .value!
+                                      .otherDogChallenges
+                                      .length,
+                                  itemBuilder:
+                                      (BuildContext context, int index) {
+                                    return Padding(
+                                      padding: EdgeInsets.only(right: 8.0.w),
+                                      child: GestureDetector(
+                                        onTap: () {
+                                          Get.toNamed("/posts");
+                                        },
+                                        child: Container(
+                                          width: 104.w,
+                                          height: 88.h,
+                                          decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(10.0.r),
+                                            image: DecorationImage(
+                                              image: NetworkImage(
+                                                PublicRepository()
+                                                    .getDiaryImageUrl(
+                                                        ChallengeDetailController
+                                                            .to
+                                                            .challengeDetailModel
+                                                            .value!
+                                                            .otherDogChallenges[
+                                                                index]
+                                                            .image),
+                                              ),
+                                              fit: BoxFit.cover,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                ),
+                              ),
                         SizedBox(height: 118.h),
                       ],
                     ),
@@ -491,7 +559,7 @@ class ChallengeDetail extends StatelessWidget {
                         )
                       : GestureDetector(
                           onTap: () {
-                            ChallengeDetailController.to.setIsChallenge(true);
+                            ChallengeDetailController.to.startChallenge();
                           },
                           child: Container(
                             height: 48.h,
