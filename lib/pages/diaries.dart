@@ -233,16 +233,54 @@ class Diaries extends StatelessWidget {
                 SizedBox(height: 16.h),
                 _diariesTabBar(),
                 Obx(
-                  () => IndexedStack(
-                    index: DiariesController.to.tabBarIndex.value,
-                    children: [
-                      Visibility(
-                        visible: DiariesController.to.tabBarIndex.value == 0,
-                        child: _monthlyDiaries(),
-                      ),
-                      _dailyDiaries(),
-                    ],
-                  ),
+                  () => DiariesController
+                              .to.myDiariesModel.value?.diaries.length ==
+                          0
+                      ? Center(
+                          child: Column(
+                            children: [
+                              Container(
+                                margin: EdgeInsets.only(top: 63.h),
+                                width: 160.w,
+                                height: 160.h,
+                                decoration: BoxDecoration(
+                                  image: DecorationImage(
+                                    image: AssetImage(
+                                        'assets/illusts/no_breed.png'),
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
+                              ),
+                              SizedBox(height: 8.h),
+                              CustomText(
+                                text: '와! 밀린 일기가 하나도 없어요!',
+                                color: StaticColor.font_main,
+                                fontSize: 16.sp,
+                                fontWeight: FontWeight.w600,
+                                height: (32 / 16),
+                              ),
+                              SizedBox(height: 8.h),
+                              CustomText(
+                                text: '대단해요 - 또 다른 챌린지를 하러 가볼까요?',
+                                color: StaticColor.icon,
+                                fontSize: 14.sp,
+                                fontWeight: FontWeight.w400,
+                                height: (20 / 14),
+                              ),
+                            ],
+                          ),
+                        )
+                      : IndexedStack(
+                          index: DiariesController.to.tabBarIndex.value,
+                          children: [
+                            Visibility(
+                              visible:
+                                  DiariesController.to.tabBarIndex.value == 0,
+                              child: _monthlyDiaries(),
+                            ),
+                            _dailyDiaries(),
+                          ],
+                        ),
                 ),
               ],
             ),

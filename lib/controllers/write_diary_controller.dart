@@ -1,4 +1,7 @@
 import 'package:dangdiarysample/components/custom_text.dart';
+import 'package:dangdiarysample/controllers/bottom_nav_controller.dart';
+import 'package:dangdiarysample/controllers/diaries_controller.dart';
+import 'package:dangdiarysample/models/write_diary/complete_diary_model.dart';
 import 'package:dangdiarysample/repositories/write_diary_repository.dart';
 import 'package:dangdiarysample/static/color.dart';
 import 'package:dangdiarysample/static/icon.dart';
@@ -10,6 +13,12 @@ import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 
 class WriteDiaryController extends GetxController {
+  late int diaryId;
+  late int? challengeId;
+  late String title;
+  WriteDiaryController(
+      {required this.diaryId, this.challengeId, this.title = ''});
+
   static WriteDiaryController get to => Get.find();
   RxString date = DateFormat('yyyy년 MM월 dd일').format(DateTime.now()).obs;
   final ImagePicker _picker = ImagePicker();
@@ -58,7 +67,9 @@ class WriteDiaryController extends GetxController {
   ].cast<Widget>().toList().obs;
   RxBool isShake = false.obs;
   RxBool isShowPopup = false.obs;
-  RxList<String> tags = ['한강공원_술래잡기'].obs;
+  RxString titleTag = ''.obs;
+  RxList tags = [].obs;
+  RxBool isLoading = false.obs;
   late TextEditingController titleTextEditingController;
   late TextEditingController contentTextEditingController;
   late TextEditingController tagTextEditingController;
@@ -70,6 +81,8 @@ class WriteDiaryController extends GetxController {
     titleTextEditingController = TextEditingController();
     contentTextEditingController = TextEditingController();
     tagTextEditingController = TextEditingController();
+    titleTag(title);
+    tags.add(getFilteredString(titleTag.value));
     super.onInit();
   }
 
@@ -268,30 +281,41 @@ class WriteDiaryController extends GetxController {
 
     if (isCompletes.isEmpty) {
       int userId = await getUserId();
-      int challengeId = 1;
+      int challengeIdArgument = challengeId!;
       String endDate = getEndDate(date.value);
-      String title;
+      String titleArgument;
       if (titleTextEditingController.text.isEmpty) {
-        title = '한강공원 술래잡기';
+        titleArgument = title;
       } else {
-        title = titleTextEditingController.text;
+        titleArgument = titleTextEditingController.text;
+      }
+      List<String> tagArgument = [];
+      for (dynamic tag in tags) {
+        tagArgument.add(tag);
       }
       List<String> imagePaths = getImagePaths();
-      int statusCode = await WriteDiaryRepository().writeDiary(
+      isLoading(true);
+      CompleteDiaryModel? completeDiaryModel =
+          await WriteDiaryRepository().writeDiary(
+        diaryId,
         userId,
-        challengeId,
+        challengeIdArgument,
         endDate,
         weathers[selectedWeatherIndex.value],
         feelings[selectedFeelingsIndex.value],
-        title,
+        titleArgument,
         contentTextEditingController.text,
         imagePaths,
-        tags,
+        tagArgument,
         isPublic.value,
       );
+      isLoading(true);
 
-      if (statusCode == 201) {
-        Get.offAndToNamed('/completeDiary');
+      if (completeDiaryModel != null) {
+        BottomNavController.to.challengeInit();
+        DiariesController.to.myDiaryInit();
+        Get.offAndToNamed('/completeDiary',
+            arguments: {'completeDiaryModel': completeDiaryModel});
       }
     } else {
       double height;

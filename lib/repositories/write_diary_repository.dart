@@ -1,10 +1,14 @@
+import 'dart:convert';
+
+import 'package:dangdiarysample/models/write_diary/complete_diary_model.dart';
 import 'package:dangdiarysample/repositories/public_repository.dart';
 import 'package:dio/dio.dart';
 
 class WriteDiaryRepository {
   final String _baseUrl = PublicRepository.baseUrl;
 
-  Future<int> writeDiary(
+  Future<CompleteDiaryModel?> writeDiary(
+    int diaryId,
     int userId,
     int challengeId,
     String endDate,
@@ -25,6 +29,7 @@ class WriteDiaryRepository {
         .toList();
 
     var formData = FormData.fromMap({
+      'diaryId': diaryId,
       'userId': userId,
       'challengeId': challengeId,
       'endDate': endDate,
@@ -38,6 +43,12 @@ class WriteDiaryRepository {
     });
     var response = await dio.post('/api/writeDiary', data: formData);
 
-    return response.statusCode!;
+    if (response.statusCode == 201) {
+      CompleteDiaryModel completeDiaryModel =
+          CompleteDiaryModel.fromJson(response.data);
+      return completeDiaryModel;
+    } else {
+      return null;
+    }
   }
 }

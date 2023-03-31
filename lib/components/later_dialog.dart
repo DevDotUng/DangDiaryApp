@@ -1,5 +1,4 @@
 import 'package:dangdiarysample/components/custom_text.dart';
-import 'package:dangdiarysample/controllers/challenge_detail_controller.dart';
 import 'package:dangdiarysample/static/color.dart';
 import 'package:dangdiarysample/static/icon.dart';
 import 'package:flutter/material.dart';
@@ -18,7 +17,13 @@ class LaterDialog extends StatefulWidget {
 }
 
 class _LaterDialogState extends State<LaterDialog> {
-  List _checkBoxBoolList = [true, false, false, false, false];
+  int currentIndex = 0;
+  List<String> reasonContents = [
+    '아이가 흥미를 보이지 않아요.',
+    '아이가 체력적으로 힘들어해요.',
+    '챌린지에 필요한 준비물이 없어요.',
+    '기타 이유',
+  ];
 
   void _showSubmitDialog() async {
     await showDialog(
@@ -104,7 +109,6 @@ class _LaterDialogState extends State<LaterDialog> {
         );
       },
     );
-    widget.onClose();
   }
 
   @override
@@ -169,10 +173,11 @@ class _LaterDialogState extends State<LaterDialog> {
                 ..._checkBoxList(),
               ],
             ),
-            SizedBox(height: 50.h),
+            SizedBox(height: 24.h),
             GestureDetector(
               onTap: () {
                 Navigator.pop(context);
+                widget.onClose(reasonContents[currentIndex]);
                 _showSubmitDialog();
               },
               child: Container(
@@ -198,34 +203,26 @@ class _LaterDialogState extends State<LaterDialog> {
   }
 
   List _checkBoxList() {
-    return [
-      Padding(
-        padding: EdgeInsets.only(bottom: 10.0.h),
-        child: _checkBox(0, '아이가 흥미를 보이지 않아요.'),
+    return List.generate(
+      4,
+      (index) => Padding(
+        padding: EdgeInsets.only(bottom: 10.h),
+        child: _checkBox(index, reasonContents[index]),
       ),
-      Padding(
-        padding: EdgeInsets.only(bottom: 10.0.h),
-        child: _checkBox(1, '아이가 체력적으로 힘들어해요.'),
-      ),
-      Padding(
-        padding: EdgeInsets.only(bottom: 10.0.h),
-        child: _checkBox(2, '챌린지에 필요한 준비물이 없어요.'),
-      ),
-      _checkBox(3, '기타 이유'),
-    ];
+    );
   }
 
   Widget _checkBox(int index, String content) {
     return GestureDetector(
       onTap: () {
         setState(() {
-          _checkBoxBoolList[index] = !_checkBoxBoolList[index];
+          currentIndex = index;
         });
       },
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          _checkBoxBoolList[index]
+          currentIndex == index
               ? Container(
                   width: 24.w,
                   height: 24.w,

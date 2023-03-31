@@ -48,14 +48,14 @@ class ChallengeDetailRepository {
     }
   }
 
-  Future<bool> stopChallenge(int challengeId) async {
+  Future<bool> stopChallenge(int challengeId, String reason) async {
     Box homeBox = await Hive.openBox('userInfo');
     int userId = homeBox.get('userId');
 
     Uri url = Uri.http(
         _baseUrl,
         '/api/challengeDetail/stop',
-        {'userId': userId, 'challengeId': challengeId}
+        {'userId': userId, 'challengeId': challengeId, 'reason': reason}
             .map((key, value) => MapEntry(key, value.toString())));
 
     var response = await get(url);

@@ -1,6 +1,8 @@
 import 'dart:async';
 
 import 'package:dangdiarysample/components/custom_text.dart';
+import 'package:dangdiarysample/controllers/bottom_nav_controller.dart';
+import 'package:dangdiarysample/controllers/diaries_controller.dart';
 import 'package:dangdiarysample/models/challenge_detail/challenge_detail_model.dart';
 import 'package:dangdiarysample/repositories/challenge_detail_repository.dart';
 import 'package:flutter/material.dart';
@@ -114,9 +116,9 @@ class ChallengeDetailController extends GetxController {
     }
   }
 
-  void stopChallenge() async {
+  void stopChallenge(String reason) async {
     bool response =
-        await ChallengeDetailRepository().stopChallenge(challengeId);
+        await ChallengeDetailRepository().stopChallenge(challengeId, reason);
     if (!response) {
       isChallenge(response);
     }
@@ -125,12 +127,20 @@ class ChallengeDetailController extends GetxController {
   void endChallenge() async {
     int diaryId = await ChallengeDetailRepository().endChallenge(challengeId);
     isChallenge(false);
+    BottomNavController.to.challengeInit();
+    DiariesController.to.myDiaryInit();
   }
 
   void endChallengeAndToWrite() async {
     int diaryId = await ChallengeDetailRepository().endChallenge(challengeId);
     isChallenge(false);
-    Get.toNamed('/writeDiary', arguments: {'diaryId': diaryId});
+    BottomNavController.to.challengeInit();
+    DiariesController.to.myDiaryInit();
+    Get.offAndToNamed('/writeDiary', arguments: {
+      'diaryId': diaryId,
+      'challengeId': challengeId,
+      'title': challengeDetailModel.value!.title
+    });
   }
 
   showToast(String text) {

@@ -8,6 +8,7 @@ import 'package:dangdiarysample/pages/challenge_detail.dart';
 import 'package:dangdiarysample/app.dart';
 import 'package:dangdiarysample/pages/complete_diary.dart';
 import 'package:dangdiarysample/pages/complete_inquiry.dart';
+import 'package:dangdiarysample/pages/confirm_diary.dart';
 import 'package:dangdiarysample/pages/customer_center.dart';
 import 'package:dangdiarysample/pages/diaries.dart';
 import 'package:dangdiarysample/pages/diary.dart';
@@ -110,6 +111,7 @@ class MyApp extends StatelessWidget {
             GetPage(name: '/registerProfile', page: () => RegisterProfile()),
             GetPage(name: '/login', page: () => Login()),
             GetPage(name: '/splash', page: () => Splash()),
+            GetPage(name: '/confirmDiary', page: () => ConfirmDiary()),
           ],
         );
       },

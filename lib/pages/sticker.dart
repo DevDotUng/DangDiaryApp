@@ -412,25 +412,26 @@ class _StickerState extends State<Sticker> {
         itemCount: orderedList.length,
         itemBuilder: (context, index) {
           if (orderedList[index] is MyStickerModel) {
-            return Container(
-              padding: orderedList[index].stickerShape == 'circle'
-                  ? EdgeInsets.symmetric(vertical: 16.h, horizontal: 16.w)
-                  : EdgeInsets.only(top: 27.h, left: 16.w, right: 16.w),
-              decoration: BoxDecoration(
-                color: StaticColor.white,
-                borderRadius: BorderRadius.circular(10.r),
-                border: Border.all(
-                  color: Color(0xffF5F5F5),
+            return GestureDetector(
+              onTap: () {
+                Get.toNamed('/stickerDetail',
+                    arguments: {'challengeId': orderedList[index].challengeId});
+              },
+              child: Container(
+                padding: orderedList[index].stickerShape == 'circle'
+                    ? EdgeInsets.symmetric(vertical: 16.h, horizontal: 16.w)
+                    : EdgeInsets.only(top: 27.h, left: 16.w, right: 16.w),
+                decoration: BoxDecoration(
+                  color: StaticColor.white,
+                  borderRadius: BorderRadius.circular(10.r),
+                  border: Border.all(
+                    color: Color(0xffF5F5F5),
+                  ),
                 ),
-              ),
-              child: Column(
-                children: [
-                  orderedList[index].stickerShape == 'circle'
-                      ? GestureDetector(
-                          onTap: () {
-                            Get.toNamed('/stickerDetail');
-                          },
-                          child: Container(
+                child: Column(
+                  children: [
+                    orderedList[index].stickerShape == 'circle'
+                        ? Container(
                             width: 124.w,
                             height: 124.w,
                             decoration: BoxDecoration(
@@ -443,13 +444,8 @@ class _StickerState extends State<Sticker> {
                                 fit: BoxFit.cover,
                               ),
                             ),
-                          ),
-                        )
-                      : GestureDetector(
-                          onTap: () {
-                            Get.toNamed('/stickerDetail');
-                          },
-                          child: Container(
+                          )
+                        : Container(
                             width: 124.w,
                             height: 105.h,
                             decoration: BoxDecoration(
@@ -463,18 +459,18 @@ class _StickerState extends State<Sticker> {
                               ),
                             ),
                           ),
-                        ),
-                  orderedList[index].stickerShape == 'circle'
-                      ? SizedBox(height: 8.h)
-                      : SizedBox(height: 16.h),
-                  CustomText(
-                    text: orderedList[index].challengeTitle,
-                    color: Color(0xff222222),
-                    fontSize: 12.sp,
-                    fontWeight: FontWeight.w400,
-                    height: (20 / 12),
-                  ),
-                ],
+                    orderedList[index].stickerShape == 'circle'
+                        ? SizedBox(height: 8.h)
+                        : SizedBox(height: 16.h),
+                    CustomText(
+                      text: orderedList[index].challengeTitle,
+                      color: Color(0xff222222),
+                      fontSize: 12.sp,
+                      fontWeight: FontWeight.w400,
+                      height: (20 / 12),
+                    ),
+                  ],
+                ),
               ),
             );
           } else if (orderedList[index] is LockedStickerModel) {

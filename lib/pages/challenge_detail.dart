@@ -46,24 +46,19 @@ class ChallengeDetail extends StatelessWidget {
                     ),
                   ],
                 ),
-                SizedBox(height: 24.h),
+                SizedBox(height: 16.h),
                 Container(
-                  width: 130.w,
-                  height: 130.h,
+                  width: 152.w,
+                  height: 152.h,
                   decoration: BoxDecoration(
-                    color: Colors.grey,
-                    borderRadius: BorderRadius.circular(65.0.r),
+                    borderRadius: BorderRadius.circular(76.r),
+                    image: DecorationImage(
+                      image: AssetImage('assets/illusts/end_diary.png'),
+                      fit: BoxFit.cover,
+                    ),
                   ),
                 ),
-                SizedBox(height: 6.h),
-                CustomText(
-                  text: '일기를 쓰면 이 칭찬스티커를 받을 수 있어요!',
-                  color: Color(0xff7D7D7D),
-                  fontSize: 14.sp,
-                  fontWeight: FontWeight.w400,
-                  height: (24 / 14),
-                ),
-                SizedBox(height: 29.h),
+                SizedBox(height: 24.h),
                 GestureDetector(
                   onTap: () {
                     ChallengeDetailController.to.endChallengeAndToWrite();
@@ -112,8 +107,8 @@ class ChallengeDetail extends StatelessWidget {
     showDialog(
       context: context,
       builder: (BuildContext context) {
-        return LaterDialog(onClose: () {
-          ChallengeDetailController.to.stopChallenge();
+        return LaterDialog(onClose: (String reason) {
+          ChallengeDetailController.to.stopChallenge(reason);
         });
       },
     );

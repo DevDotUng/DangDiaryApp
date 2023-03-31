@@ -14,17 +14,6 @@ class CompleteDiary extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0.0,
-        actions: [
-          Padding(
-            padding: EdgeInsets.only(right: 24.0.w),
-            child: GestureDetector(
-              onTap: () {
-                Get.back();
-              },
-              child: Icon(Icons.close, size: 24.r, color: Colors.black),
-            ),
-          ),
-        ],
       ),
       body: Container(
         padding: EdgeInsets.symmetric(horizontal: 24.w),
@@ -35,7 +24,8 @@ class CompleteDiary extends StatelessWidget {
           children: [
             SizedBox(height: 16.h),
             CustomText(
-              text: '축하해요!\n초코가 <한강공원 산책하기>의\n칭찬스티커를 받았어요!',
+              text:
+                  '축하해요!\n${Get.arguments['completeDiaryModel'].dogName}가 <${Get.arguments['completeDiaryModel'].title}>의\n칭찬스티커를 받았어요!',
               color: Colors.black,
               fontSize: 24.sp,
               fontWeight: FontWeight.w600,
@@ -45,24 +35,10 @@ class CompleteDiary extends StatelessWidget {
             Expanded(
               child: Container(
                 width: Get.width - 48.w,
-                child: Center(
-                  child: Container(
-                    width: 150.w,
-                    height: 150.w,
-                    decoration: BoxDecoration(
-                      color: StaticColor.white,
-                      borderRadius: BorderRadius.circular(75.r),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black.withOpacity(0.25),
-                          blurRadius: 4.r,
-                        ),
-                      ],
-                      image: DecorationImage(
-                        image: AssetImage('assets/illusts/overdue_diary.png'),
-                        fit: BoxFit.cover,
-                      ),
-                    ),
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                    image: AssetImage('assets/illusts/complete_diary.png'),
+                    fit: BoxFit.cover,
                   ),
                 ),
               ),
@@ -71,7 +47,9 @@ class CompleteDiary extends StatelessWidget {
               padding: EdgeInsets.symmetric(horizontal: 24.w),
               child: GestureDetector(
                 onTap: () {
-                  Get.back();
+                  Get.offAndToNamed('/confirmDiary', arguments: {
+                    'completeDiaryModel': Get.arguments['completeDiaryModel']
+                  });
                 },
                 child: Container(
                   height: 48.h,
@@ -94,8 +72,7 @@ class CompleteDiary extends StatelessWidget {
             Center(
               child: GestureDetector(
                 onTap: () {
-                  Get.back();
-                  BottomNavController.to.changeBottomNav(3);
+                  Get.offAndToNamed('/app');
                 },
                 child: CustomText(
                   text: '일기장으로 이동할래요',

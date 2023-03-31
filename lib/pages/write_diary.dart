@@ -10,6 +10,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:hive/hive.dart';
 
 class WriteDiary extends StatelessWidget {
   const WriteDiary({Key? key}) : super(key: key);
@@ -70,7 +71,8 @@ class WriteDiary extends StatelessWidget {
                   height: 120.h,
                   decoration: BoxDecoration(
                     image: DecorationImage(
-                      image: AssetImage('assets/illusts/overdue_diary.png'),
+                      image:
+                          AssetImage('assets/illusts/overdue_diary_dialog.png'),
                       fit: BoxFit.fitHeight,
                     ),
                   ),
@@ -81,8 +83,12 @@ class WriteDiary extends StatelessWidget {
                   children: [
                     Flexible(
                       child: GestureDetector(
-                        onTap: () {
+                        onTap: () async {
                           Navigator.pop(context);
+                          if (WriteDiaryController.to.isShowPopup.value) {
+                            Box homeBox = await Hive.openBox('userInfo');
+                            homeBox.put('isShowPopupOnWriteDiary', true);
+                          }
                           Get.back();
                         },
                         child: Container(
@@ -192,7 +198,10 @@ class WriteDiary extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Get.put(WriteDiaryController());
+    Get.put(WriteDiaryController(
+        diaryId: Get.arguments['diaryId'],
+        challengeId: Get.arguments['challengeId'],
+        title: Get.arguments['title']));
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: Stack(
@@ -202,8 +211,15 @@ class WriteDiary extends StatelessWidget {
               backgroundColor: Colors.white,
               elevation: 0.0,
               leading: GestureDetector(
-                onTap: () {
-                  _showLaterWriteDialog(context);
+                onTap: () async {
+                  Box homeBox = await Hive.openBox('userInfo');
+                  bool? isShowPopupOnWriteDiary =
+                      homeBox.get('isShowPopupOnWriteDiary');
+                  if (isShowPopupOnWriteDiary == null) {
+                    _showLaterWriteDialog(context);
+                  } else {
+                    Get.back();
+                  }
                 },
                 child: Padding(
                   padding: EdgeInsets.only(left: 24.w, top: 16.h, bottom: 16.h),
@@ -440,7 +456,7 @@ class WriteDiary extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             CustomText(
-                              text: '초코의 기분은 어땠나요?',
+                              text: '강아지의 기분은 어땠나요?',
                               color: Color(0xff545454),
                               fontSize: 18.sp,
                               fontWeight: FontWeight.w500,
@@ -576,7 +592,8 @@ class WriteDiary extends StatelessWidget {
                                   height: (24 / 14).h,
                                 ),
                                 decoration: InputDecoration(
-                                  hintText: '한강공원 술래잡기 (최대 16글자)',
+                                  hintText:
+                                      '${WriteDiaryController.to.title} (최대 16글자)',
                                   hintStyle: TextStyle(
                                     color: StaticColor.link,
                                     fontSize: 14.sp,
@@ -664,7 +681,7 @@ class WriteDiary extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             CustomText(
-                              text: '초코와 보낸 하루에 대해 적어주세요',
+                              text: '강아지와 보낸 하루에 대해 적어주세요',
                               color: StaticColor.font_main,
                               fontSize: 18.sp,
                               fontWeight: FontWeight.w500,
@@ -928,7 +945,9 @@ class WriteDiary extends StatelessWidget {
               color: StaticColor.white,
               child: GestureDetector(
                 onTap: () {
-                  WriteDiaryController.to.submit();
+                  if (!WriteDiaryController.to.isLoading.value) {
+                    WriteDiaryController.to.submit();
+                  }
                 },
                 child: Obx(
                   () => Container(
@@ -940,14 +959,20 @@ class WriteDiary extends StatelessWidget {
                       borderRadius: BorderRadius.circular(10.0.r),
                     ),
                     child: Center(
-                      child: Text(
-                        '제출할게요',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 16.sp,
-                          fontWeight: FontWeight.w600,
-                          decoration: TextDecoration.none,
-                        ),
+                      child: Obx(
+                        () => WriteDiaryController.to.isLoading.value
+                            ? const CircularProgressIndicator(
+                                color: Colors.white,
+                              )
+                            : Text(
+                                '제출할게요',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 16.sp,
+                                  fontWeight: FontWeight.w600,
+                                  decoration: TextDecoration.none,
+                                ),
+                              ),
                       ),
                     ),
                   ),
