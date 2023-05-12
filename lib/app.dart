@@ -47,6 +47,7 @@ class App extends StatelessWidget {
       },
       child: Obx(
         () => Scaffold(
+          resizeToAvoidBottomInset: false,
           body: Stack(
             children: [
               IndexedStack(
@@ -192,110 +193,146 @@ class App extends StatelessWidget {
                   child: PageView(
                     controller: BottomNavController.to.pageController,
                     children: [
-                      ListView.builder(
-                        padding: const EdgeInsets.all(0),
-                        itemCount: BottomNavController.to.challengeModel.value!
-                            .inProgressChallenges.length,
-                        itemBuilder: (context, index) {
-                          return Padding(
-                            padding: EdgeInsets.fromLTRB(24.w, 0, 24.w, 16.h),
-                            child: GestureDetector(
-                              onTap: () {
-                                Get.toNamed('/challengeDetail', arguments: {
-                                  'challengeId': BottomNavController
-                                      .to
-                                      .challengeModel
-                                      .value!
-                                      .inProgressChallenges[index]
-                                      .challengeId
-                                });
-                              },
-                              child: Container(
-                                padding: EdgeInsets.symmetric(
-                                    vertical: 16.h, horizontal: 16.w),
-                                width: double.infinity,
-                                height: 112.h,
-                                decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(10.r),
-                                ),
-                                child: Row(
-                                  children: [
-                                    Container(
-                                      width: 80.w,
-                                      height: 80.h,
-                                      decoration: BoxDecoration(
-                                        borderRadius:
-                                            BorderRadius.circular(10.r),
-                                        image: DecorationImage(
-                                          image: NetworkImage(PublicRepository()
-                                              .getChallengeImageUrl(
-                                                  BottomNavController
-                                                      .to
-                                                      .challengeModel
-                                                      .value!
-                                                      .inProgressChallenges[
-                                                          index]
-                                                      .image)),
-                                          fit: BoxFit.cover,
+                      ListView(
+                        children: [
+                          ...List.generate(
+                            BottomNavController.to.challengeModel.value!
+                                .overdueChallenges.length,
+                            (index) => Padding(
+                              padding: EdgeInsets.fromLTRB(24.w, 0, 24.w, 16.h),
+                              child: GestureDetector(
+                                onTap: () {
+                                  Get.toNamed('/challengeDetail', arguments: {
+                                    'challengeId': BottomNavController
+                                        .to
+                                        .challengeModel
+                                        .value!
+                                        .overdueChallenges[index]
+                                        .challengeId
+                                  });
+                                },
+                                child: Container(
+                                  padding: EdgeInsets.symmetric(
+                                      vertical: 16.h, horizontal: 16.w),
+                                  width: double.infinity,
+                                  height: 112.h,
+                                  decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(10.r),
+                                  ),
+                                  child: Row(
+                                    children: [
+                                      Container(
+                                        width: 80.w,
+                                        height: 80.h,
+                                        decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(10.r),
+                                          image: DecorationImage(
+                                            image: NetworkImage(
+                                                PublicRepository()
+                                                    .getChallengeImageUrl(
+                                                        BottomNavController
+                                                            .to
+                                                            .challengeModel
+                                                            .value!
+                                                            .overdueChallenges[
+                                                                index]
+                                                            .image)),
+                                            fit: BoxFit.cover,
+                                          ),
                                         ),
                                       ),
-                                    ),
-                                    SizedBox(width: 16.w),
-                                    Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        SizedBox(
-                                          width: Get.width - 176.w,
-                                          child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              Expanded(
-                                                child: CustomText(
-                                                  text: BottomNavController
-                                                      .to
-                                                      .challengeModel
-                                                      .value!
-                                                      .inProgressChallenges[
-                                                          index]
-                                                      .title,
-                                                  color: Colors.black,
-                                                  fontSize: 16.sp,
-                                                  fontWeight: FontWeight.w400,
-                                                  height: (24 / 16),
-                                                  maxLines: 1,
-                                                  overflow:
-                                                      TextOverflow.ellipsis,
+                                      SizedBox(width: 16.w),
+                                      Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          SizedBox(
+                                            width: Get.width - 176.w,
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                Expanded(
+                                                  child: CustomText(
+                                                    text: BottomNavController
+                                                        .to
+                                                        .challengeModel
+                                                        .value!
+                                                        .overdueChallenges[
+                                                            index]
+                                                        .title,
+                                                    color: Colors.black,
+                                                    fontSize: 16.sp,
+                                                    fontWeight: FontWeight.w400,
+                                                    height: (24 / 16),
+                                                    maxLines: 1,
+                                                    overflow:
+                                                        TextOverflow.ellipsis,
+                                                  ),
                                                 ),
-                                              ),
-                                              SizedBox(width: 4.w),
-                                              BottomNavController
-                                                          .to
-                                                          .challengeModel
-                                                          .value!
-                                                          .inProgressChallenges[
-                                                              index]
-                                                          .recommendType ==
-                                                      'daily'
-                                                  ? Container(
-                                                      padding:
-                                                          EdgeInsets.symmetric(
-                                                              horizontal: 8.w),
-                                                      height: 22.h,
-                                                      decoration: BoxDecoration(
-                                                        color: StaticColor.main,
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(11.r),
-                                                      ),
-                                                      child: Center(
-                                                        child: Obx(
-                                                          () => Text(
-                                                            '${twoDigits(BottomNavController.to.duration.value.inHours)}:${twoDigits(BottomNavController.to.duration.value.inMinutes.remainder(60))}:${twoDigits(BottomNavController.to.duration.value.inSeconds.remainder(60))} 남음',
+                                                SizedBox(width: 4.w),
+                                                BottomNavController
+                                                            .to
+                                                            .challengeModel
+                                                            .value!
+                                                            .overdueChallenges[
+                                                                index]
+                                                            .recommendType ==
+                                                        'daily'
+                                                    ? Container(
+                                                        padding: EdgeInsets
+                                                            .symmetric(
+                                                                horizontal:
+                                                                    8.w),
+                                                        height: 22.h,
+                                                        decoration:
+                                                            BoxDecoration(
+                                                          color:
+                                                              StaticColor.main,
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(
+                                                                      11.r),
+                                                        ),
+                                                        child: Center(
+                                                          child: Obx(
+                                                            () => Text(
+                                                              '${twoDigits(BottomNavController.to.duration.value.inHours)}:${twoDigits(BottomNavController.to.duration.value.inMinutes.remainder(60))}:${twoDigits(BottomNavController.to.duration.value.inSeconds.remainder(60))} 남음',
+                                                              style: TextStyle(
+                                                                color: Colors
+                                                                    .white,
+                                                                fontSize: 12.sp,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w400,
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      )
+                                                    : Container(
+                                                        padding: EdgeInsets
+                                                            .symmetric(
+                                                                horizontal:
+                                                                    8.w),
+                                                        height: 22.h,
+                                                        decoration:
+                                                            BoxDecoration(
+                                                          color: StaticColor
+                                                              .sub_deeper,
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(
+                                                                      11.r),
+                                                        ),
+                                                        child: Center(
+                                                          child: Text(
+                                                            '밀린 일기',
                                                             style: TextStyle(
                                                               color:
                                                                   Colors.white,
@@ -307,38 +344,184 @@ class App extends StatelessWidget {
                                                           ),
                                                         ),
                                                       ),
-                                                    )
-                                                  : Container(),
-                                            ],
+                                              ],
+                                            ),
                                           ),
-                                        ),
-                                        SizedBox(
-                                          width: Get.width - 176.w,
-                                          child: CustomText(
-                                            text: BottomNavController
-                                                .to
-                                                .challengeModel
-                                                .value!
-                                                .inProgressChallenges[index]
-                                                .content,
-                                            color: Color(0xff7D7D7D),
-                                            fontSize: 14.sp,
-                                            fontWeight: FontWeight.w400,
-                                            height: (20 / 14),
-                                            maxLines: 2,
+                                          SizedBox(
+                                            width: Get.width - 176.w,
+                                            child: CustomText(
+                                              text: BottomNavController
+                                                  .to
+                                                  .challengeModel
+                                                  .value!
+                                                  .overdueChallenges[index]
+                                                  .content,
+                                              color: Color(0xff7D7D7D),
+                                              fontSize: 14.sp,
+                                              fontWeight: FontWeight.w400,
+                                              height: (20 / 14),
+                                              maxLines: 2,
+                                            ),
                                           ),
-                                        ),
-                                      ],
-                                    ),
-                                  ],
+                                        ],
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ),
                             ),
-                          );
-                        },
+                          ),
+                          ...List.generate(
+                            BottomNavController.to.challengeModel.value!
+                                .inProgressChallenges.length,
+                            (index) => Padding(
+                              padding: EdgeInsets.fromLTRB(24.w, 0, 24.w, 16.h),
+                              child: GestureDetector(
+                                onTap: () {
+                                  Get.toNamed('/challengeDetail', arguments: {
+                                    'challengeId': BottomNavController
+                                        .to
+                                        .challengeModel
+                                        .value!
+                                        .inProgressChallenges[index]
+                                        .challengeId
+                                  });
+                                },
+                                child: Container(
+                                  padding: EdgeInsets.symmetric(
+                                      vertical: 16.h, horizontal: 16.w),
+                                  width: double.infinity,
+                                  height: 112.h,
+                                  decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(10.r),
+                                  ),
+                                  child: Row(
+                                    children: [
+                                      Container(
+                                        width: 80.w,
+                                        height: 80.h,
+                                        decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(10.r),
+                                          image: DecorationImage(
+                                            image: NetworkImage(PublicRepository()
+                                                .getChallengeImageUrl(
+                                                    BottomNavController
+                                                        .to
+                                                        .challengeModel
+                                                        .value!
+                                                        .inProgressChallenges[
+                                                            index]
+                                                        .image)),
+                                            fit: BoxFit.cover,
+                                          ),
+                                        ),
+                                      ),
+                                      SizedBox(width: 16.w),
+                                      Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          SizedBox(
+                                            width: Get.width - 176.w,
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                Expanded(
+                                                  child: CustomText(
+                                                    text: BottomNavController
+                                                        .to
+                                                        .challengeModel
+                                                        .value!
+                                                        .inProgressChallenges[
+                                                            index]
+                                                        .title,
+                                                    color: Colors.black,
+                                                    fontSize: 16.sp,
+                                                    fontWeight: FontWeight.w400,
+                                                    height: (24 / 16),
+                                                    maxLines: 1,
+                                                    overflow:
+                                                        TextOverflow.ellipsis,
+                                                  ),
+                                                ),
+                                                SizedBox(width: 4.w),
+                                                BottomNavController
+                                                            .to
+                                                            .challengeModel
+                                                            .value!
+                                                            .inProgressChallenges[
+                                                                index]
+                                                            .recommendType ==
+                                                        'daily'
+                                                    ? Container(
+                                                        padding: EdgeInsets
+                                                            .symmetric(
+                                                                horizontal:
+                                                                    8.w),
+                                                        height: 22.h,
+                                                        decoration:
+                                                            BoxDecoration(
+                                                          color:
+                                                              StaticColor.main,
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(
+                                                                      11.r),
+                                                        ),
+                                                        child: Center(
+                                                          child: Obx(
+                                                            () => Text(
+                                                              '${twoDigits(BottomNavController.to.duration.value.inHours)}:${twoDigits(BottomNavController.to.duration.value.inMinutes.remainder(60))}:${twoDigits(BottomNavController.to.duration.value.inSeconds.remainder(60))} 남음',
+                                                              style: TextStyle(
+                                                                color: Colors
+                                                                    .white,
+                                                                fontSize: 12.sp,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w400,
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      )
+                                                    : Container(),
+                                              ],
+                                            ),
+                                          ),
+                                          SizedBox(
+                                            width: Get.width - 176.w,
+                                            child: CustomText(
+                                              text: BottomNavController
+                                                  .to
+                                                  .challengeModel
+                                                  .value!
+                                                  .inProgressChallenges[index]
+                                                  .content,
+                                              color: Color(0xff7D7D7D),
+                                              fontSize: 14.sp,
+                                              fontWeight: FontWeight.w400,
+                                              height: (20 / 14),
+                                              maxLines: 2,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                       ListView.builder(
-                        padding: EdgeInsets.all(0),
+                        padding: const EdgeInsets.all(0),
                         itemCount: BottomNavController.to.challengeModel.value!
                             .recommendChallenges.length,
                         itemBuilder: (context, index) {
@@ -492,6 +675,126 @@ class App extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+
+  Widget _a() {
+    return ListView.builder(
+      padding: const EdgeInsets.all(0),
+      itemCount: BottomNavController
+          .to.challengeModel.value!.inProgressChallenges.length,
+      itemBuilder: (context, index) {
+        return Padding(
+          padding: EdgeInsets.fromLTRB(24.w, 0, 24.w, 16.h),
+          child: GestureDetector(
+            onTap: () {
+              Get.toNamed('/challengeDetail', arguments: {
+                'challengeId': BottomNavController.to.challengeModel.value!
+                    .inProgressChallenges[index].challengeId
+              });
+            },
+            child: Container(
+              padding: EdgeInsets.symmetric(vertical: 16.h, horizontal: 16.w),
+              width: double.infinity,
+              height: 112.h,
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(10.r),
+              ),
+              child: Row(
+                children: [
+                  Container(
+                    width: 80.w,
+                    height: 80.h,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10.r),
+                      image: DecorationImage(
+                        image: NetworkImage(PublicRepository()
+                            .getChallengeImageUrl(BottomNavController
+                                .to
+                                .challengeModel
+                                .value!
+                                .inProgressChallenges[index]
+                                .image)),
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                  ),
+                  SizedBox(width: 16.w),
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SizedBox(
+                        width: Get.width - 176.w,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Expanded(
+                              child: CustomText(
+                                text: BottomNavController.to.challengeModel
+                                    .value!.inProgressChallenges[index].title,
+                                color: Colors.black,
+                                fontSize: 16.sp,
+                                fontWeight: FontWeight.w400,
+                                height: (24 / 16),
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ),
+                            SizedBox(width: 4.w),
+                            BottomNavController
+                                        .to
+                                        .challengeModel
+                                        .value!
+                                        .inProgressChallenges[index]
+                                        .recommendType ==
+                                    'daily'
+                                ? Container(
+                                    padding:
+                                        EdgeInsets.symmetric(horizontal: 8.w),
+                                    height: 22.h,
+                                    decoration: BoxDecoration(
+                                      color: StaticColor.main,
+                                      borderRadius: BorderRadius.circular(11.r),
+                                    ),
+                                    child: Center(
+                                      child: Obx(
+                                        () => Text(
+                                          '${twoDigits(BottomNavController.to.duration.value.inHours)}:${twoDigits(BottomNavController.to.duration.value.inMinutes.remainder(60))}:${twoDigits(BottomNavController.to.duration.value.inSeconds.remainder(60))} 남음',
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 12.sp,
+                                            fontWeight: FontWeight.w400,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  )
+                                : Container(),
+                          ],
+                        ),
+                      ),
+                      SizedBox(
+                        width: Get.width - 176.w,
+                        child: CustomText(
+                          text: BottomNavController.to.challengeModel.value!
+                              .inProgressChallenges[index].content,
+                          color: Color(0xff7D7D7D),
+                          fontSize: 14.sp,
+                          fontWeight: FontWeight.w400,
+                          height: (20 / 14),
+                          maxLines: 2,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ),
+        );
+      },
     );
   }
 

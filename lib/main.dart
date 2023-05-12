@@ -79,7 +79,7 @@ class MyApp extends StatelessWidget {
             GetPage(name: '/challengeDetail', page: () => ChallengeDetail()),
             GetPage(name: '/writeDiary', page: () => WriteDiary()),
             GetPage(name: '/myPage', page: () => MyPage()),
-            GetPage(name: '/posts', page: () => Posts()),
+            GetPage(name: '/posts', page: () => Posts(controllerIndex: 0)),
             GetPage(
                 name: '/dogProfileSetting', page: () => DogProfileSetting()),
             GetPage(name: '/accountSetting', page: () => AccountSetting()),
@@ -94,9 +94,12 @@ class MyApp extends StatelessWidget {
             GetPage(name: '/searchDiary', page: () => SearchDiary()),
             GetPage(name: '/sticker', page: () => Sticker()),
             GetPage(name: '/stickerDetail', page: () => StickerDetail()),
-            GetPage(name: '/searchPosts', page: () => SearchPosts()),
             GetPage(
-                name: '/searchPostsResult', page: () => SearchPostsResult()),
+                name: '/searchPosts',
+                page: () => SearchPosts(autoCompleteWords: [])),
+            GetPage(
+                name: '/searchPostsResult',
+                page: () => SearchPostsResult(query: '')),
             GetPage(name: '/appSetting', page: () => AppSetting()),
             GetPage(name: '/oneToOneInquiry', page: () => OneToOneInquiry()),
             GetPage(name: '/completeInquiry', page: () => CompleteInquiry()),

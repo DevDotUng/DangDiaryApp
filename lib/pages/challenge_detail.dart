@@ -62,7 +62,6 @@ class ChallengeDetail extends StatelessWidget {
                 GestureDetector(
                   onTap: () {
                     ChallengeDetailController.to.endChallengeAndToWrite();
-                    Navigator.pop(context);
                   },
                   child: Container(
                     height: 48.h,
@@ -84,7 +83,6 @@ class ChallengeDetail extends StatelessWidget {
                 GestureDetector(
                   onTap: () {
                     ChallengeDetailController.to.endChallenge();
-                    Navigator.pop(context);
                   },
                   child: CustomText(
                     text: '다음에 쓸게요',

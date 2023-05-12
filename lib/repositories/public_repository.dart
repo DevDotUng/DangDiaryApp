@@ -20,4 +20,9 @@ class PublicRepository {
     String url = "http://" + baseUrl + "/image/sticker/$image";
     return url;
   }
+
+  String getBrowseImageUrl(String image) {
+    String url = "http://" + baseUrl + "/image/browse/$image";
+    return url;
+  }
 }

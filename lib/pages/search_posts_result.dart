@@ -5,24 +5,38 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
-class SearchPostsResult extends StatelessWidget {
-  const SearchPostsResult({Key? key}) : super(key: key);
+class SearchPostsResult extends StatefulWidget {
+  SearchPostsResult({Key? key, required this.query}) : super(key: key);
+
+  late String query;
+
+  @override
+  State<SearchPostsResult> createState() => _SearchPostsResultState();
+}
+
+class _SearchPostsResultState extends State<SearchPostsResult> {
+  @override
+  void dispose() {
+    Get.delete<SearchPostsResultController>();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
-    Get.put(SearchPostsResultController());
+    Get.put(SearchPostsResultController(query: widget.query));
     return GestureDetector(
       onTap: () {
         FocusManager.instance.primaryFocus?.unfocus();
       },
       child: Scaffold(
+        resizeToAvoidBottomInset: false,
         appBar: AppBar(
           backgroundColor: Colors.white,
           elevation: 0.0,
           centerTitle: true,
           leading: GestureDetector(
             onTap: () {
-              Get.back();
+              Navigator.pop(context);
             },
             child: Icon(
               Icons.arrow_back,
@@ -60,11 +74,6 @@ class SearchPostsResult extends StatelessWidget {
                       child: TextField(
                         controller: SearchPostsResultController
                             .to.textEditingController,
-                        onChanged: (String text) {
-                          SearchPostsResultController.to
-                              .changeTextListener(text);
-                        },
-                        autofocus: true,
                         cursorColor: Colors.black,
                         cursorWidth: 1.w,
                         cursorHeight: 20.h,
@@ -119,29 +128,34 @@ class SearchPostsResult extends StatelessWidget {
                     FocusScope.of(context).requestFocus(FocusNode());
                   },
                   child: Obx(
-                    () => IndexedStack(
-                      index: SearchPostsResultController.to.tabBarIndex.value,
-                      children: [
-                        Visibility(
-                          visible: SearchPostsResultController
-                                  .to.tabBarIndex.value ==
-                              0,
-                          child: _postsResultByHashTag(),
-                        ),
-                        Visibility(
-                          visible: SearchPostsResultController
-                                  .to.tabBarIndex.value ==
-                              1,
-                          child: _postsResultByAccount(),
-                        ),
-                        Visibility(
-                          visible: SearchPostsResultController
-                                  .to.tabBarIndex.value ==
-                              2,
-                          child: _postsResultByBreed(),
-                        ),
-                      ],
-                    ),
+                    () => SearchPostsResultController
+                                .to.searchPostsResultModel.value ==
+                            null
+                        ? Container()
+                        : IndexedStack(
+                            index: SearchPostsResultController
+                                .to.tabBarIndex.value,
+                            children: [
+                              Visibility(
+                                visible: SearchPostsResultController
+                                        .to.tabBarIndex.value ==
+                                    0,
+                                child: _postsResultByHashTag(),
+                              ),
+                              Visibility(
+                                visible: SearchPostsResultController
+                                        .to.tabBarIndex.value ==
+                                    1,
+                                child: _postsResultByAccount(),
+                              ),
+                              Visibility(
+                                visible: SearchPostsResultController
+                                        .to.tabBarIndex.value ==
+                                    2,
+                                child: _postsResultByBreed(),
+                              ),
+                            ],
+                          ),
                   ),
                 ),
               ),
@@ -281,129 +295,208 @@ class SearchPostsResult extends StatelessWidget {
   }
 
   Widget _postsResultByHashTag() {
-    return ListView.builder(
-      shrinkWrap: true,
-      physics: const NeverScrollableScrollPhysics(),
-      itemCount: 10,
-      itemBuilder: (context, index) {
-        return Padding(
-          padding: EdgeInsets.fromLTRB(12.w, 8.h, 8.w, 16.h),
-          child: GestureDetector(
-            onTap: () {
-              Get.toNamed('/posts');
-            },
-            child: Row(
-              children: [
-                Expanded(
-                  child: CustomText(
-                    text: '#한강',
-                    color: Color(0xff6B6B6B),
-                    fontSize: 16.sp,
-                    fontWeight: FontWeight.w400,
-                    height: (24 / 16),
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
+    if (SearchPostsResultController
+        .to.searchPostsResultModel.value!.hashTags.isEmpty) {
+      return noResultWidget('해시태그가');
+    } else {
+      return ListView.builder(
+        shrinkWrap: true,
+        physics: const NeverScrollableScrollPhysics(),
+        itemCount: SearchPostsResultController
+            .to.searchPostsResultModel.value!.hashTags.length,
+        itemBuilder: (context, index) {
+          return Padding(
+            padding: EdgeInsets.fromLTRB(12.w, 8.h, 8.w, 16.h),
+            child: GestureDetector(
+              onTap: () {
+                Get.toNamed('/posts', arguments: {
+                  'query': SearchPostsResultController
+                      .to.searchPostsResultModel.value!.hashTags[index],
+                  'searchType': 'hashTag'
+                });
+              },
+              child: Row(
+                children: [
+                  Expanded(
+                    child: CustomText(
+                      text:
+                          '#${SearchPostsResultController.to.searchPostsResultModel.value!.hashTags[index]}',
+                      color: StaticColor.font_main,
+                      fontSize: 16.sp,
+                      fontWeight: FontWeight.w400,
+                      height: (24 / 16),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
                   ),
-                ),
-                SizedBox(width: 8.w),
-                Icon(
-                  Icons.arrow_forward_ios_sharp,
-                  size: 14.r,
-                  color: Color(0xffA6A6A6),
-                ),
-              ],
+                  SizedBox(width: 8.w),
+                  Icon(
+                    Icons.arrow_forward_ios_sharp,
+                    size: 14.r,
+                    color: Color(0xffA6A6A6),
+                  ),
+                ],
+              ),
             ),
-          ),
-        );
-      },
-    );
+          );
+        },
+      );
+    }
   }
 
   Widget _postsResultByAccount() {
-    return ListView.builder(
-      shrinkWrap: true,
-      physics: const NeverScrollableScrollPhysics(),
-      itemCount: 10,
-      itemBuilder: (context, index) {
-        return Padding(
-          padding: EdgeInsets.fromLTRB(12.w, 8.h, 8.w, 16.h),
-          child: GestureDetector(
-            onTap: () {
-              Get.toNamed('/posts');
-            },
-            child: Row(
-              children: [
-                CustomText(
-                  text: '한강이',
-                  color: Color(0xff6B6B6B),
-                  fontSize: 16.sp,
-                  fontWeight: FontWeight.w400,
-                  height: (24 / 16),
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                ),
-                SizedBox(width: 4.w),
-                Expanded(
-                  child: CustomText(
-                    text: '오또캐드',
-                    color: Color(0xff7D7D7D),
-                    fontSize: 12.sp,
-                    fontWeight: FontWeight.w400,
-                    height: (24 / 16),
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                ),
-                SizedBox(width: 8.w),
-                Icon(
-                  Icons.arrow_forward_ios_sharp,
-                  size: 14.r,
-                  color: Color(0xffA6A6A6),
-                ),
-              ],
-            ),
-          ),
-        );
-      },
-    );
-  }
-
-  Widget _postsResultByBreed() {
-    return ListView.builder(
-      shrinkWrap: true,
-      physics: const NeverScrollableScrollPhysics(),
-      itemCount: 10,
-      itemBuilder: (context, index) {
-        return Padding(
-          padding: EdgeInsets.fromLTRB(12.w, 8.h, 8.w, 16.h),
-          child: GestureDetector(
-            onTap: () {
-              Get.toNamed('/posts');
-            },
-            child: Row(
-              children: [
-                Expanded(
-                  child: CustomText(
-                    text: '포메라니안',
-                    color: Color(0xff6B6B6B),
+    if (SearchPostsResultController
+        .to.searchPostsResultModel.value!.accounts.isEmpty) {
+      return noResultWidget('계정이');
+    } else {
+      return ListView.builder(
+        shrinkWrap: true,
+        physics: const NeverScrollableScrollPhysics(),
+        itemCount: SearchPostsResultController
+            .to.searchPostsResultModel.value!.accounts.length,
+        itemBuilder: (context, index) {
+          return Padding(
+            padding: EdgeInsets.fromLTRB(12.w, 8.h, 8.w, 16.h),
+            child: GestureDetector(
+              onTap: () {
+                Get.toNamed('/posts', arguments: {
+                  'searchType': 'account',
+                  'dogName': SearchPostsResultController
+                      .to.searchPostsResultModel.value!.accounts[index].dogName,
+                  'nickname': SearchPostsResultController.to
+                      .searchPostsResultModel.value!.accounts[index].nickname,
+                });
+              },
+              child: Row(
+                children: [
+                  CustomText(
+                    text: SearchPostsResultController.to.searchPostsResultModel
+                        .value!.accounts[index].dogName,
+                    color: StaticColor.font_main,
                     fontSize: 16.sp,
                     fontWeight: FontWeight.w400,
                     height: (24 / 16),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                   ),
-                ),
-                SizedBox(width: 8.w),
-                Icon(
-                  Icons.arrow_forward_ios_sharp,
-                  size: 14.r,
-                  color: Color(0xffA6A6A6),
-                ),
-              ],
+                  SizedBox(width: 4.w),
+                  Expanded(
+                    child: CustomText(
+                      text: SearchPostsResultController
+                          .to
+                          .searchPostsResultModel
+                          .value!
+                          .accounts[index]
+                          .nickname,
+                      color: Color(0xff7D7D7D),
+                      fontSize: 12.sp,
+                      fontWeight: FontWeight.w400,
+                      height: (24 / 16),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ),
+                  SizedBox(width: 8.w),
+                  Icon(
+                    Icons.arrow_forward_ios_sharp,
+                    size: 14.r,
+                    color: Color(0xffA6A6A6),
+                  ),
+                ],
+              ),
+            ),
+          );
+        },
+      );
+    }
+  }
+
+  Widget _postsResultByBreed() {
+    if (SearchPostsResultController
+        .to.searchPostsResultModel.value!.breeds.isEmpty) {
+      return noResultWidget('견종이');
+    } else {
+      return ListView.builder(
+        shrinkWrap: true,
+        physics: const NeverScrollableScrollPhysics(),
+        itemCount: SearchPostsResultController
+            .to.searchPostsResultModel.value!.breeds.length,
+        itemBuilder: (context, index) {
+          return Padding(
+            padding: EdgeInsets.fromLTRB(12.w, 8.h, 8.w, 16.h),
+            child: GestureDetector(
+              onTap: () {
+                Get.toNamed('/posts', arguments: {
+                  'query': SearchPostsResultController
+                      .to.searchPostsResultModel.value!.breeds[index],
+                  'searchType': 'breed'
+                });
+              },
+              child: Row(
+                children: [
+                  Expanded(
+                    child: CustomText(
+                      text: SearchPostsResultController
+                          .to.searchPostsResultModel.value!.breeds[index],
+                      color: StaticColor.font_main,
+                      fontSize: 16.sp,
+                      fontWeight: FontWeight.w400,
+                      height: (24 / 16),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ),
+                  SizedBox(width: 8.w),
+                  Icon(
+                    Icons.arrow_forward_ios_sharp,
+                    size: 14.r,
+                    color: Color(0xffA6A6A6),
+                  ),
+                ],
+              ),
+            ),
+          );
+        },
+      );
+    }
+  }
+
+  Widget noResultWidget(String type) {
+    return SizedBox(
+      width: double.infinity,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          SizedBox(height: 60.h),
+          Container(
+            width: 194.r,
+            height: 194.r,
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage('assets/illusts/no_breed.png'),
+                fit: BoxFit.cover,
+              ),
             ),
           ),
-        );
-      },
+          SizedBox(height: 2.h),
+          CustomText(
+            text: '앗... 검색 결과가 없어요.',
+            color: StaticColor.font_main,
+            fontSize: 16.sp,
+            fontWeight: FontWeight.w600,
+            height: (32 / 16),
+          ),
+          SizedBox(height: 8.h),
+          CustomText(
+            text:
+                '\'${widget.query}\' 과 일치하는 $type 없어요 ㅠㅠ\n       다른 검색어를 입력해보세요.',
+            color: StaticColor.icon,
+            fontSize: 14.sp,
+            fontWeight: FontWeight.w400,
+            height: (20 / 14),
+          ),
+        ],
+      ),
     );
   }
 }

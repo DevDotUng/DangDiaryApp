@@ -201,7 +201,6 @@ class DiariesController extends GetxController {
       width: (Get.width - 55.w) / 2 - 20.w,
       height: ((Get.width - 55.w) / 2 - 20.w) * 1.35,
       decoration: BoxDecoration(
-        color: Color(0xffB6CAFF),
         borderRadius: BorderRadius.circular(10.r),
         image: DecorationImage(
           image: NetworkImage(PublicRepository().getDiaryImageUrl(image)),

@@ -278,7 +278,11 @@ class Diaries extends StatelessWidget {
                                   DiariesController.to.tabBarIndex.value == 0,
                               child: _monthlyDiaries(),
                             ),
-                            _dailyDiaries(),
+                            Visibility(
+                              visible:
+                                  DiariesController.to.tabBarIndex.value == 1,
+                              child: _dailyDiaries(),
+                            ),
                           ],
                         ),
                 ),

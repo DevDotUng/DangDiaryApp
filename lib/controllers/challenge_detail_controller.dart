@@ -129,6 +129,8 @@ class ChallengeDetailController extends GetxController {
     isChallenge(false);
     BottomNavController.to.challengeInit();
     DiariesController.to.myDiaryInit();
+    Navigator.pop(context);
+    Get.back();
   }
 
   void endChallengeAndToWrite() async {
@@ -136,6 +138,7 @@ class ChallengeDetailController extends GetxController {
     isChallenge(false);
     BottomNavController.to.challengeInit();
     DiariesController.to.myDiaryInit();
+    Navigator.pop(context);
     Get.offAndToNamed('/writeDiary', arguments: {
       'diaryId': diaryId,
       'challengeId': challengeId,

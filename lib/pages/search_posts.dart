@@ -4,12 +4,25 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
-class SearchPosts extends StatelessWidget {
-  const SearchPosts({Key? key}) : super(key: key);
+class SearchPosts extends StatefulWidget {
+  SearchPosts({Key? key, required this.autoCompleteWords}) : super(key: key);
+
+  List<String> autoCompleteWords;
+
+  @override
+  State<SearchPosts> createState() => _SearchPostsState();
+}
+
+class _SearchPostsState extends State<SearchPosts> {
+  @override
+  void dispose() {
+    Get.delete<SearchPostsController>();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
-    Get.put(SearchPostsController());
+    Get.put(SearchPostsController(autoCompleteWords: widget.autoCompleteWords));
     return GestureDetector(
       onTap: () {
         FocusManager.instance.primaryFocus?.unfocus();
@@ -21,7 +34,7 @@ class SearchPosts extends StatelessWidget {
           centerTitle: true,
           leading: GestureDetector(
             onTap: () {
-              Get.back();
+              Navigator.pop(context);
             },
             child: Icon(
               Icons.arrow_back,
@@ -63,7 +76,7 @@ class SearchPosts extends StatelessWidget {
                           SearchPostsController.to.changeTextListener(text);
                         },
                         onSubmitted: (text) {
-                          Get.toNamed('/searchPostsResult');
+                          SearchPostsController.to.search(context, text);
                         },
                         autofocus: true,
                         cursorColor: Colors.black,
@@ -147,46 +160,51 @@ class SearchPosts extends StatelessWidget {
             height: (20 / 16),
           ),
         ),
-        ListView.builder(
-          shrinkWrap: true,
-          physics: const NeverScrollableScrollPhysics(),
-          itemCount: SearchPostsController.to.searchHistory.length,
-          itemBuilder: (context, index) {
-            return Padding(
-              padding: EdgeInsets.fromLTRB(12.w, 8.h, 8.w, 16.h),
-              child: GestureDetector(
-                onTap: () {
-                  Get.toNamed('/searchPostsResult');
-                },
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: CustomText(
-                        text: SearchPostsController.to.searchHistory[index],
-                        color: Color(0xff6B6B6B),
-                        fontSize: 16.sp,
-                        fontWeight: FontWeight.w400,
-                        height: (24 / 16),
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
+        Obx(
+          () => ListView.builder(
+            shrinkWrap: true,
+            reverse: true,
+            physics: const NeverScrollableScrollPhysics(),
+            itemCount: SearchPostsController.to.searchHistory.length,
+            itemBuilder: (context, index) {
+              return Padding(
+                padding: EdgeInsets.fromLTRB(12.w, 8.h, 8.w, 16.h),
+                child: GestureDetector(
+                  onTap: () {
+                    SearchPostsController.to.search(
+                        context, SearchPostsController.to.searchHistory[index]);
+                  },
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: CustomText(
+                          text: SearchPostsController.to.searchHistory[index],
+                          color: Color(0xff6B6B6B),
+                          fontSize: 16.sp,
+                          fontWeight: FontWeight.w400,
+                          height: (24 / 16),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                        ),
                       ),
-                    ),
-                    SizedBox(width: 8.w),
-                    GestureDetector(
-                      onTap: () {
-                        SearchPostsController.to.searchHistory.removeAt(index);
-                      },
-                      child: Icon(
-                        Icons.clear,
-                        size: 14.r,
-                        color: Color(0xffA6A6A6),
+                      SizedBox(width: 8.w),
+                      GestureDetector(
+                        onTap: () {
+                          SearchPostsController.to.searchHistory
+                              .removeAt(index);
+                        },
+                        child: Icon(
+                          Icons.clear,
+                          size: 14.r,
+                          color: Color(0xffA6A6A6),
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
-            );
-          },
+              );
+            },
+          ),
         ),
       ],
     );
@@ -216,7 +234,8 @@ class SearchPosts extends StatelessWidget {
               padding: EdgeInsets.fromLTRB(12.w, 8.h, 8.w, 16.h),
               child: GestureDetector(
                 onTap: () {
-                  Get.toNamed('/searchPostsResult');
+                  SearchPostsController.to.search(context,
+                      SearchPostsController.to.autoCompleteWord[index]);
                 },
                 child: Row(
                   children: [

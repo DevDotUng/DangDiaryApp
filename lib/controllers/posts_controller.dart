@@ -2,21 +2,39 @@ import 'dart:math';
 
 import 'package:dangdiarysample/components/custom_text.dart';
 import 'package:dangdiarysample/components/random_position_sticker.dart';
+import 'package:dangdiarysample/models/browse/posts_model.dart';
+import 'package:dangdiarysample/repositories/browse_repository.dart';
 import 'package:dangdiarysample/static/color.dart';
 import 'package:dangdiarysample/static/icon.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:hive/hive.dart';
 
 class PostsController extends GetxController {
+  int? browseId;
+  String? query;
+  String? searchType;
+  String? dogName;
+  String? nickname;
+  PostsController({
+    required this.browseId,
+    required this.query,
+    required this.searchType,
+    required this.dogName,
+    required this.nickname,
+  });
   static PostsController get to => Get.find();
+  RxList<PostsModel> postsModels = <PostsModel>[].obs;
+  final challengeId = Rxn<int>();
+
   List<PageController> pageViewControllerList = [];
   List<RxInt> pageViewIndexList = [];
 
   @override
   void onInit() {
-    initPageViews();
+    postsInit();
     super.onInit();
   }
 
@@ -25,22 +43,40 @@ class PostsController extends GetxController {
     super.dispose();
   }
 
-  void initPageViews() {
-    for (int i = 0; i < 4; i++) {
-      pageViewControllerList.add(PageController());
-      pageViewIndexList.add(0.obs);
-      pageViewControllerList[i].addListener(() {
-        pageScrollListener(i);
-      });
+  Future<void> postsInit() async {
+    List<PostsModel> postsModelsTemp;
+    if (browseId == null) {
+      postsModelsTemp = await BrowseRepository()
+          .getPostsSearchView(query, searchType, dogName, nickname);
+    } else {
+      postsModelsTemp = await BrowseRepository().getPostsView(browseId!);
+    }
+    postsModels(postsModelsTemp);
+    initPageViews(postsModels.length);
+
+    if (searchType == 'hashTag') {
+      int? challengeIdTemp = await BrowseRepository().getIsChallenge(query!);
+      challengeId(challengeIdTemp);
     }
   }
 
-  void pageScrollListener(int index) {
-    if (pageViewControllerList[index].page! % 1 < 0.5) {
-      pageViewIndexList[index](pageViewControllerList[index].page!.toInt());
-    } else {
-      pageViewIndexList[index](pageViewControllerList[index].page!.toInt() + 1);
+  void initPageViews(int length) {
+    for (int i = 0; i < length; i++) {
+      pageViewControllerList.add(PageController());
     }
+  }
+
+  Future<bool> isMyPosts(int userId) async {
+    Box homeBox = await Hive.openBox('userInfo');
+    int myUserId = homeBox.get('userId');
+
+    return userId == myUserId;
+  }
+
+  void searchByHashTag(String hashTag) {
+    Get.to('/posts',
+        arguments: {'query': hashTag, 'searchType': 'hashTag'},
+        preventDuplicates: false);
   }
 
   void editDiary(BuildContext context) {

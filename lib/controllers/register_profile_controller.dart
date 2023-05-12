@@ -223,7 +223,7 @@ class RegisterProfileController extends GetxController {
                   ),
                 ),
               ),
-              SizedBox(height: 64.h),
+              SizedBox(height: 24.h),
               Expanded(
                 child: Obx(
                   () => _breedWidget(),
@@ -273,44 +273,47 @@ class RegisterProfileController extends GetxController {
     return IndexedStack(
       index: breedIndex.value,
       children: [
-        Center(
-          child: Column(
-            children: [
-              Container(
-                width: 160.w,
-                height: 160.h,
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                    image: AssetImage('assets/illusts/unknown_breed.png'),
-                    fit: BoxFit.cover,
-                  ),
-                ),
-              ),
-              SizedBox(height: 16.h),
-              RichText(
-                text: TextSpan(
-                  style: TextStyle(
-                    color: StaticColor.font_main,
-                    fontSize: 14.sp,
-                    fontWeight: FontWeight.w500,
-                    height: (24 / 14),
-                  ),
-                  children: <TextSpan>[
-                    TextSpan(text: '잘 모르시면 아래 \''),
-                    TextSpan(
-                      text: '모르겠어요',
-                      style: TextStyle(
-                        color: StaticColor.font_main,
-                        fontSize: 14.sp,
-                        fontWeight: FontWeight.w600,
-                        height: (24 / 14),
-                      ),
+        Padding(
+          padding: EdgeInsets.only(top: 40.h),
+          child: Center(
+            child: Column(
+              children: [
+                Container(
+                  width: 160.w,
+                  height: 160.h,
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: AssetImage('assets/illusts/unknown_breed.png'),
+                      fit: BoxFit.cover,
                     ),
-                    TextSpan(text: '\' 버튼을 눌러주세요.'),
-                  ],
+                  ),
                 ),
-              ),
-            ],
+                SizedBox(height: 16.h),
+                RichText(
+                  text: TextSpan(
+                    style: TextStyle(
+                      color: StaticColor.font_main,
+                      fontSize: 14.sp,
+                      fontWeight: FontWeight.w500,
+                      height: (24 / 14),
+                    ),
+                    children: <TextSpan>[
+                      TextSpan(text: '잘 모르시면 아래 \''),
+                      TextSpan(
+                        text: '모르겠어요',
+                        style: TextStyle(
+                          color: StaticColor.font_main,
+                          fontSize: 14.sp,
+                          fontWeight: FontWeight.w600,
+                          height: (24 / 14),
+                        ),
+                      ),
+                      TextSpan(text: '\' 버튼을 눌러주세요.'),
+                    ],
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
         ListView.builder(
@@ -378,45 +381,48 @@ class RegisterProfileController extends GetxController {
             );
           },
         ),
-        Center(
-          child: Column(
-            children: [
-              Container(
-                width: 160.w,
-                height: 160.h,
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                    image: AssetImage('assets/illusts/no_breed.png'),
-                    fit: BoxFit.cover,
-                  ),
-                ),
-              ),
-              SizedBox(height: 16.h),
-              RichText(
-                text: TextSpan(
-                  style: TextStyle(
-                    color: StaticColor.font_main,
-                    fontSize: 14.sp,
-                    fontWeight: FontWeight.w500,
-                    height: (24 / 14),
-                  ),
-                  children: <TextSpan>[
-                    TextSpan(
-                        text: '                     앗, 검색 결과가 없어요!\n아래 \''),
-                    TextSpan(
-                      text: '새로운 품종으로 등록하기',
-                      style: TextStyle(
-                        color: StaticColor.font_main,
-                        fontSize: 14.sp,
-                        fontWeight: FontWeight.w600,
-                        height: (24 / 14),
-                      ),
+        Padding(
+          padding: EdgeInsets.only(top: 40.h),
+          child: Center(
+            child: Column(
+              children: [
+                Container(
+                  width: 160.w,
+                  height: 160.h,
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: AssetImage('assets/illusts/no_breed.png'),
+                      fit: BoxFit.cover,
                     ),
-                    TextSpan(text: '\' 버튼을 눌러주세요.'),
-                  ],
+                  ),
                 ),
-              ),
-            ],
+                SizedBox(height: 16.h),
+                RichText(
+                  text: TextSpan(
+                    style: TextStyle(
+                      color: StaticColor.font_main,
+                      fontSize: 14.sp,
+                      fontWeight: FontWeight.w500,
+                      height: (24 / 14),
+                    ),
+                    children: <TextSpan>[
+                      TextSpan(
+                          text: '                     앗, 검색 결과가 없어요!\n아래 \''),
+                      TextSpan(
+                        text: '새로운 품종으로 등록하기',
+                        style: TextStyle(
+                          color: StaticColor.font_main,
+                          fontSize: 14.sp,
+                          fontWeight: FontWeight.w600,
+                          height: (24 / 14),
+                        ),
+                      ),
+                      TextSpan(text: '\' 버튼을 눌러주세요.'),
+                    ],
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ],

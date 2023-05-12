@@ -1,6 +1,11 @@
+import 'dart:io';
+
 import 'package:dangdiarysample/components/custom_text.dart';
 import 'package:dangdiarysample/components/reactive_device.dart';
 import 'package:dangdiarysample/controllers/dog_profile_setting_controller.dart';
+import 'package:dangdiarysample/controllers/my_page_controller.dart';
+import 'package:dangdiarysample/repositories/public_repository.dart';
+import 'package:dangdiarysample/skeletons/home_skeleton.dart';
 import 'package:dangdiarysample/static/color.dart';
 import 'package:dangdiarysample/static/icon.dart';
 import 'package:flutter/cupertino.dart';
@@ -14,6 +19,12 @@ class DogProfileSetting extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Get.put(DogProfileSettingController());
+    return Obx(() => DogProfileSettingController.to.isLoading.value
+        ? HomeSkeleton()
+        : _dogProfileSettingView(context));
+  }
+
+  Widget _dogProfileSettingView(BuildContext context) {
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
@@ -55,39 +66,54 @@ class DogProfileSetting extends StatelessWidget {
                 child: Column(
                   children: [
                     SizedBox(height: 16.h),
-                    Stack(
-                      children: [
-                        Container(
-                          width: 80.w,
-                          height: 80.w,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(40.r),
-                            image: DecorationImage(
-                              image: AssetImage('assets/dog.png'),
-                              fit: BoxFit.cover,
-                            ),
-                          ),
-                        ),
-                        Positioned(
-                          bottom: 0,
-                          right: 0,
-                          child: Container(
-                            width: 24.w,
-                            height: 24.w,
-                            decoration: BoxDecoration(
-                              color: StaticColor.main,
-                              borderRadius: BorderRadius.circular(12.r),
-                            ),
-                            child: Center(
-                              child: StaticIcon(
-                                IconsPath.photo,
-                                size: 18.r,
-                                color: StaticColor.white,
+                    GestureDetector(
+                      onTap: () => DogProfileSettingController.to
+                          .editProfileImage(context),
+                      child: Stack(
+                        children: [
+                          Obx(
+                            () => Container(
+                              width: 80.w,
+                              height: 80.w,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(40.r),
+                                image: DecorationImage(
+                                  image: DogProfileSettingController
+                                              .to.profileImage.value ==
+                                          null
+                                      ? const AssetImage(
+                                              'assets/default_profile_image.png')
+                                          as ImageProvider
+                                      : FileImage(
+                                          File(DogProfileSettingController
+                                              .to.profileImage.value!.path),
+                                        ),
+                                  fit: BoxFit.cover,
+                                ),
                               ),
                             ),
                           ),
-                        ),
-                      ],
+                          Positioned(
+                            bottom: 0,
+                            right: 0,
+                            child: Container(
+                              width: 24.w,
+                              height: 24.w,
+                              decoration: BoxDecoration(
+                                color: StaticColor.main,
+                                borderRadius: BorderRadius.circular(12.r),
+                              ),
+                              child: Center(
+                                child: StaticIcon(
+                                  IconsPath.photo,
+                                  size: 18.r,
+                                  color: StaticColor.white,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                     SizedBox(height: 16.h),
                     Container(
@@ -113,7 +139,7 @@ class DogProfileSetting extends StatelessWidget {
                             width: 4.w,
                             height: 4.w,
                             decoration: BoxDecoration(
-                              color: Color(0xff7B61FF),
+                              color: StaticColor.main,
                               borderRadius: BorderRadius.circular(2.r),
                             ),
                           ),
@@ -173,7 +199,7 @@ class DogProfileSetting extends StatelessWidget {
                             width: 4.w,
                             height: 4.w,
                             decoration: BoxDecoration(
-                              color: Color(0xff7B61FF),
+                              color: StaticColor.main,
                               borderRadius: BorderRadius.circular(2.r),
                             ),
                           ),
@@ -233,7 +259,7 @@ class DogProfileSetting extends StatelessWidget {
                             width: 4.w,
                             height: 4.w,
                             decoration: BoxDecoration(
-                              color: Color(0xff7B61FF),
+                              color: StaticColor.main,
                               borderRadius: BorderRadius.circular(2.r),
                             ),
                           ),
@@ -260,7 +286,8 @@ class DogProfileSetting extends StatelessWidget {
                                 child: Obx(
                                   () => CustomText(
                                     text: DogProfileSettingController
-                                        .to.breed.value,
+                                            .to.breed?.value ??
+                                        '미설정',
                                     color: Color(0xff222222),
                                     fontSize: 16.sp,
                                     fontWeight: FontWeight.w500,
@@ -296,7 +323,7 @@ class DogProfileSetting extends StatelessWidget {
                             width: 4.w,
                             height: 4.w,
                             decoration: BoxDecoration(
-                              color: Color(0xff7B61FF),
+                              color: StaticColor.main,
                               borderRadius: BorderRadius.circular(2.r),
                             ),
                           ),
@@ -359,7 +386,7 @@ class DogProfileSetting extends StatelessWidget {
                             width: 4.w,
                             height: 4.w,
                             decoration: BoxDecoration(
-                              color: Color(0xff7B61FF),
+                              color: StaticColor.main,
                               borderRadius: BorderRadius.circular(2.r),
                             ),
                           ),
@@ -420,20 +447,23 @@ class DogProfileSetting extends StatelessWidget {
                 child: Column(
                   children: [
                     SizedBox(height: 8.h),
-                    Container(
-                      margin: EdgeInsets.symmetric(horizontal: 24.w),
-                      width: double.infinity,
-                      height: 48.h,
-                      decoration: BoxDecoration(
-                        color: Color(0xff7D7D7D),
-                        borderRadius: BorderRadius.circular(10.0.r),
-                      ),
-                      child: Center(
-                        child: CustomText(
-                          text: '저장할게요',
-                          color: Colors.white,
-                          fontSize: 16.sp,
-                          fontWeight: FontWeight.w600,
+                    GestureDetector(
+                      onTap: () => DogProfileSettingController.to.saveDogInfo(),
+                      child: Container(
+                        margin: EdgeInsets.symmetric(horizontal: 24.w),
+                        width: double.infinity,
+                        height: 48.h,
+                        decoration: BoxDecoration(
+                          color: Color(0xff7D7D7D),
+                          borderRadius: BorderRadius.circular(10.0.r),
+                        ),
+                        child: Center(
+                          child: CustomText(
+                            text: '저장할게요',
+                            color: Colors.white,
+                            fontSize: 16.sp,
+                            fontWeight: FontWeight.w600,
+                          ),
                         ),
                       ),
                     ),

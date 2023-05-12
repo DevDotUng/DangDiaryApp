@@ -164,7 +164,7 @@ class _LaterDialogState extends State<LaterDialog> {
                   height: 120.h,
                   decoration: BoxDecoration(
                     image: DecorationImage(
-                      image: AssetImage('assets/illusts/overdue_diary.png'),
+                      image: AssetImage('assets/illusts/sample.png'),
                       fit: BoxFit.fitHeight,
                     ),
                   ),

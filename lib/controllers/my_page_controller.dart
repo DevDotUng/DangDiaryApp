@@ -14,7 +14,7 @@ class MyPageController extends GetxController {
   }
 
   Future<void> myPageInit() async {
-    MyPageModel myPageModelTemp = await MyPageRepository().getHomeView();
+    MyPageModel myPageModelTemp = await MyPageRepository().getMyPageView();
     myPageModel(myPageModelTemp);
   }
 }

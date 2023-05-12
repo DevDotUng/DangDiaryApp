@@ -1,5 +1,7 @@
 import 'package:dangdiarysample/components/custom_text.dart';
 import 'package:dangdiarysample/controllers/browse_controller.dart';
+import 'package:dangdiarysample/pages/search_posts.dart';
+import 'package:dangdiarysample/repositories/public_repository.dart';
 import 'package:dangdiarysample/skeletons/browse_skeleton.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -12,7 +14,7 @@ class Browse extends StatelessWidget {
   Widget build(BuildContext context) {
     Get.put(BrowseController());
     return Obx(
-      () => BrowseController.to.isLoading.value
+      () => BrowseController.to.browseViewModel.value == null
           ? BrowseSkeleton()
           : _browseWidget(context),
     );
@@ -38,7 +40,15 @@ class Browse extends StatelessWidget {
               padding: EdgeInsets.symmetric(horizontal: 24.0.w),
               child: GestureDetector(
                 onTap: () {
-                  Get.toNamed('/searchPosts');
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => SearchPosts(
+                        autoCompleteWords: BrowseController
+                            .to.browseViewModel.value!.autoCompleteWords,
+                      ),
+                    ),
+                  );
                 },
                 child: Icon(
                   Icons.search,
@@ -53,16 +63,30 @@ class Browse extends StatelessWidget {
           padding: EdgeInsets.fromLTRB(24.w, 16.h, 24.w, 0),
           color: Colors.white,
           child: ListView.builder(
-            itemCount: 10,
+            padding: EdgeInsets.only(bottom: 120.h),
+            itemCount:
+                BrowseController.to.browseViewModel.value!.browses.length,
             itemBuilder: (context, index) {
-              if (index % 3 == 0) {
-                return Container(
+              return GestureDetector(
+                onTap: () {
+                  Get.toNamed('/posts', arguments: {
+                    'browseId': BrowseController
+                        .to.browseViewModel.value!.browses[index].browseId
+                  });
+                },
+                child: Container(
                   margin: EdgeInsets.only(bottom: 16.h),
                   width: double.infinity,
+                  height: 410.h,
                   decoration: BoxDecoration(
-                    color: Colors.white,
                     borderRadius: BorderRadius.circular(10.r),
                     border: Border.all(color: Color(0xffD9D9D9)),
+                    image: DecorationImage(
+                      image: NetworkImage(PublicRepository().getBrowseImageUrl(
+                          BrowseController
+                              .to.browseViewModel.value!.browses[index].image)),
+                      fit: BoxFit.cover,
+                    ),
                   ),
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -74,16 +98,18 @@ class Browse extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               CustomText(
-                                text: '지난 주 가장 인기 있는 일기에\n선정되었어요!',
-                                color: Color(0xff222222),
-                                fontSize: 20.sp,
+                                text: BrowseController.to.browseViewModel.value!
+                                    .browses[index].title,
+                                color: Colors.white,
+                                fontSize: 24.sp,
                                 fontWeight: FontWeight.w600,
-                                height: (30 / 20),
+                                height: (32 / 24),
                               ),
-                              SizedBox(height: 6.h),
+                              SizedBox(height: 8.h),
                               CustomText(
-                                text: '축하해요 🎉',
-                                color: Color(0xff545454),
+                                text: BrowseController.to.browseViewModel.value!
+                                    .browses[index].content,
+                                color: Colors.white,
                                 fontSize: 12.sp,
                                 fontWeight: FontWeight.w500,
                               ),
@@ -91,76 +117,18 @@ class Browse extends StatelessWidget {
                           ),
                         ),
                       ),
-                      Container(
-                        margin: EdgeInsets.symmetric(
-                            vertical: 16.h, horizontal: 16.w),
-                        width: 16.w,
-                        height: 16.w,
-                        decoration: BoxDecoration(
-                          color: Color(0xff7B61FF),
-                          borderRadius: BorderRadius.circular(8.r),
+                      Padding(
+                        padding: EdgeInsets.fromLTRB(16.w, 40.h, 24.w, 0),
+                        child: Icon(
+                          Icons.arrow_forward_ios_sharp,
+                          size: 24.r,
+                          color: Colors.white,
                         ),
                       ),
                     ],
                   ),
-                );
-              } else {
-                return GestureDetector(
-                  onTap: () {
-                    Get.toNamed('/posts');
-                  },
-                  child: Container(
-                    margin: EdgeInsets.only(bottom: 16.h),
-                    width: double.infinity,
-                    height: 410.h,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10.r),
-                      border: Border.all(color: Color(0xffD9D9D9)),
-                      image: DecorationImage(
-                        image: AssetImage('assets/browse${index % 3}.png'),
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Expanded(
-                          child: Container(
-                            margin: EdgeInsets.fromLTRB(24.w, 24.h, 0, 24.h),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                CustomText(
-                                  text: '지난 주\n가장 인기 있는 일기',
-                                  color: Colors.white,
-                                  fontSize: 24.sp,
-                                  fontWeight: FontWeight.w600,
-                                  height: (32 / 24),
-                                ),
-                                SizedBox(height: 8.h),
-                                CustomText(
-                                  text: '지난 주에 좋아요를 가장 많이 받은 일기를 모아봤어요.',
-                                  color: Colors.white,
-                                  fontSize: 12.sp,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.fromLTRB(16.w, 40.h, 24.w, 0),
-                          child: Icon(
-                            Icons.arrow_forward_ios_sharp,
-                            size: 24.r,
-                            color: Colors.white,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                );
-              }
+                ),
+              );
             },
           ),
         ),

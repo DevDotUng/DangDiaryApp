@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:dangdiarysample/components/custom_text.dart';
 import 'package:dangdiarysample/controllers/bottom_nav_controller.dart';
 import 'package:dangdiarysample/controllers/diaries_controller.dart';
@@ -5,6 +7,7 @@ import 'package:dangdiarysample/models/write_diary/complete_diary_model.dart';
 import 'package:dangdiarysample/repositories/write_diary_repository.dart';
 import 'package:dangdiarysample/static/color.dart';
 import 'package:dangdiarysample/static/icon.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -21,6 +24,7 @@ class WriteDiaryController extends GetxController {
 
   static WriteDiaryController get to => Get.find();
   RxString date = DateFormat('yyyy년 MM월 dd일').format(DateTime.now()).obs;
+  String tempDate = DateFormat('yyyy년 MM월 dd일').format(DateTime.now());
   final ImagePicker _picker = ImagePicker();
   RxList images = [].obs;
   List<String> weathers = ['맑음', '흐림', '비', '눈', '천둥번개', '안개'];
@@ -138,16 +142,96 @@ class WriteDiaryController extends GetxController {
   }
 
   void changeDate(BuildContext context) async {
-    DateTime? pickedDate = await showDatePicker(
+    if (Platform.isIOS) {
+      await showCupertinoModalPopup(
+        context: context,
+        builder: (context) => SizedBox(
+          height: 260.h,
+          child: Column(
+            children: [
+              Container(
+                padding: EdgeInsets.symmetric(horizontal: 16.w),
+                height: 44.h,
+                color: Color(0xffF0F1F4),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.pop(context);
+                        date(tempDate);
+                      },
+                      child: CustomText(
+                        text: '완료',
+                        color: Color(0xff387CF6),
+                        fontSize: 16.sp,
+                        fontWeight: FontWeight.w500,
+                        height: (20 / 16),
+                        decoration: TextDecoration.none,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Container(
+                height: 216.h,
+                padding: const EdgeInsets.only(top: 6.0),
+                color: CupertinoColors.white,
+                child: DefaultTextStyle(
+                  style: const TextStyle(
+                    color: CupertinoColors.black,
+                    fontSize: 22,
+                  ),
+                  child: SafeArea(
+                    top: false,
+                    child: CupertinoDatePicker(
+                      mode: CupertinoDatePickerMode.date,
+                      initialDateTime: DateTime.now(),
+                      onDateTimeChanged: (DateTime value) {
+                        if (value != null) {
+                          String formattedDate =
+                              DateFormat('yyyy년 MM월 dd일').format(value);
+                          tempDate = formattedDate;
+                        } else {}
+                      },
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      );
+    } else {
+      DateTime? pickedDate = await showDatePicker(
         context: context,
         initialDate: DateTime.now(),
         firstDate: DateTime(1950),
-        lastDate: DateTime(2100));
+        lastDate: DateTime(2100),
+        builder: (context, child) {
+          return Theme(
+            data: Theme.of(context).copyWith(
+              colorScheme: ColorScheme.light(
+                primary: StaticColor.main, // header background color
+                onPrimary: StaticColor.font_main, // header text color
+                onSurface: StaticColor.sub_deeper, // body text color
+              ),
+              textButtonTheme: TextButtonThemeData(
+                style: TextButton.styleFrom(
+                  foregroundColor: StaticColor.sub_deeper, // button text color
+                ),
+              ),
+            ),
+            child: child!,
+          );
+        },
+      );
 
-    if (pickedDate != null) {
-      String formattedDate = DateFormat('yyyy년 MM월 dd일').format(pickedDate);
-      date(formattedDate);
-    } else {}
+      if (pickedDate != null) {
+        String formattedDate = DateFormat('yyyy년 MM월 dd일').format(pickedDate);
+        date(formattedDate);
+      } else {}
+    }
   }
 
   void changeContentListener(String content) {
