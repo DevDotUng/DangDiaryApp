@@ -1,95 +1,57 @@
-import 'dart:math';
-
+import 'package:dangdiarysample/components/cover_color.dart';
 import 'package:dangdiarysample/components/custom_text.dart';
+import 'package:dangdiarysample/components/pageview_indicator.dart';
+import 'package:dangdiarysample/controllers/diaries_controller.dart';
 import 'package:dangdiarysample/controllers/diary_controller.dart';
+import 'package:dangdiarysample/repositories/public_repository.dart';
+import 'package:dangdiarysample/skeletons/home_skeleton.dart';
 import 'package:dangdiarysample/static/color.dart';
 import 'package:dangdiarysample/static/icon.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:get/get.dart';
+import 'package:stacked_listview/stacked_listview.dart';
 
 class Diary extends StatelessWidget {
   Diary({Key? key}) : super(key: key);
 
-  String postContent =
-      '나는 평소에 초코가 되게 얌전하고 게으른 줄 알았는데, 오늘 챌린지를 하면서 완전 오해라는 걸 깨달았다... 초코.. 보통이 아닌 댕댕이다... 얼마나 뛰는 걸 좋아하던지, 내가 먼저 지쳐 나가 떨어졌다!😭 그래도 초코가 활기차게 뛰어 노는 걸 보니 앞으로도 종종 이렇게 전력질주 하는 날을 만들어 줘야겠다는 생각이 들었다 :)';
-
   @override
   Widget build(BuildContext context) {
-    Get.put(DiaryController(context: context));
+    double _appBarHeight = _appBar(context).preferredSize.height;
+    double _statusBarHeight = MediaQuery.of(context).viewPadding.top;
+    Get.put(DiaryController(
+        context: context,
+        coverId: Get.arguments['coverId'],
+        diaryId: Get.arguments['diaryId']));
+    return Obx(
+      () => DiaryController.to.diaryWithCoverModel.value == null
+          ? HomeSkeleton()
+          : _diaryView(context, _appBarHeight, _statusBarHeight),
+    );
+  }
+
+  Widget _diaryView(
+      BuildContext context, double _appBarHeight, double _statusBarHeight) {
     return Scaffold(
       body: Stack(
         children: [
           Scaffold(
-            appBar: AppBar(
-              backgroundColor: Colors.white,
-              elevation: 0.0,
-              leading: GestureDetector(
-                onTap: () {
-                  Get.back();
-                },
-                child: Icon(
-                  Icons.arrow_back,
-                  size: 32.r,
-                  color: Colors.black,
-                ),
-              ),
-              centerTitle: true,
-              title: Obx(
-                () => CustomText(
-                  text: DiaryController.to.pageIndex.value == 0
-                      ? '2022년 12월'
-                      : '${DiaryController.to.pageIndex}/4',
-                  color: Colors.black,
-                  fontSize: 20.sp,
-                  fontWeight: FontWeight.w500,
-                  height: (28 / 20),
-                ),
-              ),
-              actions: [
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 24.0.w),
-                  child: GestureDetector(
-                    onTap: () {
-                      if (DiaryController.to.pageIndex.value == 0) {
-                        DiaryController.to.editDiaryCover(context);
-                      } else {
-                        DiaryController.to.editDiary(context);
-                      }
-                    },
-                    child: StaticIcon(
-                      IconsPath.more_bold,
-                      size: 24.r,
-                      color: Color(0xff272727),
-                    ),
-                  ),
-                ),
-              ],
-            ),
+            appBar: _appBar(context),
             body: Container(
               color: Colors.white,
-              child: Swiper(
-                onIndexChanged: (index) {
-                  DiaryController.to.swipeListener(index);
-                },
-                itemCount: 5,
-                layout: SwiperLayout.CUSTOM,
-                customLayoutOption:
-                    CustomLayoutOption(startIndex: -1, stateCount: 3)
-                      ..addRotate([-45.0 / 180, 0.0, 45.0 / 180])
-                      ..addTranslate([
-                        Offset(-470.0.w, -40.0.h),
-                        Offset(0.0, 0.0),
-                        Offset(470.0.w, -40.0.h)
-                      ]),
-                itemWidth: Get.width - 40.w,
-                itemHeight: Get.height * 0.83,
-                loop: false,
-                itemBuilder: (context, index) {
+              child: StackedListView(
+                controller: DiaryController.to.scrollController,
+                physics: const PageScrollPhysics(),
+                scrollDirection: Axis.horizontal,
+                padding: EdgeInsets.all(16.r),
+                itemCount: DiaryController
+                        .to.diaryWithCoverModel.value!.diaries.length +
+                    2,
+                itemExtent: Get.width,
+                builder: (context, index) {
                   if (index == 0) {
                     return Padding(
-                      padding: EdgeInsets.only(top: 16.h),
+                      padding: EdgeInsets.only(bottom: 22.h, right: 36.w),
                       child: Stack(
                         children: [
                           Positioned(
@@ -127,20 +89,20 @@ class Diary extends StatelessWidget {
                                 width: Get.width - 80.w,
                                 height: double.infinity,
                                 decoration: BoxDecoration(
-                                  color: DiaryController.to.coverColorList[
+                                  color: CoverColor().coverColorList[
                                       DiaryController.to.coverIndex.value],
                                   borderRadius: BorderRadius.circular(10.r),
                                 ),
-                                child: Stack(
-                                  children: [
-                                    ...List.generate(
-                                      DiaryController
-                                          .to.randomPositionStickerList.length,
-                                      (index) => DiaryController
-                                          .to.randomPositionStickerList[index],
-                                    ),
-                                  ],
-                                ),
+                                // child: Stack(
+                                //   children: [
+                                //     ...List.generate(
+                                //       DiaryController
+                                //           .to.randomPositionStickerList.length,
+                                //       (index) => DiaryController
+                                //           .to.randomPositionStickerList[index],
+                                //     ),
+                                //   ],
+                                // ),
                               ),
                             ),
                           ),
@@ -154,7 +116,18 @@ class Diary extends StatelessWidget {
                                   width: Get.width - 128.w,
                                   child: Obx(
                                     () => CustomText(
-                                      text: DiaryController.to.diaryTitle.value,
+                                      text: DiaryController
+                                                  .to
+                                                  .diaryWithCoverModel
+                                                  .value
+                                                  ?.coverTitle ==
+                                              null
+                                          ? '제목'
+                                          : DiaryController
+                                              .to
+                                              .diaryWithCoverModel
+                                              .value!
+                                              .coverTitle,
                                       color: Colors.black,
                                       fontSize: 20.sp,
                                       fontWeight: FontWeight.w600,
@@ -164,7 +137,9 @@ class Diary extends StatelessWidget {
                                 ),
                                 SizedBox(height: 16.h),
                                 CustomText(
-                                  text: '열아홉 날의 이야기',
+                                  text: DiaryController.to.getNumberOfDiaries(
+                                      DiaryController.to.diaryWithCoverModel
+                                          .value!.diaries.length),
                                   color: StaticColor.font_main,
                                   fontSize: 14.sp,
                                   fontWeight: FontWeight.w500,
@@ -174,14 +149,26 @@ class Diary extends StatelessWidget {
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.end,
                                   children: [
+                                    CustomText(
+                                      text: '받은 좋아요 수',
+                                      color: StaticColor.font_main,
+                                      fontSize: 12.sp,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                    SizedBox(width: 8.w),
                                     StaticIcon(
                                       IconsPath.like,
                                       size: 16.r,
                                       color: StaticColor.font_main,
                                     ),
-                                    SizedBox(width: 10.w),
+                                    SizedBox(width: 8.w),
                                     CustomText(
-                                      text: '000',
+                                      text: DiaryController
+                                          .to
+                                          .diaryWithCoverModel
+                                          .value!
+                                          .numberOfLike
+                                          .toString(),
                                       color: StaticColor.font_main,
                                       fontSize: 12.sp,
                                       fontWeight: FontWeight.w500,
@@ -196,43 +183,12 @@ class Diary extends StatelessWidget {
                             right: 0,
                             child: Obx(
                               () => Container(
-                                width: 153.w,
+                                width: 16.w,
                                 height: 56.h,
                                 decoration: BoxDecoration(
-                                  color: DiaryController.to.holderColorList[
+                                  color: CoverColor().holderColorList[
                                       DiaryController.to.holderIndex.value],
                                   borderRadius: BorderRadius.circular(28.r),
-                                ),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    Container(
-                                      decoration: BoxDecoration(
-                                        boxShadow: [
-                                          BoxShadow(
-                                            color:
-                                                Colors.white.withOpacity(0.15),
-                                            blurRadius: 4.r,
-                                          ),
-                                        ],
-                                      ),
-                                      child: Text(
-                                        '페이지를 넘기세요',
-                                        style: TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 12.sp,
-                                          fontWeight: FontWeight.w400,
-                                        ),
-                                      ),
-                                    ),
-                                    SizedBox(width: 8.w),
-                                    Icon(
-                                      Icons.arrow_circle_right_outlined,
-                                      size: 24.r,
-                                      color: Colors.white,
-                                    )
-                                  ],
                                 ),
                               ),
                             ),
@@ -240,26 +196,218 @@ class Diary extends StatelessWidget {
                         ],
                       ),
                     );
+                  } else if (index == 1) {
+                    return Container(
+                      margin: EdgeInsets.only(bottom: 22.h, right: 36.w),
+                      width: double.infinity,
+                      height: double.infinity,
+                      decoration: BoxDecoration(
+                        color: StaticColor.background,
+                        borderRadius: BorderRadius.circular(10.r),
+                      ),
+                      child: Row(
+                        children: [
+                          Padding(
+                            padding: EdgeInsets.symmetric(
+                              vertical: 81.h,
+                              horizontal: 8.w,
+                            ),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                _clipHole(),
+                                _clipHole(),
+                                _clipHole(),
+                                _clipHole(),
+                                _clipHole(),
+                                _clipHole(),
+                              ],
+                            ),
+                          ),
+                          SizedBox(width: 16.w),
+                          Expanded(
+                            child: Column(
+                              children: [
+                                SizedBox(height: 24.h),
+                                Container(
+                                  width: double.infinity,
+                                  margin:
+                                      EdgeInsets.only(left: 13.w, right: 23.w),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      for (var i = 0;
+                                          i < DiaryController.to.week.length;
+                                          i++)
+                                        CustomText(
+                                          text: DiaryController.to.week[i],
+                                          color: i == 0
+                                              ? StaticColor.main
+                                              : i ==
+                                                      DiaryController
+                                                              .to.week.length -
+                                                          1
+                                                  ? StaticColor.main
+                                                  : StaticColor.icon,
+                                          fontSize: 14.sp,
+                                          fontWeight: FontWeight.w400,
+                                          height: (28 / 14),
+                                        ),
+                                    ],
+                                  ),
+                                ),
+                                SizedBox(height: 5.h),
+                                Expanded(
+                                  child: GridView.builder(
+                                    padding: EdgeInsets.only(right: 8.w),
+                                    physics:
+                                        const NeverScrollableScrollPhysics(),
+                                    gridDelegate:
+                                        SliverGridDelegateWithFixedCrossAxisCount(
+                                      crossAxisCount: 7,
+                                      crossAxisSpacing: 0,
+                                      mainAxisSpacing: 0,
+                                      mainAxisExtent: (Get.height -
+                                              _appBarHeight -
+                                              _statusBarHeight -
+                                              111) /
+                                          6,
+                                    ),
+                                    itemCount: DiaryController.to.days.length,
+                                    itemBuilder: (context, index) {
+                                      return Stack(
+                                        children: [
+                                          Positioned(
+                                            top: 33.h,
+                                            left: 5.w,
+                                            child: DiaryController
+                                                        .to.days[index] ==
+                                                    null
+                                                ? Container()
+                                                : DiaryController
+                                                            .to
+                                                            .days[index]
+                                                                ["sticker"]
+                                                            .length !=
+                                                        0
+                                                    ? Column(
+                                                        children: [
+                                                          Container(
+                                                            width: 32.r,
+                                                            height: 32.r,
+                                                            decoration:
+                                                                BoxDecoration(
+                                                              color: StaticColor
+                                                                  .white,
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          16.r),
+                                                              boxShadow: [
+                                                                BoxShadow(
+                                                                  offset:
+                                                                      Offset(0,
+                                                                          4.h),
+                                                                  blurRadius:
+                                                                      4.r,
+                                                                  color: Colors
+                                                                      .black
+                                                                      .withOpacity(
+                                                                          0.25),
+                                                                ),
+                                                              ],
+                                                              image:
+                                                                  DecorationImage(
+                                                                image: NetworkImage(PublicRepository().getStickerImageUrl(DiaryController
+                                                                            .to
+                                                                            .days[index]
+                                                                        [
+                                                                        "sticker"][0]
+                                                                    [
+                                                                    'stickerImage'])),
+                                                                fit: BoxFit
+                                                                    .cover,
+                                                              ),
+                                                            ),
+                                                          ),
+                                                          SizedBox(height: 4.h),
+                                                          DiaryController
+                                                                      .to
+                                                                      .days[
+                                                                          index]
+                                                                          [
+                                                                          "sticker"]
+                                                                      .length !=
+                                                                  1
+                                                              ? CustomText(
+                                                                  text:
+                                                                      '+${DiaryController.to.days[index]["sticker"].length}',
+                                                                  color:
+                                                                      StaticColor
+                                                                          .icon,
+                                                                  fontSize:
+                                                                      12.sp,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w400,
+                                                                )
+                                                              : Container(),
+                                                        ],
+                                                      )
+                                                    : Container(),
+                                          ),
+                                          Column(
+                                            children: [
+                                              Container(
+                                                width: double.infinity,
+                                                height: 1.h,
+                                                color: StaticColor.line,
+                                              ),
+                                              SizedBox(height: 8.h),
+                                              CustomText(
+                                                text: DiaryController
+                                                            .to.days[index] ==
+                                                        null
+                                                    ? ""
+                                                    : DiaryController
+                                                        .to.days[index]["day"]
+                                                        .toString(),
+                                                color: DiaryController
+                                                            .to.days[index] ==
+                                                        null
+                                                    ? Colors.black
+                                                    : index % 7 == 0 ||
+                                                            index % 7 == 6
+                                                        ? StaticColor.main
+                                                        : StaticColor.font_main,
+                                                fontSize: 14.sp,
+                                                fontWeight: FontWeight.w400,
+                                              ),
+                                            ],
+                                          ),
+                                        ],
+                                      );
+                                    },
+                                  ),
+                                )
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    );
                   } else {
                     return Padding(
-                      padding: EdgeInsets.only(top: 16.h),
+                      padding: EdgeInsets.only(bottom: 22.h, right: 36.w),
                       child: Stack(
                         children: [
                           Container(
                             padding:
                                 EdgeInsets.fromLTRB(12.w, 24.h, 24.w, 32.h),
                             decoration: BoxDecoration(
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.black.withOpacity(0.1),
-                                  blurRadius: 4.r,
-                                ),
-                              ],
-                              image: DecorationImage(
-                                image:
-                                    AssetImage('assets/diary_background.png'),
-                                fit: BoxFit.cover,
-                              ),
+                              color: StaticColor.background,
+                              borderRadius: BorderRadius.circular(10.r),
                             ),
                             child: Row(
                               children: [
@@ -290,7 +438,12 @@ class Diary extends StatelessWidget {
                                         children: [
                                           Expanded(child: Container()),
                                           CustomText(
-                                            text: '한강공원 술래잡기',
+                                            text: DiaryController
+                                                .to
+                                                .diaryWithCoverModel
+                                                .value!
+                                                .diaries[index - 2]
+                                                .title,
                                             color: Color(0xff222222),
                                             fontSize: 16.sp,
                                             fontWeight: FontWeight.w500,
@@ -302,10 +455,17 @@ class Diary extends StatelessWidget {
                                                   MainAxisAlignment.end,
                                               children: [
                                                 StaticIcon(
-                                                  IconsPath.unlock,
+                                                  DiaryController
+                                                          .to
+                                                          .diaryWithCoverModel
+                                                          .value!
+                                                          .diaries[index - 2]
+                                                          .isPublic
+                                                      ? IconsPath.unlock
+                                                      : IconsPath.lock,
                                                   size: 16.r,
                                                   color: StaticColor.icon,
-                                                )
+                                                ),
                                               ],
                                             ),
                                           ),
@@ -325,7 +485,14 @@ class Diary extends StatelessWidget {
                                       Row(
                                         children: [
                                           CustomText(
-                                            text: '2022년 12월 06일 금요일',
+                                            text: DiaryController.to
+                                                .getFormattedDate(
+                                                    DiaryController
+                                                        .to
+                                                        .diaryWithCoverModel
+                                                        .value!
+                                                        .diaries[index - 2]
+                                                        .registerDate),
                                             color: Color(0xff6B6B6B),
                                             fontSize: 12.sp,
                                             fontWeight: FontWeight.w500,
@@ -340,10 +507,16 @@ class Diary extends StatelessWidget {
                                             height: (20 / 12),
                                           ),
                                           SizedBox(width: 4.w),
-                                          Icon(
-                                            Icons.wb_sunny_outlined,
+                                          StaticIcon(
+                                            DiaryController.to.getWeather(
+                                                DiaryController
+                                                    .to
+                                                    .diaryWithCoverModel
+                                                    .value!
+                                                    .diaries[index - 2]
+                                                    .weather),
                                             size: 16.r,
-                                            color: Color(0xff6B6B6B),
+                                            color: StaticColor.icon,
                                           ),
                                           SizedBox(width: 8.w),
                                           CustomText(
@@ -354,10 +527,16 @@ class Diary extends StatelessWidget {
                                             height: (20 / 12),
                                           ),
                                           SizedBox(width: 4.w),
-                                          Icon(
-                                            Icons.sentiment_very_satisfied,
+                                          StaticIcon(
+                                            DiaryController.to.getFeeling(
+                                                DiaryController
+                                                    .to
+                                                    .diaryWithCoverModel
+                                                    .value!
+                                                    .diaries[index - 2]
+                                                    .feeling),
                                             size: 16.r,
-                                            color: Color(0xff6B6B6B),
+                                            color: StaticColor.icon,
                                           ),
                                         ],
                                       ),
@@ -370,8 +549,14 @@ class Diary extends StatelessWidget {
                                               key: PageStorageKey('${index}'),
                                               controller: DiaryController.to
                                                       .pageViewControllerList[
-                                                  index - 1],
-                                              itemCount: 3,
+                                                  index - 2],
+                                              itemCount: DiaryController
+                                                  .to
+                                                  .diaryWithCoverModel
+                                                  .value!
+                                                  .diaries[index - 2]
+                                                  .images
+                                                  .length,
                                               itemBuilder: (context, jndex) {
                                                 return Container(
                                                   width: double.infinity,
@@ -381,8 +566,17 @@ class Diary extends StatelessWidget {
                                                         BorderRadius.circular(
                                                             5.r),
                                                     image: DecorationImage(
-                                                      image: AssetImage(
-                                                          'assets/dog${3 - jndex % 2}.png'),
+                                                      image: NetworkImage(
+                                                          PublicRepository()
+                                                              .getDiaryImageUrl(
+                                                                  DiaryController
+                                                                      .to
+                                                                      .diaryWithCoverModel
+                                                                      .value!
+                                                                      .diaries[
+                                                                          index -
+                                                                              2]
+                                                                      .images[jndex])),
                                                       fit: BoxFit.cover,
                                                     ),
                                                   ),
@@ -393,41 +587,18 @@ class Diary extends StatelessWidget {
                                               bottom: 16.h,
                                               left: (Get.width - 120.w) / 2 -
                                                   28.w,
-                                              child: SizedBox(
-                                                width: 56,
-                                                height: 4,
-                                                child: ListView.builder(
-                                                  scrollDirection:
-                                                      Axis.horizontal,
-                                                  itemCount: 3,
-                                                  itemBuilder:
-                                                      (context, kndex) {
-                                                    return Obx(
-                                                      () => Container(
-                                                        margin: EdgeInsets.only(
-                                                            right: 4.w),
-                                                        width: 16.w,
-                                                        height: 4.h,
-                                                        decoration:
-                                                            BoxDecoration(
-                                                          color: DiaryController
-                                                                          .to
-                                                                          .pageViewIndexList[
-                                                                      index -
-                                                                          1] ==
-                                                                  kndex
-                                                              ? StaticColor
-                                                                  .main_light
-                                                              : Colors.white,
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(
-                                                                      2.r),
-                                                        ),
-                                                      ),
-                                                    );
-                                                  },
-                                                ),
+                                              child: PageViewIndicator(
+                                                itemCount: DiaryController
+                                                    .to
+                                                    .diaryWithCoverModel
+                                                    .value!
+                                                    .diaries[index - 2]
+                                                    .images
+                                                    .length,
+                                                pageController: DiaryController
+                                                        .to
+                                                        .pageViewControllerList[
+                                                    index - 2],
                                               ),
                                             ),
                                           ],
@@ -439,7 +610,7 @@ class Diary extends StatelessWidget {
                                           GestureDetector(
                                             onTap: () {
                                               DiaryController.to
-                                                  .changeisLike(index - 1);
+                                                  .likeDiary(index - 2);
                                             },
                                             child: Obx(
                                               () => StaticIcon(
@@ -447,8 +618,10 @@ class Diary extends StatelessWidget {
                                                 size: 24.r,
                                                 color: DiaryController
                                                         .to
-                                                        .isLikeList[index - 1]
-                                                        .value
+                                                        .diaryWithCoverModel
+                                                        .value!
+                                                        .diaries[index - 2]
+                                                        .isLike
                                                     ? StaticColor.like
                                                     : Color(0xffD8D8D8),
                                               ),
@@ -456,7 +629,13 @@ class Diary extends StatelessWidget {
                                           ),
                                           SizedBox(width: 4.w),
                                           CustomText(
-                                            text: '3',
+                                            text: DiaryController
+                                                .to
+                                                .diaryWithCoverModel
+                                                .value!
+                                                .diaries[index - 2]
+                                                .numberOfLike
+                                                .toString(),
                                             color: StaticColor.icon,
                                             fontSize: 12.sp,
                                             fontWeight: FontWeight.w500,
@@ -466,12 +645,28 @@ class Diary extends StatelessWidget {
                                       ),
                                       SizedBox(height: 8.h),
                                       Expanded(
-                                        child: CustomText(
-                                          text: postContent,
-                                          color: Color(0xff6B6B6B),
-                                          fontSize: 14.sp,
-                                          fontWeight: FontWeight.w400,
-                                          height: (20 / 14),
+                                        child: SingleChildScrollView(
+                                          child: SizedBox(
+                                            width: double.infinity,
+                                            child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                CustomText(
+                                                  text: DiaryController
+                                                      .to
+                                                      .diaryWithCoverModel
+                                                      .value!
+                                                      .diaries[index - 2]
+                                                      .content,
+                                                  color: Color(0xff6B6B6B),
+                                                  fontSize: 14.sp,
+                                                  fontWeight: FontWeight.w400,
+                                                  height: (20 / 14),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
                                         ),
                                       ),
                                       SizedBox(height: 24.h),
@@ -480,9 +675,15 @@ class Diary extends StatelessWidget {
                                         child: ListView.builder(
                                           key: PageStorageKey('${index}'),
                                           scrollDirection: Axis.horizontal,
-                                          itemCount: 5,
-                                          itemBuilder: (context, index) {
-                                            if (index == 0) {
+                                          itemCount: DiaryController
+                                              .to
+                                              .diaryWithCoverModel
+                                              .value!
+                                              .diaries[index - 2]
+                                              .tags
+                                              .length,
+                                          itemBuilder: (context, jndex) {
+                                            if (jndex == 0) {
                                               return Container(
                                                 margin:
                                                     EdgeInsets.only(right: 4.w),
@@ -508,7 +709,12 @@ class Diary extends StatelessWidget {
                                                           FontWeight.w400,
                                                     ),
                                                     CustomText(
-                                                      text: '한강공원 술래잡기',
+                                                      text: DiaryController
+                                                          .to
+                                                          .diaryWithCoverModel
+                                                          .value!
+                                                          .diaries[index - 2]
+                                                          .tags[jndex],
                                                       color: StaticColor.main,
                                                       fontSize: 14.sp,
                                                       fontWeight:
@@ -544,7 +750,12 @@ class Diary extends StatelessWidget {
                                                           FontWeight.w400,
                                                     ),
                                                     CustomText(
-                                                      text: '식빵궁뎅이',
+                                                      text: DiaryController
+                                                          .to
+                                                          .diaryWithCoverModel
+                                                          .value!
+                                                          .diaries[index - 2]
+                                                          .tags[jndex],
                                                       color:
                                                           StaticColor.font_main,
                                                       fontSize: 14.sp,
@@ -572,26 +783,76 @@ class Diary extends StatelessWidget {
                               height: 66.h,
                               decoration: BoxDecoration(
                                 color: StaticColor.main_light,
-                                borderRadius: BorderRadius.only(
-                                  bottomLeft: Radius.circular(20.r),
-                                  bottomRight: Radius.circular(20.r),
-                                ),
+                                borderRadius: DiaryController
+                                            .to
+                                            .diaryWithCoverModel
+                                            .value!
+                                            .diaries[index - 2]
+                                            .stickerShape ==
+                                        'circle'
+                                    ? BorderRadius.only(
+                                        bottomLeft: Radius.circular(20.r),
+                                        bottomRight: Radius.circular(20.r),
+                                      )
+                                    : BorderRadius.only(
+                                        bottomLeft: Radius.circular(5.r),
+                                        bottomRight: Radius.circular(5.r),
+                                      ),
                               ),
                               child: Column(
                                 children: [
                                   Expanded(child: Container()),
-                                  Container(
-                                    width: 32.w,
-                                    height: 32.w,
-                                    decoration: BoxDecoration(
-                                      color: Colors.white,
-                                      borderRadius: BorderRadius.circular(16.r),
-                                      image: DecorationImage(
-                                        image: AssetImage('assets/sticker.png'),
-                                        fit: BoxFit.contain,
-                                      ),
-                                    ),
-                                  ),
+                                  DiaryController
+                                              .to
+                                              .diaryWithCoverModel
+                                              .value!
+                                              .diaries[index - 2]
+                                              .stickerShape ==
+                                          'circle'
+                                      ? Container(
+                                          width: 32.w,
+                                          height: 32.w,
+                                          decoration: BoxDecoration(
+                                            color: Colors.white,
+                                            borderRadius:
+                                                BorderRadius.circular(62.r),
+                                            image: DecorationImage(
+                                              image: NetworkImage(
+                                                  PublicRepository()
+                                                      .getStickerImageUrl(
+                                                          DiaryController
+                                                              .to
+                                                              .diaryWithCoverModel
+                                                              .value!
+                                                              .diaries[
+                                                                  index - 2]
+                                                              .stickerImage)),
+                                              fit: BoxFit.cover,
+                                            ),
+                                          ),
+                                        )
+                                      : Container(
+                                          width: 32.w,
+                                          height: 26.h,
+                                          decoration: BoxDecoration(
+                                            color: Colors.white,
+                                            borderRadius:
+                                                BorderRadius.circular(5.r),
+                                            image: DecorationImage(
+                                              image: NetworkImage(
+                                                  PublicRepository()
+                                                      .getStickerImageUrl(
+                                                          DiaryController
+                                                              .to
+                                                              .diaryWithCoverModel
+                                                              .value!
+                                                              .diaries[
+                                                                  index - 2]
+                                                              .stickerImage)),
+                                              fit: BoxFit.cover,
+                                            ),
+                                          ),
+                                        ),
                                   SizedBox(height: 4.h),
                                 ],
                               ),
@@ -672,7 +933,7 @@ class Diary extends StatelessWidget {
                             width: 175.w,
                             height: 245.h,
                             decoration: BoxDecoration(
-                              color: DiaryController.to.coverColorList[
+                              color: CoverColor().coverColorList[
                                   DiaryController.to.coverTempIndex.value],
                               borderRadius: BorderRadius.circular(15.r),
                             ),
@@ -686,7 +947,7 @@ class Diary extends StatelessWidget {
                               width: 70.w,
                               height: 30.h,
                               decoration: BoxDecoration(
-                                color: DiaryController.to.holderColorList[
+                                color: CoverColor().holderColorList[
                                     DiaryController.to.holderTempIndex.value],
                                 borderRadius: BorderRadius.circular(12.r),
                               ),
@@ -744,7 +1005,7 @@ class Diary extends StatelessWidget {
                       child: ListView.builder(
                         padding: EdgeInsets.symmetric(horizontal: 16.w),
                         scrollDirection: Axis.horizontal,
-                        itemCount: DiaryController.to.coverColorList.length,
+                        itemCount: CoverColor().coverColorList.length,
                         itemBuilder: (context, index) {
                           return Obx(
                             () => DiaryController.to.coverTempIndex.value ==
@@ -758,8 +1019,8 @@ class Diary extends StatelessWidget {
                                       color: Colors.white,
                                       borderRadius: BorderRadius.circular(19.r),
                                       border: Border.all(
-                                        color: DiaryController
-                                            .to.coverColorList[index],
+                                        color:
+                                            CoverColor().coverColorList[index],
                                       ),
                                     ),
                                     child: Center(
@@ -767,8 +1028,8 @@ class Diary extends StatelessWidget {
                                         width: 32.w,
                                         height: 32.w,
                                         decoration: BoxDecoration(
-                                          color: DiaryController
-                                              .to.coverColorList[index],
+                                          color: CoverColor()
+                                              .coverColorList[index],
                                           borderRadius:
                                               BorderRadius.circular(16.r),
                                         ),
@@ -793,8 +1054,8 @@ class Diary extends StatelessWidget {
                                       width: 32.w,
                                       height: 32.w,
                                       decoration: BoxDecoration(
-                                        color: DiaryController
-                                            .to.coverColorList[index],
+                                        color:
+                                            CoverColor().coverColorList[index],
                                         borderRadius:
                                             BorderRadius.circular(16.r),
                                       ),
@@ -825,7 +1086,7 @@ class Diary extends StatelessWidget {
                       child: ListView.builder(
                         padding: EdgeInsets.symmetric(horizontal: 16.w),
                         scrollDirection: Axis.horizontal,
-                        itemCount: DiaryController.to.holderColorList.length,
+                        itemCount: CoverColor().holderColorList.length,
                         itemBuilder: (context, index) {
                           return Obx(
                             () => DiaryController.to.holderTempIndex.value ==
@@ -839,8 +1100,8 @@ class Diary extends StatelessWidget {
                                       color: Colors.white,
                                       borderRadius: BorderRadius.circular(19.r),
                                       border: Border.all(
-                                        color: DiaryController
-                                            .to.holderColorList[index],
+                                        color:
+                                            CoverColor().holderColorList[index],
                                       ),
                                     ),
                                     child: Center(
@@ -848,8 +1109,8 @@ class Diary extends StatelessWidget {
                                         width: 32.w,
                                         height: 32.w,
                                         decoration: BoxDecoration(
-                                          color: DiaryController
-                                              .to.holderColorList[index],
+                                          color: CoverColor()
+                                              .holderColorList[index],
                                           borderRadius:
                                               BorderRadius.circular(16.r),
                                         ),
@@ -874,8 +1135,8 @@ class Diary extends StatelessWidget {
                                       width: 32.w,
                                       height: 32.w,
                                       decoration: BoxDecoration(
-                                        color: DiaryController
-                                            .to.holderColorList[index],
+                                        color:
+                                            CoverColor().holderColorList[index],
                                         borderRadius:
                                             BorderRadius.circular(16.r),
                                       ),
@@ -929,7 +1190,8 @@ class Diary extends StatelessWidget {
                                   .changeIsShowEditDiaryColorModal(false);
                               DiaryController.to.applyColors();
                               DiaryController.to.showToast(
-                                  Icons.check, '다이어리 색상 편집이 완료되었어요!');
+                                  IconsPath.check, '다이어리 색상 편집이 완료되었어요!');
+                              DiariesController.to.myDiaryInit();
                             },
                             child: Container(
                               height: 48.h,
@@ -958,6 +1220,57 @@ class Diary extends StatelessWidget {
           ),
         ],
       ),
+    );
+  }
+
+  PreferredSizeWidget _appBar(BuildContext context) {
+    return AppBar(
+      backgroundColor: Colors.white,
+      elevation: 0.0,
+      leading: GestureDetector(
+        onTap: () {
+          Get.back();
+        },
+        child: Icon(
+          Icons.arrow_back,
+          size: 32.r,
+          color: Colors.black,
+        ),
+      ),
+      centerTitle: true,
+      title: Obx(
+        () => CustomText(
+          text: DiaryController.to.pageIndex.value == 0 ||
+                  DiaryController.to.pageIndex.value == 1
+              ? DiaryController.to.diaryWithCoverModel.value!.date
+              : '${DiaryController.to.pageIndex - 1}/${DiaryController.to.diaryWithCoverModel.value!.diaries.length}',
+          color: Colors.black,
+          fontSize: 20.sp,
+          fontWeight: FontWeight.w500,
+          height: (28 / 20),
+        ),
+      ),
+      actions: [
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: 24.0.w),
+          child: GestureDetector(
+            onTap: () {
+              int _page =
+                  DiaryController.to.scrollController.offset ~/ Get.width;
+              if (_page == 0 || _page == 1) {
+                DiaryController.to.editDiaryCover(context);
+              } else {
+                DiaryController.to.editDiary(context);
+              }
+            },
+            child: StaticIcon(
+              IconsPath.more_bold,
+              size: 24.r,
+              color: Color(0xff272727),
+            ),
+          ),
+        ),
+      ],
     );
   }
 

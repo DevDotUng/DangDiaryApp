@@ -48,7 +48,7 @@ class StickerController extends GetxController {
   }
 
   void _scrollListener() {
-    if (scrollController.offset > 169.h) {
+    if (scrollController.offset > 160.h) {
       isSliver(true);
     } else {
       isSliver(false);

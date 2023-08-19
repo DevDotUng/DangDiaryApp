@@ -79,7 +79,7 @@ class MyApp extends StatelessWidget {
             GetPage(name: '/challengeDetail', page: () => ChallengeDetail()),
             GetPage(name: '/writeDiary', page: () => WriteDiary()),
             GetPage(name: '/myPage', page: () => MyPage()),
-            GetPage(name: '/posts', page: () => Posts(controllerIndex: 0)),
+            GetPage(name: '/posts', page: () => Posts()),
             GetPage(
                 name: '/dogProfileSetting', page: () => DogProfileSetting()),
             GetPage(name: '/accountSetting', page: () => AccountSetting()),

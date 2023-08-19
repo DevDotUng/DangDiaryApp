@@ -1,7 +1,15 @@
 import 'dart:math';
 
+import 'package:dangdiarysample/components/cover_color.dart';
 import 'package:dangdiarysample/components/custom_text.dart';
 import 'package:dangdiarysample/components/random_position_sticker.dart';
+import 'package:dangdiarysample/controllers/diaries_controller.dart';
+import 'package:dangdiarysample/controllers/home_controller.dart';
+import 'package:dangdiarysample/controllers/my_page_controller.dart';
+import 'package:dangdiarysample/models/diary/diary_with_cover_model.dart';
+import 'package:dangdiarysample/models/diary/mydiary_model.dart';
+import 'package:dangdiarysample/repositories/browse_repository.dart';
+import 'package:dangdiarysample/repositories/diary_repository.dart';
 import 'package:dangdiarysample/static/color.dart';
 import 'package:dangdiarysample/static/icon.dart';
 import 'package:flutter/cupertino.dart';
@@ -9,6 +17,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 
 enum coverColors {
   RED,
@@ -49,7 +58,19 @@ enum holderColors {
 class DiaryController extends GetxController {
   static DiaryController get to => Get.find();
   late BuildContext context;
-  DiaryController({required this.context});
+  late int coverId;
+  late int? diaryId;
+  DiaryController(
+      {required this.context, required this.coverId, required this.diaryId});
+
+  final diaryWithCoverModel = Rxn<DiaryWithCoverModel>();
+
+  var week = ["일", "월", "화", "수", "목", "금", "토"];
+  static DateTime now = DateTime.now();
+
+  RxInt year = 0.obs;
+  RxInt month = 0.obs;
+  RxList days = [].obs;
 
   late FToast fToast;
   RxList randomPositionStickerList = [].obs;
@@ -58,56 +79,34 @@ class DiaryController extends GetxController {
   List<RxBool> isLikeList = [];
   List<RxInt> pageViewIndexList = [];
   RxBool isShowEditDiaryColorModal = false.obs;
-  List coverColorList = [
-    Color(0xffFF9686),
-    Color(0xffFFB393),
-    Color(0xffFFCDB8),
-    Color(0xffFFA251),
-    Color(0xffFFD84B),
-    Color(0xffFFE092),
-    Color(0xffB0DBAB),
-    Color(0xffD5E5AB),
-    Color(0xffECF3AE),
-    Color(0xff9CE1CF),
-    Color(0xffB6CAFF),
-    Color(0xffD3E0FF),
-    Color(0xffCF8EF5),
-    Color(0xffE3B2FF),
-    Color(0xffEFD4FF),
-    Color(0xffFBE7ED),
-  ];
-  List holderColorList = [
-    Color(0xffEF7260),
-    Color(0xffFB956B),
-    Color(0xffFFB697),
-    Color(0xffF38928),
-    Color(0xffFFBA34),
-    Color(0xffFFD464),
-    Color(0xff77D380),
-    Color(0xffBEDE69),
-    Color(0xffDDED53),
-    Color(0xff3AD4AC),
-    Color(0xff8BACFF),
-    Color(0xffB5C9FF),
-    Color(0xffA752DA),
-    Color(0xffC77EF2),
-    Color(0xffDEA9FF),
-    Color(0xffFFB7CC),
-  ];
   RxInt coverIndex = 10.obs;
   RxInt holderIndex = 10.obs;
   RxInt coverTempIndex = 10.obs;
   RxInt holderTempIndex = 10.obs;
-  RxString diaryTitle = '초코와 겨울'.obs;
   late TextEditingController titleTextEditingController;
+  late ScrollController scrollController;
 
   @override
-  void onInit() {
+  void onInit() async {
     setRandomPosition();
     fToast = FToast();
     fToast.init(context);
     titleTextEditingController = TextEditingController();
-    initPageViews();
+    await initPageViews();
+    setFirst(2023, 7);
+    setCoverIndexAndHolderIndex();
+    setCoverTempIndexAndHolderTempIndex();
+    scrollController = ScrollController();
+    if (diaryId != null) {
+      for (int i = 0; i < diaryWithCoverModel.value!.diaries.length; i++) {
+        if (diaryWithCoverModel.value!.diaries[i].diaryId == diaryId) {
+          scrollController =
+              ScrollController(initialScrollOffset: Get.width * (i + 2));
+          break;
+        }
+      }
+    }
+    scrollController.addListener(scrollListener);
     super.onInit();
   }
 
@@ -117,23 +116,86 @@ class DiaryController extends GetxController {
     super.dispose();
   }
 
-  void swipeListener(int index) {
-    pageIndex(index);
-  }
+  Future<void> initPageViews() async {
+    DiaryWithCoverModel diaryWithCoverModelTemp =
+        await DiaryRepository().getDiaryView(coverId);
+    diaryWithCoverModel(diaryWithCoverModelTemp);
 
-  void initPageViews() {
-    for (int i = 0; i < 4; i++) {
+    for (int i = 0; i < diaryWithCoverModel.value!.diaries.length; i++) {
       pageViewControllerList.add(PageController());
       pageViewIndexList.add(0.obs);
       pageViewControllerList[i].addListener(() {
         pageScrollListener(i);
       });
-      if (i % 2 == 0) {
-        isLikeList.add(true.obs);
-      } else {
-        isLikeList.add(false.obs);
-      }
+      isLikeList.add(diaryWithCoverModel.value!.diaries[i].isLike.obs);
     }
+  }
+
+  setFirst(int setYear, int setMonth) {
+    year(setYear);
+    month(setMonth);
+    insertDays(year.value, month.value);
+  }
+
+  insertDays(int year, int month) {
+    days.clear();
+
+    /*
+      이번달 채우기
+      => 이번달의 마지막날을 구해 1일부터 마지막 날까지 추기
+    */
+    int lastDay = DateTime(year, month + 1, 0).day;
+    for (var i = 1; i <= lastDay; i++) {
+      List stickerList = [];
+      for (var j = 0; j < diaryWithCoverModel.value!.diaries.length; j++) {
+        DateTime dateTime =
+            DateTime.parse(diaryWithCoverModel.value!.diaries[j].registerDate);
+        int dayOfWeek = int.parse(DateFormat('dd').format(dateTime));
+        if (dayOfWeek == i) {
+          stickerList.add({
+            'stickerImage': diaryWithCoverModel.value!.diaries[j].stickerImage,
+            'stickerShape': diaryWithCoverModel.value!.diaries[j].stickerShape
+          });
+        }
+      }
+      days.add({
+        "year": year,
+        "month": month,
+        "day": i,
+        "inMonth": true,
+        "sticker": stickerList,
+      });
+    }
+
+    /*
+      이번달 1일의 요일 : DateTime(year, month, 1).weekday
+      => 7이면(일요일) 상관x
+      => 아니면 비어있는 요일만큼 지난달 채우기
+    */
+    if (DateTime(year, month, 1).weekday != 7) {
+      var temp = [];
+      int prevLastDay = DateTime(year, month, 0).day;
+      for (var i = DateTime(year, month, 1).weekday - 1; i >= 0; i--) {
+        temp.add(null);
+      }
+      days = [...temp, ...days].obs;
+    }
+
+    /*
+      6줄을 유지하기 위해 남은 날 채우기
+      => 6*7 = 42. 42개까지
+    */
+    var temp = [];
+    for (var i = 1; i <= 42 - days.length; i++) {
+      temp.add(null);
+    }
+
+    days = [...days, ...temp].obs;
+  }
+
+  void scrollListener() {
+    pageIndex(scrollController.offset ~/ Get.width);
+    pageIndex.refresh();
   }
 
   void pageScrollListener(int index) {
@@ -141,6 +203,168 @@ class DiaryController extends GetxController {
       pageViewIndexList[index](pageViewControllerList[index].page!.toInt());
     } else {
       pageViewIndexList[index](pageViewControllerList[index].page!.toInt() + 1);
+    }
+  }
+
+  String getNumberOfDiaries(int number) {
+    switch (number) {
+      case 1:
+        return '일일의 이야기';
+      case 2:
+        return '이일의 이야기';
+      case 3:
+        return '삼일의 이야기';
+      case 4:
+        return '사일의 이야기';
+      case 5:
+        return '오일의 이야기';
+      case 6:
+        return '육일의 이야기';
+      case 7:
+        return '칠일의 이야기';
+      case 8:
+        return '팔일의 이야기';
+      case 9:
+        return '구일의 이야기';
+      case 10:
+        return '십일의 이야기';
+      case 11:
+        return '십일일의 이야기';
+      case 12:
+        return '십이일의 이야기';
+      case 13:
+        return '십삼일의 이야기';
+      case 14:
+        return '십사일의 이야기';
+      case 15:
+        return '십오일의 이야기';
+      case 16:
+        return '십육일의 이야기';
+      case 17:
+        return '십칠일의 이야기';
+      case 18:
+        return '십팔일의 이야기';
+      case 19:
+        return '십구일의 이야기';
+      case 20:
+        return '이십일의 이야기';
+      case 21:
+        return '이십일일의 이야기';
+      case 22:
+        return '이십이일의 이야기';
+      case 23:
+        return '이십삼일의 이야기';
+      case 24:
+        return '이십사일의 이야기';
+      case 25:
+        return '이십오일의 이야기';
+      case 26:
+        return '이십육일의 이야기';
+      case 27:
+        return '이십칠일의 이야기';
+      case 28:
+        return '이십팔일의 이야기';
+      case 29:
+        return '이십구일의 이야기';
+      case 30:
+        return '삼십일의 이야기';
+      case 31:
+        return '삼십일일의 이야기';
+      default:
+        return '여러날의 이야기';
+    }
+  }
+
+  void setCoverIndexAndHolderIndex() {
+    if (diaryWithCoverModel.value?.coverColor != null) {
+      coverIndex(CoverColor().coverColorList.indexOf(
+          CoverColor().getCoverColor(diaryWithCoverModel.value!.coverColor)));
+    } else {
+      coverIndex(10);
+    }
+    if (diaryWithCoverModel.value?.holderColor != null) {
+      holderIndex(CoverColor().holderColorList.indexOf(
+          CoverColor().getHolderColor(diaryWithCoverModel.value!.holderColor)));
+    } else {
+      holderIndex(10);
+    }
+  }
+
+  void setCoverTempIndexAndHolderTempIndex() {
+    if (diaryWithCoverModel.value?.coverColor != null) {
+      coverTempIndex(CoverColor().coverColorList.indexOf(
+          CoverColor().getCoverColor(diaryWithCoverModel.value!.coverColor)));
+    } else {
+      coverTempIndex(10);
+    }
+    if (diaryWithCoverModel.value?.holderColor != null) {
+      holderTempIndex(CoverColor().holderColorList.indexOf(
+          CoverColor().getHolderColor(diaryWithCoverModel.value!.holderColor)));
+    } else {
+      holderTempIndex(10);
+    }
+  }
+
+  String getFormattedDate(String date) {
+    DateTime dateTime = DateTime.parse(date);
+    String formattedDate = DateFormat('yyyy년 MM월 dd일 ').format(dateTime);
+    String dayOfWeek = DateFormat.E('ko_KR').format(dateTime);
+    String result = formattedDate + dayOfWeek + '요일';
+
+    return result;
+  }
+
+  String getFeeling(type) {
+    String feeling;
+    final map = {
+      '기뻐요': IconsPath.happy,
+      '즐거워요': IconsPath.fun,
+      '차분해요': IconsPath.happy,
+      '활기차요': IconsPath.full_energy,
+      '화나요': IconsPath.angry,
+      '짜증나요': IconsPath.annoying,
+      '두려워요': IconsPath.afraid,
+      '불안해요': IconsPath.nervous,
+      '모르겠어요': IconsPath.dont_know,
+    };
+    feeling = map[type] ?? IconsPath.happy;
+
+    return feeling;
+  }
+
+  String getWeather(type) {
+    String weather;
+    final map = {
+      '맑음': IconsPath.sunny_bold,
+      '흐림': IconsPath.cloudy_bold,
+      '비': IconsPath.rain_bold,
+      '눈': IconsPath.snow_bold,
+      '천둥번개': IconsPath.thunder_bold,
+      '안개': IconsPath.fog_bold,
+    };
+    weather = map[type] ?? IconsPath.sunny_bold;
+
+    return weather;
+  }
+
+  void likeDiary(int index) async {
+    int diaryId = diaryWithCoverModel.value!.diaries[index].diaryId;
+    bool isLike = diaryWithCoverModel.value!.diaries[index].isLike;
+
+    int statusCode = await BrowseRepository().likeDiary(diaryId);
+
+    if (statusCode == 200) {
+      if (isLike) {
+        diaryWithCoverModel.value!.diaries[index].numberOfLike =
+            diaryWithCoverModel.value!.diaries[index].numberOfLike - 1;
+      } else {
+        diaryWithCoverModel.value!.diaries[index].numberOfLike =
+            diaryWithCoverModel.value!.diaries[index].numberOfLike + 1;
+      }
+      diaryWithCoverModel.value!.diaries[index].isLike = !isLike;
+      diaryWithCoverModel.refresh();
+
+      pageIndex(scrollController.offset ~/ Get.width);
     }
   }
 
@@ -156,16 +380,53 @@ class DiaryController extends GetxController {
     holderTempIndex(index);
   }
 
-  void changeDiaryTitle(String title) {
-    diaryTitle(title);
+  void changeDiaryTitle(String title) async {
+    if (title.length <= 14 && title.isNotEmpty) {
+      int statusCode = await DiaryRepository().editCoverTitle(coverId, title);
+      if (statusCode == 201) {
+        Navigator.pop(context);
+        diaryWithCoverModel.value?.coverTitle = title;
+        diaryWithCoverModel.refresh();
+      }
+    }
   }
 
-  void applyColors() {
-    coverIndex(coverTempIndex.value);
-    holderIndex(holderTempIndex.value);
+  void applyColors() async {
+    int statusCode = await DiaryRepository().editCoverColor(
+        coverId,
+        CoverColor().getCoverColorString(
+            CoverColor().coverColorList[coverTempIndex.value]),
+        CoverColor().getHolderColorString(
+            CoverColor().holderColorList[holderTempIndex.value]));
+    if (statusCode == 201) {
+      coverIndex(coverTempIndex.value);
+      holderIndex(holderTempIndex.value);
+      diaryWithCoverModel.value?.coverColor = CoverColor().getCoverColorString(
+          CoverColor().coverColorList[coverTempIndex.value]);
+      diaryWithCoverModel.value?.holderColor = CoverColor()
+          .getHolderColorString(
+              CoverColor().holderColorList[holderTempIndex.value]);
+      diaryWithCoverModel.refresh();
+    }
   }
 
-  showToast(IconData? icon, String text) {
+  void changeIsPublicDiary() async {
+    int _page = scrollController.offset ~/ Get.width;
+    bool _isPublic = diaryWithCoverModel.value!.diaries[_page - 2].isPublic;
+    int statusCode = await DiaryRepository().changeIsPublicDiary(
+        diaryWithCoverModel.value!.diaries[_page - 2].diaryId, !_isPublic);
+    if (statusCode == 201) {
+      Navigator.pop(context);
+      showToast(_isPublic ? IconsPath.lock_bold : IconsPath.unlock_bold,
+          '이 일기가 ${_isPublic ? '비' : ''}공개 되었어요!');
+      diaryWithCoverModel.value!.diaries[_page - 2].isPublic = !_isPublic;
+      diaryWithCoverModel.refresh();
+
+      pageIndex(_page);
+    }
+  }
+
+  showToast(String iconsPath, String text) {
     double _statusBarHeight = MediaQuery.of(context).viewPadding.top;
     Widget toast = Container(
       width: Get.width - 48.w,
@@ -176,9 +437,10 @@ class DiaryController extends GetxController {
         borderRadius: BorderRadius.circular(10.r),
       ),
       child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(
-            icon,
+          StaticIcon(
+            iconsPath,
             size: 24.r,
             color: Colors.white,
           ),
@@ -295,34 +557,7 @@ class DiaryController extends GetxController {
                   borderRadius: BorderRadius.circular(2.r),
                 ),
               ),
-              SizedBox(height: 24.h),
-              GestureDetector(
-                onTap: () {
-                  Navigator.pop(context);
-                  showToast(Icons.lock, '모든 일기가 공개 되었어요!');
-                },
-                child: Container(
-                  color: Colors.white,
-                  child: Column(
-                    children: [
-                      SizedBox(height: 16.h),
-                      CustomText(
-                        text: '모든 일기 공개하기',
-                        color: Color(0xff4D4D4D),
-                        fontSize: 18.sp,
-                        fontWeight: FontWeight.w400,
-                        height: (32 / 18),
-                      ),
-                      SizedBox(height: 16.h),
-                    ],
-                  ),
-                ),
-              ),
-              Container(
-                width: double.infinity,
-                height: 1.h,
-                color: Color(0xffF5F5F5),
-              ),
+              SizedBox(height: 8.h),
               GestureDetector(
                 onTap: () {
                   Navigator.pop(context);
@@ -377,20 +612,26 @@ class DiaryController extends GetxController {
                 height: 1.h,
                 color: Color(0xffF5F5F5),
               ),
-              Container(
-                color: Colors.white,
-                child: Column(
-                  children: [
-                    SizedBox(height: 16.h),
-                    CustomText(
-                      text: '모든 일기 삭제하기',
-                      color: Color(0xffF02E2E),
-                      fontSize: 18.sp,
-                      fontWeight: FontWeight.w400,
-                      height: (32 / 18),
-                    ),
-                    SizedBox(height: 16.h),
-                  ],
+              GestureDetector(
+                onTap: () {
+                  Navigator.pop(context);
+                  showDeleteAllDiaryDialog(context);
+                },
+                child: Container(
+                  color: Colors.white,
+                  child: Column(
+                    children: [
+                      SizedBox(height: 16.h),
+                      CustomText(
+                        text: '이 달의 일기 모두 삭제하기',
+                        color: Color(0xffF02E2E),
+                        fontSize: 18.sp,
+                        fontWeight: FontWeight.w400,
+                        height: (32 / 18),
+                      ),
+                      SizedBox(height: 16.h),
+                    ],
+                  ),
                 ),
               ),
               Container(
@@ -407,6 +648,7 @@ class DiaryController extends GetxController {
   }
 
   void editDiary(BuildContext context) {
+    int _page = scrollController.offset ~/ Get.width;
     showModalBottomSheet(
       context: context,
       shape: RoundedRectangleBorder(
@@ -435,7 +677,7 @@ class DiaryController extends GetxController {
               SizedBox(height: 24.h),
               GestureDetector(
                 onTap: () {
-                  print('일기 공개');
+                  changeIsPublicDiary();
                 },
                 child: Container(
                   color: Colors.white,
@@ -443,7 +685,8 @@ class DiaryController extends GetxController {
                     children: [
                       SizedBox(height: 16.h),
                       CustomText(
-                        text: '이 일기 비공개하기',
+                        text:
+                            '이 일기 ${diaryWithCoverModel.value!.diaries[_page - 2].isPublic ? '비' : ''}공개하기',
                         color: Color(0xff4D4D4D),
                         fontSize: 18.sp,
                         fontWeight: FontWeight.w400,
@@ -487,7 +730,7 @@ class DiaryController extends GetxController {
               ),
               GestureDetector(
                 onTap: () {
-                  showDeleteDiaryDialog(context);
+                  //showDeleteDiaryDialog(context);
                 },
                 child: Container(
                   color: Colors.white,
@@ -569,7 +812,8 @@ class DiaryController extends GetxController {
                     height: (24 / 14).h,
                   ),
                   decoration: InputDecoration(
-                    hintText: '초코의 다이어리6 (최대 14글자)',
+                    hintText:
+                        '${diaryWithCoverModel.value?.coverTitle == null ? '' : diaryWithCoverModel.value!.coverTitle + ' '}(최대 14글자)',
                     hintStyle: TextStyle(
                       color: Color(0xffA6A6A6),
                       fontSize: 14.sp,
@@ -621,8 +865,8 @@ class DiaryController extends GetxController {
                     Flexible(
                       child: GestureDetector(
                         onTap: () {
-                          Navigator.pop(context);
                           changeDiaryTitle(titleTextEditingController.text);
+                          DiariesController.to.myDiaryInit();
                         },
                         child: Container(
                           height: 48.h,
@@ -651,7 +895,7 @@ class DiaryController extends GetxController {
     );
   }
 
-  void showDeleteDiaryDialog(BuildContext context) {
+  void showDeleteAllDiaryDialog(BuildContext context) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -738,9 +982,21 @@ class DiaryController extends GetxController {
                     SizedBox(width: 8.w),
                     Flexible(
                       child: GestureDetector(
-                        onTap: () {
+                        onTap: () async {
                           Navigator.pop(context);
-                          Navigator.pop(context);
+                          List<int> diaryIds = [];
+                          for (MyDiaryModel diary
+                              in diaryWithCoverModel.value!.diaries) {
+                            diaryIds.add(diary.diaryId);
+                          }
+                          int statusCode = await DiaryRepository()
+                              .deleteAllThisMonthDiaries(coverId, diaryIds);
+                          if (statusCode == 204) {
+                            HomeController.to.homeInit();
+                            DiariesController.to.myDiaryInit();
+                            MyPageController.to.myPageInit();
+                            Navigator.pop(context);
+                          }
                         },
                         child: Container(
                           height: 48.h,

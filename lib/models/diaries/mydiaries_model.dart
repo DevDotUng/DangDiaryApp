@@ -9,6 +9,7 @@ class MyDiariesModel {
     required this.numberOfOverdueDiary,
     required this.numberOfSticker,
     required this.diaries,
+    required this.autoCompleteWords,
   });
 
   String dogName;
@@ -18,6 +19,7 @@ class MyDiariesModel {
   int numberOfOverdueDiary;
   int numberOfSticker;
   List<DiariesByCoverModel> diaries;
+  List<String> autoCompleteWords;
 
   factory MyDiariesModel.fromJson(Map<String, dynamic> json) {
     return MyDiariesModel(
@@ -29,6 +31,7 @@ class MyDiariesModel {
       numberOfSticker: json['numberOfSticker'] as int,
       diaries: List<DiariesByCoverModel>.from(
           json['diaries'].map((data) => DiariesByCoverModel.fromJson(data))),
+      autoCompleteWords: List<String>.from(json['autoCompleteWords']),
     );
   }
 
@@ -40,5 +43,6 @@ class MyDiariesModel {
         'numberOfOverdueDiary': numberOfOverdueDiary,
         'numberOfSticker': numberOfSticker,
         'diaries': diaries,
+        'autoCompleteWords': autoCompleteWords,
       };
 }

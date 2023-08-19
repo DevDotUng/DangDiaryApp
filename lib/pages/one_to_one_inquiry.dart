@@ -10,7 +10,7 @@ class OneToOneInquiry extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Get.put(OneToOneInquiryController());
+    Get.put(OneToOneInquiryController(context: context));
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
@@ -74,19 +74,19 @@ class OneToOneInquiry extends StatelessWidget {
                   () => Row(
                     children: [
                       _inquiryCategoryWidget(
-                        '일기장',
+                        OneToOneInquiryController.to.inquiryCategoryList[0],
                         0,
                         OneToOneInquiryController.to.inquiryCategoryIndex.value,
                       ),
                       SizedBox(width: 8.w),
                       _inquiryCategoryWidget(
-                        '챌린지/스티커',
+                        OneToOneInquiryController.to.inquiryCategoryList[1],
                         1,
                         OneToOneInquiryController.to.inquiryCategoryIndex.value,
                       ),
                       SizedBox(width: 8.w),
                       _inquiryCategoryWidget(
-                        '둘러보기',
+                        OneToOneInquiryController.to.inquiryCategoryList[2],
                         2,
                         OneToOneInquiryController.to.inquiryCategoryIndex.value,
                       ),
@@ -98,19 +98,19 @@ class OneToOneInquiry extends StatelessWidget {
                   () => Row(
                     children: [
                       _inquiryCategoryWidget(
-                        '계정 관리',
+                        OneToOneInquiryController.to.inquiryCategoryList[3],
                         3,
                         OneToOneInquiryController.to.inquiryCategoryIndex.value,
                       ),
                       SizedBox(width: 8.w),
                       _inquiryCategoryWidget(
-                        '버그 신고',
+                        OneToOneInquiryController.to.inquiryCategoryList[4],
                         4,
                         OneToOneInquiryController.to.inquiryCategoryIndex.value,
                       ),
                       SizedBox(width: 8.w),
                       _inquiryCategoryWidget(
-                        '기타',
+                        OneToOneInquiryController.to.inquiryCategoryList[5],
                         5,
                         OneToOneInquiryController.to.inquiryCategoryIndex.value,
                       ),
@@ -140,6 +140,8 @@ class OneToOneInquiry extends StatelessWidget {
                   ],
                 ),
                 TextField(
+                  controller:
+                      OneToOneInquiryController.to.titleTextEditingController,
                   maxLength: 16,
                   cursorColor: Colors.black,
                   cursorHeight: 18.h,
@@ -205,6 +207,8 @@ class OneToOneInquiry extends StatelessWidget {
                     borderRadius: BorderRadius.circular(10.r),
                   ),
                   child: TextField(
+                    controller: OneToOneInquiryController
+                        .to.contentTextEditingController,
                     maxLines: 15,
                     cursorColor: Colors.black,
                     cursorWidth: 1.w,
@@ -258,7 +262,7 @@ class OneToOneInquiry extends StatelessWidget {
                     Flexible(
                       child: GestureDetector(
                         onTap: () {
-                          Get.offAndToNamed('/completeInquiry');
+                          OneToOneInquiryController.to.inquiry();
                         },
                         child: Container(
                           height: 48.h,

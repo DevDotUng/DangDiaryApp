@@ -40,7 +40,7 @@ class SearchPostsController extends GetxController {
     searchText(text);
     autoCompleteWord.clear();
     for (String word in autoCompleteWords) {
-      if (word != null && word.contains(text)) {
+      if (word.contains(text)) {
         autoCompleteWord.add(word);
       }
     }

@@ -1,4 +1,5 @@
 import 'package:dangdiarysample/components/custom_text.dart';
+import 'package:dangdiarysample/controllers/diaries_controller.dart';
 import 'package:dangdiarysample/controllers/sticker_controller.dart';
 import 'package:dangdiarysample/models/sticker/locked_sticker_model.dart';
 import 'package:dangdiarysample/models/sticker/my_sticker_model.dart';
@@ -68,152 +69,35 @@ class _StickerState extends State<Sticker> {
                 SizedBox(height: 16.h),
                 Container(
                   padding: EdgeInsets.symmetric(horizontal: 24.w),
-                  height: 68.h,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      RichText(
-                        text: TextSpan(
+                  height: 96.h,
+                  child: RichText(
+                    text: TextSpan(
+                      style: TextStyle(
+                        color: StaticColor.font_main,
+                        fontSize: 20.sp,
+                        fontWeight: FontWeight.w500,
+                        height: (32 / 20),
+                      ),
+                      children: <TextSpan>[
+                        TextSpan(
+                            text:
+                                '${DiariesController.to.myDiariesModel.value?.dogName}와 함께\n총 ${StickerController.to.stickerModel.value?.numberOfTotalSticker}장 중\n'),
+                        TextSpan(
+                          text:
+                              '${StickerController.to.stickerModel.value?.numberOfSticker}개의 ',
                           style: TextStyle(
-                            color: StaticColor.font_main,
+                            color: StaticColor.main,
                             fontSize: 20.sp,
                             fontWeight: FontWeight.w500,
                             height: (32 / 20),
                           ),
-                          children: <TextSpan>[
-                            TextSpan(
-                                text:
-                                    '총 ${StickerController.to.stickerModel.value?.numberOfTotalSticker}장 중에\n'),
-                            TextSpan(
-                              text:
-                                  '${StickerController.to.stickerModel.value?.numberOfSticker}개의 ',
-                              style: TextStyle(
-                                color: StaticColor.main,
-                                fontSize: 20.sp,
-                                fontWeight: FontWeight.w500,
-                                height: (32 / 20),
-                              ),
-                            ),
-                            TextSpan(text: '스티커를 모았어요.'),
-                          ],
                         ),
-                      ),
-                      Container(
-                        width: 56.w,
-                        height: 56.w,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(28.0.r),
-                          border: Border.all(color: Colors.white),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.black.withOpacity(0.25),
-                              blurRadius: 8,
-                            ),
-                          ],
-                          image: DecorationImage(
-                            image: StickerController
-                                        .to.stickerModel.value?.profileImage ==
-                                    null
-                                ? AssetImage('assets/default_profile_image.png')
-                                    as ImageProvider
-                                : NetworkImage(PublicRepository()
-                                    .getProfileImageUrl(StickerController
-                                        .to.stickerModel.value!.profileImage)),
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                      ),
-                    ],
+                        TextSpan(text: '스티커를 모았어요.'),
+                      ],
+                    ),
                   ),
                 ),
-                SizedBox(height: 16.h),
-                Container(
-                  padding: EdgeInsets.symmetric(horizontal: 24.w),
-                  height: 29.h,
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            CustomText(
-                              text: '쓴 일기',
-                              color: Color(0xffA6A6A6),
-                              fontSize: 12.sp,
-                              fontWeight: FontWeight.w500,
-                              height: (20 / 12),
-                            ),
-                            CustomText(
-                              text:
-                                  '${StickerController.to.stickerModel.value?.numberOfDiary}장',
-                              color: Color(0xff6B6B6B),
-                              fontSize: 12.sp,
-                              fontWeight: FontWeight.w500,
-                              height: (24 / 12),
-                            ),
-                          ],
-                        ),
-                      ),
-                      Container(
-                        margin: EdgeInsets.symmetric(horizontal: 8.w),
-                        width: 1.w,
-                        height: 22.h,
-                        color: Color(0xffEAEAEA),
-                      ),
-                      Expanded(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            CustomText(
-                              text: '밀린 일기',
-                              color: Color(0xffA6A6A6),
-                              fontSize: 12.sp,
-                              fontWeight: FontWeight.w500,
-                              height: (20 / 12),
-                            ),
-                            CustomText(
-                              text:
-                                  '${StickerController.to.stickerModel.value?.numberOfOverdueDiary}장',
-                              color: Color(0xff6B6B6B),
-                              fontSize: 12.sp,
-                              fontWeight: FontWeight.w500,
-                              height: (24 / 12),
-                            ),
-                          ],
-                        ),
-                      ),
-                      Container(
-                        margin: EdgeInsets.symmetric(horizontal: 8.w),
-                        width: 1.w,
-                        height: 22.h,
-                        color: Color(0xffEAEAEA),
-                      ),
-                      Expanded(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            CustomText(
-                              text: '칭찬 스티커',
-                              color: Color(0xffA6A6A6),
-                              fontSize: 12.sp,
-                              fontWeight: FontWeight.w500,
-                              height: (20 / 12),
-                            ),
-                            CustomText(
-                              text:
-                                  '${StickerController.to.stickerModel.value?.numberOfSticker}장',
-                              color: Color(0xff6B6B6B),
-                              fontSize: 12.sp,
-                              fontWeight: FontWeight.w500,
-                              height: (24 / 12),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                SizedBox(height: 16.h),
+                SizedBox(height: 24.h),
                 Container(
                   width: double.infinity,
                   height: 8.h,

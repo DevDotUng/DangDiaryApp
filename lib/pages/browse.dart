@@ -80,7 +80,6 @@ class Browse extends StatelessWidget {
                   height: 410.h,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10.r),
-                    border: Border.all(color: Color(0xffD9D9D9)),
                     image: DecorationImage(
                       image: NetworkImage(PublicRepository().getBrowseImageUrl(
                           BrowseController

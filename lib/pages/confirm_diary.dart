@@ -69,12 +69,12 @@ class _ConfirmDiaryState extends State<ConfirmDiary> {
           padding: EdgeInsets.only(left: 24.w, top: 16.h, bottom: 16.h),
           child: GestureDetector(
             onTap: () {
-              Get.offAndToNamed('/app');
+              Get.back();
             },
             child: StaticIcon(
-              IconsPath.home_bold,
+              IconsPath.back_arrow_bold,
               size: 24.r,
-              color: Color(0xff202020),
+              color: StaticColor.font_main,
             ),
           ),
         ),
@@ -247,12 +247,22 @@ class _ConfirmDiaryState extends State<ConfirmDiary> {
                         ),
                         SizedBox(height: 8.h),
                         Expanded(
-                          child: CustomText(
-                            text: _completeDiaryModel.content,
-                            color: StaticColor.font_main,
-                            fontSize: 14.sp,
-                            fontWeight: FontWeight.w400,
-                            height: (20 / 14),
+                          child: SingleChildScrollView(
+                            child: SizedBox(
+                              width: double.infinity,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  CustomText(
+                                    text: _completeDiaryModel.content,
+                                    color: Color(0xff6B6B6B),
+                                    fontSize: 14.sp,
+                                    fontWeight: FontWeight.w400,
+                                    height: (20 / 14),
+                                  ),
+                                ],
+                              ),
+                            ),
                           ),
                         ),
                         SizedBox(height: 24.h),

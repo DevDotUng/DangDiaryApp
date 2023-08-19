@@ -3,10 +3,6 @@ import 'dart:ui';
 import 'package:dangdiarysample/components/cover_color.dart';
 import 'package:dangdiarysample/components/custom_text.dart';
 import 'package:dangdiarysample/controllers/diaries_controller.dart';
-import 'package:dangdiarysample/pages/overdue_diaries.dart';
-import 'package:dangdiarysample/pages/search_diary.dart';
-import 'package:dangdiarysample/pages/sticker.dart';
-import 'package:dangdiarysample/repositories/public_repository.dart';
 import 'package:dangdiarysample/skeletons/home_skeleton.dart';
 import 'package:dangdiarysample/static/color.dart';
 import 'package:dangdiarysample/static/icon.dart';
@@ -47,10 +43,10 @@ class Diaries extends StatelessWidget {
               onTap: () {
                 Get.toNamed('/searchDiary');
               },
-              child: Icon(
-                Icons.search,
-                color: Colors.black,
-                size: 32.r,
+              child: StaticIcon(
+                IconsPath.search_bold,
+                size: 24.r,
+                color: Color(0xff202020),
               ),
             ),
           ),
@@ -66,7 +62,7 @@ class Diaries extends StatelessWidget {
                 SizedBox(height: 16.h),
                 Container(
                   padding: EdgeInsets.symmetric(horizontal: 24.w),
-                  height: 68.h,
+                  height: 96.h,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -75,7 +71,7 @@ class Diaries extends StatelessWidget {
                           style: TextStyle(
                             color: StaticColor.font_main,
                             fontSize: 20.sp,
-                            fontWeight: FontWeight.w500,
+                            fontWeight: FontWeight.w600,
                             height: (32 / 20),
                           ),
                           children: <TextSpan>[
@@ -88,143 +84,107 @@ class Diaries extends StatelessWidget {
                               style: TextStyle(
                                 color: StaticColor.main,
                                 fontSize: 20.sp,
-                                fontWeight: FontWeight.w500,
+                                fontWeight: FontWeight.w600,
                                 height: (32 / 20),
                               ),
                             ),
-                            TextSpan(text: '이 되었어요!'),
+                            TextSpan(text: '이 되었고\n'),
+                            ...DiariesController.to.myDiariesModel.value
+                                        ?.numberOfDiary ==
+                                    0
+                                ? [TextSpan(text: '추억을 시작하려 해요!')]
+                                : [
+                                    TextSpan(
+                                      text:
+                                          '${DiariesController.to.myDiariesModel.value?.numberOfDiary}장',
+                                      style: TextStyle(
+                                        color: StaticColor.main,
+                                        fontSize: 20.sp,
+                                        fontWeight: FontWeight.w600,
+                                        height: (32 / 20),
+                                      ),
+                                    ),
+                                    TextSpan(text: '의 일기를 썼어요'),
+                                  ],
                           ],
                         ),
                       ),
-                      Container(
-                        width: 56.w,
-                        height: 56.w,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(28.0.r),
-                          border: Border.all(color: Colors.white),
-                          image: DecorationImage(
-                            image: DiariesController.to.myDiariesModel.value
-                                        ?.profileImage ==
-                                    null
-                                ? AssetImage('assets/default_profile_image.png')
-                                    as ImageProvider
-                                : NetworkImage(PublicRepository()
-                                    .getProfileImageUrl(DiariesController.to
-                                        .myDiariesModel.value!.profileImage)),
-                            fit: BoxFit.cover,
+                      GestureDetector(
+                        onTap: () {
+                          Get.toNamed('/sticker');
+                        },
+                        child: Container(
+                          width: 89.w,
+                          height: 82.h,
+                          decoration: BoxDecoration(
+                            color: DiariesController.to.myDiariesModel.value
+                                        ?.numberOfDiary ==
+                                    0
+                                ? Color(0xffD9D9D9)
+                                : StaticColor.main_light,
+                            borderRadius: BorderRadius.circular(10.r),
+                          ),
+                          child: Stack(
+                            children: [
+                              Positioned(
+                                top: 7.h,
+                                left: 0,
+                                right: 0,
+                                child: Container(
+                                  width: 89.w,
+                                  height: 75.w,
+                                  decoration: BoxDecoration(
+                                    color: DiariesController.to.myDiariesModel
+                                                .value?.numberOfDiary ==
+                                            0
+                                        ? Color(0xffECECEC)
+                                        : StaticColor.main_light_light,
+                                    borderRadius: BorderRadius.circular(10.r),
+                                  ),
+                                  child: Column(
+                                    children: [
+                                      CustomText(
+                                        text: '칭찬 스티커',
+                                        color: StaticColor.font_main,
+                                        fontSize: 12.sp,
+                                        fontWeight: FontWeight.w400,
+                                        height: (32 / 12),
+                                      ),
+                                      CustomText(
+                                        text:
+                                            '${DiariesController.to.myDiariesModel.value?.numberOfSticker == 0 ? '00' : DiariesController.to.myDiariesModel.value?.numberOfSticker}장',
+                                        color: StaticColor.font_main,
+                                        fontSize: 20.sp,
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                              Positioned(
+                                top: -3.h,
+                                left: 34.5.w,
+                                child: Container(
+                                  width: 20.w,
+                                  height: 20.w,
+                                  decoration: BoxDecoration(
+                                    color: DiariesController.to.myDiariesModel
+                                                .value?.numberOfDiary ==
+                                            0
+                                        ? Color(0xffD9D9D9)
+                                        : StaticColor.main_light,
+                                    borderRadius: BorderRadius.circular(10.r),
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
                         ),
                       ),
                     ],
                   ),
                 ),
-                SizedBox(height: 16.h),
-                Container(
-                  padding: EdgeInsets.symmetric(horizontal: 24.w),
-                  height: 29.h,
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            CustomText(
-                              text: '쓴 일기',
-                              color: Color(0xffA6A6A6),
-                              fontSize: 12.sp,
-                              fontWeight: FontWeight.w500,
-                              height: (20 / 12),
-                            ),
-                            CustomText(
-                              text:
-                                  '${DiariesController.to.myDiariesModel.value?.numberOfDiary}장',
-                              color: Color(0xff6B6B6B),
-                              fontSize: 12.sp,
-                              fontWeight: FontWeight.w500,
-                              height: (24 / 12),
-                            ),
-                          ],
-                        ),
-                      ),
-                      Container(
-                        margin: EdgeInsets.symmetric(horizontal: 8.w),
-                        width: 1.w,
-                        height: 22.h,
-                        color: Color(0xffEAEAEA),
-                      ),
-                      Expanded(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            CustomText(
-                              text: '밀린 일기',
-                              color: Color(0xffA6A6A6),
-                              fontSize: 12.sp,
-                              fontWeight: FontWeight.w500,
-                              height: (20 / 12),
-                            ),
-                            GestureDetector(
-                              onTap: () {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            OverdueDiaries()));
-                              },
-                              child: CustomText(
-                                text:
-                                    '${DiariesController.to.myDiariesModel.value?.numberOfOverdueDiary}장',
-                                color: Color(0xff6B6B6B),
-                                fontSize: 12.sp,
-                                fontWeight: FontWeight.w500,
-                                height: (24 / 12),
-                                decoration: TextDecoration.underline,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      Container(
-                        margin: EdgeInsets.symmetric(horizontal: 8.w),
-                        width: 1.w,
-                        height: 22.h,
-                        color: Color(0xffEAEAEA),
-                      ),
-                      Expanded(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            CustomText(
-                              text: '칭찬 스티커',
-                              color: Color(0xffA6A6A6),
-                              fontSize: 12.sp,
-                              fontWeight: FontWeight.w500,
-                              height: (20 / 12),
-                            ),
-                            GestureDetector(
-                              onTap: () {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => Sticker()));
-                              },
-                              child: CustomText(
-                                text:
-                                    '${DiariesController.to.myDiariesModel.value?.numberOfSticker}장',
-                                color: Color(0xff6B6B6B),
-                                fontSize: 12.sp,
-                                fontWeight: FontWeight.w500,
-                                height: (24 / 12),
-                                decoration: TextDecoration.underline,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                SizedBox(height: 16.h),
+                SizedBox(height: 24.h),
                 Container(
                   width: double.infinity,
                   height: 8.h,
@@ -273,16 +233,8 @@ class Diaries extends StatelessWidget {
                       : IndexedStack(
                           index: DiariesController.to.tabBarIndex.value,
                           children: [
-                            Visibility(
-                              visible:
-                                  DiariesController.to.tabBarIndex.value == 0,
-                              child: _monthlyDiaries(),
-                            ),
-                            Visibility(
-                              visible:
-                                  DiariesController.to.tabBarIndex.value == 1,
-                              child: _dailyDiaries(),
-                            ),
+                            _monthlyDiaries(),
+                            _dailyDiaries(),
                           ],
                         ),
                 ),
@@ -406,7 +358,10 @@ class Diaries extends StatelessWidget {
         itemBuilder: (context, index) {
           return GestureDetector(
             onTap: () {
-              Get.toNamed('/diary');
+              Get.toNamed('/diary', arguments: {
+                'coverId': DiariesController
+                    .to.myDiariesModel.value?.diaries[index].coverId
+              });
             },
             child: Stack(
               children: [

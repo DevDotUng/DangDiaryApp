@@ -1,5 +1,6 @@
 import 'package:dangdiarysample/components/custom_text.dart';
 import 'package:dangdiarysample/controllers/my_page_controller.dart';
+import 'package:dangdiarysample/pages/notification_page.dart';
 import 'package:dangdiarysample/repositories/public_repository.dart';
 import 'package:dangdiarysample/static/color.dart';
 import 'package:dangdiarysample/static/icon.dart';
@@ -16,11 +17,11 @@ class MyPage extends StatelessWidget {
     return Obx(
       () => MyPageController.to.myPageModel.value == null
           ? Container(color: Colors.white)
-          : _myPageView(),
+          : _myPageView(context),
     );
   }
 
-  Widget _myPageView() {
+  Widget _myPageView(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Color(0xffB5C9FF),
@@ -37,11 +38,28 @@ class MyPage extends StatelessWidget {
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 24.w),
             child: GestureDetector(
-              onTap: () {},
-              child: Icon(
-                Icons.notifications_active_outlined,
-                size: 32.r,
-                color: Colors.black,
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => NotificationPage()));
+              },
+              child: Stack(
+                children: [
+                  StaticIcon(IconsPath.notification_off, size: 32.w),
+                  Positioned(
+                    top: 0,
+                    right: 5.w,
+                    child: Container(
+                      width: 4.w,
+                      height: 4.h,
+                      decoration: BoxDecoration(
+                        color: StaticColor.main,
+                        borderRadius: BorderRadius.circular(2.w),
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
           ),

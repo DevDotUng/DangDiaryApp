@@ -73,6 +73,7 @@ class CompleteDiary extends StatelessWidget {
               child: GestureDetector(
                 onTap: () {
                   Get.offAndToNamed('/app');
+                  BottomNavController.to.changeBottomNav(1);
                 },
                 child: CustomText(
                   text: '일기장으로 이동할래요',

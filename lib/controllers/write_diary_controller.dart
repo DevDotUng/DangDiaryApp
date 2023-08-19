@@ -394,6 +394,10 @@ class WriteDiaryController extends GetxController {
         isPublic.value,
       );
       isLoading(true);
+      print(completeDiaryModel!.userId);
+      print(completeDiaryModel!.feeling);
+      print(completeDiaryModel!.endDate);
+      print(completeDiaryModel!.weather);
 
       if (completeDiaryModel != null) {
         BottomNavController.to.challengeInit();

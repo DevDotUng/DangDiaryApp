@@ -1,4 +1,5 @@
 import 'package:dangdiarysample/components/custom_text.dart';
+import 'package:dangdiarysample/static/color.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -46,10 +47,13 @@ class CompleteInquiry extends StatelessWidget {
               child: SizedBox(
                 child: Center(
                   child: Container(
-                    constraints: BoxConstraints(maxHeight: Get.width - 48.w),
+                    width: Get.width - 96.w,
+                    height: Get.width - 96.w,
+                    constraints: BoxConstraints(maxHeight: Get.width - 96.w),
                     decoration: BoxDecoration(
                       image: DecorationImage(
-                        image: AssetImage('assets/sticker.png'),
+                        image:
+                            AssetImage('assets/illusts/complete_inquiry.png'),
                         fit: BoxFit.cover,
                       ),
                     ),
@@ -64,7 +68,7 @@ class CompleteInquiry extends StatelessWidget {
               child: Container(
                 height: 48.h,
                 decoration: BoxDecoration(
-                  color: Color(0xff7D7D7D),
+                  color: StaticColor.sub_deeper,
                   borderRadius: BorderRadius.circular(10.r),
                 ),
                 child: Center(
@@ -81,17 +85,22 @@ class CompleteInquiry extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                CustomText(
-                  text: '나의 문의 내역 페이지로 이동할래요',
-                  color: Color(0xff6B6B6B),
-                  fontSize: 12.sp,
-                  fontWeight: FontWeight.w400,
-                  height: (20 / 12),
-                  decoration: TextDecoration.underline,
+                GestureDetector(
+                  onTap: () {
+                    Get.offAndToNamed('/myInquiryHistory');
+                  },
+                  child: CustomText(
+                    text: '나의 문의 내역 페이지로 이동할래요',
+                    color: Color(0xff6B6B6B),
+                    fontSize: 12.sp,
+                    fontWeight: FontWeight.w400,
+                    height: (20 / 12),
+                    decoration: TextDecoration.underline,
+                  ),
                 ),
               ],
             ),
-            SizedBox(height: 24.h),
+            SizedBox(height: 80.h),
           ],
         ),
       ),

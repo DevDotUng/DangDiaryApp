@@ -100,4 +100,23 @@ class BrowseRepository {
       return Future.error(response.statusCode);
     }
   }
+
+  Future<int> likeDiary(int diaryId) async {
+    Box homeBox = await Hive.openBox('userInfo');
+    int userId = homeBox.get('userId');
+
+    Uri url = Uri.http(
+        _baseUrl,
+        '/api/browse/posts/like',
+        {'userId': userId, 'diaryId': diaryId}
+            .map((key, value) => MapEntry(key, value.toString())));
+
+    var response = await put(url);
+    if (response.statusCode == 200) {
+      int? challengeId = response.statusCode;
+      return challengeId;
+    } else {
+      return Future.error(response.statusCode);
+    }
+  }
 }

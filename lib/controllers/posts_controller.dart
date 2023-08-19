@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:dangdiarysample/components/custom_text.dart';
 import 'package:dangdiarysample/components/random_position_sticker.dart';
 import 'package:dangdiarysample/models/browse/posts_model.dart';
+import 'package:dangdiarysample/pages/posts.dart';
 import 'package:dangdiarysample/repositories/browse_repository.dart';
 import 'package:dangdiarysample/static/color.dart';
 import 'package:dangdiarysample/static/icon.dart';
@@ -25,7 +26,6 @@ class PostsController extends GetxController {
     required this.dogName,
     required this.nickname,
   });
-  static PostsController get to => Get.find();
   RxList<PostsModel> postsModels = <PostsModel>[].obs;
   final challengeId = Rxn<int>();
 
@@ -74,7 +74,7 @@ class PostsController extends GetxController {
   }
 
   void searchByHashTag(String hashTag) {
-    Get.to('/posts',
+    Get.toNamed('/posts',
         arguments: {'query': hashTag, 'searchType': 'hashTag'},
         preventDuplicates: false);
   }
@@ -105,39 +105,7 @@ class PostsController extends GetxController {
                   borderRadius: BorderRadius.circular(2.r),
                 ),
               ),
-              SizedBox(height: 24.h),
-              GestureDetector(
-                onTap: () {
-                  Navigator.pop(context);
-                  Get.toNamed('/diaries');
-                },
-                child: Container(
-                  color: Colors.white,
-                  child: Column(
-                    children: [
-                      SizedBox(height: 16.h),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          CustomText(
-                            text: '이 계정 정보',
-                            color: Color(0xff4D4D4D),
-                            fontSize: 18.sp,
-                            fontWeight: FontWeight.w400,
-                            height: (32 / 18),
-                          ),
-                        ],
-                      ),
-                      SizedBox(height: 16.h),
-                    ],
-                  ),
-                ),
-              ),
-              Container(
-                width: double.infinity,
-                height: 1.h,
-                color: Color(0xffF5F5F5),
-              ),
+              SizedBox(height: 8.h),
               GestureDetector(
                 onTap: () {
                   print('일기 수정');

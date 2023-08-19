@@ -163,81 +163,100 @@ class StickerDetail extends StatelessWidget {
                           itemCount: StickerDetailController.to
                               .stickerDetailModel.value!.diaryBySticker.length,
                           itemBuilder: (context, index) {
-                            return Container(
-                              margin: EdgeInsets.only(bottom: 8.h),
-                              width: double.infinity,
-                              height: 56.h,
-                              decoration: BoxDecoration(
-                                color: CoverColor().getCoverColor(
-                                    StickerDetailController
-                                        .to
-                                        .stickerDetailModel
-                                        .value!
-                                        .diaryBySticker[index]
-                                        .coverColor),
-                                borderRadius: BorderRadius.circular(10.r),
-                              ),
-                              child: Row(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  SizedBox(width: 16.w),
-                                  Container(
-                                    padding:
-                                        EdgeInsets.symmetric(horizontal: 8.w),
-                                    height: 24.h,
-                                    decoration: BoxDecoration(
-                                      color: StaticColor.white,
-                                      borderRadius: BorderRadius.circular(10.r),
-                                    ),
-                                    child: Center(
-                                      child: Text(
-                                        getFormattedDate(
-                                            StickerDetailController
-                                                .to
-                                                .stickerDetailModel
-                                                .value!
-                                                .diaryBySticker[index]
-                                                .endDate,
-                                            'yy년 MM월 dd일'),
-                                        style: TextStyle(
-                                          color: StaticColor.font_main,
-                                          fontSize: 12.sp,
-                                          fontWeight: FontWeight.w500,
+                            return GestureDetector(
+                              onTap: () {
+                                Get.toNamed('/diary', arguments: {
+                                  'coverId': StickerDetailController
+                                      .to
+                                      .stickerDetailModel
+                                      .value!
+                                      .diaryBySticker[index]
+                                      .coverId,
+                                  'diaryId': StickerDetailController
+                                      .to
+                                      .stickerDetailModel
+                                      .value!
+                                      .diaryBySticker[index]
+                                      .diaryId,
+                                });
+                              },
+                              child: Container(
+                                margin: EdgeInsets.only(bottom: 8.h),
+                                width: double.infinity,
+                                height: 56.h,
+                                decoration: BoxDecoration(
+                                  color: CoverColor().getCoverColor(
+                                      StickerDetailController
+                                          .to
+                                          .stickerDetailModel
+                                          .value!
+                                          .diaryBySticker[index]
+                                          .coverColor),
+                                  borderRadius: BorderRadius.circular(10.r),
+                                ),
+                                child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    SizedBox(width: 16.w),
+                                    Container(
+                                      padding:
+                                          EdgeInsets.symmetric(horizontal: 8.w),
+                                      height: 24.h,
+                                      decoration: BoxDecoration(
+                                        color: StaticColor.white,
+                                        borderRadius:
+                                            BorderRadius.circular(10.r),
+                                      ),
+                                      child: Center(
+                                        child: Text(
+                                          getFormattedDate(
+                                              StickerDetailController
+                                                  .to
+                                                  .stickerDetailModel
+                                                  .value!
+                                                  .diaryBySticker[index]
+                                                  .endDate,
+                                              'yy년 MM월 dd일'),
+                                          style: TextStyle(
+                                            color: StaticColor.font_main,
+                                            fontSize: 12.sp,
+                                            fontWeight: FontWeight.w500,
+                                          ),
                                         ),
                                       ),
                                     ),
-                                  ),
-                                  SizedBox(width: 8.w),
-                                  Text(
-                                    StickerDetailController
-                                        .to
-                                        .stickerDetailModel
-                                        .value!
-                                        .diaryBySticker[index]
-                                        .diaryTitle,
-                                    style: TextStyle(
-                                      color: Color(0xff222222),
-                                      fontSize: 14.sp,
-                                      fontWeight: FontWeight.w600,
+                                    SizedBox(width: 8.w),
+                                    Text(
+                                      StickerDetailController
+                                          .to
+                                          .stickerDetailModel
+                                          .value!
+                                          .diaryBySticker[index]
+                                          .diaryTitle,
+                                      style: TextStyle(
+                                        color: Color(0xff222222),
+                                        fontSize: 14.sp,
+                                        fontWeight: FontWeight.w600,
+                                      ),
                                     ),
-                                  ),
-                                  Expanded(child: Container()),
-                                  StaticIcon(
-                                    IconsPath.like,
-                                    size: 16.r,
-                                    color: Color(0xff272727),
-                                  ),
-                                  SizedBox(width: 8.w),
-                                  Text(
-                                    '${StickerDetailController.to.stickerDetailModel.value!.diaryBySticker[index].numberOfLike}',
-                                    style: TextStyle(
-                                      color: StaticColor.font_main,
-                                      fontSize: 12.sp,
-                                      fontWeight: FontWeight.w500,
+                                    Expanded(child: Container()),
+                                    StaticIcon(
+                                      IconsPath.like,
+                                      size: 16.r,
+                                      color: Color(0xff272727),
                                     ),
-                                  ),
-                                  SizedBox(width: 16.w),
-                                ],
+                                    SizedBox(width: 8.w),
+                                    Text(
+                                      '${StickerDetailController.to.stickerDetailModel.value!.diaryBySticker[index].numberOfLike}',
+                                      style: TextStyle(
+                                        color: StaticColor.font_main,
+                                        fontSize: 12.sp,
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                    ),
+                                    SizedBox(width: 16.w),
+                                  ],
+                                ),
                               ),
                             );
                           },

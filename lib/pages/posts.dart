@@ -13,21 +13,23 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
 class Posts extends StatelessWidget {
-  const Posts({Key? key}) : super(key: key);
+  Posts({Key? key}) : super(key: key);
+
+  final controller = Get.put<PostsController>(
+      PostsController(
+        browseId: Get.arguments['browseId'],
+        query: Get.arguments['query'],
+        searchType: Get.arguments['searchType'],
+        dogName: Get.arguments['dogName'],
+        nickname: Get.arguments['nickname'],
+      ),
+      tag: Get.arguments['query']);
 
   @override
   Widget build(BuildContext context) {
-    Get.put(PostsController(
-      browseId: Get.arguments['browseId'],
-      query: Get.arguments['query'],
-      searchType: Get.arguments['searchType'],
-      dogName: Get.arguments['dogName'],
-      nickname: Get.arguments['nickname'],
-    ));
+    Get.find<PostsController>();
     return Obx(
-      () => PostsController.to.postsModels.isEmpty
-          ? HomeSkeleton()
-          : _postsWidget(),
+      () => controller.postsModels.isEmpty ? HomeSkeleton() : _postsWidget(),
     );
   }
 
@@ -64,23 +66,30 @@ class Posts extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            PostsController.to.challengeId.value == null
+            controller.challengeId.value == null
                 ? Container()
-                : Container(
-                    margin: EdgeInsets.only(bottom: 12.h),
-                    width: 166,
-                    height: 33,
-                    decoration: BoxDecoration(
-                      color: StaticColor.main,
-                      borderRadius: BorderRadius.circular(5.r),
-                    ),
-                    child: Center(
-                      child: Text(
-                        '이 챌린지 하러 가기',
-                        style: TextStyle(
-                          color: StaticColor.white,
-                          fontSize: 16.sp,
-                          fontWeight: FontWeight.w500,
+                : GestureDetector(
+                    onTap: () {
+                      Get.toNamed('/challengeDetail', arguments: {
+                        'challengeId': controller.challengeId.value
+                      });
+                    },
+                    child: Container(
+                      margin: EdgeInsets.only(bottom: 12.h),
+                      width: 166,
+                      height: 33,
+                      decoration: BoxDecoration(
+                        color: StaticColor.main,
+                        borderRadius: BorderRadius.circular(5.r),
+                      ),
+                      child: Center(
+                        child: Text(
+                          '이 챌린지 하러 가기',
+                          style: TextStyle(
+                            color: StaticColor.white,
+                            fontSize: 16.sp,
+                            fontWeight: FontWeight.w500,
+                          ),
                         ),
                       ),
                     ),
@@ -89,7 +98,7 @@ class Posts extends StatelessWidget {
               child: ListView.builder(
                 physics: const ClampingScrollPhysics(),
                 scrollDirection: Axis.vertical,
-                itemCount: PostsController.to.postsModels?.length,
+                itemCount: controller.postsModels?.length,
                 itemBuilder: (context, index) {
                   return Padding(
                     padding: EdgeInsets.symmetric(vertical: 16.h),
@@ -108,28 +117,24 @@ class Posts extends StatelessWidget {
                                     decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(16.r),
                                       image: DecorationImage(
-                                        image: PostsController
-                                                    .to
-                                                    .postsModels![index]
+                                        image: controller.postsModels![index]
                                                     ?.profileImage ==
                                                 null
                                             ? AssetImage(
                                                     'assets/default_profile_image.png')
                                                 as ImageProvider
                                             : NetworkImage(PublicRepository()
-                                                .getProfileImageUrl(
-                                                    PostsController
-                                                        .to
-                                                        .postsModels![index]!
-                                                        .profileImage)),
+                                                .getProfileImageUrl(controller
+                                                    .postsModels![index]!
+                                                    .profileImage)),
                                         fit: BoxFit.cover,
                                       ),
                                     ),
                                   ),
                                   SizedBox(width: 8.w),
                                   CustomText(
-                                    text: PostsController
-                                        .to.postsModels![index].dogName,
+                                    text:
+                                        controller.postsModels![index].dogName,
                                     color: Color(0xff222222),
                                     fontSize: 14.sp,
                                     fontWeight: FontWeight.w500,
@@ -142,7 +147,7 @@ class Posts extends StatelessWidget {
                               padding: EdgeInsets.symmetric(horizontal: 24.0.w),
                               child: GestureDetector(
                                 onTap: () {
-                                  PostsController.to.editDiary(context);
+                                  controller.editDiary(context);
                                 },
                                 child: Icon(
                                   Icons.more_horiz,
@@ -198,8 +203,8 @@ class Posts extends StatelessWidget {
                                             CrossAxisAlignment.center,
                                         children: [
                                           CustomText(
-                                            text: PostsController
-                                                .to.postsModels![index].title,
+                                            text: controller
+                                                .postsModels![index].title,
                                             color: Color(0xff222222),
                                             fontSize: 16.sp,
                                             fontWeight: FontWeight.w500,
@@ -222,8 +227,7 @@ class Posts extends StatelessWidget {
                                             children: [
                                               CustomText(
                                                 text: getFormattedDate(
-                                                    PostsController
-                                                        .to
+                                                    controller
                                                         .postsModels![index]
                                                         .registerDate),
                                                 color: Color(0xff6B6B6B),
@@ -241,8 +245,7 @@ class Posts extends StatelessWidget {
                                               ),
                                               SizedBox(width: 4.w),
                                               StaticIcon(
-                                                getWeather(PostsController
-                                                    .to
+                                                getWeather(controller
                                                     .postsModels![index]
                                                     .weather),
                                                 size: 16.r,
@@ -258,8 +261,7 @@ class Posts extends StatelessWidget {
                                               ),
                                               SizedBox(width: 4.w),
                                               StaticIcon(
-                                                getFeeling(PostsController
-                                                    .to
+                                                getFeeling(controller
                                                     .postsModels![index]
                                                     .feeling),
                                                 size: 16.r,
@@ -275,11 +277,10 @@ class Posts extends StatelessWidget {
                                                 PageView.builder(
                                                   key: PageStorageKey(
                                                       '${index}'),
-                                                  controller: PostsController.to
+                                                  controller: controller
                                                           .pageViewControllerList[
                                                       index],
-                                                  itemCount: PostsController
-                                                      .to
+                                                  itemCount: controller
                                                       .postsModels![index]
                                                       .images
                                                       .length,
@@ -293,10 +294,9 @@ class Posts extends StatelessWidget {
                                                             BorderRadius
                                                                 .circular(5.r),
                                                         image: DecorationImage(
-                                                          image: NetworkImage(PublicRepository()
-                                                              .getDiaryImageUrl(
-                                                                  PostsController
-                                                                      .to
+                                                          image: NetworkImage(
+                                                              PublicRepository()
+                                                                  .getDiaryImageUrl(controller
                                                                       .postsModels![
                                                                           index]!
                                                                       .images[jndex])),
@@ -311,13 +311,11 @@ class Posts extends StatelessWidget {
                                                   left: (Get.width - 76.w) / 2 -
                                                       28.w,
                                                   child: PageViewIndicator(
-                                                    itemCount: PostsController
-                                                        .to
+                                                    itemCount: controller
                                                         .postsModels![index]
                                                         .images
                                                         .length,
-                                                    pageController: PostsController
-                                                            .to
+                                                    pageController: controller
                                                             .pageViewControllerList[
                                                         index],
                                                   ),
@@ -329,15 +327,12 @@ class Posts extends StatelessWidget {
                                           Row(
                                             children: [
                                               StaticIcon(
-                                                PostsController
-                                                        .to
-                                                        .postsModels![index]
+                                                controller.postsModels![index]
                                                         .isLike
                                                     ? IconsPath.like
                                                     : IconsPath.like_outlined,
                                                 size: 24.r,
-                                                color: PostsController
-                                                        .to
+                                                color: controller
                                                         .postsModels![index]
                                                         .isLike
                                                     ? StaticColor.like
@@ -346,7 +341,7 @@ class Posts extends StatelessWidget {
                                               SizedBox(width: 4.w),
                                               CustomText(
                                                 text:
-                                                    '${PostsController.to.postsModels![index].numberOfLike} 개',
+                                                    '${controller.postsModels![index].numberOfLike} 개',
                                                 color: StaticColor.font_main,
                                                 fontSize: 12.sp,
                                                 fontWeight: FontWeight.w500,
@@ -362,9 +357,7 @@ class Posts extends StatelessWidget {
                                               SizedBox(
                                                 width: double.infinity,
                                                 child: ExpandableText(
-                                                  PostsController
-                                                      .to
-                                                      .postsModels![index]
+                                                  controller.postsModels![index]
                                                       .content,
                                                   expandText: '더보기',
                                                   maxLines: 2,
@@ -389,19 +382,16 @@ class Posts extends StatelessWidget {
                                             child: ListView.builder(
                                               key: PageStorageKey('${index}'),
                                               scrollDirection: Axis.horizontal,
-                                              itemCount: PostsController
-                                                  .to
+                                              itemCount: controller
                                                   .postsModels![index]
                                                   .tags
                                                   .length,
                                               itemBuilder: (context, jndex) {
                                                 if (jndex == 0) {
                                                   return GestureDetector(
-                                                    onTap: () => PostsController
-                                                        .to
+                                                    onTap: () => controller
                                                         .searchByHashTag(
-                                                            PostsController
-                                                                .to
+                                                            controller
                                                                 .postsModels![
                                                                     index]
                                                                 .tags[jndex]),
@@ -433,8 +423,7 @@ class Posts extends StatelessWidget {
                                                                 FontWeight.w400,
                                                           ),
                                                           CustomText(
-                                                            text: PostsController
-                                                                .to
+                                                            text: controller
                                                                 .postsModels![
                                                                     index]
                                                                 .tags[jndex],
@@ -450,11 +439,9 @@ class Posts extends StatelessWidget {
                                                   );
                                                 } else {
                                                   return GestureDetector(
-                                                    onTap: () => PostsController
-                                                        .to
+                                                    onTap: () => controller
                                                         .searchByHashTag(
-                                                            PostsController
-                                                                .to
+                                                            controller
                                                                 .postsModels![
                                                                     index]
                                                                 .tags[jndex]),
@@ -486,8 +473,7 @@ class Posts extends StatelessWidget {
                                                                 FontWeight.w400,
                                                           ),
                                                           CustomText(
-                                                            text: PostsController
-                                                                .to
+                                                            text: controller
                                                                 .postsModels![
                                                                     index]
                                                                 .tags[jndex],
@@ -519,9 +505,7 @@ class Posts extends StatelessWidget {
                                   height: 66.h,
                                   decoration: BoxDecoration(
                                     color: StaticColor.main_light,
-                                    borderRadius: PostsController
-                                                .to
-                                                .postsModels[index]
+                                    borderRadius: controller.postsModels[index]
                                                 .stickerShape ==
                                             'circle'
                                         ? BorderRadius.only(
@@ -536,7 +520,7 @@ class Posts extends StatelessWidget {
                                   child: Column(
                                     children: [
                                       Expanded(child: Container()),
-                                      PostsController.to.postsModels[index]
+                                      controller.postsModels[index]
                                                   .stickerShape ==
                                               'circle'
                                           ? Container(
@@ -550,8 +534,7 @@ class Posts extends StatelessWidget {
                                                   image: NetworkImage(
                                                       PublicRepository()
                                                           .getStickerImageUrl(
-                                                              PostsController
-                                                                  .to
+                                                              controller
                                                                   .postsModels[
                                                                       index]
                                                                   .stickerImage)),
@@ -570,8 +553,7 @@ class Posts extends StatelessWidget {
                                                   image: NetworkImage(
                                                       PublicRepository()
                                                           .getStickerImageUrl(
-                                                              PostsController
-                                                                  .to
+                                                              controller
                                                                   .postsModels[
                                                                       index]
                                                                   .stickerImage)),
