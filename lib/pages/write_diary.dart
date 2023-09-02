@@ -199,8 +199,8 @@ class WriteDiary extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Get.put(WriteDiaryController(
-        diaryId: Get.arguments['diaryId'],
-        challengeId: Get.arguments['challengeId'],
+        writeType: Get.arguments['writeType'],
+        overdueDiary: Get.arguments['overdueDiary'],
         title: Get.arguments['title']));
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
@@ -212,11 +212,15 @@ class WriteDiary extends StatelessWidget {
               elevation: 0.0,
               leading: GestureDetector(
                 onTap: () async {
-                  Box homeBox = await Hive.openBox('userInfo');
-                  bool? isShowPopupOnWriteDiary =
-                      homeBox.get('isShowPopupOnWriteDiary');
-                  if (isShowPopupOnWriteDiary == null) {
-                    _showLaterWriteDialog(context);
+                  if (WriteDiaryController.to.writeType == 'write') {
+                    Box homeBox = await Hive.openBox('userInfo');
+                    bool? isShowPopupOnWriteDiary =
+                        homeBox.get('isShowPopupOnWriteDiary');
+                    if (isShowPopupOnWriteDiary == null) {
+                      _showLaterWriteDialog(context);
+                    } else {
+                      WriteDiaryController.to.overdue();
+                    }
                   } else {
                     Get.back();
                   }
@@ -946,7 +950,11 @@ class WriteDiary extends StatelessWidget {
               child: GestureDetector(
                 onTap: () {
                   if (!WriteDiaryController.to.isLoading.value) {
-                    WriteDiaryController.to.submit();
+                    if (WriteDiaryController.to.writeType == 'write') {
+                      WriteDiaryController.to.submit();
+                    } else {
+                      WriteDiaryController.to.editDiary();
+                    }
                   }
                 },
                 child: Obx(

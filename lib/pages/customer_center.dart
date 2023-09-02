@@ -163,7 +163,8 @@ class CustomerCenter extends StatelessWidget {
                               padding: EdgeInsets.symmetric(vertical: 12.h),
                               child: GestureDetector(
                                 onTap: () {
-                                  Get.toNamed('/appSetting');
+                                  Get.toNamed('/faq',
+                                      arguments: {'index': index});
                                 },
                                 child: Row(
                                   children: [

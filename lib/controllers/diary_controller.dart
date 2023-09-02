@@ -6,6 +6,7 @@ import 'package:dangdiarysample/components/random_position_sticker.dart';
 import 'package:dangdiarysample/controllers/diaries_controller.dart';
 import 'package:dangdiarysample/controllers/home_controller.dart';
 import 'package:dangdiarysample/controllers/my_page_controller.dart';
+import 'package:dangdiarysample/models/challenge_detail/overdue_diary_model.dart';
 import 'package:dangdiarysample/models/diary/diary_with_cover_model.dart';
 import 'package:dangdiarysample/models/diary/mydiary_model.dart';
 import 'package:dangdiarysample/repositories/browse_repository.dart';
@@ -17,6 +18,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
+import 'package:hive/hive.dart';
 import 'package:intl/intl.dart';
 
 enum coverColors {
@@ -73,7 +75,6 @@ class DiaryController extends GetxController {
   RxList days = [].obs;
 
   late FToast fToast;
-  RxList randomPositionStickerList = [].obs;
   RxInt pageIndex = 0.obs;
   List<PageController> pageViewControllerList = [];
   List<RxBool> isLikeList = [];
@@ -88,12 +89,11 @@ class DiaryController extends GetxController {
 
   @override
   void onInit() async {
-    setRandomPosition();
     fToast = FToast();
     fToast.init(context);
     titleTextEditingController = TextEditingController();
     await initPageViews();
-    setFirst(2023, 7);
+    setFirst(DateTime.now().year, DateTime.now().month);
     setCoverIndexAndHolderIndex();
     setCoverTempIndexAndHolderTempIndex();
     scrollController = ScrollController();
@@ -149,7 +149,7 @@ class DiaryController extends GetxController {
       List stickerList = [];
       for (var j = 0; j < diaryWithCoverModel.value!.diaries.length; j++) {
         DateTime dateTime =
-            DateTime.parse(diaryWithCoverModel.value!.diaries[j].registerDate);
+            DateTime.parse(diaryWithCoverModel.value!.diaries[j].endDate);
         int dayOfWeek = int.parse(DateFormat('dd').format(dateTime));
         if (dayOfWeek == i) {
           stickerList.add({
@@ -467,62 +467,6 @@ class DiaryController extends GetxController {
         });
   }
 
-  void setRandomPosition() {
-    for (int i = 0; i < 10; i++) {
-      int shape = Random().nextInt(2);
-      int index = Random().nextInt(5) + 1;
-      double size = 56.w + 15.w * index;
-      double degrees = Random().nextDouble() * 360;
-      double radians = degrees * pi / 180;
-      double top = 8.h;
-      double left;
-      if (shape == 0) {
-        do {
-          top = Random().nextDouble() *
-                  (Get.height * 0.83 - 16.h - getDiagonalLength(size) * 1.2) +
-              8.h +
-              getDiagonalLength(size) * 0.2;
-        } while (
-            !(top < 64.h || (top > 210.h && top < Get.height * 0.83 - 16.h)));
-        left = Random().nextDouble() *
-                (Get.width - 96.w - getDiagonalLength(size)) +
-            8.w;
-      } else {
-        do {
-          top = Random().nextDouble() *
-                  (Get.height * 0.83 - 16.h - getDiagonalLength(size) * 1.2) +
-              8.h +
-              getDiagonalLength(size) * 0.2;
-        } while (
-            !(top < 64.h || (top > 210.h && top < Get.height * 0.83 - 16.h)));
-        left = Random().nextDouble() *
-                (Get.width - 96.w - getDiagonalLength(size)) +
-            8.w;
-      }
-      if (shape == 0) {
-        randomPositionStickerList.add(
-          RandomPositionSticker(
-            shape: 'rectangle',
-            size: size,
-            radians: radians,
-            top: top,
-            left: left,
-          ),
-        );
-      } else {
-        randomPositionStickerList.add(
-          RandomPositionSticker(
-            shape: 'circle',
-            size: size,
-            radians: radians,
-            top: top,
-            left: left,
-          ),
-        );
-      }
-    }
-  }
-
   double getDiagonalLength(double size) {
     return sqrt(size * size + (size * 0.7) * (size * 0.7));
   }
@@ -703,8 +647,48 @@ class DiaryController extends GetxController {
                 color: Color(0xffF5F5F5),
               ),
               GestureDetector(
-                onTap: () {
-                  print('일기 공유');
+                onTap: () async {
+                  Box homeBox = await Hive.openBox('userInfo');
+                  int userId = homeBox.get('userId');
+
+                  int diaryId =
+                      diaryWithCoverModel.value!.diaries[_page - 2].diaryId;
+                  int challengeId =
+                      diaryWithCoverModel.value!.diaries[_page - 2].challengeId;
+                  String endDate =
+                      diaryWithCoverModel.value!.diaries[_page - 2].endDate;
+                  String weather =
+                      diaryWithCoverModel.value!.diaries[_page - 2].weather;
+                  String feeling =
+                      diaryWithCoverModel.value!.diaries[_page - 2].feeling;
+                  String title =
+                      diaryWithCoverModel.value!.diaries[_page - 2].title;
+                  String content =
+                      diaryWithCoverModel.value!.diaries[_page - 2].content;
+                  bool isPublic =
+                      diaryWithCoverModel.value!.diaries[_page - 2].isPublic;
+                  List<String> tags =
+                      diaryWithCoverModel.value!.diaries[_page - 2].tags;
+
+                  Navigator.pop(context);
+                  Get.toNamed('/writeDiary', arguments: {
+                    'writeType': 'edit',
+                    'overdueDiary': OverdueDiaryModel(
+                      diaryId: diaryId,
+                      userId: userId,
+                      challengeId: challengeId,
+                      endDate: endDate,
+                      weather: weather,
+                      feeling: feeling,
+                      title: title,
+                      content: content,
+                      isPublic: isPublic,
+                      tags: tags,
+                    ),
+                    'title': diaryWithCoverModel
+                        .value!.diaries[_page - 2].tags[0]
+                        .replaceAll('_', ' '),
+                  });
                 },
                 child: Container(
                   color: Colors.white,
@@ -712,7 +696,7 @@ class DiaryController extends GetxController {
                     children: [
                       SizedBox(height: 16.h),
                       CustomText(
-                        text: '이 일기 공유하기',
+                        text: '일기를 수정할래요',
                         color: Color(0xff4D4D4D),
                         fontSize: 18.sp,
                         fontWeight: FontWeight.w400,
@@ -730,7 +714,8 @@ class DiaryController extends GetxController {
               ),
               GestureDetector(
                 onTap: () {
-                  //showDeleteDiaryDialog(context);
+                  Navigator.pop(context);
+                  showDeleteDiaryDialog(context);
                 },
                 child: Container(
                   color: Colors.white,
@@ -991,6 +976,134 @@ class DiaryController extends GetxController {
                           }
                           int statusCode = await DiaryRepository()
                               .deleteAllThisMonthDiaries(coverId, diaryIds);
+                          if (statusCode == 204) {
+                            HomeController.to.homeInit();
+                            DiariesController.to.myDiaryInit();
+                            MyPageController.to.myPageInit();
+                            Navigator.pop(context);
+                          }
+                        },
+                        child: Container(
+                          height: 48.h,
+                          decoration: BoxDecoration(
+                            color: StaticColor.error,
+                            borderRadius: BorderRadius.circular(10.0.r),
+                          ),
+                          child: Center(
+                            child: CustomText(
+                              text: '삭제할래요',
+                              color: StaticColor.white,
+                              fontSize: 16.sp,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  void showDeleteDiaryDialog(BuildContext context) {
+    int _page = scrollController.offset ~/ Get.width;
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return Dialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(15.r),
+          ),
+          insetPadding: EdgeInsets.all(24.0.r),
+          child: Container(
+            padding: EdgeInsets.symmetric(vertical: 40.r, horizontal: 24.w),
+            width: double.infinity,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(15.r),
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    StaticIcon(
+                      IconsPath.trash,
+                      size: 24.r,
+                      color: StaticColor.error,
+                    ),
+                    SizedBox(width: 8.w),
+                    CustomText(
+                      text: '일기를 삭제할까요?',
+                      color: StaticColor.font_main,
+                      fontSize: 20.sp,
+                      fontWeight: FontWeight.w600,
+                    ),
+                    Expanded(child: SizedBox()),
+                  ],
+                ),
+                SizedBox(height: 16.h),
+                CustomText(
+                  text: '한번 삭제된 일기의 내용과 사진들은 다시 복구할 수 없습니다.',
+                  color: Color(0xff7D7D7D),
+                  fontSize: 14.sp,
+                  fontWeight: FontWeight.w400,
+                  height: (20 / 14),
+                ),
+                SizedBox(height: 24.h),
+                Container(
+                  width: double.infinity,
+                  height: 120.h,
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: AssetImage('assets/illusts/delete_diary.png'),
+                      fit: BoxFit.fitHeight,
+                    ),
+                  ),
+                ),
+                SizedBox(height: 24.h),
+                Row(
+                  children: [
+                    Flexible(
+                      child: GestureDetector(
+                        onTap: () {
+                          Navigator.pop(context);
+                        },
+                        child: Container(
+                          height: 48.h,
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(10.0.r),
+                            border: Border.all(
+                              color: StaticColor.line,
+                            ),
+                          ),
+                          child: Center(
+                            child: CustomText(
+                              text: '취소할게요',
+                              color: StaticColor.link,
+                              fontSize: 16.sp,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    SizedBox(width: 8.w),
+                    Flexible(
+                      child: GestureDetector(
+                        onTap: () async {
+                          Navigator.pop(context);
+                          int statusCode = await DiaryRepository().deleteDiary(
+                              coverId,
+                              diaryWithCoverModel
+                                  .value!.diaries[_page - 2].diaryId);
                           if (statusCode == 204) {
                             HomeController.to.homeInit();
                             DiariesController.to.myDiaryInit();

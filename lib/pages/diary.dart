@@ -492,7 +492,7 @@ class Diary extends StatelessWidget {
                                                         .diaryWithCoverModel
                                                         .value!
                                                         .diaries[index - 2]
-                                                        .registerDate),
+                                                        .endDate),
                                             color: Color(0xff6B6B6B),
                                             fontSize: 12.sp,
                                             fontWeight: FontWeight.w500,

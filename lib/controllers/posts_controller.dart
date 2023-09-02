@@ -32,6 +32,15 @@ class PostsController extends GetxController {
   List<PageController> pageViewControllerList = [];
   List<RxInt> pageViewIndexList = [];
 
+  RxInt reportIndex = 0.obs;
+  List<String> reportReasonList = [
+    '학대가 의심돼요.',
+    '일기가 챌린지와 무관해요.',
+    '상업적 광고가 포함되어 있어요.',
+    '불쾌한 내용이 포함되어 있어요.',
+    '불법적인 게시글이에요.(펫 분양/약물 등)',
+  ];
+
   @override
   void onInit() {
     postsInit();
@@ -302,34 +311,34 @@ class PostsController extends GetxController {
     return [
       Padding(
         padding: EdgeInsets.only(bottom: 10.0.h),
-        child: _checkBox(0, '학대가 의심돼요.'),
+        child: _checkBox(0, reportReasonList[0]),
       ),
       Padding(
         padding: EdgeInsets.only(bottom: 10.0.h),
-        child: _checkBox(1, '일기가 챌린지와 무관해요.'),
+        child: _checkBox(1, reportReasonList[1]),
       ),
       Padding(
         padding: EdgeInsets.only(bottom: 10.0.h),
-        child: _checkBox(2, '상업적 광고가 포함되어 있어요.'),
+        child: _checkBox(2, reportReasonList[2]),
       ),
       Padding(
         padding: EdgeInsets.only(bottom: 10.0.h),
-        child: _checkBox(3, '불쾌한 내용이 포함되어 있어요.'),
+        child: _checkBox(3, reportReasonList[3]),
       ),
-      _checkBox(4, '불법적인 게시글이에요.(펫 분양/약물 등)'),
+      _checkBox(4, reportReasonList[4]),
     ];
   }
 
   Widget _checkBox(int index, String content) {
     return GestureDetector(
       onTap: () {
-        _checkBoxBoolList[index](!_checkBoxBoolList[index].value);
+        reportIndex(index);
       },
       child: Obx(
         () => Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            _checkBoxBoolList[index].value
+            reportIndex.value == index
                 ? Container(
                     width: 24.w,
                     height: 24.w,

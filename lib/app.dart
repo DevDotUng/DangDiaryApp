@@ -937,14 +937,16 @@ class App extends StatelessWidget {
                         Positioned(
                           top: 0,
                           right: 0,
-                          child: Container(
-                            width: 16.w,
-                            height: 16.w,
-                            decoration: BoxDecoration(
-                              color: StaticColor.main,
-                              borderRadius: BorderRadius.circular(8.r),
-                            ),
-                          ),
+                          child: BottomNavController.to.isShowChallenge()
+                              ? Container(
+                                  width: 16.w,
+                                  height: 16.w,
+                                  decoration: BoxDecoration(
+                                    color: StaticColor.main,
+                                    borderRadius: BorderRadius.circular(8.r),
+                                  ),
+                                )
+                              : Container(),
                         ),
                       ],
                     ),

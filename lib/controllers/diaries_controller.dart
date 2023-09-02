@@ -39,7 +39,7 @@ class DiariesController extends GetxController {
   @override
   void onInit() {
     scrollController = ScrollController();
-    scrollController.addListener(_scrollListener);
+    scrollController.addListener(scrollListener);
     myDiaryInit();
     super.onInit();
   }
@@ -85,7 +85,7 @@ class DiariesController extends GetxController {
     return DateFormat('MM월 dd일').format(dateTime);
   }
 
-  void _scrollListener() {
+  void scrollListener() {
     if (scrollController.offset > 160.h) {
       isSliver(true);
     } else {

@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:dangdiarysample/components/reactive_device.dart';
+import 'package:dangdiarysample/pages/account_delete.dart';
 import 'package:dangdiarysample/pages/account_setting.dart';
 import 'package:dangdiarysample/pages/all_challenge.dart';
 import 'package:dangdiarysample/pages/app_setting.dart';
@@ -13,6 +14,7 @@ import 'package:dangdiarysample/pages/customer_center.dart';
 import 'package:dangdiarysample/pages/diaries.dart';
 import 'package:dangdiarysample/pages/diary.dart';
 import 'package:dangdiarysample/pages/dog_profile_setting.dart';
+import 'package:dangdiarysample/pages/faq.dart';
 import 'package:dangdiarysample/pages/login.dart';
 import 'package:dangdiarysample/pages/my_inquiry_history.dart';
 import 'package:dangdiarysample/pages/my_inquiry_history_detail.dart';
@@ -32,6 +34,8 @@ import 'package:dangdiarysample/pages/search_posts_result.dart';
 import 'package:dangdiarysample/pages/splash.dart';
 import 'package:dangdiarysample/pages/sticker.dart';
 import 'package:dangdiarysample/pages/sticker_detail.dart';
+import 'package:dangdiarysample/pages/terms_of_service.dart';
+import 'package:dangdiarysample/pages/webview.dart';
 import 'package:dangdiarysample/pages/write_diary.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -114,7 +118,11 @@ class MyApp extends StatelessWidget {
             GetPage(name: '/registerProfile', page: () => RegisterProfile()),
             GetPage(name: '/login', page: () => Login()),
             GetPage(name: '/splash', page: () => Splash()),
-            GetPage(name: '/confirmDiary', page: () => ConfirmDiary()),
+            GetPage(name: '/termsOfService', page: () => TermsOfService()),
+            GetPage(name: '/faq', page: () => FAQ()),
+            GetPage(name: '/accountDelete', page: () => AccountDelete()),
+            GetPage(name: '/webviewPage', page: () => WebviewPage()),
+            // GetPage(name: '/confirmDiary', page: () => ConfirmDiary()),
           ],
         );
       },

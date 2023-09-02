@@ -18,6 +18,9 @@ class MyInquiryHistoryController extends GetxController {
   }
 
   Future<void> inquiryHistoryInit() async {
+    preparingForAnswerList.clear();
+    receivedList.clear();
+    answerCompleteList.clear();
     List<InquiryHistoryModel> inquiryHistoryModelList =
         await CustomerCenterRepository().getInquiryHistoryView();
 

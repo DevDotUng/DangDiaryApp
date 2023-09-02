@@ -1,5 +1,7 @@
 import 'package:dangdiarysample/components/custom_text.dart';
+import 'package:dangdiarysample/controllers/my_inquiry_history_controller.dart';
 import 'package:dangdiarysample/models/customer_center/Inquiry_history_model.dart';
+import 'package:dangdiarysample/repositories/customer_center_repository.dart';
 import 'package:dangdiarysample/static/color.dart';
 import 'package:dangdiarysample/static/icon.dart';
 import 'package:flutter/material.dart';
@@ -7,8 +9,27 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
-class MyInquiryHistoryDetail extends StatelessWidget {
+class MyInquiryHistoryDetail extends StatefulWidget {
   const MyInquiryHistoryDetail({Key? key}) : super(key: key);
+
+  @override
+  State<MyInquiryHistoryDetail> createState() => _MyInquiryHistoryDetailState();
+}
+
+class _MyInquiryHistoryDetailState extends State<MyInquiryHistoryDetail> {
+  bool? isLike = Get.arguments['inquiryHistoryModel'].isLike;
+
+  void likeInquiry(int inquiryId, bool isLikeArgument) async {
+    int statusCode =
+        await CustomerCenterRepository().likeInquiry(inquiryId, isLikeArgument);
+
+    if (statusCode == 200) {
+      setState(() {
+        isLike = isLikeArgument;
+      });
+      MyInquiryHistoryController.to.inquiryHistoryInit();
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -193,21 +214,30 @@ class MyInquiryHistoryDetail extends StatelessWidget {
                                     Flexible(
                                       child: GestureDetector(
                                         onTap: () {
-                                          print('잘 모르겠어요');
+                                          likeInquiry(
+                                              _inquiryHistoryModel.inquiryId,
+                                              false);
                                         },
                                         child: Container(
                                           height: 48.h,
                                           decoration: BoxDecoration(
+                                            color: isLike == null || isLike!
+                                                ? StaticColor.white
+                                                : StaticColor.sub_deeper,
                                             borderRadius:
                                                 BorderRadius.circular(10.r),
-                                            border: Border.all(
-                                              color: Color(0xffA6A6A6),
-                                            ),
+                                            border: isLike == null || isLike!
+                                                ? Border.all(
+                                                    color: Color(0xffA6A6A6),
+                                                  )
+                                                : null,
                                           ),
                                           child: Center(
                                             child: CustomText(
                                               text: '잘 모르겠어요',
-                                              color: Color(0xffA6A6A6),
+                                              color: isLike == null || isLike!
+                                                  ? Color(0xffA6A6A6)
+                                                  : StaticColor.white,
                                               fontSize: 16.sp,
                                               fontWeight: FontWeight.w600,
                                               height: (32 / 16),
@@ -220,30 +250,46 @@ class MyInquiryHistoryDetail extends StatelessWidget {
                                     Flexible(
                                       child: GestureDetector(
                                         onTap: () {
-                                          print('고마워요');
+                                          likeInquiry(
+                                              _inquiryHistoryModel.inquiryId,
+                                              true);
                                         },
                                         child: Container(
                                           height: 48.h,
                                           decoration: BoxDecoration(
+                                            color: isLike == null || !isLike!
+                                                ? StaticColor.white
+                                                : StaticColor.like,
                                             borderRadius:
                                                 BorderRadius.circular(10.r),
-                                            border: Border.all(
-                                              color: Color(0xffA6A6A6),
-                                            ),
+                                            border: isLike == null || !isLike!
+                                                ? Border.all(
+                                                    color: Color(0xffA6A6A6),
+                                                  )
+                                                : null,
                                           ),
                                           child: Row(
                                             mainAxisAlignment:
                                                 MainAxisAlignment.center,
                                             children: [
-                                              StaticIcon(
-                                                IconsPath.like_outlined,
-                                                size: 24.r,
-                                                color: Color(0xff6B6B6B),
-                                              ),
+                                              isLike == null || !isLike!
+                                                  ? StaticIcon(
+                                                      IconsPath.like_outlined,
+                                                      size: 24.r,
+                                                      color: Color(0xff6B6B6B),
+                                                    )
+                                                  : StaticIcon(
+                                                      IconsPath.like,
+                                                      size: 24.r,
+                                                      color: Color(0xffFFFFFF),
+                                                    ),
                                               SizedBox(width: 4.w),
                                               CustomText(
                                                 text: '고마워요!',
-                                                color: Color(0xffA6A6A6),
+                                                color:
+                                                    isLike == null || !isLike!
+                                                        ? Color(0xffA6A6A6)
+                                                        : StaticColor.white,
                                                 fontSize: 16.sp,
                                                 fontWeight: FontWeight.w600,
                                                 height: (32 / 16),

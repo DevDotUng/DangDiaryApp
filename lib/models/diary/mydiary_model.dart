@@ -1,8 +1,9 @@
 class MyDiaryModel {
   MyDiaryModel({
     required this.diaryId,
+    required this.challengeId,
     required this.title,
-    required this.registerDate,
+    required this.endDate,
     required this.weather,
     required this.feeling,
     required this.content,
@@ -16,8 +17,9 @@ class MyDiaryModel {
   });
 
   int diaryId;
+  int challengeId;
   String title;
-  String registerDate;
+  String endDate;
   String weather;
   String feeling;
   String content;
@@ -32,8 +34,9 @@ class MyDiaryModel {
   factory MyDiaryModel.fromJson(Map<String, dynamic> json) {
     return MyDiaryModel(
       diaryId: json['diaryId'] as int,
+      challengeId: json['challengeId'] as int,
       title: json['title'] as String,
-      registerDate: json['registerDate'] as String,
+      endDate: json['endDate'] as String,
       weather: json['weather'] as String,
       feeling: json['feeling'] as String,
       content: json['content'] as String,
@@ -49,8 +52,9 @@ class MyDiaryModel {
 
   Map<String, dynamic> toJson() => {
         'diaryId': diaryId,
+        'challengeId': challengeId,
         'title': title,
-        'registerDate': registerDate,
+        'endDate': endDate,
         'weather': weather,
         'feeling': feeling,
         'content': content,

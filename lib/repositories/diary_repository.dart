@@ -96,4 +96,22 @@ class DiaryRepository {
       return 0;
     }
   }
+
+  Future<int> deleteDiary(int coverId, int diaryId) async {
+    Box homeBox = await Hive.openBox('userInfo');
+    int userId = homeBox.get('userId');
+
+    Uri url = Uri.http(
+        _baseUrl,
+        '/api/diaries/delete',
+        {'userId': userId, 'coverId': coverId, 'diaryId': diaryId}
+            .map((key, value) => MapEntry(key, value.toString())));
+
+    var response = await http.delete(url);
+    if (response.statusCode == 204) {
+      return 204;
+    } else {
+      return Future.error(response.statusCode);
+    }
+  }
 }

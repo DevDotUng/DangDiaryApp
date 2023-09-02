@@ -77,7 +77,7 @@ class Diaries extends StatelessWidget {
                           children: <TextSpan>[
                             TextSpan(
                                 text:
-                                    '${DiariesController.to.myDiariesModel.value?.dogName}와 일기를 쓴지\n'),
+                                    '${DiariesController.to.myDiariesModel.value?.dogName}와 일기를 쓴 지\n'),
                             TextSpan(
                               text:
                                   '${DiariesController.to.myDiariesModel.value?.date}일',
@@ -213,7 +213,7 @@ class Diaries extends StatelessWidget {
                               ),
                               SizedBox(height: 8.h),
                               CustomText(
-                                text: '와! 밀린 일기가 하나도 없어요!',
+                                text: '앗... 일기를 아직 안 쓰셨군요',
                                 color: StaticColor.font_main,
                                 fontSize: 16.sp,
                                 fontWeight: FontWeight.w600,
@@ -221,7 +221,7 @@ class Diaries extends StatelessWidget {
                               ),
                               SizedBox(height: 8.h),
                               CustomText(
-                                text: '대단해요 - 또 다른 챌린지를 하러 가볼까요?',
+                                text: '챌린지를 하고 일기를 작성해 보세요!',
                                 color: StaticColor.icon,
                                 fontSize: 14.sp,
                                 fontWeight: FontWeight.w400,

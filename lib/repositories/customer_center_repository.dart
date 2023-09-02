@@ -11,7 +11,14 @@ class CustomerCenterRepository {
   final String _baseUrl = PublicRepository.baseUrl;
 
   Future<CustomerCenterModel> getCustomerCenterView() async {
-    Uri url = Uri.http(_baseUrl, '/api/customerCenter');
+    Box homeBox = await Hive.openBox('userInfo');
+    int userId = homeBox.get('userId');
+
+    Uri url = Uri.http(
+        _baseUrl,
+        '/api/customerCenter',
+        {'userId': userId}
+            .map((key, value) => MapEntry(key, value.toString())));
 
     var response = await http.get(url);
     if (response.statusCode == 200) {
@@ -62,6 +69,39 @@ class CustomerCenterRepository {
       List<InquiryHistoryModel> inquiryHistoryModel =
           body.map((data) => InquiryHistoryModel.fromJson(data)).toList();
       return inquiryHistoryModel;
+    } else {
+      return Future.error(response.statusCode);
+    }
+  }
+
+  Future<int> likeInquiry(int inquiryId, bool isLike) async {
+    Uri url = Uri.http(
+        _baseUrl,
+        '/api/customerCenter/inquiry/history/like',
+        {'inquiryId': inquiryId, 'isLike': isLike}
+            .map((key, value) => MapEntry(key, value.toString())));
+
+    var response = await http.put(url);
+    if (response.statusCode == 200) {
+      return 200;
+    } else {
+      return Future.error(response.statusCode);
+    }
+  }
+
+  Future<int> likeFAQ(int faqId, bool isLike) async {
+    Box homeBox = await Hive.openBox('userInfo');
+    int userId = homeBox.get('userId');
+
+    Uri url = Uri.http(
+        _baseUrl,
+        '/api/customerCenter/like',
+        {'userId': userId, 'faqId': faqId, 'isLike': isLike}
+            .map((key, value) => MapEntry(key, value.toString())));
+
+    var response = await http.put(url);
+    if (response.statusCode == 200) {
+      return 200;
     } else {
       return Future.error(response.statusCode);
     }

@@ -1,5 +1,6 @@
 import 'package:dangdiarysample/components/custom_text.dart';
 import 'package:dangdiarysample/controllers/bottom_nav_controller.dart';
+import 'package:dangdiarysample/controllers/diaries_controller.dart';
 import 'package:dangdiarysample/static/color.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -25,7 +26,7 @@ class CompleteDiary extends StatelessWidget {
             SizedBox(height: 16.h),
             CustomText(
               text:
-                  '축하해요!\n${Get.arguments['completeDiaryModel'].dogName}가 <${Get.arguments['completeDiaryModel'].title}>의\n칭찬스티커를 받았어요!',
+                  '축하해요!\n${DiariesController.to.myDiariesModel.value!.dogName}가 <${Get.arguments['title']}>의\n칭찬스티커를 받았어요!',
               color: Colors.black,
               fontSize: 24.sp,
               fontWeight: FontWeight.w600,
@@ -47,9 +48,11 @@ class CompleteDiary extends StatelessWidget {
               padding: EdgeInsets.symmetric(horizontal: 24.w),
               child: GestureDetector(
                 onTap: () {
-                  Get.offAndToNamed('/confirmDiary', arguments: {
-                    'completeDiaryModel': Get.arguments['completeDiaryModel']
+                  Get.offAndToNamed('/diary', arguments: {
+                    'coverId': Get.arguments['completeDiaryModel'].coverId,
+                    'diaryId': Get.arguments['completeDiaryModel'].diaryId,
                   });
+                  BottomNavController.to.changeBottomNav(1);
                 },
                 child: Container(
                   height: 48.h,
@@ -72,7 +75,7 @@ class CompleteDiary extends StatelessWidget {
             Center(
               child: GestureDetector(
                 onTap: () {
-                  Get.offAndToNamed('/app');
+                  Get.until((route) => Get.currentRoute == '/app');
                   BottomNavController.to.changeBottomNav(1);
                 },
                 child: CustomText(

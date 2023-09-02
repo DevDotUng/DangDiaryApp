@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:dangdiarysample/components/custom_text.dart';
 import 'package:dangdiarysample/controllers/bottom_nav_controller.dart';
 import 'package:dangdiarysample/controllers/diaries_controller.dart';
+import 'package:dangdiarysample/models/challenge_detail/overdue_diary_model.dart';
 import 'package:dangdiarysample/models/write_diary/complete_diary_model.dart';
 import 'package:dangdiarysample/repositories/write_diary_repository.dart';
 import 'package:dangdiarysample/static/color.dart';
@@ -16,11 +17,11 @@ import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 
 class WriteDiaryController extends GetxController {
-  late int diaryId;
-  late int? challengeId;
+  late String writeType;
+  late OverdueDiaryModel overdueDiary;
   late String title;
   WriteDiaryController(
-      {required this.diaryId, this.challengeId, this.title = ''});
+      {required this.writeType, required this.overdueDiary, this.title = ''});
 
   static WriteDiaryController get to => Get.find();
   RxString date = DateFormat('yyyy년 MM월 dd일').format(DateTime.now()).obs;
@@ -85,7 +86,7 @@ class WriteDiaryController extends GetxController {
     titleTextEditingController = TextEditingController();
     contentTextEditingController = TextEditingController();
     tagTextEditingController = TextEditingController();
-    titleTag(title);
+    setOverdueDiary();
     tags.add(getFilteredString(titleTag.value));
     super.onInit();
   }
@@ -99,22 +100,48 @@ class WriteDiaryController extends GetxController {
     super.dispose();
   }
 
+  void setOverdueDiary() {
+    date(DateFormat('yyyy년 MM월 dd일')
+        .format(DateTime.parse(overdueDiary.endDate)));
+    setWeather(overdueDiary.weather);
+    if (selectedWeatherIndex.value != 6) {
+      progress[1] = 1;
+    }
+    setFeeling(overdueDiary.feeling);
+    if (selectedFeelingsIndex.value != 9) {
+      progress[2] = 1;
+    }
+    titleTag(title);
+    if (overdueDiary.title != null) {
+      titleTextEditingController.text = overdueDiary.title;
+    }
+    if (overdueDiary.content != null) {
+      contentTextEditingController.text = overdueDiary.content;
+      if (contentTextEditingController.text.isEmpty) {
+        progress[4] = 0;
+      } else {
+        progress[4] = 1;
+      }
+    }
+    isPublic(overdueDiary.isPublic);
+  }
+
   void changePublic() {
     isPublic(!isPublic.value);
   }
 
   void changeWeather(int index) {
-    if (selectedWeatherIndex.value == 6) {
+    selectedWeatherIndex(index);
+    if (selectedWeatherIndex.value != 6) {
       progress[1] = 1;
     }
-    selectedWeatherIndex(index);
   }
 
   void changeFeelings(int index) {
-    if (selectedFeelingsIndex.value == 9) {
+    selectedFeelingsIndex(index);
+    if (selectedFeelingsIndex.value != 9) {
       progress[2] = 1;
     }
-    selectedFeelingsIndex(index);
   }
 
   int getProgress() {
@@ -365,7 +392,7 @@ class WriteDiaryController extends GetxController {
 
     if (isCompletes.isEmpty) {
       int userId = await getUserId();
-      int challengeIdArgument = challengeId!;
+      int challengeIdArgument = overdueDiary.challengeId;
       String endDate = getEndDate(date.value);
       String titleArgument;
       if (titleTextEditingController.text.isEmpty) {
@@ -381,7 +408,7 @@ class WriteDiaryController extends GetxController {
       isLoading(true);
       CompleteDiaryModel? completeDiaryModel =
           await WriteDiaryRepository().writeDiary(
-        diaryId,
+        overdueDiary.diaryId,
         userId,
         challengeIdArgument,
         endDate,
@@ -394,16 +421,14 @@ class WriteDiaryController extends GetxController {
         isPublic.value,
       );
       isLoading(true);
-      print(completeDiaryModel!.userId);
-      print(completeDiaryModel!.feeling);
-      print(completeDiaryModel!.endDate);
-      print(completeDiaryModel!.weather);
 
       if (completeDiaryModel != null) {
         BottomNavController.to.challengeInit();
         DiariesController.to.myDiaryInit();
-        Get.offAndToNamed('/completeDiary',
-            arguments: {'completeDiaryModel': completeDiaryModel});
+        Get.offAndToNamed('/completeDiary', arguments: {
+          'completeDiaryModel': completeDiaryModel,
+          'title': titleArgument
+        });
       }
     } else {
       double height;
@@ -445,6 +470,139 @@ class WriteDiaryController extends GetxController {
     }
   }
 
+  void editDiary() async {
+    List<int> isCompletes = [];
+    for (int i = 0; i < 5; i++) {
+      if (progress[i] == 0) {
+        isCompletes.add(i);
+        essentialTextList[i] = Padding(
+          padding: EdgeInsets.only(top: 4.h, bottom: 8.h),
+          child: Row(
+            children: [
+              Obx(
+                () => AnimatedContainer(
+                  duration: Duration(milliseconds: 100),
+                  width: isShake.value ? 10.w : 0,
+                ),
+              ),
+              CustomText(
+                text: '* 필수 답변 항목이에요!',
+                color: StaticColor.main,
+                fontSize: 14.sp,
+                fontWeight: FontWeight.w400,
+                height: (20 / 14),
+              ),
+            ],
+          ),
+        );
+      }
+    }
+
+    if (isCompletes.isEmpty) {
+      int userId = await getUserId();
+      int challengeIdArgument = overdueDiary.challengeId;
+      String endDate = getEndDate(date.value);
+      String titleArgument;
+      if (titleTextEditingController.text.isEmpty) {
+        titleArgument = title;
+      } else {
+        titleArgument = titleTextEditingController.text;
+      }
+      List<String> tagArgument = [];
+      for (dynamic tag in tags) {
+        tagArgument.add(tag);
+      }
+      List<String> imagePaths = getImagePaths();
+      isLoading(true);
+      int statusCode = await WriteDiaryRepository().editDiary(
+        overdueDiary.diaryId,
+        endDate,
+        weathers[selectedWeatherIndex.value],
+        feelings[selectedFeelingsIndex.value],
+        titleArgument,
+        contentTextEditingController.text,
+        imagePaths,
+        tagArgument,
+        isPublic.value,
+      );
+      isLoading(true);
+
+      if (statusCode == 201) {
+        BottomNavController.to.challengeInit();
+        DiariesController.to.myDiaryInit();
+        Get.back();
+        Get.back();
+      }
+    } else {
+      double height;
+      switch (isCompletes[0]) {
+        case 0:
+        case 1:
+          height = 149.h;
+          break;
+        case 2:
+          height = 469.h;
+          break;
+        case 3:
+          height = 1034.h;
+          break;
+        case 4:
+          height = 1226.h;
+          break;
+        default:
+          height = 149.h;
+          break;
+      }
+      scrollController.animateTo(
+        height,
+        duration: Duration(milliseconds: 200),
+        curve: Curves.linear,
+      );
+      await Future.delayed(Duration(milliseconds: 100), () {
+        isShake(!isShake.value);
+      });
+      await Future.delayed(Duration(milliseconds: 100), () {
+        isShake(!isShake.value);
+      });
+      await Future.delayed(Duration(milliseconds: 100), () {
+        isShake(!isShake.value);
+      });
+      await Future.delayed(Duration(milliseconds: 100), () {
+        isShake(!isShake.value);
+      });
+    }
+  }
+
+  void overdue() async {
+    String endDate = getEndDate(date.value);
+    String? weatherArgument = selectedWeatherIndex.value == 6
+        ? null
+        : weathers[selectedWeatherIndex.value];
+    String? feelingArgument = selectedFeelingsIndex.value == 9
+        ? null
+        : feelings[selectedFeelingsIndex.value];
+    String? titleArgument = titleTextEditingController.text.isEmpty
+        ? null
+        : titleTextEditingController.text;
+    String? contentArgument = contentTextEditingController.text.isEmpty
+        ? null
+        : contentTextEditingController.text;
+    int statusCode = await WriteDiaryRepository().overdueDiary(
+      overdueDiary.diaryId,
+      overdueDiary.userId,
+      overdueDiary.challengeId,
+      endDate,
+      weatherArgument,
+      feelingArgument,
+      titleArgument,
+      contentArgument,
+      isPublic.value,
+    );
+    if (statusCode == 200) {
+      Get.back();
+    }
+  }
+
   Future<int> getUserId() async {
     Box homeBox = await Hive.openBox('userInfo');
     int userId = homeBox.get('userId');
@@ -470,5 +628,66 @@ class WriteDiaryController extends GetxController {
 
   void changeIsShowPopup() {
     isShowPopup(!isShowPopup.value);
+  }
+
+  void setWeather(String weather) {
+    switch (weather) {
+      case '맑음':
+        selectedWeatherIndex(0);
+        return;
+      case '흐림':
+        selectedWeatherIndex(1);
+        return;
+      case '비':
+        selectedWeatherIndex(2);
+        return;
+      case '눈':
+        selectedWeatherIndex(3);
+        return;
+      case '천둥번개':
+        selectedWeatherIndex(4);
+        return;
+      case '안개':
+        selectedWeatherIndex(5);
+        return;
+      default:
+        selectedWeatherIndex(6);
+        return;
+    }
+  }
+
+  void setFeeling(String feeling) {
+    switch (feeling) {
+      case '기뻐요':
+        selectedFeelingsIndex(0);
+        return;
+      case '즐거워요':
+        selectedFeelingsIndex(1);
+        return;
+      case '차분해요':
+        selectedFeelingsIndex(2);
+        return;
+      case '활기차요':
+        selectedFeelingsIndex(3);
+        return;
+      case '화나요':
+        selectedFeelingsIndex(4);
+        return;
+      case '짜증나요':
+        selectedFeelingsIndex(5);
+        return;
+      case '두려워요':
+        selectedFeelingsIndex(6);
+        return;
+      case '불안해요':
+        selectedFeelingsIndex(7);
+        return;
+      case '모르겠어요':
+        selectedFeelingsIndex(8);
+        return;
+      default:
+        selectedFeelingsIndex(9);
+        return;
+    }
   }
 }

@@ -1,5 +1,3 @@
-import 'package:dangdiarysample/models/sticker/locked_sticker_model.dart';
-import 'package:dangdiarysample/models/sticker/my_sticker_model.dart';
 import 'package:dangdiarysample/models/sticker/sticker_model.dart';
 import 'package:dangdiarysample/repositories/sticker_repository.dart';
 import 'package:flutter/material.dart';

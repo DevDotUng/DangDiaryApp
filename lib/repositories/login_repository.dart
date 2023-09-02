@@ -135,4 +135,40 @@ class LoginRepository {
       return Future.error(response.statusCode);
     }
   }
+
+  Future<int> logout() async {
+    Box homeBox = await Hive.openBox('userInfo');
+    int userId = homeBox.get('userId');
+
+    Uri url = Uri.http(
+        _baseUrl,
+        '/api/user/logout',
+        {'userId': userId}
+            .map((key, value) => MapEntry(key, value.toString())));
+
+    var response = await get(url);
+    if (response.statusCode == 200) {
+      return 200;
+    } else {
+      return Future.error(response.statusCode);
+    }
+  }
+
+  Future<int> deleteAccount() async {
+    Box homeBox = await Hive.openBox('userInfo');
+    int userId = homeBox.get('userId');
+
+    Uri url = Uri.http(
+        _baseUrl,
+        '/api/user/delete',
+        {'userId': userId}
+            .map((key, value) => MapEntry(key, value.toString())));
+
+    var response = await delete(url);
+    if (response.statusCode == 200) {
+      return 200;
+    } else {
+      return Future.error(response.statusCode);
+    }
+  }
 }

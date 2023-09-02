@@ -4,6 +4,7 @@ import 'package:dangdiarysample/components/custom_text.dart';
 import 'package:dangdiarysample/controllers/bottom_nav_controller.dart';
 import 'package:dangdiarysample/controllers/diaries_controller.dart';
 import 'package:dangdiarysample/models/challenge_detail/challenge_detail_model.dart';
+import 'package:dangdiarysample/models/challenge_detail/overdue_diary_model.dart';
 import 'package:dangdiarysample/repositories/challenge_detail_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -125,7 +126,8 @@ class ChallengeDetailController extends GetxController {
   }
 
   void endChallenge() async {
-    int diaryId = await ChallengeDetailRepository().endChallenge(challengeId);
+    OverdueDiaryModel overdueDiary =
+        await ChallengeDetailRepository().endChallenge(challengeId);
     isChallenge(false);
     BottomNavController.to.challengeInit();
     DiariesController.to.myDiaryInit();
@@ -134,14 +136,15 @@ class ChallengeDetailController extends GetxController {
   }
 
   void endChallengeAndToWrite() async {
-    int diaryId = await ChallengeDetailRepository().endChallenge(challengeId);
+    OverdueDiaryModel overdueDiary =
+        await ChallengeDetailRepository().endChallenge(challengeId);
     isChallenge(false);
     BottomNavController.to.challengeInit();
     DiariesController.to.myDiaryInit();
     Navigator.pop(context);
     Get.offAndToNamed('/writeDiary', arguments: {
-      'diaryId': diaryId,
-      'challengeId': challengeId,
+      'writeType': 'write',
+      'overdueDiary': overdueDiary,
       'title': challengeDetailModel.value!.title
     });
   }

@@ -9,6 +9,7 @@ import 'package:dangdiarysample/static/icon.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:hive/hive.dart';
 import 'package:intl/intl.dart';
 
 enum PageName { HOME, DIARY, BROWSE, MYPAGE }
@@ -29,6 +30,8 @@ class BottomNavController extends GetxController {
   Rx<Duration> duration = Duration().obs;
   Timer? timer;
   RxBool countDown = true.obs;
+
+  late Box homeBox;
 
   List<String> inProgressChallengeImage = [
     'assets/challenge_sample1.png',
@@ -73,6 +76,7 @@ class BottomNavController extends GetxController {
     pageController = PageController();
     pageController.addListener(pageChangeListener);
     await challengeInit();
+    homeBox = await Hive.openBox('userInfo');
     super.onInit();
   }
 
@@ -171,8 +175,22 @@ class BottomNavController extends GetxController {
     }
   }
 
-  void changeIsShowBottomModal() {
+  void changeIsShowBottomModal() async {
+    homeBox.put(
+        'challengeUpdateTime',
+        DateTime.utc(DateTime.now().year, DateTime.now().month,
+            DateTime.now().day, DateTime.now().hour, DateTime.now().minute));
     isShowBottomModal(!isShowBottomModal.value);
+  }
+
+  bool isShowChallenge() {
+    DateTime updateDateTime = DateTime.utc(
+        DateTime.now().year, DateTime.now().month, DateTime.now().day, 10);
+    DateTime now = DateTime.utc(DateTime.now().year, DateTime.now().month,
+        DateTime.now().day, DateTime.now().hour, DateTime.now().minute);
+    return homeBox.get('challengeUpdateTime') == null ||
+        (homeBox.get('challengeUpdateTime').isBefore(updateDateTime) &&
+            now.isAfter(updateDateTime));
   }
 
   void showExplanationDialog(BuildContext context) {
