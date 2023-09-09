@@ -1,3 +1,4 @@
+import 'package:dangdiarysample/components/custom_back_button.dart';
 import 'package:dangdiarysample/components/custom_text.dart';
 import 'package:dangdiarysample/controllers/search_posts_controller.dart';
 import 'package:flutter/material.dart';
@@ -36,11 +37,7 @@ class _SearchPostsState extends State<SearchPosts> {
             onTap: () {
               Navigator.pop(context);
             },
-            child: Icon(
-              Icons.arrow_back,
-              size: 32.r,
-              color: Colors.black,
-            ),
+            child: const CustomBackButton(),
           ),
           title: CustomText(
             text: '둘러보기 검색하기',

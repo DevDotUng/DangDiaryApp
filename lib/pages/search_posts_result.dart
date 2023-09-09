@@ -1,3 +1,4 @@
+import 'package:dangdiarysample/components/custom_back_button.dart';
 import 'package:dangdiarysample/components/custom_text.dart';
 import 'package:dangdiarysample/controllers/search_posts_result_controller.dart';
 import 'package:dangdiarysample/static/color.dart';
@@ -38,11 +39,7 @@ class _SearchPostsResultState extends State<SearchPostsResult> {
             onTap: () {
               Navigator.pop(context);
             },
-            child: Icon(
-              Icons.arrow_back,
-              size: 32.r,
-              color: Colors.black,
-            ),
+            child: const CustomBackButton(),
           ),
           title: CustomText(
             text: '둘러보기 검색하기',
@@ -312,7 +309,8 @@ class _SearchPostsResultState extends State<SearchPostsResult> {
                 Get.toNamed('/posts', arguments: {
                   'query': SearchPostsResultController
                       .to.searchPostsResultModel.value!.hashTags[index],
-                  'searchType': 'hashTag'
+                  'searchType': 'hashTag',
+                  'isSearch': true,
                 });
               },
               child: Row(
@@ -429,7 +427,8 @@ class _SearchPostsResultState extends State<SearchPostsResult> {
                 Get.toNamed('/posts', arguments: {
                   'query': SearchPostsResultController
                       .to.searchPostsResultModel.value!.breeds[index],
-                  'searchType': 'breed'
+                  'searchType': 'breed',
+                  'isSearch': true,
                 });
               },
               child: Row(

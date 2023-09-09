@@ -1,4 +1,5 @@
 import 'package:dangdiarysample/components/cover_color.dart';
+import 'package:dangdiarysample/components/custom_back_button.dart';
 import 'package:dangdiarysample/components/custom_text.dart';
 import 'package:dangdiarysample/components/pageview_indicator.dart';
 import 'package:dangdiarysample/controllers/diaries_controller.dart';
@@ -684,85 +685,115 @@ class Diary extends StatelessWidget {
                                               .length,
                                           itemBuilder: (context, jndex) {
                                             if (jndex == 0) {
-                                              return Container(
-                                                margin:
-                                                    EdgeInsets.only(right: 4.w),
-                                                padding: EdgeInsets.symmetric(
-                                                    vertical: 6.h,
-                                                    horizontal: 16.w),
-                                                decoration: BoxDecoration(
-                                                  color: Colors.white,
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          16.r),
-                                                  border: Border.all(
-                                                    color: StaticColor.line2,
+                                              return GestureDetector(
+                                                onTap: () {
+                                                  Get.toNamed('/posts',
+                                                      arguments: {
+                                                        'query': DiaryController
+                                                            .to
+                                                            .diaryWithCoverModel
+                                                            .value!
+                                                            .diaries[index - 2]
+                                                            .tags[jndex],
+                                                        'searchType': 'hashTag',
+                                                        'isSearch': true,
+                                                      });
+                                                },
+                                                child: Container(
+                                                  margin: EdgeInsets.only(
+                                                      right: 4.w),
+                                                  padding: EdgeInsets.symmetric(
+                                                      vertical: 6.h,
+                                                      horizontal: 16.w),
+                                                  decoration: BoxDecoration(
+                                                    color: Colors.white,
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            16.r),
+                                                    border: Border.all(
+                                                      color: StaticColor.line2,
+                                                    ),
                                                   ),
-                                                ),
-                                                child: Row(
-                                                  children: [
-                                                    CustomText(
-                                                      text: '# ',
-                                                      color: StaticColor.main,
-                                                      fontSize: 14.sp,
-                                                      fontWeight:
-                                                          FontWeight.w400,
-                                                    ),
-                                                    CustomText(
-                                                      text: DiaryController
-                                                          .to
-                                                          .diaryWithCoverModel
-                                                          .value!
-                                                          .diaries[index - 2]
-                                                          .tags[jndex],
-                                                      color: StaticColor.main,
-                                                      fontSize: 14.sp,
-                                                      fontWeight:
-                                                          FontWeight.w400,
-                                                    ),
-                                                  ],
+                                                  child: Row(
+                                                    children: [
+                                                      CustomText(
+                                                        text: '# ',
+                                                        color: StaticColor.main,
+                                                        fontSize: 14.sp,
+                                                        fontWeight:
+                                                            FontWeight.w400,
+                                                      ),
+                                                      CustomText(
+                                                        text: DiaryController
+                                                            .to
+                                                            .diaryWithCoverModel
+                                                            .value!
+                                                            .diaries[index - 2]
+                                                            .tags[jndex],
+                                                        color: StaticColor.main,
+                                                        fontSize: 14.sp,
+                                                        fontWeight:
+                                                            FontWeight.w400,
+                                                      ),
+                                                    ],
+                                                  ),
                                                 ),
                                               );
                                             } else {
-                                              return Container(
-                                                margin:
-                                                    EdgeInsets.only(right: 4.w),
-                                                padding: EdgeInsets.symmetric(
-                                                    vertical: 6.h,
-                                                    horizontal: 16.w),
-                                                decoration: BoxDecoration(
-                                                  color: Colors.white,
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          16.r),
-                                                  border: Border.all(
-                                                    color: StaticColor.line2,
+                                              return GestureDetector(
+                                                onTap: () {
+                                                  Get.toNamed('/posts',
+                                                      arguments: {
+                                                        'query': DiaryController
+                                                            .to
+                                                            .diaryWithCoverModel
+                                                            .value!
+                                                            .diaries[index - 2]
+                                                            .tags[jndex],
+                                                        'searchType': 'hashTag',
+                                                        'isSearch': true,
+                                                      });
+                                                },
+                                                child: Container(
+                                                  margin: EdgeInsets.only(
+                                                      right: 4.w),
+                                                  padding: EdgeInsets.symmetric(
+                                                      vertical: 6.h,
+                                                      horizontal: 16.w),
+                                                  decoration: BoxDecoration(
+                                                    color: Colors.white,
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            16.r),
+                                                    border: Border.all(
+                                                      color: StaticColor.line2,
+                                                    ),
                                                   ),
-                                                ),
-                                                child: Row(
-                                                  children: [
-                                                    CustomText(
-                                                      text: '# ',
-                                                      color:
-                                                          StaticColor.font_main,
-                                                      fontSize: 14.sp,
-                                                      fontWeight:
-                                                          FontWeight.w400,
-                                                    ),
-                                                    CustomText(
-                                                      text: DiaryController
-                                                          .to
-                                                          .diaryWithCoverModel
-                                                          .value!
-                                                          .diaries[index - 2]
-                                                          .tags[jndex],
-                                                      color:
-                                                          StaticColor.font_main,
-                                                      fontSize: 14.sp,
-                                                      fontWeight:
-                                                          FontWeight.w400,
-                                                    ),
-                                                  ],
+                                                  child: Row(
+                                                    children: [
+                                                      CustomText(
+                                                        text: '# ',
+                                                        color: StaticColor
+                                                            .font_main,
+                                                        fontSize: 14.sp,
+                                                        fontWeight:
+                                                            FontWeight.w400,
+                                                      ),
+                                                      CustomText(
+                                                        text: DiaryController
+                                                            .to
+                                                            .diaryWithCoverModel
+                                                            .value!
+                                                            .diaries[index - 2]
+                                                            .tags[jndex],
+                                                        color: StaticColor
+                                                            .font_main,
+                                                        fontSize: 14.sp,
+                                                        fontWeight:
+                                                            FontWeight.w400,
+                                                      ),
+                                                    ],
+                                                  ),
                                                 ),
                                               );
                                             }
@@ -1231,11 +1262,7 @@ class Diary extends StatelessWidget {
         onTap: () {
           Get.back();
         },
-        child: Icon(
-          Icons.arrow_back,
-          size: 32.r,
-          color: Colors.black,
-        ),
+        child: const CustomBackButton(),
       ),
       centerTitle: true,
       title: Obx(

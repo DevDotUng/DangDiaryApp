@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:dangdiarysample/components/custom_back_button.dart';
 import 'package:dangdiarysample/components/custom_switch.dart';
 import 'package:dangdiarysample/components/custom_text.dart';
 import 'package:dangdiarysample/controllers/write_diary_controller.dart';
@@ -35,7 +36,7 @@ class WriteDiary extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               children: [
                 CustomText(
-                  text: '일기쓰기를 중단하시나요?',
+                  text: '일기쓰기를 미룰까요?',
                   color: Colors.black,
                   fontSize: 20.sp,
                   fontWeight: FontWeight.w600,
@@ -225,14 +226,7 @@ class WriteDiary extends StatelessWidget {
                     Get.back();
                   }
                 },
-                child: Padding(
-                  padding: EdgeInsets.only(left: 24.w, top: 16.h, bottom: 16.h),
-                  child: StaticIcon(
-                    IconsPath.back_arrow_bold,
-                    size: 24.r,
-                    color: StaticColor.font_main,
-                  ),
-                ),
+                child: const CustomBackButton(),
               ),
               centerTitle: true,
               title: CustomText(

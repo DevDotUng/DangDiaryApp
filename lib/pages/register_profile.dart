@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:dangdiarysample/components/custom_back_button.dart';
 import 'package:dangdiarysample/components/custom_text.dart';
 import 'package:dangdiarysample/controllers/register_profile_controller.dart';
 import 'package:dangdiarysample/static/color.dart';
@@ -29,15 +30,7 @@ class RegisterProfile extends StatelessWidget {
                     onTap: () {
                       RegisterProfileController.to.previousPage();
                     },
-                    child: Padding(
-                      padding:
-                          EdgeInsets.only(left: 24.w, top: 16.h, bottom: 16.h),
-                      child: StaticIcon(
-                        IconsPath.back_arrow_bold,
-                        size: 24.r,
-                        color: StaticColor.font_main,
-                      ),
-                    ),
+                    child: const CustomBackButton(),
                   ),
           ),
         ),

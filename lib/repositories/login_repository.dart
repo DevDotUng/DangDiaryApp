@@ -12,7 +12,7 @@ import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 class LoginRepository {
   final String _baseUrl = PublicRepository.baseUrl;
 
-  void kakaoLogin() async {
+  void kakaoLogin(String? firebaseToken) async {
     try {
       bool isInstalled = await isKakaoTalkInstalled();
 
@@ -36,7 +36,7 @@ class LoginRepository {
         String? refreshToken = token.refreshToken;
 
         LoginResponseModel loginResponse =
-            await sendUserInfoKakao(accessToken, refreshToken);
+            await sendUserInfoKakao(accessToken, refreshToken, firebaseToken);
 
         int userId = loginResponse.userId;
 
@@ -57,12 +57,15 @@ class LoginRepository {
   }
 
   Future<LoginResponseModel> sendUserInfoKakao(
-      String accessToken, String? refreshToken) async {
+      String accessToken, String? refreshToken, String? firebaseToken) async {
     Uri url = Uri.http(
         _baseUrl,
         '/api/user/kakao',
-        {'accessToken': accessToken, 'refreshToken': refreshToken}
-            .map((key, value) => MapEntry(key, value.toString())));
+        {
+          'accessToken': accessToken,
+          'refreshToken': refreshToken,
+          'firebaseToken': firebaseToken
+        }.map((key, value) => MapEntry(key, value.toString())));
 
     var response = await get(url);
     if (response.statusCode == 200) {
@@ -74,7 +77,7 @@ class LoginRepository {
     }
   }
 
-  void appleLogin() async {
+  void appleLogin(String? firebaseToken) async {
     try {
       final AuthorizationCredentialAppleID credential =
           await SignInWithApple.getAppleIDCredential(
@@ -85,11 +88,13 @@ class LoginRepository {
       );
 
       LoginResponseModel loginResponse = await sendUserInfoApple(
-          credential.userIdentifier,
-          credential.authorizationCode,
-          credential.identityToken,
-          credential.familyName,
-          credential.givenName);
+        credential.userIdentifier,
+        credential.authorizationCode,
+        credential.identityToken,
+        credential.familyName,
+        credential.givenName,
+        firebaseToken,
+      );
 
       int userId = loginResponse.userId;
 
@@ -114,6 +119,7 @@ class LoginRepository {
     String? clientSecret,
     String? familyName,
     String? givenName,
+    String? firebaseToken,
   ) async {
     Uri url = Uri.http(
         _baseUrl,
@@ -123,7 +129,8 @@ class LoginRepository {
           'authorizationCode': authorizationCode,
           'clientSecret': clientSecret,
           'familyName': familyName,
-          'givenName': givenName
+          'givenName': givenName,
+          'firebaseToken': firebaseToken,
         }.map((key, value) => MapEntry(key, value.toString())));
 
     var response = await get(url);

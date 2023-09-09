@@ -1,4 +1,6 @@
+import 'package:dangdiarysample/components/custom_back_button.dart';
 import 'package:dangdiarysample/components/custom_text.dart';
+import 'package:dangdiarysample/static/icon.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -13,21 +15,11 @@ class NotificationPage extends StatelessWidget {
         backgroundColor: Colors.white,
         elevation: 0.0,
         centerTitle: true,
-        leading: Padding(
-          padding: EdgeInsets.only(left: 24.w),
-          child: GestureDetector(
-            onTap: () {
-              Navigator.pop(context);
-            },
-            child: Container(
-              width: 32.w,
-              child: Icon(
-                Icons.arrow_back,
-                size: 32.r,
-                color: Colors.black,
-              ),
-            ),
-          ),
+        leading: GestureDetector(
+          onTap: () {
+            Navigator.pop(context);
+          },
+          child: const CustomBackButton(),
         ),
         title: Text(
           '알림',

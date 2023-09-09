@@ -1,3 +1,4 @@
+import 'package:dangdiarysample/components/custom_back_button.dart';
 import 'package:dangdiarysample/components/custom_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -37,21 +38,11 @@ class WebviewPage extends StatelessWidget {
         backgroundColor: Colors.white,
         elevation: 0.0,
         centerTitle: true,
-        leading: Padding(
-          padding: EdgeInsets.only(left: 24.w),
-          child: GestureDetector(
-            onTap: () {
-              Get.back();
-            },
-            child: SizedBox(
-              width: 32.w,
-              child: Icon(
-                Icons.arrow_back,
-                size: 32.r,
-                color: Colors.black,
-              ),
-            ),
-          ),
+        leading: GestureDetector(
+          onTap: () {
+            Get.back();
+          },
+          child: const CustomBackButton(),
         ),
         title: CustomText(
           text: '이용 약관',

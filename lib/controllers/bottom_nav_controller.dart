@@ -26,50 +26,7 @@ class BottomNavController extends GetxController {
   late PageController pageController;
   RxDouble page = 0.0.obs;
 
-  late Duration countdownDuration;
-  Rx<Duration> duration = Duration().obs;
-  Timer? timer;
-  RxBool countDown = true.obs;
-
   late Box homeBox;
-
-  List<String> inProgressChallengeImage = [
-    'assets/challenge_sample1.png',
-    'assets/challenge_sample2.png',
-    'assets/challenge_sample3.png',
-  ];
-  List<String> inProgressChallengeTitle = [
-    '한강공원 술래잡기',
-    '강아지 푸딩 요리하기',
-    '터그 장난감 만들기',
-  ];
-  List<String> inProgressChallengeContent = [
-    '한강 공원 어디에서든 우리 아이와 술래잡기를 해보세요!',
-    '포동포동, 정성스레 만든 강아지용 푸딩을 직접 만들어볼까요?',
-    '낑낑 줄다리기를 하다보면 보호자님과 관계가 더욱 가까워 진다고요!',
-  ];
-
-  List<String> recommendChallengeImage = [
-    'assets/challenge_sample1.png',
-    'assets/challenge_sample2.png',
-    'assets/challenge_sample3.png',
-    'assets/challenge_sample4.png',
-    'assets/challenge_sample5.png',
-  ];
-  List<String> recommendChallengeTitle = [
-    '한강공원 술래잡기',
-    '강아지 푸딩 요리하기',
-    '거실에서 노즈워크',
-    '터그 장난감 만들기',
-    '물놀이 하기',
-  ];
-  List<String> recommendChallengeContent = [
-    '한강 공원 어디에서든 우리 아이와 술래잡기를 해보세요!',
-    '포동포동, 정성스레 만든 강아지용 푸딩을 직접 만들어볼까요?',
-    '요즘 아이가 스트레스를 받아하진 않나요? 노즈워크 놀이로 해소하세요!',
-    '낑낑 줄다리기를 하다보면 보호자님과 관계가 더욱 가까워 진다고요!',
-    '낑낑 줄다리기를 하다보면 보호자님과 관계가 더욱 가까워 진다고요!',
-  ];
 
   @override
   void onInit() async {
@@ -90,67 +47,6 @@ class BottomNavController extends GetxController {
     ChallengeModel challengeModelTemp =
         await ChallengeRepository().getChallengeView();
     challengeModel(challengeModelTemp);
-
-    if (challengeModel.value!.inProgressChallenges.isNotEmpty) {
-      for (RecommendChallengeModel inProgressChallengeModel
-          in challengeModel.value!.inProgressChallenges) {
-        if (inProgressChallengeModel.recommendType == 'daily') {
-          setDuration(inProgressChallengeModel.recommendDate);
-        } else {
-          countdownDuration = const Duration(hours: 0, minutes: 0, seconds: 0);
-        }
-      }
-    } else {
-      countdownDuration = const Duration(hours: 0, minutes: 0, seconds: 0);
-    }
-    reset();
-    startTimer();
-  }
-
-  void setDuration(String recommendDate) {
-    DateTime datetime = DateFormat("yyyy-MM-dd hh:mm:ss").parse(recommendDate);
-    DateTime now = DateTime.now();
-    int hour = (datetime.millisecondsSinceEpoch - now.millisecondsSinceEpoch) ~/
-        (1000 * 60 * 60);
-    int minute =
-        ((datetime.millisecondsSinceEpoch - now.millisecondsSinceEpoch) ~/
-                (1000 * 60)) %
-            60;
-    int second =
-        (((datetime.millisecondsSinceEpoch - now.millisecondsSinceEpoch) /
-                    1000) %
-                60)
-            .toInt();
-    countdownDuration = Duration(hours: hour, minutes: minute, seconds: second);
-  }
-
-  void reset() {
-    if (countDown.value) {
-      duration.value = countdownDuration;
-    } else {
-      duration.value = Duration();
-    }
-  }
-
-  void startTimer() {
-    timer = Timer.periodic(Duration(seconds: 1), (_) => addTime());
-  }
-
-  void addTime() {
-    final addSeconds = countDown.value ? -1 : 1;
-    final seconds = duration.value.inSeconds + addSeconds;
-    if (seconds < 0) {
-      timer?.cancel();
-    } else {
-      duration.value = Duration(seconds: seconds);
-    }
-  }
-
-  void stopTimer({bool resets = true}) {
-    if (resets) {
-      reset();
-    }
-    timer?.cancel();
   }
 
   void pageChangeListener() {
@@ -196,7 +92,6 @@ class BottomNavController extends GetxController {
   void showExplanationDialog(BuildContext context) {
     showDialog(
       context: context,
-      barrierDismissible: false,
       builder: (BuildContext context) {
         return Dialog(
           shape: RoundedRectangleBorder(

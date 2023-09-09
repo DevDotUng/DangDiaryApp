@@ -3,6 +3,7 @@ import 'package:dangdiarysample/controllers/browse_controller.dart';
 import 'package:dangdiarysample/pages/search_posts.dart';
 import 'package:dangdiarysample/repositories/public_repository.dart';
 import 'package:dangdiarysample/skeletons/browse_skeleton.dart';
+import 'package:dangdiarysample/static/icon.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -50,10 +51,10 @@ class Browse extends StatelessWidget {
                     ),
                   );
                 },
-                child: Icon(
-                  Icons.search,
-                  color: Colors.black,
-                  size: 32.r,
+                child: StaticIcon(
+                  IconsPath.search_bold,
+                  size: 24.r,
+                  color: Color(0xff202020),
                 ),
               ),
             ),

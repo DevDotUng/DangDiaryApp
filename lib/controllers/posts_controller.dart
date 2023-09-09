@@ -82,6 +82,23 @@ class PostsController extends GetxController {
     return userId == myUserId;
   }
 
+  void likeDiary(int index) async {
+    int diaryId = postsModels[index].diaryId;
+    bool isLike = postsModels[index].isLike;
+
+    int statusCode = await BrowseRepository().likeDiary(diaryId);
+
+    if (statusCode == 200) {
+      if (isLike) {
+        postsModels[index].numberOfLike = postsModels[index].numberOfLike - 1;
+      } else {
+        postsModels[index].numberOfLike = postsModels[index].numberOfLike + 1;
+      }
+      postsModels[index].isLike = !isLike;
+      postsModels.refresh();
+    }
+  }
+
   void searchByHashTag(String hashTag) {
     Get.toNamed('/posts',
         arguments: {'query': hashTag, 'searchType': 'hashTag'},

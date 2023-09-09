@@ -1,3 +1,4 @@
+import 'package:dangdiarysample/components/custom_back_button.dart';
 import 'package:dangdiarysample/components/custom_text.dart';
 import 'package:dangdiarysample/components/report_dropdown_container.dart';
 import 'package:flutter/material.dart';
@@ -18,11 +19,7 @@ class ReportDetail extends StatelessWidget {
           onTap: () {
             Get.back();
           },
-          child: Icon(
-            Icons.arrow_back,
-            size: 32.r,
-            color: Colors.black,
-          ),
+          child: const CustomBackButton(),
         ),
         title: CustomText(
           text: '신고내역',

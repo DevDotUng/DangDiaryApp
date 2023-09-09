@@ -1,3 +1,4 @@
+import 'package:dangdiarysample/components/custom_back_button.dart';
 import 'package:dangdiarysample/components/custom_text.dart';
 import 'package:dangdiarysample/components/expandable_text.dart';
 import 'package:dangdiarysample/components/pageview_indicator.dart';
@@ -23,7 +24,10 @@ class Posts extends StatelessWidget {
         dogName: Get.arguments['dogName'],
         nickname: Get.arguments['nickname'],
       ),
-      tag: Get.arguments['query']);
+      tag: Get.arguments['isSearch'] != null ||
+              Get.arguments['isSearch'] == false
+          ? null
+          : Get.arguments['query']);
 
   @override
   Widget build(BuildContext context) {
@@ -42,11 +46,7 @@ class Posts extends StatelessWidget {
           onTap: () {
             Get.back();
           },
-          child: Icon(
-            Icons.arrow_back,
-            size: 32.r,
-            color: Colors.black,
-          ),
+          child: const CustomBackButton(),
         ),
         centerTitle: true,
         title: CustomText(
@@ -178,7 +178,7 @@ class Posts extends StatelessWidget {
                             children: [
                               Padding(
                                 padding:
-                                    EdgeInsets.fromLTRB(16.w, 24.h, 24.w, 16.h),
+                                    EdgeInsets.fromLTRB(16.w, 24.h, 24.w, 20.h),
                                 child: Row(
                                   children: [
                                     SizedBox(
@@ -326,17 +326,22 @@ class Posts extends StatelessWidget {
                                           SizedBox(height: 8.h),
                                           Row(
                                             children: [
-                                              StaticIcon(
-                                                controller.postsModels![index]
-                                                        .isLike
-                                                    ? IconsPath.like
-                                                    : IconsPath.like_outlined,
-                                                size: 24.r,
-                                                color: controller
-                                                        .postsModels![index]
-                                                        .isLike
-                                                    ? StaticColor.like
-                                                    : Color(0xff202020),
+                                              GestureDetector(
+                                                onTap: () {
+                                                  controller.likeDiary(index);
+                                                },
+                                                child: StaticIcon(
+                                                  controller.postsModels![index]
+                                                          .isLike
+                                                      ? IconsPath.like
+                                                      : IconsPath.like_outlined,
+                                                  size: 24.r,
+                                                  color: controller
+                                                          .postsModels![index]
+                                                          .isLike
+                                                      ? StaticColor.like
+                                                      : Color(0xff202020),
+                                                ),
                                               ),
                                               SizedBox(width: 4.w),
                                               CustomText(
@@ -378,7 +383,7 @@ class Posts extends StatelessWidget {
                                           ),
                                           SizedBox(height: 24.h),
                                           SizedBox(
-                                            height: 32.h,
+                                            height: 28.h,
                                             child: ListView.builder(
                                               key: PageStorageKey('${index}'),
                                               scrollDirection: Axis.horizontal,
@@ -418,7 +423,7 @@ class Posts extends StatelessWidget {
                                                             text: '# ',
                                                             color: StaticColor
                                                                 .main,
-                                                            fontSize: 14.sp,
+                                                            fontSize: 12.sp,
                                                             fontWeight:
                                                                 FontWeight.w400,
                                                           ),
@@ -429,7 +434,7 @@ class Posts extends StatelessWidget {
                                                                 .tags[jndex],
                                                             color: StaticColor
                                                                 .main,
-                                                            fontSize: 14.sp,
+                                                            fontSize: 12.sp,
                                                             fontWeight:
                                                                 FontWeight.w400,
                                                           ),
@@ -468,7 +473,7 @@ class Posts extends StatelessWidget {
                                                             text: '# ',
                                                             color: StaticColor
                                                                 .font_main,
-                                                            fontSize: 14.sp,
+                                                            fontSize: 12.sp,
                                                             fontWeight:
                                                                 FontWeight.w400,
                                                           ),
@@ -479,7 +484,7 @@ class Posts extends StatelessWidget {
                                                                 .tags[jndex],
                                                             color: StaticColor
                                                                 .font_main,
-                                                            fontSize: 14.sp,
+                                                            fontSize: 12.sp,
                                                             fontWeight:
                                                                 FontWeight.w400,
                                                           ),

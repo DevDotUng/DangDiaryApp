@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:dangdiarysample/components/custom_back_button.dart';
 import 'package:dangdiarysample/components/custom_text.dart';
 import 'package:dangdiarysample/components/reactive_device.dart';
 import 'package:dangdiarysample/controllers/dog_profile_setting_controller.dart';
@@ -33,21 +34,11 @@ class DogProfileSetting extends StatelessWidget {
           backgroundColor: Colors.white,
           elevation: 0.0,
           centerTitle: true,
-          leading: Padding(
-            padding: EdgeInsets.only(left: 24.w),
-            child: GestureDetector(
-              onTap: () {
-                Get.back();
-              },
-              child: Container(
-                width: 32.w,
-                child: Icon(
-                  Icons.arrow_back,
-                  size: 32.r,
-                  color: Colors.black,
-                ),
-              ),
-            ),
+          leading: GestureDetector(
+            onTap: () {
+              Get.back();
+            },
+            child: const CustomBackButton(),
           ),
           title: CustomText(
             text: '댕댕 주민등록증 수정',
@@ -158,6 +149,10 @@ class DogProfileSetting extends StatelessWidget {
                           border: Border.all(color: Color(0xffD9D9D9)),
                         ),
                         child: TextField(
+                          onChanged: (String text) {
+                            DogProfileSettingController.to
+                                .textChangeListener(text);
+                          },
                           controller: DogProfileSettingController
                               .to.dogNameTextEditingController,
                           cursorColor: Colors.black,
@@ -218,6 +213,10 @@ class DogProfileSetting extends StatelessWidget {
                           border: Border.all(color: Color(0xffD9D9D9)),
                         ),
                         child: TextField(
+                          onChanged: (String text) {
+                            DogProfileSettingController.to
+                                .textChangeListener(text);
+                          },
                           controller: DogProfileSettingController
                               .to.userNicknameTextEditingController,
                           cursorColor: Colors.black,
@@ -448,21 +447,29 @@ class DogProfileSetting extends StatelessWidget {
                   children: [
                     SizedBox(height: 8.h),
                     GestureDetector(
-                      onTap: () => DogProfileSettingController.to.saveDogInfo(),
-                      child: Container(
-                        margin: EdgeInsets.symmetric(horizontal: 24.w),
-                        width: double.infinity,
-                        height: 48.h,
-                        decoration: BoxDecoration(
-                          color: Color(0xff7D7D7D),
-                          borderRadius: BorderRadius.circular(10.0.r),
-                        ),
-                        child: Center(
-                          child: CustomText(
-                            text: '저장할게요',
-                            color: Colors.white,
-                            fontSize: 16.sp,
-                            fontWeight: FontWeight.w600,
+                      onTap: () {
+                        if (DogProfileSettingController.to.isEdit.value) {
+                          DogProfileSettingController.to.saveDogInfo();
+                        }
+                      },
+                      child: Obx(
+                        () => Container(
+                          margin: EdgeInsets.symmetric(horizontal: 24.w),
+                          width: double.infinity,
+                          height: 48.h,
+                          decoration: BoxDecoration(
+                            color: DogProfileSettingController.to.isEdit.value
+                                ? StaticColor.main
+                                : Color(0xff7D7D7D),
+                            borderRadius: BorderRadius.circular(10.0.r),
+                          ),
+                          child: Center(
+                            child: CustomText(
+                              text: '저장할게요',
+                              color: Colors.white,
+                              fontSize: 16.sp,
+                              fontWeight: FontWeight.w600,
+                            ),
                           ),
                         ),
                       ),

@@ -7,7 +7,7 @@ import 'package:http/http.dart';
 class SplashRepository {
   final String _baseUrl = PublicRepository.baseUrl;
 
-  Future<int> getSplashResponse() async {
+  Future<int> getSplashResponse(String? firebaseToken) async {
     Box homeBox = await Hive.openBox('userInfo');
     int userId = homeBox.get('userId');
 
@@ -18,7 +18,7 @@ class SplashRepository {
     Uri url = Uri.http(
         _baseUrl,
         '/api/user',
-        {'userId': userId}
+        {'userId': userId, 'firebaseToken': firebaseToken}
             .map((key, value) => MapEntry(key, value.toString())));
 
     var response = await get(url);

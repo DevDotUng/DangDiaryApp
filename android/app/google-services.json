@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "391899211300",
+    "project_id": "dangdiary-b6e07",
+    "storage_bucket": "dangdiary-b6e07.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:391899211300:android:96ffdd5c77d79cbf909ab1",
+        "android_client_info": {
+          "package_name": "com.uniqueone.dangdiarysample"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "391899211300-8j2lk7atl075b2uskn94cv75n491p168.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.uniqueone.dangdiarysample",
+            "certificate_hash": "82f702b21719e740b1979e58adeccc27509474ac"
+          }
+        },
+        {
+          "client_id": "391899211300-n719et09k27deqblc78f8dp6aebsjt6t.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAr79N8UmcxIcF7AvpTkGaJNA2xE9YBTLo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "391899211300-n719et09k27deqblc78f8dp6aebsjt6t.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -7,7 +7,9 @@ import 'package:get/get.dart';
 import 'package:hive/hive.dart';
 
 class Splash extends StatefulWidget {
-  const Splash({Key? key}) : super(key: key);
+  Splash({Key? key, this.firebaseToken}) : super(key: key);
+
+  String? firebaseToken;
 
   @override
   State<Splash> createState() => _SplashState();
@@ -15,7 +17,8 @@ class Splash extends StatefulWidget {
 
 class _SplashState extends State<Splash> {
   Future<void> login() async {
-    int response = await SplashRepository().getSplashResponse();
+    int response =
+        await SplashRepository().getSplashResponse(widget.firebaseToken);
 
     if (response == 200) {
       Get.offAndToNamed('/app');

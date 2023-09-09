@@ -1,3 +1,4 @@
+import 'package:dangdiarysample/components/custom_back_button.dart';
 import 'package:dangdiarysample/components/custom_text.dart';
 import 'package:dangdiarysample/controllers/my_inquiry_history_controller.dart';
 import 'package:dangdiarysample/models/customer_center/Inquiry_history_model.dart';
@@ -40,21 +41,11 @@ class _MyInquiryHistoryDetailState extends State<MyInquiryHistoryDetail> {
         backgroundColor: Color(0xffF5F5F5),
         elevation: 0.0,
         centerTitle: true,
-        leading: Padding(
-          padding: EdgeInsets.only(left: 24.w),
-          child: GestureDetector(
-            onTap: () {
-              Get.back();
-            },
-            child: SizedBox(
-              width: 32.w,
-              child: Icon(
-                Icons.arrow_back,
-                size: 32.r,
-                color: Colors.black,
-              ),
-            ),
-          ),
+        leading: GestureDetector(
+          onTap: () {
+            Get.back();
+          },
+          child: const CustomBackButton(),
         ),
         title: CustomText(
           text: '나의 문의 내역',

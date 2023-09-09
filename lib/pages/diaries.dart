@@ -274,7 +274,9 @@ class Diaries extends StatelessWidget {
                     child: Text(
                       '월별',
                       style: TextStyle(
-                        color: Color(0xff545454),
+                        color: DiariesController.to.tabBarIndex.value == 0
+                            ? StaticColor.font_main
+                            : StaticColor.link,
                         fontSize: 14.sp,
                         fontWeight: FontWeight.w500,
                         height: (20 / 14),
@@ -293,7 +295,9 @@ class Diaries extends StatelessWidget {
                     child: Text(
                       '일별',
                       style: TextStyle(
-                        color: Color(0xff545454),
+                        color: DiariesController.to.tabBarIndex.value == 1
+                            ? StaticColor.font_main
+                            : StaticColor.link,
                         fontSize: 14.sp,
                         fontWeight: FontWeight.w500,
                         height: (20 / 14),

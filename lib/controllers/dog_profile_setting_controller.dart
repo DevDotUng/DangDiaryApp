@@ -19,6 +19,7 @@ import 'package:path_provider/path_provider.dart';
 class DogProfileSettingController extends GetxController {
   static DogProfileSettingController get to => Get.find();
   RxBool isLoading = true.obs;
+  RxBool isEdit = false.obs;
   final ImagePicker _picker = ImagePicker();
   final profileImage = Rxn<XFile>();
   List<String> genderList = ['암컷', '수컷'];
@@ -48,6 +49,14 @@ class DogProfileSettingController extends GetxController {
     dogNameTextEditingController.dispose();
     userNicknameTextEditingController.dispose();
     super.dispose();
+  }
+
+  void textChangeListener(String text) {
+    if (text.isEmpty) {
+      isEdit(false);
+    } else {
+      isEdit(true);
+    }
   }
 
   Future<XFile?> _xFileFromImageUrl() async {
@@ -90,6 +99,7 @@ class DogProfileSettingController extends GetxController {
                     onTap: () {
                       Navigator.pop(context);
                       breed(tempBreed);
+                      isEdit(true);
                     },
                     child: CustomText(
                       text: '완료',
@@ -155,6 +165,7 @@ class DogProfileSettingController extends GetxController {
                     onTap: () {
                       Navigator.pop(context);
                       birth(tempBirth);
+                      isEdit(true);
                     },
                     child: CustomText(
                       text: '완료',
@@ -216,6 +227,7 @@ class DogProfileSettingController extends GetxController {
                     onTap: () {
                       Navigator.pop(context);
                       gender(tempGender);
+                      isEdit(true);
                     },
                     child: CustomText(
                       text: '완료',
@@ -294,6 +306,9 @@ class DogProfileSettingController extends GetxController {
                   XFile? image =
                       await _picker.pickImage(source: ImageSource.gallery);
                   profileImage(image);
+                  if (image != null) {
+                    isEdit(true);
+                  }
                   Navigator.pop(context);
                 },
                 child: Container(
@@ -321,6 +336,7 @@ class DogProfileSettingController extends GetxController {
               GestureDetector(
                 onTap: () {
                   profileImage(profileImage.value = null);
+                  isEdit(true);
                   Navigator.pop(context);
                 },
                 child: Container(

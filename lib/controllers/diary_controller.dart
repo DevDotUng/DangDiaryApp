@@ -119,6 +119,8 @@ class DiaryController extends GetxController {
   Future<void> initPageViews() async {
     DiaryWithCoverModel diaryWithCoverModelTemp =
         await DiaryRepository().getDiaryView(coverId);
+    diaryWithCoverModelTemp.diaries[0].content =
+        '산책을 했는데 귀요미가 정말 귀여웠어용 ㅎㅎ산책을 했는데 귀요미가 정말 귀여웠어용 ㅎㅎ산책을 했는데 귀요미가 정말 귀여웠어용 ㅎㅎ산책을 했는데 귀요미가 정말 귀여웠어용 ㅎㅎ산책을 했는데 귀요미가 정말 귀여웠어용 ㅎㅎ산책을 했는데 귀요미가 정말 귀여웠어용 ㅎㅎ산책을 했는데 귀요미가 정말 귀여웠어용 ㅎㅎ산책을 했는데 귀요미가 정말 귀여웠어용 ㅎㅎ산책을 했는데 귀요미가 정말 귀여웠어용 ㅎㅎ산책을 했는데 귀요미가 정말 귀여웠어용 ㅎㅎ산책을 했는데 귀요미가 정말 귀여웠어용 ㅎㅎ산책을 했는데 귀요미가 정말 귀여웠어용 ㅎㅎ산책을 했는데 귀요미가 정말 귀여웠어용 ㅎㅎ산책을 했는데 귀요미가 정말 귀여웠어용 ㅎㅎ산책을 했는데 귀요미가 정말 귀여웠어용 ㅎㅎ산책을 했는데 귀요미가 정말 귀여웠어용 ㅎㅎ산책을 했는데 귀요미가 정말 귀여웠어용 ㅎㅎ산책을 했는데 귀요미가 정말 귀여웠어용 ㅎㅎ산책을 했는데 귀요미가 정말 귀여웠어용 ㅎㅎ산책을 했는데 귀요미가 정말 귀여웠어용 ㅎㅎ산책을 했는데 귀요미가 정말 귀여웠어용 ㅎㅎ산책을 했는데 귀요미가 정말 귀여웠어용 ㅎㅎ산책을 했는데 귀요미가 정말 귀여웠어용 ㅎㅎ산책을 했는데 귀요미가 정말 귀여웠어용 ㅎㅎ산책을 했는데 귀요미가 정말 귀여웠어용 ㅎㅎ';
     diaryWithCoverModel(diaryWithCoverModelTemp);
 
     for (int i = 0; i < diaryWithCoverModel.value!.diaries.length; i++) {

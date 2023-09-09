@@ -1,3 +1,4 @@
+import 'package:dangdiarysample/components/custom_back_button.dart';
 import 'package:dangdiarysample/components/custom_text.dart';
 import 'package:dangdiarysample/controllers/diaries_controller.dart';
 import 'package:dangdiarysample/controllers/sticker_controller.dart';
@@ -44,11 +45,7 @@ class _StickerState extends State<Sticker> {
           onTap: () {
             Navigator.pop(context);
           },
-          child: Icon(
-            Icons.arrow_back,
-            size: 32.r,
-            color: Colors.black,
-          ),
+          child: const CustomBackButton(),
         ),
         centerTitle: true,
         title: CustomText(
@@ -75,7 +72,7 @@ class _StickerState extends State<Sticker> {
                       style: TextStyle(
                         color: StaticColor.font_main,
                         fontSize: 20.sp,
-                        fontWeight: FontWeight.w500,
+                        fontWeight: FontWeight.w600,
                         height: (32 / 20),
                       ),
                       children: <TextSpan>[
@@ -88,7 +85,7 @@ class _StickerState extends State<Sticker> {
                           style: TextStyle(
                             color: StaticColor.main,
                             fontSize: 20.sp,
-                            fontWeight: FontWeight.w500,
+                            fontWeight: FontWeight.w600,
                             height: (32 / 20),
                           ),
                         ),
@@ -210,7 +207,9 @@ class _StickerState extends State<Sticker> {
                     child: Text(
                       '최근 획득순',
                       style: TextStyle(
-                        color: Color(0xff545454),
+                        color: StickerController.to.tabBarIndex.value == 0
+                            ? StaticColor.font_main
+                            : StaticColor.link,
                         fontSize: 14.sp,
                         fontWeight: FontWeight.w500,
                         height: (20 / 14),
@@ -229,7 +228,9 @@ class _StickerState extends State<Sticker> {
                     child: Text(
                       '오래된순',
                       style: TextStyle(
-                        color: Color(0xff545454),
+                        color: StickerController.to.tabBarIndex.value == 1
+                            ? StaticColor.font_main
+                            : StaticColor.link,
                         fontSize: 14.sp,
                         fontWeight: FontWeight.w500,
                         height: (20 / 14),

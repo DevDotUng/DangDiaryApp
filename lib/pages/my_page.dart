@@ -44,22 +44,29 @@ class MyPage extends StatelessWidget {
                     MaterialPageRoute(
                         builder: (context) => NotificationPage()));
               },
-              child: Stack(
-                children: [
-                  StaticIcon(IconsPath.notification_off, size: 32.w),
-                  Positioned(
-                    top: 0,
-                    right: 5.w,
-                    child: Container(
-                      width: 4.w,
-                      height: 4.h,
-                      decoration: BoxDecoration(
-                        color: StaticColor.main,
-                        borderRadius: BorderRadius.circular(2.w),
+              child: Padding(
+                padding: EdgeInsets.only(top: 12.h),
+                child: Stack(
+                  children: [
+                    StaticIcon(
+                      IconsPath.notification_off,
+                      size: 32.w,
+                      color: StaticColor.font_main,
+                    ),
+                    Positioned(
+                      top: 0,
+                      right: 5.w,
+                      child: Container(
+                        width: 4.w,
+                        height: 4.h,
+                        decoration: BoxDecoration(
+                          color: StaticColor.main,
+                          borderRadius: BorderRadius.circular(2.w),
+                        ),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           ),

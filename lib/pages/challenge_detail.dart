@@ -142,13 +142,16 @@ class ChallengeDetail extends StatelessWidget {
                       Get.back();
                     },
                     child: Obx(
-                      () => Icon(
-                        Icons.arrow_back,
-                        size: 32.r,
-                        color:
-                            ChallengeDetailController.to.scrollPosition > 150.h
-                                ? Colors.black
-                                : Colors.white,
+                      () => Padding(
+                        padding: EdgeInsets.only(left: 24.w, right: 8.w),
+                        child: StaticIcon(
+                          IconsPath.back_arrow_bold,
+                          size: 24.r,
+                          color: ChallengeDetailController.to.scrollPosition >
+                                  150.h
+                              ? Colors.black
+                              : Colors.white,
+                        ),
                       ),
                     ),
                   ),

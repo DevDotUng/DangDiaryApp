@@ -1,6 +1,7 @@
 import 'dart:math';
 import 'dart:ui';
 
+import 'package:dangdiarysample/components/TimerWidget.dart';
 import 'package:dangdiarysample/components/custom_text.dart';
 import 'package:dangdiarysample/components/reactive_device.dart';
 import 'package:dangdiarysample/controllers/bottom_nav_controller.dart';
@@ -15,6 +16,7 @@ import 'package:dangdiarysample/static/icon.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 
 class App extends StatelessWidget {
   App({Key? key}) : super(key: key);
@@ -194,6 +196,7 @@ class App extends StatelessWidget {
                     controller: BottomNavController.to.pageController,
                     children: [
                       ListView(
+                        padding: EdgeInsets.zero,
                         children: [
                           ...List.generate(
                             BottomNavController.to.challengeModel.value!
@@ -277,42 +280,30 @@ class App extends StatelessWidget {
                                                 ),
                                                 SizedBox(width: 4.w),
                                                 BottomNavController
-                                                            .to
-                                                            .challengeModel
-                                                            .value!
-                                                            .overdueChallenges[
-                                                                index]
-                                                            .recommendType ==
-                                                        'daily'
-                                                    ? Container(
-                                                        padding: EdgeInsets
-                                                            .symmetric(
-                                                                horizontal:
-                                                                    8.w),
-                                                        height: 22.h,
-                                                        decoration:
-                                                            BoxDecoration(
-                                                          color:
-                                                              StaticColor.main,
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(
-                                                                      11.r),
-                                                        ),
-                                                        child: Center(
-                                                          child: Obx(
-                                                            () => Text(
-                                                              '${twoDigits(BottomNavController.to.duration.value.inHours)}:${twoDigits(BottomNavController.to.duration.value.inMinutes.remainder(60))}:${twoDigits(BottomNavController.to.duration.value.inSeconds.remainder(60))} 남음',
-                                                              style: TextStyle(
-                                                                color: Colors
-                                                                    .white,
-                                                                fontSize: 12.sp,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w400,
-                                                              ),
-                                                            ),
-                                                          ),
+                                                                .to
+                                                                .challengeModel
+                                                                .value!
+                                                                .overdueChallenges[
+                                                                    index]
+                                                                .recommendType ==
+                                                            'daily' ||
+                                                        BottomNavController
+                                                                .to
+                                                                .challengeModel
+                                                                .value!
+                                                                .overdueChallenges[
+                                                                    index]
+                                                                .recommendType ==
+                                                            'weekly'
+                                                    ? TimerWidget(
+                                                        duration: getDuration(
+                                                          BottomNavController
+                                                              .to
+                                                              .challengeModel
+                                                              .value!
+                                                              .overdueChallenges[
+                                                                  index]
+                                                              .recommendDate,
                                                         ),
                                                       )
                                                     : Container(
@@ -452,42 +443,30 @@ class App extends StatelessWidget {
                                                 ),
                                                 SizedBox(width: 4.w),
                                                 BottomNavController
-                                                            .to
-                                                            .challengeModel
-                                                            .value!
-                                                            .inProgressChallenges[
-                                                                index]
-                                                            .recommendType ==
-                                                        'daily'
-                                                    ? Container(
-                                                        padding: EdgeInsets
-                                                            .symmetric(
-                                                                horizontal:
-                                                                    8.w),
-                                                        height: 22.h,
-                                                        decoration:
-                                                            BoxDecoration(
-                                                          color:
-                                                              StaticColor.main,
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(
-                                                                      11.r),
-                                                        ),
-                                                        child: Center(
-                                                          child: Obx(
-                                                            () => Text(
-                                                              '${twoDigits(BottomNavController.to.duration.value.inHours)}:${twoDigits(BottomNavController.to.duration.value.inMinutes.remainder(60))}:${twoDigits(BottomNavController.to.duration.value.inSeconds.remainder(60))} 남음',
-                                                              style: TextStyle(
-                                                                color: Colors
-                                                                    .white,
-                                                                fontSize: 12.sp,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w400,
-                                                              ),
-                                                            ),
-                                                          ),
+                                                                .to
+                                                                .challengeModel
+                                                                .value!
+                                                                .inProgressChallenges[
+                                                                    index]
+                                                                .recommendType ==
+                                                            'daily' ||
+                                                        BottomNavController
+                                                                .to
+                                                                .challengeModel
+                                                                .value!
+                                                                .inProgressChallenges[
+                                                                    index]
+                                                                .recommendType ==
+                                                            'weekly'
+                                                    ? TimerWidget(
+                                                        duration: getDuration(
+                                                          BottomNavController
+                                                              .to
+                                                              .challengeModel
+                                                              .value!
+                                                              .inProgressChallenges[
+                                                                  index]
+                                                              .recommendDate,
                                                         ),
                                                       )
                                                     : Container(),
@@ -495,6 +474,7 @@ class App extends StatelessWidget {
                                             ),
                                           ),
                                           SizedBox(
+                                            height: 40.h,
                                             width: Get.width - 176.w,
                                             child: CustomText(
                                               text: BottomNavController
@@ -602,13 +582,21 @@ class App extends StatelessWidget {
                                               ),
                                               SizedBox(width: 4.w),
                                               BottomNavController
-                                                          .to
-                                                          .challengeModel
-                                                          .value!
-                                                          .recommendChallenges[
-                                                              index]
-                                                          .recommendType ==
-                                                      'daily'
+                                                              .to
+                                                              .challengeModel
+                                                              .value!
+                                                              .recommendChallenges[
+                                                                  index]
+                                                              .recommendType ==
+                                                          'daily' ||
+                                                      BottomNavController
+                                                              .to
+                                                              .challengeModel
+                                                              .value!
+                                                              .recommendChallenges[
+                                                                  index]
+                                                              .recommendType ==
+                                                          'weekly'
                                                   ? Container(
                                                       padding:
                                                           EdgeInsets.symmetric(
@@ -622,7 +610,7 @@ class App extends StatelessWidget {
                                                       ),
                                                       child: Center(
                                                         child: Text(
-                                                          '일일 챌린지',
+                                                          '${BottomNavController.to.challengeModel.value!.recommendChallenges[index].recommendType == 'daily' ? '일일' : '주간'} 챌린지',
                                                           style: TextStyle(
                                                             color: Colors.white,
                                                             fontSize: 12.sp,
@@ -637,6 +625,7 @@ class App extends StatelessWidget {
                                           ),
                                         ),
                                         SizedBox(
+                                          height: 40.h,
                                           width: Get.width - 176.w,
                                           child: CustomText(
                                             text: BottomNavController
@@ -678,124 +667,12 @@ class App extends StatelessWidget {
     );
   }
 
-  Widget _a() {
-    return ListView.builder(
-      padding: const EdgeInsets.all(0),
-      itemCount: BottomNavController
-          .to.challengeModel.value!.inProgressChallenges.length,
-      itemBuilder: (context, index) {
-        return Padding(
-          padding: EdgeInsets.fromLTRB(24.w, 0, 24.w, 16.h),
-          child: GestureDetector(
-            onTap: () {
-              Get.toNamed('/challengeDetail', arguments: {
-                'challengeId': BottomNavController.to.challengeModel.value!
-                    .inProgressChallenges[index].challengeId
-              });
-            },
-            child: Container(
-              padding: EdgeInsets.symmetric(vertical: 16.h, horizontal: 16.w),
-              width: double.infinity,
-              height: 112.h,
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(10.r),
-              ),
-              child: Row(
-                children: [
-                  Container(
-                    width: 80.w,
-                    height: 80.h,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10.r),
-                      image: DecorationImage(
-                        image: NetworkImage(PublicRepository()
-                            .getChallengeImageUrl(BottomNavController
-                                .to
-                                .challengeModel
-                                .value!
-                                .inProgressChallenges[index]
-                                .image)),
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                  ),
-                  SizedBox(width: 16.w),
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      SizedBox(
-                        width: Get.width - 176.w,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Expanded(
-                              child: CustomText(
-                                text: BottomNavController.to.challengeModel
-                                    .value!.inProgressChallenges[index].title,
-                                color: Colors.black,
-                                fontSize: 16.sp,
-                                fontWeight: FontWeight.w400,
-                                height: (24 / 16),
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
-                              ),
-                            ),
-                            SizedBox(width: 4.w),
-                            BottomNavController
-                                        .to
-                                        .challengeModel
-                                        .value!
-                                        .inProgressChallenges[index]
-                                        .recommendType ==
-                                    'daily'
-                                ? Container(
-                                    padding:
-                                        EdgeInsets.symmetric(horizontal: 8.w),
-                                    height: 22.h,
-                                    decoration: BoxDecoration(
-                                      color: StaticColor.main,
-                                      borderRadius: BorderRadius.circular(11.r),
-                                    ),
-                                    child: Center(
-                                      child: Obx(
-                                        () => Text(
-                                          '${twoDigits(BottomNavController.to.duration.value.inHours)}:${twoDigits(BottomNavController.to.duration.value.inMinutes.remainder(60))}:${twoDigits(BottomNavController.to.duration.value.inSeconds.remainder(60))} 남음',
-                                          style: TextStyle(
-                                            color: Colors.white,
-                                            fontSize: 12.sp,
-                                            fontWeight: FontWeight.w400,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  )
-                                : Container(),
-                          ],
-                        ),
-                      ),
-                      SizedBox(
-                        width: Get.width - 176.w,
-                        child: CustomText(
-                          text: BottomNavController.to.challengeModel.value!
-                              .inProgressChallenges[index].content,
-                          color: Color(0xff7D7D7D),
-                          fontSize: 14.sp,
-                          fontWeight: FontWeight.w400,
-                          height: (20 / 14),
-                          maxLines: 2,
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-          ),
-        );
-      },
-    );
+  Duration getDuration(String deadline) {
+    DateTime datetime = DateFormat("yyyy-MM-dd hh:mm:ss").parse(deadline);
+    DateTime now = DateTime.now();
+    int second =
+        (datetime.millisecondsSinceEpoch - now.millisecondsSinceEpoch) ~/ 1000;
+    return Duration(seconds: second);
   }
 
   void _bottomNavBack(int index) async {

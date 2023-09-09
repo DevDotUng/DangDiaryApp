@@ -1,3 +1,4 @@
+import 'package:dangdiarysample/components/custom_back_button.dart';
 import 'package:dangdiarysample/components/custom_text.dart';
 import 'package:dangdiarysample/controllers/diaries_controller.dart';
 import 'package:dangdiarysample/controllers/my_page_controller.dart';
@@ -18,21 +19,11 @@ class AccountDelete extends StatelessWidget {
         backgroundColor: Colors.white,
         elevation: 0.0,
         centerTitle: true,
-        leading: Padding(
-          padding: EdgeInsets.only(left: 24.w),
-          child: GestureDetector(
-            onTap: () {
-              Get.back();
-            },
-            child: SizedBox(
-              width: 32.w,
-              child: Icon(
-                Icons.arrow_back,
-                size: 32.r,
-                color: Colors.black,
-              ),
-            ),
-          ),
+        leading: GestureDetector(
+          onTap: () {
+            Get.back();
+          },
+          child: const CustomBackButton(),
         ),
         title: CustomText(
           text: '계정 삭제',
@@ -62,7 +53,7 @@ class AccountDelete extends StatelessWidget {
                 children: <TextSpan>[
                   TextSpan(
                       text:
-                          '${MyPageController.to.myPageModel.value!.nickname}님과 ${DiariesController.to.myDiariesModel.value?.dogName}와 일기를 쓴 지\n'),
+                          '${MyPageController.to.myPageModel.value!.nickname}님과 ${DiariesController.to.myDiariesModel.value?.dogName}은(는) 일기를 쓴 지\n'),
                   TextSpan(
                     text: '${DiariesController.to.myDiariesModel.value?.date}일',
                     style: TextStyle(
@@ -118,6 +109,7 @@ class AccountDelete extends StatelessWidget {
                 if (statusCode == 200) {
                   Box homeBox = await Hive.openBox('userInfo');
                   homeBox.put('userId', null);
+                  homeBox.put('isShowPopupOnWriteDiary', null);
                   Box searchBox = await Hive.openBox('searchHistory');
                   searchBox.put('diarySearch', null);
                   searchBox.put('postsSearch', null);
