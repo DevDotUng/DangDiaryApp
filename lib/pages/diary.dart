@@ -282,81 +282,87 @@ class Diary extends StatelessWidget {
                                           Positioned(
                                             top: 33.h,
                                             left: 5.w,
-                                            child: DiaryController
-                                                        .to.days[index] ==
-                                                    null
-                                                ? Container()
-                                                : DiaryController
-                                                            .to
-                                                            .days[index]
-                                                                ["sticker"]
-                                                            .length !=
-                                                        0
-                                                    ? Column(
-                                                        children: [
-                                                          Container(
-                                                            width: 32.r,
-                                                            height: 32.r,
-                                                            decoration:
-                                                                BoxDecoration(
-                                                              color: StaticColor
-                                                                  .white,
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          16.r),
-                                                              boxShadow: [
-                                                                BoxShadow(
-                                                                  offset:
-                                                                      Offset(0,
-                                                                          4.h),
-                                                                  blurRadius:
-                                                                      4.r,
-                                                                  color: Colors
-                                                                      .black
-                                                                      .withOpacity(
-                                                                          0.25),
-                                                                ),
-                                                              ],
-                                                              image:
-                                                                  DecorationImage(
-                                                                image: NetworkImage(PublicRepository().getStickerImageUrl(DiaryController
-                                                                            .to
-                                                                            .days[index]
-                                                                        [
-                                                                        "sticker"][0]
-                                                                    [
-                                                                    'stickerImage'])),
-                                                                fit: BoxFit
-                                                                    .cover,
-                                                              ),
-                                                            ),
-                                                          ),
-                                                          SizedBox(height: 4.h),
-                                                          DiaryController
+                                            child:
+                                                DiaryController
+                                                            .to.days[index] ==
+                                                        null
+                                                    ? Container()
+                                                    : DiaryController
+                                                                .to
+                                                                .days[index]
+                                                                    ["sticker"]
+                                                                .length !=
+                                                            0
+                                                        ? Column(
+                                                            children: [
+                                                              GestureDetector(
+                                                                onTap: () {
+                                                                  DiaryController
                                                                       .to
-                                                                      .days[
-                                                                          index]
+                                                                      .onClickStickerListener(
+                                                                          index);
+                                                                },
+                                                                child:
+                                                                    Container(
+                                                                  width: 32.r,
+                                                                  height: 32.r,
+                                                                  decoration:
+                                                                      BoxDecoration(
+                                                                    color: StaticColor
+                                                                        .white,
+                                                                    borderRadius:
+                                                                        BorderRadius.circular(
+                                                                            16.r),
+                                                                    boxShadow: [
+                                                                      BoxShadow(
+                                                                        offset: Offset(
+                                                                            0,
+                                                                            4.h),
+                                                                        blurRadius:
+                                                                            4.r,
+                                                                        color: Colors
+                                                                            .black
+                                                                            .withOpacity(0.25),
+                                                                      ),
+                                                                    ],
+                                                                    image:
+                                                                        DecorationImage(
+                                                                      image: NetworkImage(PublicRepository().getStickerImageUrl(DiaryController
+                                                                              .to
+                                                                              .days[index]["sticker"][0]
                                                                           [
-                                                                          "sticker"]
-                                                                      .length !=
-                                                                  1
-                                                              ? CustomText(
-                                                                  text:
-                                                                      '+${DiaryController.to.days[index]["sticker"].length}',
-                                                                  color:
-                                                                      StaticColor
+                                                                          'stickerImage'])),
+                                                                      fit: BoxFit
+                                                                          .cover,
+                                                                    ),
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                              SizedBox(
+                                                                  height: 4.h),
+                                                              DiaryController
+                                                                          .to
+                                                                          .days[
+                                                                              index]
+                                                                              [
+                                                                              "sticker"]
+                                                                          .length !=
+                                                                      1
+                                                                  ? CustomText(
+                                                                      text:
+                                                                          '+${DiaryController.to.days[index]["sticker"].length}',
+                                                                      color: StaticColor
                                                                           .icon,
-                                                                  fontSize:
-                                                                      12.sp,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w400,
-                                                                )
-                                                              : Container(),
-                                                        ],
-                                                      )
-                                                    : Container(),
+                                                                      fontSize:
+                                                                          12.sp,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w400,
+                                                                    )
+                                                                  : Container(),
+                                                            ],
+                                                          )
+                                                        : Container(),
                                           ),
                                           Column(
                                             children: [

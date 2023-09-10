@@ -119,8 +119,6 @@ class DiaryController extends GetxController {
   Future<void> initPageViews() async {
     DiaryWithCoverModel diaryWithCoverModelTemp =
         await DiaryRepository().getDiaryView(coverId);
-    diaryWithCoverModelTemp.diaries[0].content =
-        '산책을 했는데 귀요미가 정말 귀여웠어용 ㅎㅎ산책을 했는데 귀요미가 정말 귀여웠어용 ㅎㅎ산책을 했는데 귀요미가 정말 귀여웠어용 ㅎㅎ산책을 했는데 귀요미가 정말 귀여웠어용 ㅎㅎ산책을 했는데 귀요미가 정말 귀여웠어용 ㅎㅎ산책을 했는데 귀요미가 정말 귀여웠어용 ㅎㅎ산책을 했는데 귀요미가 정말 귀여웠어용 ㅎㅎ산책을 했는데 귀요미가 정말 귀여웠어용 ㅎㅎ산책을 했는데 귀요미가 정말 귀여웠어용 ㅎㅎ산책을 했는데 귀요미가 정말 귀여웠어용 ㅎㅎ산책을 했는데 귀요미가 정말 귀여웠어용 ㅎㅎ산책을 했는데 귀요미가 정말 귀여웠어용 ㅎㅎ산책을 했는데 귀요미가 정말 귀여웠어용 ㅎㅎ산책을 했는데 귀요미가 정말 귀여웠어용 ㅎㅎ산책을 했는데 귀요미가 정말 귀여웠어용 ㅎㅎ산책을 했는데 귀요미가 정말 귀여웠어용 ㅎㅎ산책을 했는데 귀요미가 정말 귀여웠어용 ㅎㅎ산책을 했는데 귀요미가 정말 귀여웠어용 ㅎㅎ산책을 했는데 귀요미가 정말 귀여웠어용 ㅎㅎ산책을 했는데 귀요미가 정말 귀여웠어용 ㅎㅎ산책을 했는데 귀요미가 정말 귀여웠어용 ㅎㅎ산책을 했는데 귀요미가 정말 귀여웠어용 ㅎㅎ산책을 했는데 귀요미가 정말 귀여웠어용 ㅎㅎ산책을 했는데 귀요미가 정말 귀여웠어용 ㅎㅎ산책을 했는데 귀요미가 정말 귀여웠어용 ㅎㅎ';
     diaryWithCoverModel(diaryWithCoverModelTemp);
 
     for (int i = 0; i < diaryWithCoverModel.value!.diaries.length; i++) {
@@ -147,6 +145,7 @@ class DiaryController extends GetxController {
       => 이번달의 마지막날을 구해 1일부터 마지막 날까지 추기
     */
     int lastDay = DateTime(year, month + 1, 0).day;
+    int kndex = 0;
     for (var i = 1; i <= lastDay; i++) {
       List stickerList = [];
       for (var j = 0; j < diaryWithCoverModel.value!.diaries.length; j++) {
@@ -156,8 +155,10 @@ class DiaryController extends GetxController {
         if (dayOfWeek == i) {
           stickerList.add({
             'stickerImage': diaryWithCoverModel.value!.diaries[j].stickerImage,
-            'stickerShape': diaryWithCoverModel.value!.diaries[j].stickerShape
+            'stickerShape': diaryWithCoverModel.value!.diaries[j].stickerShape,
+            'index': kndex,
           });
+          kndex++;
         }
       }
       days.add({
@@ -206,6 +207,13 @@ class DiaryController extends GetxController {
     } else {
       pageViewIndexList[index](pageViewControllerList[index].page!.toInt() + 1);
     }
+  }
+
+  void onClickStickerListener(int index) {
+    scrollController.animateTo(
+        (days[index]["sticker"][0]['index'] + 2) * Get.width,
+        duration: const Duration(milliseconds: 300),
+        curve: Curves.fastOutSlowIn);
   }
 
   String getNumberOfDiaries(int number) {

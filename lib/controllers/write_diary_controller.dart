@@ -88,6 +88,10 @@ class WriteDiaryController extends GetxController {
     tagTextEditingController = TextEditingController();
     setOverdueDiary();
     tags.add(getFilteredString(titleTag.value));
+    if (writeType == 'edit') {
+      progress[3] = 1;
+      tags = overdueDiary.tags.obs;
+    }
     super.onInit();
   }
 
@@ -150,7 +154,7 @@ class WriteDiaryController extends GetxController {
 
   void addTag(String tag) {
     String filteredString = getFilteredString(tag);
-    if (tag.isNotEmpty) {
+    if (filteredString.isNotEmpty && filteredString != '_') {
       tags.add(filteredString);
     }
   }

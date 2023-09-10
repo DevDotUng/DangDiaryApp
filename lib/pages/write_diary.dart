@@ -620,61 +620,71 @@ class WriteDiary extends StatelessWidget {
                           ],
                         ),
                         SizedBox(height: 56.h),
-                        Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            CustomText(
-                              text: '인증 사진을 올려주세요 (최대 10장)',
-                              color: StaticColor.font_main,
-                              fontSize: 18.sp,
-                              fontWeight: FontWeight.w500,
-                              height: (32 / 18),
-                            ),
-                            SizedBox(width: 4.w),
-                            Container(
-                              width: 8.w,
-                              height: 8.w,
-                              decoration: BoxDecoration(
-                                color: StaticColor.main,
-                                borderRadius: BorderRadius.circular(4.r),
-                              ),
-                            ),
-                          ],
-                        ),
-                        Obx(() => WriteDiaryController.to.essentialTextList[3]),
-                        Obx(
-                          () => WriteDiaryController.to.images.isEmpty
-                              ? Padding(
-                                  padding:
-                                      EdgeInsets.symmetric(horizontal: 0.5.w),
-                                  child: DottedBorder(
-                                    borderType: BorderType.RRect,
-                                    radius: Radius.circular(10.r),
-                                    color: Color(0xffD9D9D9),
-                                    child: GestureDetector(
-                                      onTap: () {
-                                        WriteDiaryController.to
-                                            .pickImages(context);
-                                      },
-                                      child: Container(
-                                        width: double.infinity,
-                                        height: 88.h,
-                                        decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(10.r),
-                                        ),
-                                        child: _emptyImageList(),
+                        WriteDiaryController.to.writeType == 'write'
+                            ? Column(
+                                children: [
+                                  Row(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      CustomText(
+                                        text: '인증 사진을 올려주세요 (최대 10장)',
+                                        color: StaticColor.font_main,
+                                        fontSize: 18.sp,
+                                        fontWeight: FontWeight.w500,
+                                        height: (32 / 18),
                                       ),
-                                    ),
+                                      SizedBox(width: 4.w),
+                                      Container(
+                                        width: 8.w,
+                                        height: 8.w,
+                                        decoration: BoxDecoration(
+                                          color: StaticColor.main,
+                                          borderRadius:
+                                              BorderRadius.circular(4.r),
+                                        ),
+                                      ),
+                                    ],
                                   ),
-                                )
-                              : SizedBox(
-                                  width: double.infinity,
-                                  height: 88.h,
-                                  child: _imageList(context),
-                                ),
-                        ),
-                        SizedBox(height: 56.h),
+                                  Obx(() => WriteDiaryController
+                                      .to.essentialTextList[3]),
+                                  Obx(
+                                    () => WriteDiaryController.to.images.isEmpty
+                                        ? Padding(
+                                            padding: EdgeInsets.symmetric(
+                                                horizontal: 0.5.w),
+                                            child: DottedBorder(
+                                              borderType: BorderType.RRect,
+                                              radius: Radius.circular(10.r),
+                                              color: Color(0xffD9D9D9),
+                                              child: GestureDetector(
+                                                onTap: () {
+                                                  WriteDiaryController.to
+                                                      .pickImages(context);
+                                                },
+                                                child: Container(
+                                                  width: double.infinity,
+                                                  height: 88.h,
+                                                  decoration: BoxDecoration(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            10.r),
+                                                  ),
+                                                  child: _emptyImageList(),
+                                                ),
+                                              ),
+                                            ),
+                                          )
+                                        : SizedBox(
+                                            width: double.infinity,
+                                            height: 88.h,
+                                            child: _imageList(context),
+                                          ),
+                                  ),
+                                  SizedBox(height: 56.h),
+                                ],
+                              )
+                            : Container(),
                         Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
