@@ -117,5 +117,5 @@ class IconsPath {
   static String get fun => 'assets/icons/fun.svg';
   static String get happy => 'assets/icons/happy.svg';
   static String get nervous => 'assets/icons/nervous.svg';
-  static String get apple_logo => 'assets/icons/apple_logo.svg';
+  static String get kakao_logo => 'assets/icons/kakao_logo.svg';
 }

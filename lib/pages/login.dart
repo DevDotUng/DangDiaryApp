@@ -70,19 +70,6 @@ class Login extends StatelessWidget {
             ),
             SizedBox(height: 14.h),
             GestureDetector(
-              onTap: () => LoginRepository().kakaoLogin(firebaseToken),
-              child: Container(
-                margin: EdgeInsets.symmetric(horizontal: 36.w),
-                width: double.infinity,
-                height: 48.r,
-                decoration: BoxDecoration(
-                  color: Color(0xffFEE500),
-                  borderRadius: BorderRadius.circular(12.r),
-                ),
-              ),
-            ),
-            SizedBox(height: 8.h),
-            GestureDetector(
               onTap: () => LoginRepository().appleLogin(firebaseToken),
               child: Container(
                 margin: EdgeInsets.symmetric(horizontal: 36.w),
@@ -92,10 +79,64 @@ class Login extends StatelessWidget {
                   color: Colors.black,
                   borderRadius: BorderRadius.circular(12.r),
                 ),
-                child: StaticIcon(
-                  IconsPath.apple_logo,
-                  size: 19.35.r,
-                  color: StaticColor.white,
+                child: SizedBox(
+                  height: double.infinity,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Container(
+                        width: 15.r,
+                        height: 19.r,
+                        decoration: const BoxDecoration(
+                          image: DecorationImage(
+                            image: AssetImage('assets/apple_logo.png'),
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                      ),
+                      SizedBox(width: 9.w),
+                      Text(
+                        'Apple로 계속하기',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 14.sp,
+                          fontWeight: FontWeight.w400,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+            SizedBox(height: 8.h),
+            GestureDetector(
+              onTap: () => LoginRepository().kakaoLogin(firebaseToken),
+              child: Container(
+                margin: EdgeInsets.symmetric(horizontal: 36.w),
+                width: double.infinity,
+                height: 48.r,
+                decoration: BoxDecoration(
+                  color: Color(0xffFEE500),
+                  borderRadius: BorderRadius.circular(12.r),
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    StaticIcon(
+                      IconsPath.kakao_logo,
+                      size: 17.r,
+                      color: Colors.black,
+                    ),
+                    SizedBox(width: 9.w),
+                    Text(
+                      '카카오톡으로 로그인',
+                      style: TextStyle(
+                        color: Colors.black.withOpacity(0.85),
+                        fontSize: 14.sp,
+                        fontWeight: FontWeight.w400,
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ),

@@ -38,13 +38,21 @@ class _SplashState extends State<Splash> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: CustomText(
-          text: '댕댕일기 스플래시',
-          color: StaticColor.icon,
-          fontSize: 12.sp,
-          fontWeight: FontWeight.w500,
-          height: (20 / 12),
+      body: Container(
+        width: double.infinity,
+        height: double.infinity,
+        color: StaticColor.white,
+        child: Center(
+          child: Container(
+            width: 116.67.r,
+            height: 116.67.r,
+            decoration: const BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage('assets/splash.png'),
+                fit: BoxFit.cover,
+              ),
+            ),
+          ),
         ),
       ),
     );

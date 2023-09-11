@@ -13,7 +13,7 @@ class RecommendChallengeModel {
   String content;
   String image;
   String recommendDate;
-  String recommendType;
+  String? recommendType;
 
   factory RecommendChallengeModel.fromJson(Map<String, dynamic> json) {
     return RecommendChallengeModel(

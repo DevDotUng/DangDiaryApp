@@ -31,10 +31,13 @@ class BrowseRepository {
   }
 
   Future<List<PostsModel>> getPostsView(int browseId) async {
+    Box homeBox = await Hive.openBox('userInfo');
+    int userId = homeBox.get('userId');
+
     Uri url = Uri.http(
         _baseUrl,
         '/api/browse/posts',
-        {'browseId': browseId}
+        {'userId': userId, 'browseId': browseId}
             .map((key, value) => MapEntry(key, value.toString())));
 
     var response = await get(url);
