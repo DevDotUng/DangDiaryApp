@@ -1,6 +1,8 @@
 import 'package:dangdiarysample/components/custom_back_button.dart';
 import 'package:dangdiarysample/components/custom_text.dart';
+import 'package:dangdiarysample/controllers/my_page_controller.dart';
 import 'package:dangdiarysample/repositories/login_repository.dart';
+import 'package:dangdiarysample/static/icon.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -53,8 +55,50 @@ class AccountSetting extends StatelessWidget {
                 width: double.infinity,
                 height: 40.h,
                 decoration: BoxDecoration(
-                  color: Color(0xffFEE500),
+                  color: MyPageController.to.myPageModel.value!.loginType ==
+                          'kakao'
+                      ? Color(0xffFEE500)
+                      : Colors.black,
                   borderRadius: BorderRadius.circular(5.r),
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    MyPageController.to.myPageModel.value!.loginType == 'kakao'
+                        ? StaticIcon(
+                            IconsPath.kakao_logo,
+                            size: 17.r,
+                            color: Colors.black,
+                          )
+                        : Container(
+                            width: 15.r,
+                            height: 19.r,
+                            decoration: const BoxDecoration(
+                              image: DecorationImage(
+                                image: AssetImage('assets/apple_logo.png'),
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                          ),
+                    SizedBox(width: 9.w),
+                    Text(
+                      MyPageController.to.myPageModel.value!.email == null
+                          ? MyPageController.to.myPageModel.value!.loginType ==
+                                  'kakao'
+                              ? '카카오 계정으로 로그인 함'
+                              : '애플 계정으로 로그인 함'
+                          : MyPageController.to.myPageModel.value!.email!,
+                      style: TextStyle(
+                        color:
+                            MyPageController.to.myPageModel.value!.loginType ==
+                                    'kakao'
+                                ? Colors.black
+                                : Colors.white,
+                        fontSize: 14.sp,
+                        fontWeight: FontWeight.w400,
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ),

@@ -808,7 +808,7 @@ class DiaryController extends GetxController {
                   ),
                   decoration: InputDecoration(
                     hintText:
-                        '${diaryWithCoverModel.value?.coverTitle == null ? '' : diaryWithCoverModel.value!.coverTitle + ' '}(최대 14글자)',
+                        '${diaryWithCoverModel.value?.coverTitle == null ? '' : diaryWithCoverModel.value!.coverTitle! + ' '}(최대 14글자)',
                     hintStyle: TextStyle(
                       color: Color(0xffA6A6A6),
                       fontSize: 14.sp,

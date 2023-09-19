@@ -12,7 +12,7 @@ class RecommendChallengeModel {
   String title;
   String content;
   String image;
-  String recommendDate;
+  String? recommendDate;
   String? recommendType;
 
   factory RecommendChallengeModel.fromJson(Map<String, dynamic> json) {
@@ -21,8 +21,8 @@ class RecommendChallengeModel {
       title: json['title'] as String,
       content: json['content'] as String,
       image: json['image'] as String,
-      recommendDate: json['recommendDate'] as String,
-      recommendType: json['recommendType'] as String,
+      recommendDate: json['recommendDate'] as String?,
+      recommendType: json['recommendType'] as String?,
     );
   }
 

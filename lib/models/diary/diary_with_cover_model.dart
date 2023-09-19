@@ -13,9 +13,9 @@ class DiaryWithCoverModel {
 
   int coverId;
   String date;
-  String coverTitle;
-  String coverColor;
-  String holderColor;
+  String? coverTitle;
+  String? coverColor;
+  String? holderColor;
   int numberOfLike;
   List<MyDiaryModel> diaries;
 
@@ -23,9 +23,9 @@ class DiaryWithCoverModel {
     return DiaryWithCoverModel(
       coverId: json['coverId'] as int,
       date: json['date'] as String,
-      coverTitle: json['coverTitle'] as String,
-      coverColor: json['coverColor'] as String,
-      holderColor: json['holderColor'] as String,
+      coverTitle: json['coverTitle'] as String?,
+      coverColor: json['coverColor'] as String?,
+      holderColor: json['holderColor'] as String?,
       numberOfLike: json['numberOfLike'] as int,
       diaries: List<MyDiaryModel>.from(
           json['diaries'].map((data) => MyDiaryModel.fromJson(data))),

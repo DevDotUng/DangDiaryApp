@@ -51,10 +51,9 @@ class WriteDiary extends StatelessWidget {
                       height: (20 / 14).h,
                     ),
                     children: <TextSpan>[
+                      TextSpan(text: '지금까지 쓴 내용은 '),
                       TextSpan(
-                          text: '뒤로 가기를 하시면 현재 작성 중이던 일기는 임시 저장됩니다. 해당 일기는 '),
-                      TextSpan(
-                        text: '\'일기장>밀린 일기\'',
+                        text: '진행중인 챌린지',
                         style: TextStyle(
                           color: StaticColor.main,
                           fontSize: 14.sp,
@@ -62,7 +61,7 @@ class WriteDiary extends StatelessWidget {
                           height: (20 / 14).h,
                         ),
                       ),
-                      TextSpan(text: '탭에서 이어서 작성할 수 있어요.'),
+                      TextSpan(text: '에서 이어서 쓸 수 있어요.'),
                     ],
                   ),
                 ),
@@ -929,6 +928,8 @@ class WriteDiary extends StatelessWidget {
                               child: Obx(
                                 () => CustomSwitch(
                                   value: WriteDiaryController.to.isPublic.value,
+                                  onColor: StaticColor.main,
+                                  offColor: StaticColor.icon,
                                 ),
                               ),
                             ),

@@ -117,8 +117,8 @@ class DiariesController extends GetxController {
     }
   }
 
-  Widget _dailyCover(int coverId, String date, String? title, String coverColor,
-      String holderColor) {
+  Widget _dailyCover(int coverId, String date, String? title,
+      String? coverColor, String? holderColor) {
     return GestureDetector(
       onTap: () {
         Get.toNamed('/diary', arguments: {'coverId': coverId});

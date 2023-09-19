@@ -19,7 +19,7 @@ class PostsModel {
     required this.tags,
   });
 
-  String profileImage;
+  String? profileImage;
   String dogName;
   int userId;
   int diaryId;
@@ -39,7 +39,7 @@ class PostsModel {
 
   factory PostsModel.fromJson(Map<String, dynamic> json) {
     return PostsModel(
-      profileImage: json['profileImage'] as String,
+      profileImage: json['profileImage'] as String?,
       dogName: json['dogName'] as String,
       userId: json['userId'] as int,
       diaryId: json['diaryId'] as int,

@@ -13,7 +13,7 @@ class StickerModel {
   });
 
   int numberOfTotalSticker;
-  String profileImage;
+  String? profileImage;
   int numberOfSticker;
   int numberOfDiary;
   int numberOfOverdueDiary;
@@ -23,7 +23,7 @@ class StickerModel {
   factory StickerModel.fromJson(Map<String, dynamic> json) {
     return StickerModel(
       numberOfTotalSticker: json['numberOfTotalSticker'] as int,
-      profileImage: json['profileImage'] as String,
+      profileImage: json['profileImage'] as String?,
       numberOfSticker: json['numberOfSticker'] as int,
       numberOfDiary: json['numberOfDiary'] as int,
       numberOfOverdueDiary: json['numberOfOverdueDiary'] as int,

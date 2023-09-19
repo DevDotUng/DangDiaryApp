@@ -5,6 +5,7 @@ import 'package:dangdiarysample/components/pageview_indicator.dart';
 import 'package:dangdiarysample/controllers/posts_controller.dart';
 import 'package:dangdiarysample/repositories/public_repository.dart';
 import 'package:dangdiarysample/skeletons/home_skeleton.dart';
+import 'package:dangdiarysample/skeletons/posts_skeleton.dart';
 import 'package:dangdiarysample/static/color.dart';
 import 'package:dangdiarysample/static/icon.dart';
 import 'package:flutter/cupertino.dart';
@@ -33,7 +34,7 @@ class Posts extends StatelessWidget {
   Widget build(BuildContext context) {
     Get.find<PostsController>();
     return Obx(
-      () => controller.postsModels.isEmpty ? HomeSkeleton() : _postsWidget(),
+      () => controller.postsModels.isEmpty ? PostsSkeleton() : _postsWidget(),
     );
   }
 
@@ -126,7 +127,7 @@ class Posts extends StatelessWidget {
                                             : NetworkImage(PublicRepository()
                                                 .getProfileImageUrl(controller
                                                     .postsModels![index]!
-                                                    .profileImage)),
+                                                    .profileImage!)),
                                         fit: BoxFit.cover,
                                       ),
                                     ),

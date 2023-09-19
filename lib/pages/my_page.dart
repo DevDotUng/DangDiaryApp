@@ -171,7 +171,7 @@ class MyPage extends StatelessWidget {
                                         as ImageProvider
                                     : NetworkImage(PublicRepository()
                                         .getProfileImageUrl(MyPageController.to
-                                            .myPageModel.value!.profileImage)),
+                                            .myPageModel.value!.profileImage!)),
                                 fit: BoxFit.cover,
                               ),
                             ),

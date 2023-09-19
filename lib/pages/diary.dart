@@ -5,6 +5,7 @@ import 'package:dangdiarysample/components/pageview_indicator.dart';
 import 'package:dangdiarysample/controllers/diaries_controller.dart';
 import 'package:dangdiarysample/controllers/diary_controller.dart';
 import 'package:dangdiarysample/repositories/public_repository.dart';
+import 'package:dangdiarysample/skeletons/diary_skeleton.dart';
 import 'package:dangdiarysample/skeletons/home_skeleton.dart';
 import 'package:dangdiarysample/static/color.dart';
 import 'package:dangdiarysample/static/icon.dart';
@@ -26,7 +27,7 @@ class Diary extends StatelessWidget {
         diaryId: Get.arguments['diaryId']));
     return Obx(
       () => DiaryController.to.diaryWithCoverModel.value == null
-          ? HomeSkeleton()
+          ? DiarySkeleton()
           : _diaryView(context, _appBarHeight, _statusBarHeight),
     );
   }
@@ -128,7 +129,7 @@ class Diary extends StatelessWidget {
                                               .to
                                               .diaryWithCoverModel
                                               .value!
-                                              .coverTitle,
+                                              .coverTitle!,
                                       color: Colors.black,
                                       fontSize: 20.sp,
                                       fontWeight: FontWeight.w600,

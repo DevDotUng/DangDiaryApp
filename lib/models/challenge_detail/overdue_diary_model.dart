@@ -16,10 +16,10 @@ class OverdueDiaryModel {
   int userId;
   int challengeId;
   String endDate;
-  String weather;
-  String feeling;
-  String title;
-  String content;
+  String? weather;
+  String? feeling;
+  String? title;
+  String? content;
   bool isPublic;
   List<String> tags;
 
@@ -29,10 +29,10 @@ class OverdueDiaryModel {
       userId: json['userId'] as int,
       challengeId: json['challengeId'] as int,
       endDate: json['endDate'] as String,
-      weather: json['weather'] as String,
-      feeling: json['feeling'] as String,
-      title: json['title'] as String,
-      content: json['content'] as String,
+      weather: json['weather'] as String?,
+      feeling: json['feeling'] as String?,
+      title: json['title'] as String?,
+      content: json['content'] as String?,
       isPublic: json['isPublic'] as bool,
       tags: List<String>.from(json['tags']),
     );

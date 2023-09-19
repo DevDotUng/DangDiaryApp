@@ -303,7 +303,7 @@ class App extends StatelessWidget {
                                                               .value!
                                                               .overdueChallenges[
                                                                   index]
-                                                              .recommendDate,
+                                                              .recommendDate!,
                                                         ),
                                                       )
                                                     : Container(
@@ -466,7 +466,7 @@ class App extends StatelessWidget {
                                                               .value!
                                                               .inProgressChallenges[
                                                                   index]
-                                                              .recommendDate,
+                                                              .recommendDate!,
                                                         ),
                                                       )
                                                     : Container(),
@@ -712,48 +712,44 @@ class App extends StatelessWidget {
             bottom: ReactiveDevice().hasHomeIndicator() ? 30.h : -4.h,
             left: 0,
             right: 0,
-            child: Container(
+            child: SizedBox(
               width: double.infinity,
               height: 80.h,
               child: Row(
                 children: [
                   Expanded(
-                    child: Container(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          _bottomNavigationBarItem(
-                            IconsPath.home_bold,
-                            '홈',
-                            0,
-                          ),
-                          _bottomNavigationBarItem(
-                            IconsPath.diary_bold,
-                            '일기장',
-                            1,
-                          ),
-                        ],
-                      ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        _bottomNavigationBarItem(
+                          IconsPath.home_bold,
+                          '홈',
+                          0,
+                        ),
+                        _bottomNavigationBarItem(
+                          IconsPath.diary_bold,
+                          '일기장',
+                          1,
+                        ),
+                      ],
                     ),
                   ),
                   Container(width: 64.w),
                   Expanded(
-                    child: Container(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          _bottomNavigationBarItem(
-                            IconsPath.browse,
-                            '둘러보기',
-                            2,
-                          ),
-                          _bottomNavigationBarItem(
-                            IconsPath.my_bold,
-                            'MY',
-                            3,
-                          ),
-                        ],
-                      ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        _bottomNavigationBarItem(
+                          IconsPath.browse,
+                          '둘러보기',
+                          2,
+                        ),
+                        _bottomNavigationBarItem(
+                          IconsPath.my_bold,
+                          'MY',
+                          3,
+                        ),
+                      ],
                     ),
                   ),
                 ],
@@ -853,33 +849,37 @@ class App extends StatelessWidget {
         BottomNavController.to.changeBottomNav(index);
         BottomNavController.to.isShowBottomModal(true);
       },
-      child: Column(
-        children: [
-          SizedBox(height: 16.h),
-          StaticIcon(
-            iconsPath,
-            size: 24.r,
-            color: BottomNavController.to.pageIndex == index
-                ? StaticColor.main
-                : StaticColor.icon,
-          ),
-          SizedBox(height: 8.h),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                label,
-                style: TextStyle(
-                  color: BottomNavController.to.pageIndex == index
-                      ? Colors.orangeAccent
-                      : Color(0xffA6A6A6),
-                  fontSize: 12.sp,
-                  fontWeight: FontWeight.w500,
+      child: Container(
+        width: (Get.width / 2 - 32.w) / 2,
+        color: Colors.transparent,
+        child: Column(
+          children: [
+            SizedBox(height: 16.h),
+            StaticIcon(
+              iconsPath,
+              size: 24.r,
+              color: BottomNavController.to.pageIndex == index
+                  ? StaticColor.main
+                  : StaticColor.icon,
+            ),
+            SizedBox(height: 8.h),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  label,
+                  style: TextStyle(
+                    color: BottomNavController.to.pageIndex == index
+                        ? Colors.orangeAccent
+                        : Color(0xffA6A6A6),
+                    fontSize: 12.sp,
+                    fontWeight: FontWeight.w500,
+                  ),
                 ),
-              ),
-            ],
-          ),
-        ],
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }

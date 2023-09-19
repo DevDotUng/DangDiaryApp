@@ -46,13 +46,31 @@ class Home extends StatelessWidget {
             ),
           ),
           Positioned(
+            top: 0,
+            left: 0,
+            right: 0,
+            child: Container(
+              width: double.infinity,
+              height: 560.h,
+              decoration: const BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors: [Colors.white, Colors.transparent],
+                ),
+              ),
+            ),
+          ),
+          Positioned(
             top: (_appBarHeight + _statusBarHeight + 16).h,
             left: 24.w,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 CustomText(
-                  text: '오늘의 일일챌린지가\n도착했어요!',
+                  text: BottomNavController.to.isShowChallenge()
+                      ? '오늘의 일일챌린지가\n도착했어요!'
+                      : '지금 챌린지를\n즐겨보세요!',
                   color: Colors.black,
                   fontSize: 24.sp,
                   fontWeight: FontWeight.w500,
@@ -86,7 +104,7 @@ class Home extends StatelessWidget {
                         ? AssetImage('assets/default_profile_image.png')
                             as ImageProvider
                         : NetworkImage(PublicRepository().getProfileImageUrl(
-                            HomeController.to.homeModel.value!.profileImage)),
+                            HomeController.to.homeModel.value!.profileImage!)),
                     fit: BoxFit.cover,
                   ),
                 ),

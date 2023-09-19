@@ -13,7 +13,7 @@ class MyDiariesModel {
   });
 
   String dogName;
-  String profileImage;
+  String? profileImage;
   int date;
   int numberOfDiary;
   int numberOfOverdueDiary;
@@ -24,7 +24,7 @@ class MyDiariesModel {
   factory MyDiariesModel.fromJson(Map<String, dynamic> json) {
     return MyDiariesModel(
       dogName: json['dogName'] as String,
-      profileImage: json['profileImage'] as String,
+      profileImage: json['profileImage'] as String?,
       date: json['date'] as int,
       numberOfDiary: json['numberOfDiary'] as int,
       numberOfOverdueDiary: json['numberOfOverdueDiary'] as int,

@@ -13,7 +13,7 @@ class DiaryByStickerModel {
   String endDate;
   String diaryTitle;
   int numberOfLike;
-  String coverColor;
+  String? coverColor;
 
   factory DiaryByStickerModel.fromJson(Map<String, dynamic> json) {
     return DiaryByStickerModel(
@@ -22,7 +22,7 @@ class DiaryByStickerModel {
       endDate: json['endDate'] as String,
       diaryTitle: json['diaryTitle'] as String,
       numberOfLike: json['numberOfLike'] as int,
-      coverColor: json['coverColor'] as String,
+      coverColor: json['coverColor'] as String?,
     );
   }
 

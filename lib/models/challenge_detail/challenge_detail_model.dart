@@ -22,7 +22,7 @@ class ChallengeDetailModel {
   String stickerImage;
   String stickerShape;
   int numberOfComplete;
-  String recommendDate;
+  String? recommendDate;
   List<OtherDogChallengeModel> otherDogChallenges;
 
   factory ChallengeDetailModel.fromJson(Map<String, dynamic> json) {
@@ -35,7 +35,7 @@ class ChallengeDetailModel {
       stickerImage: json['stickerImage'] as String,
       stickerShape: json['stickerShape'] as String,
       numberOfComplete: json['numberOfComplete'] as int,
-      recommendDate: json['recommendDate'] as String,
+      recommendDate: json['recommendDate'] as String?,
       otherDogChallenges: List<OtherDogChallengeModel>.from(
           json['otherDogChallenges']
               .map((data) => OtherDogChallengeModel.fromJson(data))),

@@ -117,10 +117,10 @@ class WriteDiaryController extends GetxController {
     }
     titleTag(title);
     if (overdueDiary.title != null) {
-      titleTextEditingController.text = overdueDiary.title;
+      titleTextEditingController.text = overdueDiary.title!;
     }
     if (overdueDiary.content != null) {
-      contentTextEditingController.text = overdueDiary.content;
+      contentTextEditingController.text = overdueDiary.content!;
       if (contentTextEditingController.text.isEmpty) {
         progress[4] = 0;
       } else {
@@ -634,7 +634,7 @@ class WriteDiaryController extends GetxController {
     isShowPopup(!isShowPopup.value);
   }
 
-  void setWeather(String weather) {
+  void setWeather(String? weather) {
     switch (weather) {
       case '맑음':
         selectedWeatherIndex(0);
@@ -660,7 +660,7 @@ class WriteDiaryController extends GetxController {
     }
   }
 
-  void setFeeling(String feeling) {
+  void setFeeling(String? feeling) {
     switch (feeling) {
       case '기뻐요':
         selectedFeelingsIndex(0);

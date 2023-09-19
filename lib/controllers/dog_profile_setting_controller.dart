@@ -66,7 +66,7 @@ class DogProfileSettingController extends GetxController {
     final response = await http.get(
       Uri.parse(
         PublicRepository().getProfileImageUrl(
-            MyPageController.to.myPageModel.value!.profileImage),
+            MyPageController.to.myPageModel.value!.profileImage!),
       ),
     );
 

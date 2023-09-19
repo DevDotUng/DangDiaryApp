@@ -40,6 +40,7 @@ import 'package:dangdiarysample/pages/write_diary.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -49,6 +50,12 @@ import 'package:hive_flutter/adapters.dart';
 import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
 
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+    DeviceOrientation.portraitDown,
+  ]);
+
   KakaoSdk.init(
     nativeAppKey: 'b8dae3679aac82ab76c71988353705ad',
   );
@@ -91,8 +98,6 @@ Future<String?> fcmSetting() async {
     sound: true,
   );
 
-  print('User granted permission: ${settings.authorizationStatus}');
-
   // foreground에서의 푸시 알림 표시를 위한 알림 중요도 설정 (안드로이드)
   const AndroidNotificationChannel channel = AndroidNotificationChannel(
       'somain_notification', 'somain_notification',
@@ -111,9 +116,6 @@ Future<String?> fcmSetting() async {
     RemoteNotification? notification = message.notification;
     AndroidNotification? android = message.notification?.android;
 
-    print('Got a message whilst in the foreground!');
-    print('Message data: ${message.data}');
-
     if (message.notification != null && android != null) {
       flutterLocalNotificationsPlugin.show(
           notification.hashCode,
@@ -127,15 +129,11 @@ Future<String?> fcmSetting() async {
               icon: android.smallIcon,
             ),
           ));
-
-      print('Message also contained a notification: ${message.notification}');
     }
   });
 
   // firebase token 발급
   String? firebaseToken = await messaging.getToken();
-
-  print("firebaseToken : ${firebaseToken}");
 
   return firebaseToken;
 }

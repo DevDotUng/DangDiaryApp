@@ -1,12 +1,25 @@
 import 'package:dangdiarysample/components/custom_back_button.dart';
 import 'package:dangdiarysample/components/custom_switch.dart';
 import 'package:dangdiarysample/components/custom_text.dart';
+import 'package:dangdiarysample/controllers/my_page_controller.dart';
+import 'package:dangdiarysample/models/my_page/agree_model.dart';
+import 'package:dangdiarysample/repositories/my_page_repository.dart';
+import 'package:dangdiarysample/static/color.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 class AppSetting extends StatelessWidget {
   const AppSetting({Key? key}) : super(key: key);
+
+  void agree(String type) async {
+    AgreeModel agreeModel = await MyPageRepository().editAgree(type);
+    MyPageController.to.myPageModel.value!.agreeLikeNotification =
+        agreeModel.agreeLikeNotification;
+    MyPageController.to.myPageModel.value!.agreeChallengeNotification =
+        agreeModel.agreeChallengeNotification;
+    MyPageController.to.myPageModel.refresh();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -49,7 +62,21 @@ class AppSetting extends StatelessWidget {
                   Expanded(
                     child: Container(height: 20, color: Colors.transparent),
                   ),
-                  CustomSwitch(value: true),
+                  GestureDetector(
+                    onTap: () {
+                      agree('all');
+                    },
+                    child: Obx(
+                      () => CustomSwitch(
+                        value: MyPageController
+                                .to.myPageModel.value!.agreeLikeNotification ||
+                            MyPageController.to.myPageModel.value!
+                                .agreeChallengeNotification,
+                        onColor: StaticColor.sub_deeper,
+                        offColor: StaticColor.icon,
+                      ),
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -68,7 +95,19 @@ class AppSetting extends StatelessWidget {
                   Expanded(
                     child: Container(height: 20, color: Colors.transparent),
                   ),
-                  CustomSwitch(value: true),
+                  GestureDetector(
+                    onTap: () {
+                      agree('like');
+                    },
+                    child: Obx(
+                      () => CustomSwitch(
+                        value: MyPageController
+                            .to.myPageModel.value!.agreeLikeNotification,
+                        onColor: StaticColor.sub_deeper,
+                        offColor: StaticColor.icon,
+                      ),
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -78,7 +117,7 @@ class AppSetting extends StatelessWidget {
               child: Row(
                 children: [
                   CustomText(
-                    text: '이벤트 알림',
+                    text: '챌린지 알림',
                     color: Color(0xff222222),
                     fontSize: 16.sp,
                     fontWeight: FontWeight.w400,
@@ -87,7 +126,19 @@ class AppSetting extends StatelessWidget {
                   Expanded(
                     child: Container(height: 20, color: Colors.transparent),
                   ),
-                  CustomSwitch(value: true),
+                  GestureDetector(
+                    onTap: () {
+                      agree('challenge');
+                    },
+                    child: Obx(
+                      () => CustomSwitch(
+                        value: MyPageController
+                            .to.myPageModel.value!.agreeChallengeNotification,
+                        onColor: StaticColor.sub_deeper,
+                        offColor: StaticColor.icon,
+                      ),
+                    ),
+                  ),
                 ],
               ),
             ),

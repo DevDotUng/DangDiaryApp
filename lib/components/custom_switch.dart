@@ -5,9 +5,16 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'custom_text.dart';
 
 class CustomSwitch extends StatelessWidget {
-  CustomSwitch({Key? key, required this.value}) : super(key: key);
+  CustomSwitch({
+    Key? key,
+    required this.value,
+    required this.onColor,
+    required this.offColor,
+  }) : super(key: key);
 
   bool value;
+  Color onColor;
+  Color offColor;
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +37,7 @@ class CustomSwitch extends StatelessWidget {
             duration: Duration(milliseconds: 200),
             child: CustomText(
               text: value ? 'ON' : 'OFF',
-              color: value ? StaticColor.main : StaticColor.icon,
+              color: value ? onColor : offColor,
               fontSize: 14.sp,
               fontWeight: FontWeight.w400,
               height: (24 / 14),
@@ -45,7 +52,7 @@ class CustomSwitch extends StatelessWidget {
               width: 24.w,
               height: 24.w,
               decoration: BoxDecoration(
-                color: value ? StaticColor.main : StaticColor.icon,
+                color: value ? onColor : offColor,
                 borderRadius: BorderRadius.circular(12.r),
               ),
             ),

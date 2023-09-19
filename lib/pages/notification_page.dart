@@ -1,5 +1,6 @@
 import 'package:dangdiarysample/components/custom_back_button.dart';
 import 'package:dangdiarysample/components/custom_text.dart';
+import 'package:dangdiarysample/components/reactive_device.dart';
 import 'package:dangdiarysample/controllers/bottom_nav_controller.dart';
 import 'package:dangdiarysample/controllers/home_controller.dart';
 import 'package:dangdiarysample/models/home/notification_model.dart';
@@ -14,6 +15,9 @@ class NotificationPage extends StatelessWidget {
   Widget build(BuildContext context) {
     List<NotificationModel> notifications =
         HomeController.to.homeModel.value!.notifications;
+    for (NotificationModel notification in notifications) {
+      print(notification.registerDate);
+    }
 
     return Scaffold(
       appBar: AppBar(
@@ -39,11 +43,12 @@ class NotificationPage extends StatelessWidget {
         ),
       ),
       body: Container(
-        padding: EdgeInsets.symmetric(vertical: 8.h),
         width: double.infinity,
         height: double.infinity,
         color: Colors.white,
         child: ListView.builder(
+          padding: EdgeInsets.only(
+              bottom: ReactiveDevice().hasHomeIndicator() ? 171.h : 137.h),
           itemCount: notifications.length,
           itemBuilder: (context, index) {
             return GestureDetector(

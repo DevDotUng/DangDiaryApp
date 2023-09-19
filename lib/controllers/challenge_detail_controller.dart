@@ -56,7 +56,7 @@ class ChallengeDetailController extends GetxController {
     isChallenge(challengeDetailModel.value!.isChallenge);
 
     if (challengeDetailModel.value?.recommendDate != null) {
-      setDuration(challengeDetailModel.value!.recommendDate);
+      setDuration(challengeDetailModel.value!.recommendDate!);
     } else {
       countdownDuration = const Duration(hours: 0, minutes: 0, seconds: 0);
     }

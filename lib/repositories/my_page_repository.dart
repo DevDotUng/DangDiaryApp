@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:dangdiarysample/models/my_page/agree_model.dart';
 import 'package:dangdiarysample/models/my_page/my_page_model.dart';
 import 'package:dangdiarysample/repositories/public_repository.dart';
 import 'package:dio/dio.dart';
@@ -62,5 +63,24 @@ class MyPageRepository {
     var response = await dio.post('/api/mypage/info', data: formData);
 
     return response.statusCode!;
+  }
+
+  Future<AgreeModel> editAgree(String type) async {
+    Box homeBox = await Hive.openBox('userInfo');
+    int userId = homeBox.get('userId');
+
+    Uri url = Uri.http(
+        _baseUrl,
+        '/api/mypage/agree',
+        {'type': type, 'userId': userId}
+            .map((key, value) => MapEntry(key, value.toString())));
+
+    var response = await http.get(url);
+    if (response.statusCode == 200) {
+      AgreeModel agreeModel = AgreeModel.fromJson(json.decode(response.body));
+      return agreeModel;
+    } else {
+      return Future.error(response.statusCode);
+    }
   }
 }
