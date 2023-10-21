@@ -1,16 +1,20 @@
 import 'package:dangdiarysample/components/custom_back_button.dart';
 import 'package:dangdiarysample/components/custom_text.dart';
+import 'package:dangdiarysample/models/customer_center/report_history_model.dart';
 import 'package:dangdiarysample/static/color.dart';
 import 'package:dangdiarysample/static/icon.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 
 class MyReportHistoryDetail extends StatelessWidget {
   const MyReportHistoryDetail({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    ReportHistoryModel _reportHistoryModel =
+        Get.arguments['reportHistoryModel'];
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Color(0xffF5F5F5),
@@ -23,7 +27,7 @@ class MyReportHistoryDetail extends StatelessWidget {
           child: const CustomBackButton(),
         ),
         title: CustomText(
-          text: '신고내역',
+          text: '나의 문의 내역',
           color: Colors.black,
           fontSize: 20.sp,
           fontWeight: FontWeight.w500,
@@ -61,7 +65,7 @@ class MyReportHistoryDetail extends StatelessWidget {
                           SizedBox(width: 8.w),
                           Expanded(
                             child: CustomText(
-                              text: '얼음물수영하기 일기를 신고했어요.',
+                              text: _reportHistoryModel.title,
                               color: Color(0xff222222),
                               fontSize: 16.sp,
                               fontWeight: FontWeight.w500,
@@ -86,7 +90,7 @@ class MyReportHistoryDetail extends StatelessWidget {
                         children: [
                           SizedBox(width: 16.w),
                           CustomText(
-                            text: '신고사유 : 학대가 의심돼요.',
+                            text: '신고사유 : ' + _reportHistoryModel.reason,
                             color: Color(0xff222222),
                             fontSize: 14.sp,
                             fontWeight: FontWeight.w400,
@@ -94,7 +98,8 @@ class MyReportHistoryDetail extends StatelessWidget {
                           ),
                           SizedBox(height: 8.h),
                           CustomText(
-                            text: '2023.01.17',
+                            text: getFormattedDate(
+                                _reportHistoryModel.createDate),
                             color: Color(0xff696969),
                             fontSize: 12.sp,
                             fontWeight: FontWeight.w400,
@@ -132,8 +137,8 @@ class MyReportHistoryDetail extends StatelessWidget {
                           ),
                           SizedBox(width: 4.w),
                           CustomText(
-                            text: '처리를 완료했어요.',
-                            color: StaticColor.sub_deeper,
+                            text: getAnswerTitle(_reportHistoryModel.status),
+                            color: Color(0xff6C8FDF),
                             fontSize: 18.sp,
                             fontWeight: FontWeight.w600,
                             height: (32 / 18),
@@ -142,22 +147,24 @@ class MyReportHistoryDetail extends StatelessWidget {
                       ),
                       SizedBox(height: 24.h),
                       CustomText(
-                        text:
-                            '안녕하세요 오또캐드님.\n운영진 ‘버찌’ 입니다.\n\n신고해주신 일기를 검토한 결과, 학대 정황이 의심되어 해당 유저의 계정을 이용 정지 처리했습니다.\n\n관심을 가지고 신고해주셔서 감사합니다.',
+                        text: getAnswer(_reportHistoryModel.status,
+                            _reportHistoryModel.answer),
                         color: Color(0xff222222),
                         fontSize: 14.sp,
                         fontWeight: FontWeight.w400,
-                        height: (24 / 14),
+                        height: (20 / 14),
                       ),
                       SizedBox(height: 8.h),
-                      CustomText(
-                        text: '2023.01.17',
-                        color: StaticColor.icon,
-                        fontSize: 12.sp,
-                        fontWeight: FontWeight.w400,
-                        height: (20 / 12),
-                      ),
-                      SizedBox(height: 61.h),
+                      _reportHistoryModel.modifyDate == null
+                          ? Container()
+                          : CustomText(
+                              text: getFormattedDate(
+                                  _reportHistoryModel.modifyDate),
+                              color: Color(0xff696969),
+                              fontSize: 12.sp,
+                              fontWeight: FontWeight.w400,
+                              height: (20 / 12),
+                            ),
                     ],
                   ),
                 ),
@@ -167,5 +174,41 @@ class MyReportHistoryDetail extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  String getFormattedDate(String? date) {
+    DateTime dateTime = DateTime.now();
+    if (date != null) {
+      dateTime = DateTime.parse(date);
+    }
+
+    String formattedDate = DateFormat('yyyy.MM.dd').format(dateTime);
+
+    return formattedDate;
+  }
+
+  String getAnswerTitle(String status) {
+    if (status == '신고 처리중') {
+      return '신고를 확인하고 처리중이에요!';
+    } else if (status == '접수 완료') {
+      return '접수가 완료되었어요.';
+    } else if (status == '답변 완료') {
+      return '처리를 완료했어요.';
+    } else {
+      return '';
+    }
+  }
+
+  String getAnswer(String status, String? answer) {
+    if (answer != null) {
+      return answer;
+    }
+    if (status == '신고 처리중') {
+      return '정황을 파악하고 규정에 따라 조치 여부를 논의하고 있는 중이에요. 답변을 드리기까지 약 2~3일정도 소요됩니다.\n답변 완료 시, \'메인 홈 > 알림 센터\' 또는 \'고객센터 > 공지사항\'에서 알려 드릴게요!';
+    } else if (status == '접수 완료') {
+      return '접수된 신고를 선착순으로 확인하고 있어요.\n답변을 드리기까지 약 2~3일정도 소요됩니다.\n답변 완료 시, \'메인 홈 > 알림 센터\' 또는 \'고객센터 > 공지사항\'에서 알려 드릴게요!';
+    } else {
+      return '';
+    }
   }
 }

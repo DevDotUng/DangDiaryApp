@@ -176,7 +176,7 @@ class MyApp extends StatelessWidget {
             GetPage(name: '/allChallenge', page: () => AllChallenge()),
             GetPage(name: '/customerCenter', page: () => CustomerCenter()),
             GetPage(name: '/notice', page: () => Notice()),
-            GetPage(name: '/reportDetail', page: () => ReportDetail()),
+            GetPage(name: '/reportDetail', page: () => MyReportHistoryDetail()),
             GetPage(name: '/completeDiary', page: () => CompleteDiary()),
             GetPage(name: '/diary', page: () => Diary()),
             GetPage(name: '/diaries', page: () => Diaries()),

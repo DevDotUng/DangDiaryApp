@@ -45,7 +45,6 @@ class AppSetting extends StatelessWidget {
       body: Container(
         color: Colors.white,
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SizedBox(height: 10.h),
             Padding(
@@ -66,15 +65,13 @@ class AppSetting extends StatelessWidget {
                     onTap: () {
                       agree('all');
                     },
-                    child: Obx(
-                      () => CustomSwitch(
-                        value: MyPageController
-                                .to.myPageModel.value!.agreeLikeNotification ||
-                            MyPageController.to.myPageModel.value!
-                                .agreeChallengeNotification,
-                        onColor: StaticColor.sub_deeper,
-                        offColor: StaticColor.icon,
-                      ),
+                    child: CustomSwitch(
+                      value: MyPageController
+                              .to.myPageModel.value!.agreeLikeNotification ||
+                          MyPageController
+                              .to.myPageModel.value!.agreeChallengeNotification,
+                      onColor: StaticColor.sub_deeper,
+                      offColor: StaticColor.icon,
                     ),
                   ),
                 ],

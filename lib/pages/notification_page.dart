@@ -15,9 +15,6 @@ class NotificationPage extends StatelessWidget {
   Widget build(BuildContext context) {
     List<NotificationModel> notifications =
         HomeController.to.homeModel.value!.notifications;
-    for (NotificationModel notification in notifications) {
-      print(notification.registerDate);
-    }
 
     return Scaffold(
       appBar: AppBar(

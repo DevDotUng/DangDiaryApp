@@ -122,4 +122,30 @@ class BrowseRepository {
       return Future.error(response.statusCode);
     }
   }
+
+  Future<int> reportDiary(int diaryId, String status, String reason) async {
+    Box homeBox = await Hive.openBox('userInfo');
+    int userId = homeBox.get('userId');
+
+    var body = jsonEncode({
+      "diaryId": diaryId,
+      "userId": userId,
+      "status": status,
+      "reason": reason,
+    });
+
+    var response = await post(
+      Uri.http(_baseUrl, '/api/report'),
+      headers: <String, String>{
+        'Content-Type': 'application/json',
+      },
+      body: body,
+    );
+
+    if (response.statusCode == 201) {
+      return 201;
+    } else {
+      return Future.error(response.statusCode);
+    }
+  }
 }

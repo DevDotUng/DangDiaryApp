@@ -148,7 +148,11 @@ class Posts extends StatelessWidget {
                               padding: EdgeInsets.symmetric(horizontal: 24.0.w),
                               child: GestureDetector(
                                 onTap: () {
-                                  controller.editDiary(context);
+                                  controller.editDiary(
+                                      context,
+                                      controller.postsModels![index].diaryId,
+                                      controller
+                                          .postsModels![index].challengeId);
                                 },
                                 child: Icon(
                                   Icons.more_horiz,

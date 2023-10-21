@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:dangdiarysample/models/customer_center/Inquiry_history_model.dart';
 import 'package:dangdiarysample/models/customer_center/customer_center_model.dart';
+import 'package:dangdiarysample/models/customer_center/report_history_model.dart';
 import 'package:dangdiarysample/repositories/public_repository.dart';
 import 'package:dio/dio.dart';
 import 'package:hive/hive.dart';
@@ -102,6 +103,27 @@ class CustomerCenterRepository {
     var response = await http.put(url);
     if (response.statusCode == 200) {
       return 200;
+    } else {
+      return Future.error(response.statusCode);
+    }
+  }
+
+  Future<List<ReportHistoryModel>> getReportHistory() async {
+    Box homeBox = await Hive.openBox('userInfo');
+    int userId = homeBox.get('userId');
+
+    Uri url = Uri.http(
+        _baseUrl,
+        '/api/report/history',
+        {'userId': userId}
+            .map((key, value) => MapEntry(key, value.toString())));
+
+    var response = await http.get(url);
+    if (response.statusCode == 200) {
+      List<dynamic> body = json.decode(response.body);
+      List<ReportHistoryModel> reportHistoryModel =
+          body.map((data) => ReportHistoryModel.fromJson(data)).toList();
+      return reportHistoryModel;
     } else {
       return Future.error(response.statusCode);
     }

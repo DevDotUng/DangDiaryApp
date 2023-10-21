@@ -1,5 +1,5 @@
 class PublicRepository {
-  static String get baseUrl => "localhost:8080";
+  static String get baseUrl => "54.214.241.207:8080";
 
   String getDiaryImageUrl(String image) {
     String url = "http://" + baseUrl + "/image/diary/$image";

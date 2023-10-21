@@ -40,6 +40,13 @@ class PostsController extends GetxController {
     '불쾌한 내용이 포함되어 있어요.',
     '불법적인 게시글이에요.(펫 분양/약물 등)',
   ];
+  List<String> reportReasonEnglishList = [
+    'VIOLENCE',
+    'UNRELATED',
+    'AD',
+    'UNPLEASANT',
+    'ILLEGAL',
+  ];
 
   @override
   void onInit() {
@@ -105,7 +112,7 @@ class PostsController extends GetxController {
         preventDuplicates: false);
   }
 
-  void editDiary(BuildContext context) {
+  void editDiary(BuildContext context, int diaryId, int challengeId) {
     showModalBottomSheet(
       context: context,
       shape: RoundedRectangleBorder(
@@ -134,39 +141,9 @@ class PostsController extends GetxController {
               SizedBox(height: 8.h),
               GestureDetector(
                 onTap: () {
-                  print('일기 수정');
-                },
-                child: Container(
-                  color: Colors.white,
-                  child: Column(
-                    children: [
-                      SizedBox(height: 16.h),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          CustomText(
-                            text: '해당 일기 공유하기',
-                            color: Color(0xff4D4D4D),
-                            fontSize: 18.sp,
-                            fontWeight: FontWeight.w400,
-                            height: (32 / 18),
-                          ),
-                        ],
-                      ),
-                      SizedBox(height: 16.h),
-                    ],
-                  ),
-                ),
-              ),
-              Container(
-                width: double.infinity,
-                height: 1.h,
-                color: Color(0xffF5F5F5),
-              ),
-              GestureDetector(
-                onTap: () {
                   Navigator.pop(context);
-                  Get.toNamed('/challengeDetail');
+                  Get.toNamed('/challengeDetail',
+                      arguments: {'challengeId': challengeId});
                 },
                 child: Container(
                   color: Colors.white,
@@ -197,7 +174,8 @@ class PostsController extends GetxController {
               ),
               GestureDetector(
                 onTap: () {
-                  _showReportPostsDialog(context);
+                  Navigator.pop(context);
+                  _showReportPostsDialog(context, diaryId);
                 },
                 child: Container(
                   color: Colors.white,
@@ -243,7 +221,7 @@ class PostsController extends GetxController {
     false.obs,
   ];
 
-  void _showReportPostsDialog(BuildContext context) async {
+  void _showReportPostsDialog(BuildContext context, int diaryId) async {
     await showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -298,6 +276,8 @@ class PostsController extends GetxController {
                 SizedBox(height: 32.h),
                 GestureDetector(
                   onTap: () {
+                    BrowseRepository().reportDiary(diaryId, 'IN_PROGRESS',
+                        reportReasonEnglishList[reportIndex.value]);
                     Navigator.pop(context);
                   },
                   child: Container(
